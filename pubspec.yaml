@@ -52,6 +52,7 @@ dependencies:
   record: ^5.1.2
   audio_waveforms: ^1.0.5
   pin_code_fields: ^8.0.1
+  camera: ^0.11.0+2
 
 dev_dependencies:
   flutter_test:
@@ -94,6 +95,7 @@ flutter:
       - assets/onboarding/
       - assets/Services/Appointment/
       - assets/Hospital/
+      - assets/labReports/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

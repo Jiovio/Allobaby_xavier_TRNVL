@@ -11,13 +11,7 @@ class Baby extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      floatingActionButton: FloatingActionButton(onPressed:() {
-        Get.back();
-        
-      },
       
-      child: Icon(Icons.mic , color: PrimaryColor),
-      ),
       appBar: AppBar(
         elevation: 0,
         leading: IconButton(onPressed: () {

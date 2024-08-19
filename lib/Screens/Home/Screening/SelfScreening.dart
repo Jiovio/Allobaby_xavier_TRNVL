@@ -2,20 +2,39 @@ import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Screens/Home/Screening/Controllers/SelfScreeningController.dart';
 import 'package:allobaby/Screens/Home/Screening/SymptomsScreen.dart';
 import 'package:allobaby/Screens/Home/Screening/Vitals/Vitals.dart';
+import 'package:allobaby/Screens/Home/Screening/labReports/Tests/FetalMonitoring.dart';
+import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Glucose.dart';
+import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Hemoglobin.dart';
+import 'package:allobaby/Screens/Home/Screening/labReports/Tests/UltraSound.dart';
+import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Urine.dart';
 import 'package:allobaby/Screens/Home/Screening/summary.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SelfScreening extends StatefulWidget {
-  const SelfScreening({super.key});
+   int initPage = 0;
+    SelfScreening({super.key, required this.initPage});
 
   @override
   State<SelfScreening> createState() => _SelfScreeningState();
 }
 
 class _SelfScreeningState extends State<SelfScreening> {
-    int i=0;
-    PageController pg = PageController();
+
+    late int initP;
+    int i = 0;
+    late PageController pg ;
+
+
+    @override
+    void initState() {
+      super.initState();
+      initP = widget.initPage;
+      pg = PageController(initialPage: initP);
+
+    }
+
+    
 
   void _updateCurrentPageIndex(int index) {
     pg.animateToPage(
@@ -49,7 +68,13 @@ class _SelfScreeningState extends State<SelfScreening> {
         children: [
           SymptomsScreen(),
           VitalsScreen(),
+          Hemoglobin(),
+          Urine(),
+          Glucose(),
+          Fetalmonitoring(),
+          Ultrasound(),
           summary(),
+
 
 
         ],
@@ -75,16 +100,13 @@ class _SelfScreeningState extends State<SelfScreening> {
 
                           ),
                           onPressed: () {
-                            // pageController.pageController.animateToPage(
-                            //     pageController.pageChanged - 1,
-                            //     duration: Duration(milliseconds: 300),
-                            //     curve: Curves.easeInOut);
 
-                            _updateCurrentPageIndex(i>0?i--:0);
+                            // _updateCurrentPageIndex(i>0?i--:0);
+                            pg.previousPage(duration: Durations.medium1,curve: Curves.bounceInOut);
 
-setState(() {
+// setState(() {
   
-});
+// });
                           },
                           child: Text("BACK"),
                         ),

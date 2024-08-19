@@ -6,6 +6,8 @@ import 'package:allobaby/Screens/Home/Prescription/Prescription.dart';
 import 'package:allobaby/Screens/Home/Report/Report.dart';
 import 'package:allobaby/Screens/Home/Screening/SelfScreening.dart';
 import 'package:allobaby/Screens/Home/Screening/SymptomsScreen.dart';
+import 'package:allobaby/Screens/Home/Screening/labReports/ScreeningwithReports.dart';
+import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Hemoglobin.dart';
 import 'package:allobaby/Screens/Service/Appointment.dart';
 import 'package:allobaby/Screens/Service/MyAppointment.dart';
 import 'package:allobaby/Screens/Signin.dart';
@@ -242,9 +244,9 @@ class _HomeState extends State<Home> {
 
 
                     categories("Screening", 'assets/Homescreen/virus.png',
-                        SelfScreening()
-
-                        // SymptomsScreen()
+                        // SelfScreening()
+                        // Hemoglobin()
+                        ScreeningWithReports()
                         ),
                     categories(
                         "Report",

@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class VitalsScreen extends StatelessWidget {
-  const VitalsScreen({super.key});
+   VitalsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -86,73 +86,75 @@ class VitalsScreen extends StatelessWidget {
           vitalsWidget: HeartRateVariability())
     ];
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Vitals",
-              style: TextStyle(
-                fontSize: 20,
+    return  SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Vitals",
+                style: TextStyle(
+                  fontSize: 20,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            GridView.count(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              crossAxisCount: 2,
-              crossAxisSpacing: 8.0,
-              mainAxisSpacing: 10.0,
-              children: List.generate(
-                  vitalsList.length,
-                  (index) => Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: InkWell(
+              SizedBox(
+                height: 15,
+              ),
+              GridView.count(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                crossAxisCount: 2,
+                crossAxisSpacing: 8.0,
+                mainAxisSpacing: 10.0,
+                children: List.generate(
+                    vitalsList.length,
+                    (index) => Card(
+                        shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
-                          highlightColor: accentColor.withOpacity(0.1),
-                          splashColor: accentColor.withOpacity(0.8),
-                          onTap: () => showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                    title: Text(vitalsList[index].title),
-                                    content: vitalsList[index].vitalsWidget,
-                                  )),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                vitalsList[index].image,
-                                scale: 6,
-                              ),
-                              SizedBox(
-                                height: 12,
-                              ),
-                              Text(
-                                vitalsList[index].title,
-                                style: TextStyle(
-                                    color: PrimaryColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              vitalsList[index].value,
-                            ],
-                          )))),
-            ),
-          ],
+                        ),
+                        child: InkWell(
+                            borderRadius: BorderRadius.circular(8.0),
+                            highlightColor: accentColor.withOpacity(0.1),
+                            splashColor: accentColor.withOpacity(0.8),
+                            onTap: () => showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: Text(vitalsList[index].title),
+                                      content: vitalsList[index].vitalsWidget,
+                                    )),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  vitalsList[index].image,
+                                  scale: 6,
+                                ),
+                                SizedBox(
+                                  height: 12,
+                                ),
+                                Text(
+                                  vitalsList[index].title,
+                                  // "hi",
+                                  style: TextStyle(
+                                      color: PrimaryColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                vitalsList[index].value,
+                              ],
+                            )))),
+              ),
+            
+            ],
+          ),
         ),
-      ),
-    );
+      );
 }
 }
 
