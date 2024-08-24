@@ -4,6 +4,8 @@ import 'package:get/get_rx/get_rx.dart';
 
 class Maincontroller extends GetxController {
 
+  
+
   bool voice = true;
 
   int currpage = 0;

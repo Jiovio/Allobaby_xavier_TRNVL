@@ -1,4 +1,6 @@
 import 'package:allobaby/Config/responsive.dart';
+import 'package:allobaby/Controller/AuthController.dart';
+import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Screens/Initial/MomOrDad.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
 import 'package:allobaby/Screens/mobileverification/otpverification.dart';
@@ -196,6 +198,9 @@ class _SigninState extends State<Signin> {
                   )
                 ]),
               ),
+              GetBuilder<Authcontroller>(
+                init: Authcontroller(),
+                builder:(controller) => 
               Flexible(
                   flex: 2,
                   child: Padding(
@@ -211,6 +216,7 @@ class _SigninState extends State<Signin> {
                         Form(
                           key: _formKey,
                           child: IntlPhoneField(
+                            controller: controller.phone,
                             keyboardType: TextInputType.phone,
                             // countryCodeTextColor:
                             // Get.isDarkMode ? White : Black,
@@ -233,13 +239,21 @@ class _SigninState extends State<Signin> {
                                     BorderRadius.circular(40))),
                             onPressed: ()  async{
 
-                              onSuccessLogin();
-                              if (_formKey.currentState!.validate()) {
-                                // setState(() {
-                                //   current_state = 1 ;
-                                // });
-                                // googleSignInController.googleSignIn();
+                              if(int.tryParse(controller.phone.value.text)==null || int.parse(controller.phone.value.text) <1000000000 ){
+
+                                Get.snackbar("Invalid Mobile Number", "Please Enter Valid Mobile Number");
+
+                              }else{
+                            controller.onSuccessLogin();
+
                               }
+
+                              // if (_formKey.currentState!.validate()) {
+                              //   // setState(() {
+                              //   //   current_state = 1 ;
+                              //   // });
+
+                              // }
                             },
                             child: Row(
                                 mainAxisAlignment:
@@ -281,15 +295,11 @@ class _SigninState extends State<Signin> {
                         }, child: Text("Signup"))
                       ],
                     ),
-                  ))
+                  )))
             ],
           );
   }
 
-  onSuccessLogin() {
-    print("Hi");
-    Get.offAll(()=>Otpverification(),
-    transition: Transition.rightToLeft);
-  }
+
   
 }

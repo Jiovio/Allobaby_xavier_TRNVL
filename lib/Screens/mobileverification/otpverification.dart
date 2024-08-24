@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class Otpverification extends StatelessWidget {
-  const Otpverification({super.key});
+  String phone;
+   Otpverification({super.key, required this.phone});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +54,9 @@ class Otpverification extends StatelessWidget {
                                 fontSize: 16),
                             children: [
                               TextSpan(
-                                  text: "+91 9363286517",
+                                  // text: "+91 9363286517",
+                                  text: phone,
+
                                 
                                   // data.read('mobileNo'),
                                   style: TextStyle(
