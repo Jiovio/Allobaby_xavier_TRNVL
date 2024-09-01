@@ -31,6 +31,7 @@ class TFField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
       obscureText: oText ?? false,
       maxLength: mLength,
       validator: validator,
@@ -39,7 +40,7 @@ class TFField extends StatelessWidget {
       onTap: function,
       readOnly: rOnly ?? false,
       controller: txtController,
-      decoration: InputDecoration(labelText: label),
+      decoration: InputDecoration(labelText: label,border:OutlineInputBorder()),
       inputFormatters: iFormatter,
       keyboardType: kType,
     );

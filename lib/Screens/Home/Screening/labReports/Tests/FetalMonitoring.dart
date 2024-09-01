@@ -1,43 +1,36 @@
 
+import 'dart:convert';
+
+import 'package:allobaby/Components/textfield.dart';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/Reports/fetalMonitoringController.dart';
 import 'package:allobaby/Screens/Home/Screening/labReports/Scan/HemoglobinScan.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class Fetalmonitoring extends StatelessWidget {
    Fetalmonitoring({super.key});
 
+  Fetalmonitoringcontroller fetalmonitoringcontroller = Get.put(Fetalmonitoringcontroller());
+   
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Fetal Monitoring "),
-      // ),
 
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Column(
+          child: 
+          GetBuilder<Fetalmonitoringcontroller>(
+            init: Fetalmonitoringcontroller(),
+            builder:(controller) => 
+          Column(
 
             children: [
-
-                                          SizedBox(
-                              width: double.infinity,
-                              child: Text(
-                                              "Fetal Monitoring ",
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                            ),
-              SizedBox(
-                height: 15,
-              ),
-
-   
-
 
               GestureDetector(
                 onTap: () => showDialog(
@@ -51,22 +44,17 @@ class Fetalmonitoring extends StatelessWidget {
                                 child: Stack(
                                   children: [
                                     InteractiveViewer(
-                                      child:const Center(
+                                      child: Center(
                                         child: 
-                                        // controller.fileImage64 == null
-                                        //     ? Text(
-                                        //         "NO IMAGE",
-                                        //         style: TextStyle(
-                                        //             fontSize: 18, color: White),
-                                        //       )
-                                        //     : Image.memory(base64Decode(
-                                        //         controller.fileImage64)),
-
-                                              Text(
+                                        controller.fileImage64 == null
+                                            ? const Text(
                                                 "NO IMAGE",
                                                 style: TextStyle(
                                                     fontSize: 18, color: White),
                                               )
+                                            : Image.memory(base64Decode(
+                                                controller.fileImage64)),
+
                                                 
                                       ),
                                     ),
@@ -94,19 +82,15 @@ class Fetalmonitoring extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: 
-                        // controller.fileImage64 == null
-                        //     ? Center(
-                        //         child: Text(
-                        //         "Click Add Image Button",
-                        //         style: TextStyle(fontSize: 18),
-                        //       ))
-                        //     : Image.memory(
-                        //         base64Decode(controller.fileImage64)),
-                              const Center(
+                        controller.fileImage64 == null
+                            ? Center(
                                 child: Text(
                                 "Click Add Image Button",
                                 style: TextStyle(fontSize: 18),
                               ))
+                            : Image.memory(
+                                base64Decode(controller.fileImage64)),
+
 
                       ),
               ),
@@ -138,22 +122,22 @@ class Fetalmonitoring extends StatelessWidget {
                                     FloatingActionButton(
                                         elevation: 0,
                                         tooltip: "Camera",
-                                        onPressed: () => {},
-                                            // reportController.getImageFromCamera(),
+                                        onPressed: () =>
+                                            controller.getImageFromCamera(),
                                         backgroundColor: Colors.amberAccent,
                                         child: Image.asset(
-                                          'assets/camera.png',
+                                          'assets/General/camera.png',
                                           scale: 16,
                                         )),
                                     FloatingActionButton(
                                         elevation: 0,
                                         focusColor: Colors.greenAccent,
                                         tooltip: "Gallery",
-                                        onPressed: () => {},
-                                            // reportController.getImageFromGallery(),
+                                        onPressed: () =>
+                                            controller.getImageFromGallery(),
                                         backgroundColor: Colors.indigoAccent,
                                         child: Image.asset(
-                                          'assets/gallery.png',
+                                          'assets/General/gallery.png',
                                           scale: 16,
                                         )),
                                   ],
@@ -181,7 +165,7 @@ class Fetalmonitoring extends StatelessWidget {
 
                           ListTile(
                             leading: Image.asset("assets/labReports/heart.png"),
-                            title: Text("Heart Rate : 60 BPM"),
+                            title: Text("Heart Rate : ${controller.heartRate} BPM"),
                             subtitle: Text("Tap to Change "),
                             shape: OutlineInputBorder(borderSide: BorderSide(
                               color: Colors.grey
@@ -191,19 +175,17 @@ class Fetalmonitoring extends StatelessWidget {
                               showDialog(context: context, builder:(context) {
                                 return AlertDialog(
                                   title: Text("Heart Rate "),
-
                                   content: Row(
                                     children: [
-                                      NumberPicker(
-                                                      
-                                            value: 40,
-                                                          minValue: 30,
-                                                          itemHeight: 32,
-                                                          maxValue: 150,
-                                                          onChanged: (value) {
-                                                          
-                                                          },
-                                                        ),
+                                            NumberPicker(
+                                            value: controller.heartRate,
+                                            minValue: 30,
+                                            itemHeight: 32,
+                                            maxValue: 150,
+                                            onChanged: (value) {
+                                              controller.setHeartRate(value);
+                                            },
+                                          ),
 
                                                         SizedBox(width: 10,),
 
@@ -218,38 +200,19 @@ class Fetalmonitoring extends StatelessWidget {
                           SizedBox(height: 20,),
 
 
-                                                    ListTile(
+                            ListTile(      
                             leading: Icon(Icons.airline_seat_legroom_normal_rounded,size: 40,),
-                            title: Text("Kick Count : 0"),
+                            title: Text("Kick Count : ${controller.kickCount}"),
                             subtitle: Text("Tap to Increase the Count "),
                             iconColor: PrimaryColor,
                             shape: OutlineInputBorder(borderSide: BorderSide(
                               color: Colors.grey
                             )),
-
                             onTap: () {
-
+                              controller.kickCount++;
+                              controller.update();
                             },
                           ),
-
-
-                     const SizedBox(
-                height: 20.0,
-              ),
-
-               TextFormField(
-                          decoration: InputDecoration(
-                            labelText: "Description",
-                            border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
-                            
-                          maxLines: 5
-                        ),
-
-
-
-                          
-
-
 
                         // TextFormField(
                         //   decoration: InputDecoration(
@@ -261,13 +224,16 @@ class Fetalmonitoring extends StatelessWidget {
 
 
                            SizedBox(
-                height: 10.0,
+                              height: 10.0,
+                            ),
+              const SizedBox(
+                height: 20.0,
               ),
 
+                            TFField(label: "Description",mLines: 5,
+                            txtController: controller.desc,),
 
-
-
-              const SizedBox(
+               const SizedBox(
                 height: 20.0,
               ),
 
@@ -286,12 +252,9 @@ class Fetalmonitoring extends StatelessWidget {
 
             ],
           ),
-          )
+          ))
         ),
 
     );
   }
-
-
-
 }

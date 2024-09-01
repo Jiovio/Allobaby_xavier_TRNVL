@@ -1,9 +1,14 @@
 
+import 'dart:convert';
+
 import 'package:allobaby/Components/CameraCapture.dart';
 import 'package:allobaby/Components/forms.dart';
+import 'package:allobaby/Components/textfield.dart';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/Reports/urineTestController.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 
 class Urine extends StatelessWidget {
@@ -12,30 +17,15 @@ class Urine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Add Urine Report"),
-      // ),
-
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Column(
-
+          child: 
+          GetBuilder<Urinetestcontroller>(
+            init: Urinetestcontroller(),
+            builder:(controller) => 
+          Column(
             children: [
-              SizedBox(
-                              width: double.infinity,
-                              child: Text(
-                                              "Add Urine Report",
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                            ),
-              SizedBox(
-                height: 15,
-              ),
-
-
               GestureDetector(
                 onTap: () => showDialog(
                             context: context,
@@ -48,22 +38,16 @@ class Urine extends StatelessWidget {
                                 child: Stack(
                                   children: [
                                     InteractiveViewer(
-                                      child:const Center(
+                                      child: Center(
                                         child: 
-                                        // controller.fileImage64 == null
-                                        //     ? Text(
-                                        //         "NO IMAGE",
-                                        //         style: TextStyle(
-                                        //             fontSize: 18, color: White),
-                                        //       )
-                                        //     : Image.memory(base64Decode(
-                                        //         controller.fileImage64)),
-
-                                              Text(
+                                        controller.fileImage64 == null
+                                            ? Text(
                                                 "NO IMAGE",
                                                 style: TextStyle(
                                                     fontSize: 18, color: White),
                                               )
+                                            : Image.memory(base64Decode(
+                                                controller.fileImage64)),
                                                 
                                       ),
                                     ),
@@ -91,11 +75,13 @@ class Urine extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: 
-                              const Center(
+                        controller.fileImage64 == null
+                            ? Center(
                                 child: Text(
                                 "Click Add Image Button",
                                 style: TextStyle(fontSize: 18),
                               ))
+                            : Image.memory(base64Decode(controller.fileImage64)),
 
                       ),
               ),
@@ -118,7 +104,7 @@ class Urine extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text(
+                                   const Text(
                                       "Choose photo from :",
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
@@ -127,29 +113,28 @@ class Urine extends StatelessWidget {
                                     FloatingActionButton(
                                         elevation: 0,
                                         tooltip: "Camera",
-                                        onPressed: () => {},
-                                            // reportController.getImageFromCamera(),
+                                        onPressed: () => 
+                                            controller.getImageFromCamera(),
                                         backgroundColor: Colors.amberAccent,
                                         child: Image.asset(
-                                          'assets/camera.png',
+                                          'assets/General/camera.png',
                                           scale: 16,
                                         )),
                                     FloatingActionButton(
                                         elevation: 0,
                                         focusColor: Colors.greenAccent,
                                         tooltip: "Gallery",
-                                        onPressed: () => {},
-                                            // reportController.getImageFromGallery(),
+                                        onPressed: () => 
+                                            controller.getImageFromGallery(),
                                         backgroundColor: Colors.indigoAccent,
-                                        child: Image.asset(
-                                          'assets/gallery.png',
+                                        child: Image.asset('assets/General/gallery.png',
                                           scale: 16,
                                         )),
                                   ],
                                 ),
                               )),
-                                                icon: Icon(Icons.add_a_photo),
-                                                label: Text("Upload Report")),
+                                                icon:const Icon(Icons.add_a_photo),
+                                                label:const Text("Upload Report")),
 
 
                                        TextButton.icon(onPressed: (){
@@ -160,19 +145,30 @@ class Urine extends StatelessWidget {
                             ],
                           ),
 
-                                SizedBox(
-                height: 10.0,
-              ),
+                              const  SizedBox(
+                                height: 10.0,
+                              ),
 
-                          dropDown("Alpamine Present", ["Yes", "No"]),
+                          dropDown(
+                            "Alpamine Present", 
+                            ["Yes", "No"],
+                            (text) {
+                              controller.alphaminePresent = text;
+                              controller.update();
+                            }
+                            ),
 
                          
 
-                                                     SizedBox(
-                height: 20.0,
-              ),
+                             const SizedBox(
+                                      height: 20.0,
+                                    ),
 
-                          dropDown("Sugar Present", ["Yes","No"]),
+                          dropDown("Sugar Present", ["Yes","No"],
+                          (text) {
+                              controller.sugarPresent = text;
+                              controller.update();
+                            }),
 
 
 
@@ -204,24 +200,13 @@ class Urine extends StatelessWidget {
               //   },
               // ),
 
+                            TFField(label: "Description",mLines: 5,
+                            txtController: controller.desc,),
 
-
-
-              //  const SizedBox(
-              //   height: 20.0,
-              // ),
-
-               TextFormField(
-                          decoration: InputDecoration(
-                            labelText: "Description",
-                            border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
-                            
-                          maxLines: 5
-                        ),
-
-              const SizedBox(
+               const SizedBox(
                 height: 20.0,
               ),
+
 
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -237,7 +222,7 @@ class Urine extends StatelessWidget {
 
 
             ],
-          ),
+        ))
           )
         ),
 

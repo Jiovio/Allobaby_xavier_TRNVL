@@ -35,7 +35,7 @@ searchBox(String hint,List<String> options) {
   }
 
 
-dropDown(String hint,List<String> options) {
+dropDown(String hint,List<String> options,onChanged) {
 
     return DropdownSearch<String>(
 
@@ -60,9 +60,7 @@ dropDown(String hint,List<String> options) {
                 ),
                 items: options,
                 // label: "Report of ?",
-                onChanged: (value) {
-                  // reportController.reportOf = value!;
-                },
+                onChanged: onChanged
               );
 
   }

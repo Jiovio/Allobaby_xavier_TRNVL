@@ -1,9 +1,13 @@
 
 
+import 'dart:convert';
+
 import 'package:allobaby/Components/forms.dart';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/Reports/ultraSoundController.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:get/get.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class Ultrasound extends StatelessWidget {
@@ -12,11 +16,12 @@ class Ultrasound extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Ultra Sound "),
-      // ),
 
-      body: SingleChildScrollView(
+      body: 
+      GetBuilder<Ultrasoundcontroller>(
+        init: Ultrasoundcontroller(),
+        builder:(controller) => 
+      SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -50,27 +55,22 @@ class Ultrasound extends StatelessWidget {
                                 child: Stack(
                                   children: [
                                     InteractiveViewer(
-                                      child:const Center(
+                                      child: Center(
                                         child: 
-                                        // controller.fileImage64 == null
-                                        //     ? Text(
-                                        //         "NO IMAGE",
-                                        //         style: TextStyle(
-                                        //             fontSize: 18, color: White),
-                                        //       )
-                                        //     : Image.memory(base64Decode(
-                                        //         controller.fileImage64)),
-
-                                              Text(
+                                        controller.fileImage64 == null
+                                            ?const Text(
                                                 "NO IMAGE",
                                                 style: TextStyle(
                                                     fontSize: 18, color: White),
                                               )
+                                            : Image.memory(base64Decode(
+                                                controller.fileImage64)),
+
                                                 
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.all(10),
+                                      padding:const EdgeInsets.all(10),
                                       child: IconButton(
                                           icon:const Icon(
                                             Icons.arrow_back,
@@ -110,9 +110,9 @@ class Ultrasound extends StatelessWidget {
                           Row(
                             children: [
                               TextButton.icon(
-                                                onPressed: () => showModalBottomSheet(
+                                onPressed: () => showModalBottomSheet(
                                                     context: context,
-                                                    builder: (context) => Container(
+                                builder: (context) => Container(
                                 height: MediaQuery.of(context).size.height / 5,
                                 color: White,
                                 padding: EdgeInsets.only(top: 18.0, bottom: 18.0),
@@ -129,22 +129,22 @@ class Ultrasound extends StatelessWidget {
                                     FloatingActionButton(
                                         elevation: 0,
                                         tooltip: "Camera",
-                                        onPressed: () => {},
-                                            // reportController.getImageFromCamera(),
+                                        onPressed: () => 
+                                            controller.getImageFromCamera(),
                                         backgroundColor: Colors.amberAccent,
                                         child: Image.asset(
-                                          'assets/camera.png',
+                                          'assets/General/camera.png',
                                           scale: 16,
                                         )),
                                     FloatingActionButton(
                                         elevation: 0,
                                         focusColor: Colors.greenAccent,
                                         tooltip: "Gallery",
-                                        onPressed: () => {},
-                                            // reportController.getImageFromGallery(),
+                                        onPressed: () => 
+                                            controller.getImageFromGallery(),
                                         backgroundColor: Colors.indigoAccent,
                                         child: Image.asset(
-                                          'assets/gallery.png',
+                                          'assets/General/gallery.png',
                                           scale: 16,
                                         )),
                                   ],
@@ -166,13 +166,13 @@ class Ultrasound extends StatelessWidget {
                 height: 10.0,
               ),
 
-                          dropDown("Fetal Presentation", ["Cephalic", "Breech","Shoulder","Compound"]),
+                          dropDown("Fetal Presentation", ["Cephalic", "Breech","Shoulder","Compound"],(t){}),
 
             SizedBox(
                 height: 20.0,
               ),
 
-               dropDown("Fetal Movement", ["Present","Absent"]),
+               dropDown("Fetal Movement", ["Present","Absent"],(t){}),
 
 
               SizedBox(
@@ -180,7 +180,7 @@ class Ultrasound extends StatelessWidget {
               ),
 
                           dropDown("Placenta", 
-                          ["Posterior","Anterior","Fundal","Lateral","Low-lying"]),
+                          ["Posterior","Anterior","Fundal","Lateral","Low-lying"],(t){}),
 
                            SizedBox(
                 height: 20.0,
@@ -278,7 +278,7 @@ class Ultrasound extends StatelessWidget {
             ],
           ),
           )
-        ),
+        )),
 
     );
   }
