@@ -1,5 +1,6 @@
 
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Screens/Home/Screening/Controllers/SelfScreeningController.dart';
 import 'package:allobaby/Screens/Home/Screening/SelfScreening.dart';
 import 'package:allobaby/Screens/Home/Screening/SymptomsScreen.dart';
 import 'package:allobaby/Screens/Home/Screening/Vitals/Vitals.dart';
@@ -8,6 +9,7 @@ import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Glucose.dart';
 import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Hemoglobin.dart';
 import 'package:allobaby/Screens/Home/Screening/labReports/Tests/UltraSound.dart';
 import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Urine.dart';
+import 'package:allobaby/db/dbHelper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +26,6 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
 
   List<LabreportOptions> ls = [
   LabreportOptions("Symptoms",SelfScreening(initPage: 0,),"hemoglobin.png"),
-
   LabreportOptions("Vital Test",SelfScreening(initPage: 1,),"hemoglobin.png"),
   LabreportOptions("Hemoglobin Test",SelfScreening(initPage: 2,),"hemoglobin.png"),
   LabreportOptions("Urine Test",SelfScreening(initPage: 3,),"urinetest.png"),
@@ -33,6 +34,8 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
   LabreportOptions("UltraSound Test",SelfScreening(initPage: 6,),"ultrasound.png")
   ];
 
+  Selfscreeningcontroller sc = Get.put(Selfscreeningcontroller());
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -40,6 +43,10 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
         title: Text("Self Screening"),
       ),
       
+      floatingActionButton: FloatingActionButton(onPressed: getReports,
+      
+      ),
+
       body: SingleChildScrollView(
         child: Container(
           
@@ -64,14 +71,7 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
               height: 40,
             ),
         
-        
-          //          LabreportOptions("Hemoglobin Test",Hemoglobin(),"hemoglobin.png"),
-          // LabreportOptions("Urine Test",Urine(),"urinetest.png"),
-          // LabreportOptions("Glucose Test",Glucose(),"glucose.png"),
-          // LabreportOptions("Fetal Monitoring",Fetalmonitoring(),"fetalmon.png"),
-          // LabreportOptions("UltraSound Test",Ultrasound(),"ultrasound.png")
-        
-            // ScreeningItem("Hemoglobin Test",const Hemoglobin(),"hemoglobin.png")
+      
         
         
             ListView.builder(
@@ -82,9 +82,7 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
                 String title = ls[index].x;
                 Widget sc = ls[index].screen;
                 String img = ls[index].img;
-        
-        
-        
+
                 return Column(
                   children: [
                     Card(

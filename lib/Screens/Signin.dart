@@ -241,19 +241,12 @@ class _SigninState extends State<Signin> {
 
                               if(int.tryParse(controller.phone.value.text)==null || int.parse(controller.phone.value.text) <1000000000 ){
 
-                                Get.snackbar("Invalid Mobile Number", "Please Enter Valid Mobile Number");
+                                Get.snackbar("Invalid Mobile Number", "Please Enter Valid Mobile Number",snackPosition: SnackPosition.BOTTOM);
 
                               }else{
                             controller.onSuccessLogin();
 
                               }
-
-                              // if (_formKey.currentState!.validate()) {
-                              //   // setState(() {
-                              //   //   current_state = 1 ;
-                              //   // });
-
-                              // }
                             },
                             child: Row(
                                 mainAxisAlignment:

@@ -1,4 +1,5 @@
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Screens/Home/Screening/Controllers/SelfScreeningController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -6,21 +7,33 @@ import 'package:numberpicker/numberpicker.dart';
 Wrap Temperature() {
   return Wrap(
     children: [
+      GetBuilder<Selfscreeningcontroller>(builder:(c) => 
          Wrap(children: [
           Row(
             children: [
               Text("°C"),
               ValueBuilder<bool?>(
-                // initialValue: c.iValue.value ? false : true,
-                initialValue: false,
+                initialValue:c.healthData["temperatureMetric"]=='C' ? false : true,
+                // initialValue: false,
 
                 builder: (isChecked, updateFn) => Switch(
                   activeColor: PrimaryColor,
                   value: isChecked!,
                   onChanged: (newValue) {
                     // c.iValue.value = !c.iValue.value.obs();
+                    if(newValue){
+                      c.updateVitals("temperatureMetric", 'F');
+                      c.updateVitals("temperature", 96.0);
+
+              
+                    }else {
+                      c.updateVitals("temperatureMetric", 'C');
+                      c.updateVitals("temperature", 30.0);
+
+}
                     // c.update();
-                    // updateFn(newValue);
+                    print(newValue);
+                    updateFn(newValue);
                   },
                 ),
               ),
@@ -28,22 +41,21 @@ Wrap Temperature() {
             ],
           ),
           DecimalNumberPicker(
-            // value: c.iValue.value ? c.celsius : c.temperature,
-            value: 30,
+            value: c.healthData["temperature"] ,
+            // value: 30,
 
-            // minValue: c.iValue.value ? 20 : 68,
-            // maxValue: c.iValue.value ? 44 : 110,
-                        minValue:20 ,
-            maxValue: 44 ,
+            minValue: c.healthData["temperatureMetric"]=='C' ? 20 : 68,
+            maxValue: c.healthData["temperatureMetric"]=='C' ? 44 : 110,
             decimalPlaces: 1,
             onChanged: (value) {
+              c.updateVitals("temperature", value);
               // c.iValue.value
               //     ? c.celsiusChange(value)
               //     : c.temperatureChange(value);
             },
           ),
         ]
-      ),
+      )),
     ],
   );
 }

@@ -26,22 +26,24 @@ class Selfscreeningcontroller extends GetxController {
     }
   }
 
+  RxBool iBloodGlucoseValue = true.obs;
+
    Map<String, dynamic> healthData = {
     'bloodPressureH': 120,
     'bloodPressureL': 90,
     'bloodSaturationBW': 99.0,
     'bloodSaturationAW': 99.0,
-    'temperature': 98.0,
-    'celsius': 20.0,
+    'temperature': 30.0,
     'heartRateBW': 72,
     'heartRateAW': 72,
     'bloodGlucoseBF': 150.0,
     'bloodGlucoseAF': 150.0,
-    'bmiHeight': 150.0,
+    'bmiHeight': 150,
     'bmiWeight': 50.0,
     'respiratoryRate': 18,
     'hrv': 98,
     'hB': 10.0,
+    'temperatureMetric':'C'
   }.obs;
 
   void updateVitals(String key, dynamic value){

@@ -1,4 +1,5 @@
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/db/dbHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,7 @@ import 'dart:io' as Io;
 import 'dart:convert' as convert;
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'dart:convert';
 
 class Ultrasoundcontroller extends GetxController {
 
@@ -20,6 +22,8 @@ TextEditingController desc = TextEditingController();
 String alphaminePresent = "";
 String sugarPresent = "";
 
+
+   int heartRate = 60;
   late File image;
 
   final picker = ImagePicker();
@@ -56,6 +60,26 @@ String sugarPresent = "";
       print('No image selected.');
     }
     update();
+  }
+
+      void submit (){
+    Map<String,dynamic> reportData = {
+      "fetalPresentation":fetalPresentation,
+      "fetalMovement":fetalMovement,
+      "placenta":Placenta,
+      "heartRate":heartRate
+    };
+
+    Map<String,dynamic> data = {
+      "reportType":"Ultrasound",
+      "details":json.encode(reportData),
+      "reportFile":fileImage64,
+
+    };
+
+    addReports(data);
+
+    // showToast("Please Enter All Details",'Fields are empty. please enter all fields.');
   }
 
 

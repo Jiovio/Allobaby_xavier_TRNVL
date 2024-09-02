@@ -6,7 +6,8 @@ import 'package:allobaby/Components/textfield.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/Reports/hemoglobinController.dart';
 import 'package:allobaby/Screens/Home/Screening/labReports/Scan/HemoglobinScan.dart';
-import 'package:allobaby/Screens/Home/Screening/labReports/Widgets/hemoglobinSelector.dart';
+import 'package:allobaby/Screens/Home/Screening/labReports/Widgets/selectorWidgets.dart';
+
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,16 @@ class Hemoglobin extends StatelessWidget {
                               Column(
 
             children: [
+
+                                      SizedBox(
+                              width: double.infinity,
+                              child: Text(
+                                              "Add HemoGlobin Report",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                            ),
 
               GestureDetector(
                 onTap: () => showDialog(
@@ -146,7 +157,7 @@ class Hemoglobin extends StatelessWidget {
                                             controller.getImageFromGallery(),
                                         backgroundColor: Colors.indigoAccent,
                                         child: Image.asset(
-                                          'assets/general/gallery.png',
+                                          'assets/General/gallery.png',
                                           scale: 16,
                                         )),
                                   ],
@@ -228,7 +239,7 @@ class Hemoglobin extends StatelessWidget {
                       minimumSize: Size(300, 50),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
-                  onPressed: () => {},
+                  onPressed: controller.submit,
                   child: Text("ADD REPORT"))
 
 

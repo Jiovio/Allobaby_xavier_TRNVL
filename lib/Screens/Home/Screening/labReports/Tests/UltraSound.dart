@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:allobaby/Components/forms.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/Reports/ultraSoundController.dart';
+import 'package:allobaby/Screens/Home/Screening/labReports/Widgets/selectorWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:get/get.dart';
@@ -93,11 +94,14 @@ class Ultrasound extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: 
-                              const Center(
+                              controller.fileImage64 == null
+                            ? Center(
                                 child: Text(
                                 "Click Add Image Button",
                                 style: TextStyle(fontSize: 18),
                               ))
+                            : Image.memory(
+                                base64Decode(controller.fileImage64)),
 
                       ),
               ),
@@ -166,13 +170,20 @@ class Ultrasound extends StatelessWidget {
                 height: 10.0,
               ),
 
-                          dropDown("Fetal Presentation", ["Cephalic", "Breech","Shoulder","Compound"],(t){}),
+                          dropDown("Fetal Presentation", ["Cephalic", "Breech","Shoulder","Compound"],
+                          (t){
+                            controller.fetalPresentation = t;
+                            controller.update();
+                          }),
 
             SizedBox(
                 height: 20.0,
               ),
 
-               dropDown("Fetal Movement", ["Present","Absent"],(t){}),
+               dropDown("Fetal Movement", ["Present","Absent"],(t){
+                controller.fetalMovement = t;
+                controller.update();
+               }),
 
 
               SizedBox(
@@ -180,7 +191,10 @@ class Ultrasound extends StatelessWidget {
               ),
 
                           dropDown("Placenta", 
-                          ["Posterior","Anterior","Fundal","Lateral","Low-lying"],(t){}),
+                          ["Posterior","Anterior","Fundal","Lateral","Low-lying"],(t){
+                            controller.Placenta = t;
+                            controller.update();
+                          }),
 
                            SizedBox(
                 height: 20.0,
@@ -189,7 +203,7 @@ class Ultrasound extends StatelessWidget {
 
                                         ListTile(
                             leading: Image.asset("assets/labReports/heart.png"),
-                            title: Text("Heart Rate : 60 BPM"),
+                            title: Text("Heart Rate : ${controller.heartRate} BPM"),
                             subtitle: Text("Tap to Change "),
                             shape: OutlineInputBorder(borderSide: BorderSide(
                               color: Colors.grey
@@ -202,16 +216,7 @@ class Ultrasound extends StatelessWidget {
 
                                   content: Row(
                                     children: [
-                                      NumberPicker(
-                                                      
-                                            value: 40,
-                                                          minValue: 30,
-                                                          itemHeight: 32,
-                                                          maxValue: 150,
-                                                          onChanged: (value) {
-                                                          
-                                                          },
-                                                        ),
+                                      ultraSoundHeartMonitoring(),
 
                                                         SizedBox(width: 10,),
 
@@ -252,7 +257,7 @@ class Ultrasound extends StatelessWidget {
                           decoration: InputDecoration(
                             labelText: "Description",
                             border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
-                            
+                            controller: controller.desc,
                           maxLines: 5
                         ),
                 
@@ -267,7 +272,7 @@ class Ultrasound extends StatelessWidget {
                       minimumSize: Size(300, 50),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
-                  onPressed: () => {},
+                  onPressed: controller.submit,
                   child: Text("ADD REPORT"))
 
 

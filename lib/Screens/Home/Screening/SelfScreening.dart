@@ -62,7 +62,10 @@ class _SelfScreeningState extends State<SelfScreening> {
         physics: NeverScrollableScrollPhysics(),
         controller: pg,
         onPageChanged: (index) {
-          print(pg);
+          print(index);
+          setState(() {
+            i=index;
+          });
           // serviceController.pagechanged(index);
         },
         children: [
@@ -87,8 +90,10 @@ class _SelfScreeningState extends State<SelfScreening> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+
+                
                       Visibility(
-                        visible: true,
+                        visible: i!=0,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: PrimaryColor,

@@ -5,6 +5,7 @@ import 'package:allobaby/Components/textfield.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/Reports/fetalMonitoringController.dart';
 import 'package:allobaby/Screens/Home/Screening/labReports/Scan/HemoglobinScan.dart';
+import 'package:allobaby/Screens/Home/Screening/labReports/Widgets/selectorWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:get/get.dart';
@@ -31,6 +32,16 @@ class Fetalmonitoring extends StatelessWidget {
           Column(
 
             children: [
+
+                                      SizedBox(
+                              width: double.infinity,
+                              child: Text(
+                                              "Fetal Monitoring",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                            ),
 
               GestureDetector(
                 onTap: () => showDialog(
@@ -177,15 +188,7 @@ class Fetalmonitoring extends StatelessWidget {
                                   title: Text("Heart Rate "),
                                   content: Row(
                                     children: [
-                                            NumberPicker(
-                                            value: controller.heartRate,
-                                            minValue: 30,
-                                            itemHeight: 32,
-                                            maxValue: 150,
-                                            onChanged: (value) {
-                                              controller.setHeartRate(value);
-                                            },
-                                          ),
+                                      fetalHeartMonitoring(),
 
                                                         SizedBox(width: 10,),
 
@@ -242,7 +245,7 @@ class Fetalmonitoring extends StatelessWidget {
                       minimumSize: Size(300, 50),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
-                  onPressed: () => {},
+                  onPressed: controller.submit,
                   child: Text("ADD REPORT"))
 
 

@@ -26,6 +26,17 @@ class Urine extends StatelessWidget {
             builder:(controller) => 
           Column(
             children: [
+
+                                      SizedBox(
+                              width: double.infinity,
+                              child: Text(
+                                              "Add Urine Test Report",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                            ),
+
               GestureDetector(
                 onTap: () => showDialog(
                             context: context,
@@ -213,7 +224,7 @@ class Urine extends StatelessWidget {
                       minimumSize: Size(300, 50),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
-                  onPressed: () => {},
+                  onPressed: controller.submit,
                   child: Text("ADD REPORT"))
 
 

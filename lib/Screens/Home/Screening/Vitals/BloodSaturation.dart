@@ -1,4 +1,5 @@
 
+import 'package:allobaby/Screens/Home/Screening/Controllers/SelfScreeningController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:get/get.dart';
@@ -10,34 +11,40 @@ Wrap BloodSaturation() {
       Text("At rest"),
       Row(
         children: [
+          GetBuilder<Selfscreeningcontroller>(
+            builder:(c) => 
               DecimalNumberPicker(
-                    // value: c.bloodSaturationBW,
-                                        value: 50,
+                    value: c.healthData["bloodSaturationBW"],
+                                        // value: 50,
                     minValue: 40,
                     itemHeight: 32,
                     maxValue: 100,
                     decimalPlaces: 1,
                     onChanged: (value) {
                       // c.bloodSaturationBWChange(value);
+                      c.updateVitals("bloodSaturationBW", value);
                     },
-                  ),
+          )),
           Flexible(child: Text("%"))
         ],
       ),
       Text("After Walk"),
       Row(
         children: [
+                    GetBuilder<Selfscreeningcontroller>(
+            builder:(c) => 
           DecimalNumberPicker(
-                    // value: c.bloodSaturationAW,
-                                        value: 55,
+                    value: c.healthData["bloodSaturationAW"],
+                                        // value: 55,
                     minValue: 40,
                     maxValue: 100,
                     itemHeight: 32,
                     decimalPlaces: 1,
                     onChanged: (value) {
                       // c.bloodSaturationAWChange(value);
+                      c.updateVitals("bloodSaturationAW", value);
                     },
-                  ),
+                  )),
           Flexible(child: Text("%"))
         ],
       ),
