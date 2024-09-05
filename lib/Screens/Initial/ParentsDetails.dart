@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/SignupController.dart';
 import 'package:allobaby/Screens/Initial/LastCycleUI.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,10 @@ import 'package:http/http.dart' as http;
 
 // ignore: must_be_immutable
 class ParentDetails extends StatelessWidget {
+
+
+  Signupcontroller controller = Get.put(Signupcontroller());
+
   late DateTime startDate;
   final _formKey = GlobalKey<FormState>();
   @override
@@ -28,7 +33,7 @@ class ParentDetails extends StatelessWidget {
                   height: 40,
                 ),
                 Text(
-                  "Enter your spouse mobile number.",
+                  "Enter your Partner mobile number.",
                   style: TextStyle(
                       color: PrimaryColor,
                       fontSize: 24,
@@ -43,15 +48,15 @@ class ParentDetails extends StatelessWidget {
                     children: [
                       TextFormField(
                         // enabled: true,
-                        // controller: initialDetailsController.partnerName,
+                        controller: controller.partnerName,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter Spouse Name';
+                            return 'Please enter Partner Name';
                           }
                           return null;
                         },
                         decoration: InputDecoration(
-                            labelText: "Spouse Name",
+                            labelText: "Partner Name",
                             border: OutlineInputBorder()),
                         // keyboardType: TextInputType.number,
                       ),
@@ -60,16 +65,16 @@ class ParentDetails extends StatelessWidget {
                       ),
                       TextFormField(
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter Spouse Mobile Number';
+                          if (value == null || value.isEmpty || value.length<10) {
+                            return 'Please enter Partner Mobile Number';
                           }
                           return null;
                         },
                         // enabled: false,
-                        // controller:initialDetailsController.partnerMobileNumber,
+                        controller:controller.partnerMobile,
                         maxLength: 10,
                         decoration: InputDecoration(
-                            labelText: "Spouse Mobile Number",
+                            labelText: "Partner Mobile Number",
                             border: OutlineInputBorder()),
                         keyboardType: TextInputType.number,
                       ),
@@ -99,6 +104,12 @@ class ParentDetails extends StatelessWidget {
                       Flexible(
                         child: ElevatedButton(
                           onPressed: () async {
+
+                            if(_formKey.currentState!.validate()){
+                                Get.to(() => LastCycleUI(),
+                                    transition: Transition.rightToLeft);
+                            }
+                            
                             // if (_formKey.currentState!.validate()) {
                   
 
@@ -107,7 +118,7 @@ class ParentDetails extends StatelessWidget {
                             //   var data = jsonDecode(res.body);
                             //   if (data['return'] == true) {
                             //     Get.snackbar("Message",
-                            //         "Sent SMS to Spouse is Successfull",
+                            //         "Sent SMS to Partner is Successfull",
                             //         icon: Icon(
                             //           Icons.clear,
                             //           color: White,
@@ -120,11 +131,11 @@ class ParentDetails extends StatelessWidget {
                             //         borderRadius: 4.0,
                             //         backgroundColor: Colors.red,
                             //         colorText: White);
-                                Get.to(() => LastCycleUI(),
-                                    transition: Transition.rightToLeft);
+                                // Get.to(() => LastCycleUI(),
+                                //     transition: Transition.rightToLeft);
                             //   } else {
                             //     Get.snackbar("Message",
-                            //         "SMS to Spouse is UnSuccessfull",
+                            //         "SMS to Partner is UnSuccessfull",
                             //         icon: Icon(
                             //           Icons.clear,
                             //           color: White,
@@ -140,7 +151,7 @@ class ParentDetails extends StatelessWidget {
                             //   }
                             // } else {
                             //   Get.snackbar(
-                            //       "Message", "Please Enter Spouse Details",
+                            //       "Message", "Please Enter Partner Details",
                             //       icon: Icon(
                             //         Icons.clear,
                             //         color: White,

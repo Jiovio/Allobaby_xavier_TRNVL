@@ -5,5 +5,5 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Sqlite.db();
-  runApp(const MyApp());
+  runApp( MyApp());
 }

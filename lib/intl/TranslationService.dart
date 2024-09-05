@@ -7,7 +7,7 @@ import 'ta.dart';
 
 class TranslationService extends Translations {
   // Default locale
-  static final locale = Locale('en');
+  static final locale = Locale("en");
   // fallbackLocale saves the day when the locale gets in trouble
   static final fallbackLocale = Locale('ta');
 

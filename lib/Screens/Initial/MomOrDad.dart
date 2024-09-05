@@ -1,6 +1,8 @@
 
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/SignupController.dart';
 import 'package:allobaby/Screens/Initial/ParentsDetails.dart';
+import 'package:allobaby/Screens/Initial/PregnancyStatus.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,8 @@ import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class MomOrDad extends StatelessWidget {
+
+  Signupcontroller controller = Get.put(Signupcontroller());
 
 
   late DateTime startDate;
@@ -39,10 +43,13 @@ class MomOrDad extends StatelessWidget {
                 Row(
                     children: [
                       Spacer(),
-                      OutlinedButton(
+
+                      GetBuilder(
+                        init: Signupcontroller(),
+                        builder: (controller)=>
+                                            OutlinedButton(
                           style: OutlinedButton.styleFrom(
-                            side: true
-                            // initialDetailsController.parentType == "Dad"
+                          side:   controller.data["parentType"] == "Dad"
                                 ? BorderSide(color: PrimaryColor, width: 1.5)
                                 : null,
                             padding: EdgeInsets.all(14),
@@ -51,6 +58,8 @@ class MomOrDad extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
+                            controller.updateData("parentType", "Dad");
+
                             // initialDetailsController.parentType = "Dad";
                             // initialDetailsController.update();
                           },
@@ -61,8 +70,8 @@ class MomOrDad extends StatelessWidget {
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8.0),
-                                  color: true
-                                  // initialDetailsController.parentType =="Dad"
+                                  color: 
+                                  controller.data["parentType"] == "Dad"
                                       ? PrimaryColor
                                       : Colors.grey,
                                 ),
@@ -79,18 +88,27 @@ class MomOrDad extends StatelessWidget {
                               Text(
                                 "Dad",
                                 style: TextStyle(
-                                    color: true
-                                        // initialDetailsController.parentType == "Dad"
+                                    color: 
+                                        controller.data["parentType"] == "Dad"
                                             ? PrimaryColor
                                             : Black),
                                 textAlign: TextAlign.center,
                               ),
                             ],
                           )),
+                      
+                      ),
+
+                      
                       Spacer(),
-                      OutlinedButton(
+
+                      GetBuilder
+                      (
+                        init: Signupcontroller(),
+                        builder: (controller)=>
+                                            OutlinedButton(
                           style: OutlinedButton.styleFrom(
-                            side: true 
+                            side: controller.data["parentType"] == "Mom" 
                             // initialDetailsController.parentType == "Mom"
                                 ? BorderSide(color: PrimaryColor, width: 1.5)
                                 : null,
@@ -100,6 +118,7 @@ class MomOrDad extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
+                            controller.updateData("parentType", "Mom");
                             // initialDetailsController.parentType = "Mom";
                             // initialDetailsController.update();
                           },
@@ -110,8 +129,8 @@ class MomOrDad extends StatelessWidget {
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8.0),
-                                  color: true
-                                  //  initialDetailsController.parentType =="Mom"
+                                  color: 
+                                   controller.data["parentType"] =="Mom"
                                       ? PrimaryColor
                                       : Colors.grey,
                                 ),
@@ -128,7 +147,7 @@ class MomOrDad extends StatelessWidget {
                               Text(
                                 "Mom",
                                 style: TextStyle(
-                                    color: true
+                                    color: controller.data["parentType"] == "Mom"
                                         // initialDetailsController.parentType == "Mom"
                                             ? PrimaryColor
                                             : Black),
@@ -136,6 +155,10 @@ class MomOrDad extends StatelessWidget {
                               ),
                             ],
                           )),
+                      
+                      ),
+
+                      
                       Spacer(),
                     ],
                   )
@@ -163,20 +186,8 @@ class MomOrDad extends StatelessWidget {
                       Flexible(
                         child: ElevatedButton(
                           onPressed: () {
-                            // if (_formKey.currentState!.validate()) {
-                            // data.write(
-                            //     'Qstartdate',
-                            //     initialDetailsController
-                            //         .quarantineStartDate.text);
-                            // data.write(
-                            //     'Qenddate',
-                            //     initialDetailsController
-                            //         .quarantineDueDate.text);
-                            // initialDetailsController.quarantineStatus =
-                            //     "In Progress";
-                            // if (initialDetailsController.parentType == "Dad" ||
-                            //     initialDetailsController.parentType == "Mom") {
-                              Get.to(() => ParentDetails(),
+             
+                              Get.to(() => Pregnancystatus(),
                                   transition: Transition.rightToLeft);
                             // } else {
                             //   Get.snackbar(

@@ -1,13 +1,18 @@
+import 'package:allobaby/Components/textfield.dart';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/SignupController.dart';
 import 'package:allobaby/Screens/Initial/AddressDetails.dart';
+import 'package:allobaby/Screens/Initial/Widgets/AverageCycleLength.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:numberpicker/numberpicker.dart';
 import '../../../main.dart';
 
 
 // ignore: must_be_immutable
 class LastCycleUI extends StatelessWidget {
+
 
   late DateTime startDate;
   final _formKey = GlobalKey<FormState>();
@@ -35,30 +40,23 @@ class LastCycleUI extends StatelessWidget {
                 SizedBox(
                   height: 40,
                 ),
+                
                 Form(
                   key: _formKey,
                   child: TextFormField(
                     readOnly: true,
                     // controller: initialDetailsController.quarantineStartDate,
                     onTap: () {
-                      // showDatePicker(
-                      //   context: context,
-                      //   initialDate: DateTime.now(),
-                      //   firstDate: DateTime.now().subtract(Duration(days: 305)),
-                      //   lastDate: DateTime.now(),
-                      // ).then((selectedDate) {
-                      //   initialDetailsController.qStartDate =
-                      //       selectedDate.toString();
-                      //   initialDetailsController.qEndDate =
-                      //       selectedDate!.add(Duration(days:280)).toString();
-                      //   final localization = MaterialLocalizations.of(context);
-                      //   startDate = selectedDate;
-                      //   initialDetailsController.quarantineDueDate.text =
-                      //       localization.formatShortDate(
-                      //           startDate.add(Duration(days: 280)));
-                      //   initialDetailsController.quarantineStartDate.text =
-                      //       localization.formatShortDate(selectedDate);
-                      // });
+                      showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now().subtract(Duration(days: 305)),
+                        lastDate: DateTime.now(),
+                      ).then((selectedDate) {
+
+                        print(selectedDate);
+
+                      });
                     },
                     decoration: InputDecoration(
                         labelText: "LMP Date", border: OutlineInputBorder()),
@@ -99,9 +97,35 @@ class LastCycleUI extends StatelessWidget {
                 //   ),
                 // ),
                 
-                SizedBox(
+
+
+
+                TextFormField(
+                    readOnly: true,
+                    // controller: initialDetailsController.quarantineStartDate,
+                    onTap: () {
+                    showDialog(context: context, builder:(context) {
+                      
+                      return averageCycleLength();
+                    },);
+                    },
+                    decoration: InputDecoration(
+                        labelText: "Average Length of Cycles", border: OutlineInputBorder()),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter LMP Date';
+                      }
+                      return null;
+                    },
+                  ),
+
+                                  SizedBox(
                   height: 20,
                 ),
+
+
+
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

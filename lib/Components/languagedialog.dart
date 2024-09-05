@@ -1,17 +1,21 @@
+
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/UserController.dart';
 import 'package:allobaby/intl/TranslationService.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-import '../../main.dart';
-
 languageSelectDialog(BuildContext context) {
+  final Usercontroller usercontroller = Get.put(Usercontroller());
   return showDialog(
+      
       builder: (BuildContext context) => AlertDialog(
           contentPadding: EdgeInsets.only(top: 8.0, bottom: 16.0),
           insetPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
           title: Text("Select Language".tr),
+          backgroundColor: White,
           content: Container(
             width: double.minPositive,
             height: 230,
@@ -27,28 +31,37 @@ languageSelectDialog(BuildContext context) {
                     ),
                   ),
                   trailing: 
+
+                  
+                  GetBuilder<Usercontroller>(
+                    // init: Usercontroller(),
+                    builder:(controller) => 
                       Radio(
                             activeColor: PrimaryColor,
                             value: TranslationService.langs[index],
-                            groupValue: "English",
+                            groupValue: controller.locale,
                             onChanged: (val) {
-                              // TranslationService().changeLocale(val.toString());
+                              TranslationService().changeLocale(val.toString());
+                              controller.locale = val!;
+                              // print(controller.locale);
+
+                              controller.update();
                               // data.write(
                               //     'lang',
                               //     TranslationService()
                               //         .getLocaleFromLanguage(val.toString())
                               //         .toString());
-                              // Fluttertoast.showToast(
-                              //     msg: "Language Changed to $val",
-                              //     toastLength: Toast.LENGTH_SHORT,
-                              //     gravity: ToastGravity.BOTTOM,
-                              //     backgroundColor: Colors.black54,
-                              //     textColor: Colors.white,
-                              //     fontSize: 16.0);
+                              Fluttertoast.showToast(
+                                  msg: "Language Changed to $val",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  backgroundColor: Colors.black54,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
                               // controller.onSelectLang(val);
-                              // Navigator.pop(context);
+                              Navigator.pop(context);
                             },
-                          )),
+                          ))),
             ),
           
           )),
@@ -56,11 +69,11 @@ languageSelectDialog(BuildContext context) {
 }
 
 class LanguageController extends GetxController {
-  // String selectedLang = TranslationService().getLanguageFromLocal(data.read('lang'));
-  String selectedLang = TranslationService().getLanguageFromLocal('en');
-
+  String selectedLang =
+      TranslationService().getLanguageFromLocal("en");
   void onSelectLang(lang) {
     selectedLang = lang;
     update();
   }
+  
 }

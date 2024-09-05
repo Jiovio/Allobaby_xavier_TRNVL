@@ -1,5 +1,6 @@
 import 'package:allobaby/Config/Themes.dart';
 import 'package:allobaby/Screens/Signin.dart';
+import 'package:allobaby/intl/TranslationService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
@@ -14,6 +15,9 @@ class MyApp extends StatelessWidget {
         home: Signin(),
         debugShowCheckedModeBanner: false,
         theme: Themes().lightTheme,
+          locale: TranslationService.locale,
+          fallbackLocale: TranslationService.fallbackLocale,
+          translations: TranslationService(),
       
       ),
     );
