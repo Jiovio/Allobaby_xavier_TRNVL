@@ -6,6 +6,7 @@ import 'package:allobaby/Screens/Initial/Widgets/AverageCycleLength.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
 import '../../../main.dart';
 
@@ -27,39 +28,103 @@ class LastCycleUI extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+             const   SizedBox(
                   height: 40,
                 ),
-                Text(
+               const Text(
                   "Select Last cycle Date",
                   style: TextStyle(
                       color: PrimaryColor,
                       fontSize: 24,
                       fontWeight: FontWeight.w600),
                 ),
-                SizedBox(
+             const SizedBox(
                   height: 40,
                 ),
                 
+                GetBuilder(
+                  init: Signupcontroller(),
+                  builder:(controller) => 
                 Form(
                   key: _formKey,
-                  child: TextFormField(
+                  child: Column(
+                    children: [
+                      
+                      if(controller.data["pregnancyStatus"]!=controller.pregnancyStatusList[2])
+                      ...[
+                      TextFormField(
+                        readOnly: true,
+                        controller: controller.lmpDate,
+                        onTap: () {
+                          controller.eddate.text="";
+                          showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime.now().subtract(const Duration(days: 305)),
+                            lastDate: DateTime.now(),
+                          ).then((selectedDate) {
+                      
+                            // print(selectedDate);
+
+                            // controller.lmpDate.text = selectedDate!.toLocal().toString();
+                            controller.lmpDate.text = DateFormat('dd-MM-yyyy').format(selectedDate!.toLocal());
+
+                            DateTime eddate = selectedDate.add(Duration(days: 280));
+
+                            controller.eddate.text = DateFormat('dd-MM-yyyy').format(eddate.toLocal());
+
+                            controller.update();
+
+                      
+                          });
+                        },
+                        decoration: InputDecoration(
+                            labelText: "LMP Date", border: OutlineInputBorder()),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter LMP Date';
+                          }
+                          return null;
+                        },
+                      ),
+                SizedBox(
+                  height: 20,
+                ),
+
+                      ],
+
+
+                if(controller.data["pregnancyStatus"]=="Iam Pregnant" && controller.eddate.text!="")
+                Column(
+                  children: [
+                TextField(
+                  enabled: false,
+                  controller: controller.eddate,
+                  decoration: InputDecoration(
+                      labelText: "ED Date", border: OutlineInputBorder()),
+                  keyboardType: TextInputType.number,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                  ],
+                ),
+
+
+                    if(controller.data["pregnancyStatus"]==controller.pregnancyStatusList[0])
+
+                    ...[TextFormField(
                     readOnly: true,
-                    // controller: initialDetailsController.quarantineStartDate,
+                    controller: controller.averageCycleLength,
                     onTap: () {
-                      showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime.now().subtract(Duration(days: 305)),
-                        lastDate: DateTime.now(),
-                      ).then((selectedDate) {
-
-                        print(selectedDate);
-
-                      });
+                    showDialog(context: context, builder:(context) {
+                      
+                    return averageCycleLength();
+                    },);
                     },
                     decoration: InputDecoration(
-                        labelText: "LMP Date", border: OutlineInputBorder()),
+                        labelText: "Average Length of Cycles", border: OutlineInputBorder()),
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -68,20 +133,54 @@ class LastCycleUI extends StatelessWidget {
                       return null;
                     },
                   ),
-                ),
-                SizedBox(
+
+                                  SizedBox(
                   height: 20,
-                ),
-                TextField(
-                  enabled: false,
-                  // controller: initialDetailsController.quarantineDueDate,
-                  decoration: InputDecoration(
-                      labelText: "ED Date", border: OutlineInputBorder()),
-                  keyboardType: TextInputType.number,
-                ),
-                SizedBox(
+                )],
+
+
+                     if(controller.data["pregnancyStatus"]==controller.pregnancyStatusList[2])
+                        ...[TextFormField(
+                        readOnly: true,
+                        controller: controller.dateofdelivery,
+                        onTap: () {
+                          controller.eddate.text="";
+                          showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime.now().subtract(const Duration(days: 305)),
+                            lastDate: DateTime.now(),
+                          ).then((selectedDate) {
+                      
+                            // print(selectedDate);
+
+                            // controller.lmpDate.text = selectedDate!.toLocal().toString();
+                            controller.dateofdelivery.text = DateFormat('dd-MM-yyyy').format(selectedDate!.toLocal());
+
+                      
+                          });
+                        },
+                        decoration: InputDecoration(
+                            labelText: "Date of delivery", border: OutlineInputBorder()),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter Delivery Date';
+                          }
+                          return null;
+                        },
+                      ),
+                                                        SizedBox(
                   height: 20,
-                ),
+                )]
+                        
+
+
+
+                    ],
+                  ),
+                )),
+
                 // Container(
                 //   height: 60.0,
                 //   child: DropdownSearch<String>(
@@ -100,29 +199,6 @@ class LastCycleUI extends StatelessWidget {
 
 
 
-                TextFormField(
-                    readOnly: true,
-                    // controller: initialDetailsController.quarantineStartDate,
-                    onTap: () {
-                    showDialog(context: context, builder:(context) {
-                      
-                      return averageCycleLength();
-                    },);
-                    },
-                    decoration: InputDecoration(
-                        labelText: "Average Length of Cycles", border: OutlineInputBorder()),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter LMP Date';
-                      }
-                      return null;
-                    },
-                  ),
-
-                                  SizedBox(
-                  height: 20,
-                ),
 
 
 

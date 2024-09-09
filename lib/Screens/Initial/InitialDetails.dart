@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/SignupController.dart';
 import 'package:allobaby/Screens/Main/Home.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
 import 'package:flutter/services.dart';
@@ -26,7 +27,13 @@ class InitialDetails extends StatelessWidget {
                 body: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
-                    child: Column(
+                    child: 
+                    
+                    GetBuilder(
+                      init: Signupcontroller(),
+                      builder:(controller) => 
+                    
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -193,7 +200,7 @@ class InitialDetails extends StatelessWidget {
                                 SizedBox(
                                   height: 6,
                                 ),
-                                Text('+91 9876589800',
+                                Text('+91 ${controller.phone}',
                                   style: TextStyle(fontSize: 16),
                                 )
                               ],
@@ -213,7 +220,7 @@ class InitialDetails extends StatelessWidget {
                         SizedBox(
                           height: 14.0,
                         ),
-                        // detailsForm(_formKey, initialDetailsController, context),
+                        detailsForm(_formKey, controller, context),
                         Align(
                           alignment: Alignment.bottomRight,
                           child: ElevatedButton(
@@ -237,7 +244,7 @@ class InitialDetails extends StatelessWidget {
                           ),
                         )
                       ],
-                    ),
+                    )),
                   ),
                 ),
               );
@@ -291,6 +298,12 @@ Form detailsForm(
               Flexible(
                 child: DropdownSearch<String>(
                   validator: (v) => v == null ? "Please Select Gender" : null,
+                  dropdownDecoratorProps: DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      label: Text("Gender"),
+                      border: OutlineInputBorder()
+                    )
+                  ),
                   // mode: Mode.MENU,
                   // showSelectedItem: true,
                   items: ["Male", "Female"],
@@ -327,8 +340,12 @@ Form detailsForm(
             height: 60.0,
             child: DropdownSearch<String>(
               validator: (v) => v == null ? "Select Blood Group" : null,
-              // mode: Mode.MENU,
-              // showSelectedItem: true,
+              dropdownDecoratorProps: DropDownDecoratorProps(
+              dropdownSearchDecoration: InputDecoration(
+                      label: Text("Select Blood Group"),
+                      border: OutlineInputBorder()
+                    )),
+                  
               items: BG,
               // label: "Blood Group",
               onChanged: (value) =>

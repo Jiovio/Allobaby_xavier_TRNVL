@@ -134,35 +134,32 @@ class Pregnancystatus extends StatelessWidget {
                       // ),
                       Spacer(),
                       Flexible(
-                        child: ElevatedButton(
+                        child: 
+                        GetBuilder(
+                          init: Signupcontroller(),
+                          builder:(controller) => 
+                        ElevatedButton(
                           onPressed: () {
-             
+
+                            if(controller.data["pregnancyStatus"]==""){
+
+                              Get.snackbar("Status not Selected", 
+                              "Please select Pregnancy Status",
+                              snackPosition: SnackPosition.BOTTOM
+                              );
+
+
+                            }else {
                               Get.to(() => ParentDetails(),
                                   transition: Transition.rightToLeft);
-                            // } else {
-                            //   Get.snackbar(
-                            //       "Message", "Please Select Parent Type",
-                            //       icon: Icon(
-                            //         Icons.clear,
-                            //         color: White,
-                            //       ),
-                            //       snackPosition: SnackPosition.BOTTOM,
-                            //       animationDuration:
-                            //           Duration(milliseconds: 500),
-                            //       margin: EdgeInsets.all(0),
-                            //       duration: Duration(milliseconds: 1500),
-                            //       borderRadius: 4.0,
-                            //       backgroundColor: Colors.red,
-                            //       colorText: White);
-                            // }
-                            // }
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                               minimumSize: Size(100, 40),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(40))),
                           child: Text(("Continue").toUpperCase()),
-                        ),
+                        )),
                       ),
                     ])
                         

@@ -1,5 +1,8 @@
 
+import 'dart:async';
+
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/SignupController.dart';
 import 'package:allobaby/Screens/Initial/InitialDetails.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +20,12 @@ class AddressDetails extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Form(
+          
+          child: 
+          GetBuilder(
+            init: Signupcontroller(),
+            builder:(controller) => 
+          Form(
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +41,7 @@ class AddressDetails extends StatelessWidget {
                     height: 20,
                   ),
                   TextFormField(
-                    // controller: initialDetailsController.doorNo,
+                    controller: controller.doorNo,
                     decoration: InputDecoration(
                         labelText: "Door No", border: OutlineInputBorder()),
                     keyboardType: TextInputType.number,
@@ -48,7 +56,7 @@ class AddressDetails extends StatelessWidget {
                     height: 16.0,
                   ),
                   TextFormField(
-                    // controller: initialDetailsController.streetName,
+                     controller: controller.streetName,
                     decoration: InputDecoration(
                         labelText: "Street Name", border: OutlineInputBorder()),
                     keyboardType: TextInputType.text,
@@ -63,11 +71,12 @@ class AddressDetails extends StatelessWidget {
                     height: 16.0,
                   ),
                   TextFormField(
-                        // controller: initialDetailsController.pinCode,
+                        controller: controller.pincode,
                         keyboardType: TextInputType.number,
+                        maxLength: 6,
                         decoration: InputDecoration(
-                            suffix:true
-                            // initialDetailsController.isLoadingAreaName.value
+                            suffix:
+                            controller.pincodeSearching
                                     ? SizedBox(
                                         height: 15,
                                         width: 15,
@@ -82,18 +91,10 @@ class AddressDetails extends StatelessWidget {
                           return null;
                         },
                         onChanged: (value) {
-                          // initialDetailsController.areaList.clear();
-                          // initialDetailsController.areaList.add("Fetching....");
-                          // initialDetailsController.getAreaName();
-                          // if (value.length > 0 && value.trim() != "") {
-                          //   initialDetailsController.isLoadingAreaName.value =
-                          //       true;
-                          // } else {
-                          //   initialDetailsController.isLoadingAreaName.value =
-                          //       false;
-                          //   initialDetailsController.areaNameVisibility.value =
-                          //       false;
-                          // }
+                          
+                          if(controller.pincode.text.length==6){
+                            controller.searchPincode();
+                          }
                         },
                       ),
                   SizedBox(
@@ -106,19 +107,39 @@ class AddressDetails extends StatelessWidget {
                           height: 60.0,
                           child: DropdownSearch<String>(
                             // searchBoxController: TextEditingController(),
-                            // searchBoxDecoration: InputDecoration(
-                            //   labelText: "Search Area",
-                            // ),
+
+
+
+                            dropdownDecoratorProps: DropDownDecoratorProps(
+                              dropdownSearchDecoration: InputDecoration(
+                              labelText: "Search Area",
+                              border: OutlineInputBorder()
+                            )
+                            ),
+
+
                             // isFilteredOnline: true,
-                            // showSearchBox: true,
+                            
+                            selectedItem: controller.selectedArea,
+                            
                             validator: (v) =>
                                 v == null ? "Select Area Name" : null,
                             // mode: Mode.BOTTOM_SHEET,
+                            popupProps: PopupProps.bottomSheet(
+                              showSearchBox: true,
+                              searchFieldProps: TextFieldProps(
+                                  decoration: InputDecoration(label: Text("Search"),
+                                  border: OutlineInputBorder())
+                              )
+
+
+                            ),
                             // showSelectedItem: true,
-                            items: [],
+                            items: controller.areas,
                             // label: "Area Name",
                             onChanged: (value) {
                               // initialDetailsController.areaName = value!;
+                              // controller.selectedArea = value;
                             },
                           ),
                         ),
@@ -165,7 +186,7 @@ class AddressDetails extends StatelessWidget {
                     ),
                   )
                 ],
-              )),
+              ))),
         ),
       ),
     );

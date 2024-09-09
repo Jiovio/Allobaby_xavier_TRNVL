@@ -29,7 +29,7 @@ Widget averageCycleLength() {
                                   
                                   value: controller.data["avgLengthOfCycles"], 
                                   onChanged:(value) {
-
+                                    controller.averageCycleLength.text = "${value}";
                                     controller.updateData("avgLengthOfCycles", value);
                                     
                                   },),
