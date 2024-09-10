@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:otpless_flutter/otpless_flutter.dart';
 
 class Signin extends StatefulWidget {
   const Signin({super.key});
@@ -19,6 +20,54 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
 
   final _formKey = GlobalKey<FormState>();
+Otpless otpLess = Otpless();
+
+
+@override
+void initState(){
+  super.initState();
+
+otpLess.initHeadless("82AR64JHBHZR3T3TEX1Q");
+otpLess.setHeadlessCallback(onHeadlessResult);
+
+// otpLess.openLoginPage((result) {
+//     var message = "";
+//     if (result['data'] != null) {
+//         final token = result['response']['token'];
+//         message = "token: $token";
+//     } else {
+//         message = result['errorMessage'];
+//     }
+// }, arg);
+
+}
+
+
+
+void onHeadlessResult(dynamic result) {
+  print(result);
+	setState(() {
+		// handle result to update UI
+	});
+}
+
+void sendOtp(){
+Map<String, dynamic> arg = {};
+arg["channel"] = "PHONE";
+arg["phone"] = "9363286517";
+arg["countryCode"] = "+91";
+otpLess.startHeadless(onHeadlessResult, arg);
+
+}
+
+var arg = {
+    'appId': "82AR64JHBHZR3T3TEX1Q",
+};
+
+
+
+
+
 
 
   @override
@@ -244,7 +293,9 @@ class _SigninState extends State<Signin> {
                                 Get.snackbar("Invalid Mobile Number", "Please Enter Valid Mobile Number",snackPosition: SnackPosition.BOTTOM);
 
                               }else{
-                            controller.onSuccessLogin();
+
+                                sendOtp();
+                            // controller.onSuccessLogin();
 
                               }
                             },
@@ -284,6 +335,7 @@ class _SigninState extends State<Signin> {
                         ),
 
                         ElevatedButton(onPressed: (){
+
                           Get.to(MomOrDad());
                         }, child: Text("Signup"))
                       ],
