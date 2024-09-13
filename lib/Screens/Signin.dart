@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:allobaby/Config/responsive.dart';
 import 'package:allobaby/Controller/AuthController.dart';
 import 'package:allobaby/Controller/MainController.dart';
@@ -20,7 +22,48 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
 
   final _formKey = GlobalKey<FormState>();
-Otpless otpLess = Otpless();
+final otpLess = Otpless();
+
+
+ void onHeadlessResult(dynamic result) {
+  // print("--------------------------------------------------------------------");
+    if (result['statusCode'] == 200) {
+      switch (result['responseType'] as String) {
+        case 'OTP_AUTO_READ':
+          {
+            if (Platform.isAndroid) {
+              var otp = result['response']['otp'] as String;
+
+                            showDialog(context: context, builder:(context) => 
+              
+              Text("${otp}"),);
+
+              print(otp);
+              setState(() {
+                // otpContoller.text = otp;
+              });
+              // startHeadlessForPhoneOrEmail();
+            }
+          }
+          break;
+        case 'ONETAP':
+          {
+                          showDialog(context: context, builder:(context) => 
+              
+              Text("${result["response"]["token"]}"),);
+
+
+            setState(() {
+
+              print(result["response"]["token"]);
+            });
+          }
+      }
+    } else {
+      //todo
+    }
+  }
+
 
 
 @override
@@ -44,19 +87,38 @@ otpLess.setHeadlessCallback(onHeadlessResult);
 
 
 
-void onHeadlessResult(dynamic result) {
-  print(result);
-	setState(() {
-		// handle result to update UI
-	});
-}
 
-void sendOtp(){
+void sendOtp() async{
 Map<String, dynamic> arg = {};
 arg["channel"] = "PHONE";
 arg["phone"] = "9363286517";
 arg["countryCode"] = "+91";
-otpLess.startHeadless(onHeadlessResult, arg);
+await otpLess.startHeadless(onHeadlessResult, arg);
+
+return;
+showModalBottomSheet(context: context, builder:(context) {
+  
+  return Container(
+    decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(10))),
+    height: Get.height/2,
+    width: Get.width*0.98,
+    child: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("OTP has been sent to your Whatsapp"),
+          SizedBox(
+            height: 20,
+          ),
+        CircularProgressIndicator(strokeWidth: 10,),
+        SizedBox(
+            height: 20,
+          ),
+        Text(" Please approve the otp"),
+      ],),
+    ),
+  );
+},);
 
 }
 
@@ -288,14 +350,17 @@ var arg = {
                                     BorderRadius.circular(40))),
                             onPressed: ()  async{
 
+                                // sendOtp();
+
+
                               if(int.tryParse(controller.phone.value.text)==null || int.parse(controller.phone.value.text) <1000000000 ){
 
                                 Get.snackbar("Invalid Mobile Number", "Please Enter Valid Mobile Number",snackPosition: SnackPosition.BOTTOM);
 
                               }else{
 
-                                sendOtp();
-                            // controller.onSuccessLogin();
+                                // sendOtp();
+                            controller.onSuccessLogin();
 
                               }
                             },
