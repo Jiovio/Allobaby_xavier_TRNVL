@@ -1,3 +1,5 @@
+
+
 import 'package:allobaby/Config/responsive.dart';
 import 'package:allobaby/Controller/AuthController.dart';
 import 'package:allobaby/Controller/MainController.dart';
@@ -9,6 +11,7 @@ import 'package:allobaby/Config/Color.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:otpless_flutter/otpless_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Signin extends StatefulWidget {
   const Signin({super.key});
@@ -43,20 +46,165 @@ otpLess.setHeadlessCallback(onHeadlessResult);
 }
 
 
+bool initiate = false;
+
+bool verified = false;
+
+void showWaitingVerification() {
+  Future<void> _launchUrl(Uri _url) async {
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
+    }
+  }
+
+  showModalBottomSheet(
+    context: context,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    backgroundColor: Colors.white,
+    builder: (context) {
+      return Container(
+        height: Get.height / 2,
+        width: double.infinity,
+        padding: EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              "Please accept the verification request on WhatsApp.",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 30),
+            CircularProgressIndicator(
+              color: Colors.greenAccent,
+              strokeWidth: 4,
+            ),
+            SizedBox(height: 30),
+            ElevatedButton.icon(
+              onPressed: () {
+                _launchUrl(Uri.parse("https://wa.me/7639744744")); // Replace with your WhatsApp link
+              },
+              icon: Icon(Icons.gamepad, color: Colors.white),
+              label: Text(
+                "Open in WhatsApp",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                // primary: Colors.green,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+void showConfirmed() {
+  showModalBottomSheet(
+    context: context,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    backgroundColor: Colors.white,
+    builder: (context) {
+      return Container(
+        // height: Get.height / 3, // Adjusted height for a better fit
+        padding: EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.check_circle_outline,
+              color: Colors.green,
+              size: 60,
+            ),
+            SizedBox(height: 20),
+            Text(
+              "Mobile Number Verified!",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              "Your mobile number has been verified successfully.",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[700],
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 30),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                // primary: Colors.green, 
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+              ),
+              onPressed: () {
+                Navigator.pop(context); // Close the bottom sheet
+              },
+              child: Text(
+                "OK",
+                style: TextStyle(fontSize: 16, color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
 
 void onHeadlessResult(dynamic result) {
   print(result);
-	setState(() {
-		// handle result to update UI
-	});
+
+  if(result["statusCode"]==200){
+      if(result["responseType"]=="INITIATE"){
+        initiate = true;
+        String openChatUrl = result["response"]["destinationUri"];
+        showWaitingVerification();
+      }
+      if(result["responseType"]=="ONETAP" && result["response"]["status"]=="SUCCESS"){
+        Navigator.pop(context);
+        showConfirmed();
+      }
+  }
+
+
+	// setState(() {
+	// 	// handle result to update UI
+	// });
 }
 
 void sendOtp(){
 Map<String, dynamic> arg = {};
 arg["channel"] = "PHONE";
-arg["phone"] = "9363286517";
+arg["phone"] = "7639744744";
 arg["countryCode"] = "+91";
-otpLess.startHeadless(onHeadlessResult, arg);
+// otpLess.startHeadless(onHeadlessResult, arg);
+showWaitingVerification();
+// showConfirmed();
 
 }
 
