@@ -1,5 +1,7 @@
 import 'package:allobaby/Components/appbar.dart';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/MainController.dart';
+import 'package:allobaby/Controller/NewsController.dart';
 import 'package:allobaby/Screens/Home/Awareness/Awareness.dart';
 import 'package:allobaby/Screens/Home/Checkup/CheckUp.dart';
 import 'package:allobaby/Screens/Home/Prescription/Prescription.dart';
@@ -8,6 +10,8 @@ import 'package:allobaby/Screens/Home/Screening/SelfScreening.dart';
 import 'package:allobaby/Screens/Home/Screening/SymptomsScreen.dart';
 import 'package:allobaby/Screens/Home/Screening/labReports/ScreeningwithReports.dart';
 import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Hemoglobin.dart';
+import 'package:allobaby/Screens/Main/Card/AvatarCard.dart';
+import 'package:allobaby/Screens/Main/Card/BannerCard.dart';
 import 'package:allobaby/Screens/Service/Appointment.dart';
 import 'package:allobaby/Screens/Service/MyAppointment.dart';
 import 'package:allobaby/Screens/Signin.dart';
@@ -23,6 +27,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+
+  Maincontroller mainC = Get.put(Maincontroller());
+
+  Newscontroller newsC = Get.put(Newscontroller());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,12 +83,12 @@ class _HomeState extends State<Home> {
                                       ),
                                       backgroundColor: accentColor.withOpacity(0.3),
                                       radius: 80.0,
-                                      lineWidth: 12.0,
-                                      percent: 1,
+                                      lineWidth: 15.0,
+                                      percent: mainC.ccomp,
                               
                                       center: true
                                           ? Text(
-                                              "Day ${(280 - 80)}",
+                                              "Day ${mainC.ctotalDays - (mainC.ctotalDays - mainC.cdaysPassed)}",
                                               style: TextStyle(
                                                 fontSize: 24,
                                                 fontWeight: FontWeight.w700,
@@ -290,52 +300,52 @@ class _HomeState extends State<Home> {
             Padding(padding: const EdgeInsets.only(left: 14.0, right: 14.0),
             child: Column(children: [
 
+              Obx(()=>
+
+              newsC.loading.value?CircularProgressIndicator():
+              newsC.news.length==0?
               Center(
                             child: Text(
                               "No News Feed".tr,
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.w600),
                             ),
-                          ),
-                                                                  Card(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(12.0),
-                                              child: Row(
-                                                children: [
-                                                 const Flexible(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          "Healthy Pregnant Woman",
-                                                          style: TextStyle(
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Text("Pregnancy is the time during which one or more offspring develops (gestates) inside a woman's uterus (womb).[4][13] A multiple pregnancy involves more than one offspring, such as with twins.[14]"),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    height: 90,
-                                                    width: 90,
-                                                    child: Image.network(
-                                                      "https://images.indianexpress.com/2023/05/pregnancy-1.jpg",
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          )
+                          ):
+              ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: newsC.news.length,
+                itemBuilder: (context, index) {
+
+                  dynamic data = newsC.news[index];
+
+                  String type = data["cardtype"];
+
+                  switch (type) {
+                    case "banner":
+                     return   Bannercard(title: data["title"],
+                     description: data["description"],
+                     imgurl: data["imageurl"],);
+                      
+
+                    case "avatar":
+                    return  Avatarcard(title: data["title"],
+                     description: data["description"],
+                     imgurl: data["imageurl"]);
+                      
+                  }
+                          
+                 
+
+                
+              },)
+              
+              ),
+
+
+
+
+                          // Avatarcard(),
 
 
             ],),

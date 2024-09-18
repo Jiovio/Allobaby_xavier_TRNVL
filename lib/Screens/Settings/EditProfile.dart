@@ -1,68 +1,20 @@
-// import 'package:Allobaby/Config/Color.dart';
-// import 'package:Allobaby/Screens/MainScreen/Controller/MainScreenController.dart';
-// import 'package:Allobaby/Screens/Settings/Controller/SettingsController.dart';
+
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/MainController.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class EditProfile extends StatelessWidget {
-  // final user = FirebaseAuth.instance.currentUser;
-  // final _formKey = GlobalKey<FormState>();
-  // SettingsController settingsController = Get.put(SettingsController());
-  // MainScreenController mainScreenController = Get.find();
+  
+  Maincontroller mainc = Get.put(Maincontroller());
+
   @override
   Widget build(BuildContext context) {
-    // final localization = MaterialLocalizations.of(context);
-    // settingsController.age.text =
-    //     settingsController.patientDetails[0].age.toString();
-    // settingsController.pinCode.text =
-    //     settingsController.patientDetails[0].pinCode;
-    // settingsController.gender.value =
-    //     settingsController.patientDetails[0].gender;
-    // settingsController.healthStatus.value =
-    //     settingsController.patientDetails[0].healthStatus;
-    // settingsController.quarantineStatus.value =
-    //     settingsController.patientDetails[0].quarantineStatus;
-    // settingsController.bloodGroup.value =
-    //     settingsController.patientDetails[0].bloodGroup;
-    // settingsController.address.text =
-    //     settingsController.patientDetails[0].address;
 
-    // settingsController.qStartDate =
-    //     settingsController.patientDetails[0].quarantineStartDate == ""
-    //         ? ""
-    //         : settingsController.patientDetails[0].quarantineStartDate;
-    // settingsController.qEndDate =
-    //     settingsController.patientDetails[0].quarantineEndDate == ""
-    //         ? ""
-    //         : settingsController.patientDetails[0].quarantineEndDate;
-
-    // settingsController.quarantineStartDate.text =
-    //     settingsController.patientDetails[0].quarantineStartDate == ""
-    //         ? ""
-    //         : localization.formatShortDate(DateTime.parse(
-    //             settingsController.patientDetails[0].quarantineStartDate));
-
-    // settingsController.quarantineEndDate.text =
-    //     settingsController.patientDetails[0].quarantineEndDate == ""
-    //         ? ""
-    //         : localization.formatShortDate(DateTime.parse(
-    //             settingsController.patientDetails[0].quarantineEndDate));
-    // settingsController.name.text = settingsController.patientDetails[0].name;
-    // settingsController.parentType =
-    //     settingsController.patientDetails[0].parentType!;
-    // print(settingsController.parentType);
-    // settingsController.partnerName.text =
-    //     settingsController.patientDetails[0].partnerName!;
-    // settingsController.partnerMobileNumber.text =
-    //     settingsController.patientDetails[0].partnerMobileNumber!;
-    // settingsController.fileImage64 =
-    //     settingsController.patientDetails[0].imageUrl;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit Profile"),
+        title:const Text("Edit Profile"),
         actions: [
           IconButton(
               icon: Icon(Icons.check),
@@ -186,8 +138,7 @@ class EditProfile extends StatelessWidget {
                         height: 8,
                       ),
                       Text(
-                        " +91 90745 74893",
-                        // mainScreenController.patientDetails[0].mobileNo,
+                        " +91 ${mainc.phoneNumber.text}",
                         style: TextStyle(fontSize: 18),
                       ),
                     ],
@@ -207,7 +158,7 @@ class EditProfile extends StatelessWidget {
                   height: 16.0,
                 ),
                 TextFormField(
-                  // controller: settingsController.name,
+                  controller: mainc.name,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter Name';
@@ -240,11 +191,10 @@ class EditProfile extends StatelessWidget {
                         // showSelectedItem: true,
                         // selectedItem: settingsController.gender.value,
                         items: ["Male", "Female"],
-                        // label: "Gender",
-                        // maxHeight: 120,
-                        // onChanged: (value) {
-                        //   settingsController.gender.value = value!;
-                        // },
+                        selectedItem: mainc.gender,
+                        onChanged: (value) {
+                          mainc.gender = value!;
+                        },
                       ),
                     ),
                     SizedBox(
@@ -252,7 +202,7 @@ class EditProfile extends StatelessWidget {
                     ),
                     Flexible(
                       child: TextFormField(
-                        // controller: settingsController.age,
+                        controller: mainc.age,
                         decoration: InputDecoration(
                             labelText: "age", border: OutlineInputBorder()),
                         keyboardType: TextInputType.number,
@@ -285,7 +235,7 @@ class EditProfile extends StatelessWidget {
                             ),
                     // label: "Blood Group",
                     onChanged: (value) {
-                      // settingsController.bloodGroup.value = value!;
+                      mainc.bloodGroup = value!;
                     },
                   ),
                 ),
@@ -325,7 +275,7 @@ class EditProfile extends StatelessWidget {
                   height: 16.0,
                 ),
                 TextFormField(
-                  // controller: settingsController.partnerName,
+                  controller: mainc.partnerName,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter Partner Name';
@@ -339,7 +289,7 @@ class EditProfile extends StatelessWidget {
                   height: 16.0,
                 ),
                 TextFormField(
-                  // controller: settingsController.partnerMobileNumber,
+                  controller: mainc.partnerPhone,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter Partner Mobile Number';
@@ -390,7 +340,7 @@ class EditProfile extends StatelessWidget {
                   // key: _formKey,
                   child: TextFormField(
                     readOnly: true,
-                    // controller: settingsController.quarantineStartDate,
+                    controller: mainc.lmpDate,
                     onTap: () {
                       showDatePicker(
                         context: context,
@@ -438,7 +388,7 @@ class EditProfile extends StatelessWidget {
                 ),
                 TextFormField(
                   enabled: false,
-                  // controller: settingsController.quarantineEndDate,
+                  controller: mainc.edDate,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter ED date';
@@ -499,7 +449,7 @@ class EditProfile extends StatelessWidget {
                   height: 12.0,
                 ),
                 TextFormField(
-                  // controller: settingsController.pinCode,
+                  controller: mainc.pincode,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter pincode';

@@ -200,7 +200,7 @@ class InitialDetails extends StatelessWidget {
                                 SizedBox(
                                   height: 6,
                                 ),
-                                Text('+91 ${controller.phone}',
+                                Text('+91 ${controller.phone.text}',
                                   style: TextStyle(fontSize: 16),
                                 )
                               ],
@@ -229,8 +229,9 @@ class InitialDetails extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(40))),
                             onPressed: () async {
-                              Get.to(MainScreen(),transition: Transition.rightToLeft);
+                              // Get.to(MainScreen(),transition: Transition.rightToLeft);
                               if (_formKey.currentState!.validate()) {
+                              controller.submitUser();
                                 // initialDetailsController.fileImage64 == null
                                 //     ? ScaffoldMessenger.of(context)
                                 //         .showSnackBar(SnackBar(

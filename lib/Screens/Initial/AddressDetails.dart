@@ -139,7 +139,7 @@ class AddressDetails extends StatelessWidget {
                             // label: "Area Name",
                             onChanged: (value) {
                               // initialDetailsController.areaName = value!;
-                              // controller.selectedArea = value;
+                              controller.selectedArea = value!;
                             },
                           ),
                         ),

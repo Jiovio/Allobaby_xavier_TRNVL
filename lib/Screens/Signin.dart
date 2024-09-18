@@ -3,6 +3,7 @@
 import 'package:allobaby/Config/responsive.dart';
 import 'package:allobaby/Controller/AuthController.dart';
 import 'package:allobaby/Controller/MainController.dart';
+import 'package:allobaby/Controller/SignupController.dart';
 import 'package:allobaby/Screens/Initial/MomOrDad.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
 import 'package:allobaby/Screens/mobileverification/otpverification.dart';
@@ -24,6 +25,8 @@ class _SigninState extends State<Signin> {
 
   final _formKey = GlobalKey<FormState>();
 Otpless otpLess = Otpless();
+
+Signupcontroller signupCont = Get.put(Signupcontroller());
 
 
 @override
@@ -188,23 +191,30 @@ void onHeadlessResult(dynamic result) {
       if(result["responseType"]=="ONETAP" && result["response"]["status"]=="SUCCESS"){
         Navigator.pop(context);
         showConfirmed();
+        signupCont.checkUser();
+
       }
   }
-
-
-	// setState(() {
-	// 	// handle result to update UI
-	// });
 }
 
 void sendOtp(){
+
+  debugPrint(signupCont.countryCode);
+debugPrint(signupCont.phone.text);
+
+
 Map<String, dynamic> arg = {};
 arg["channel"] = "PHONE";
-arg["phone"] = "7639744744";
-arg["countryCode"] = "+91";
-// otpLess.startHeadless(onHeadlessResult, arg);
-showWaitingVerification();
+arg["phone"] = signupCont.phone.text;
+arg["countryCode"] = "+${signupCont.countryCode}";
+otpLess.startHeadless(onHeadlessResult, arg);
+// showWaitingVerification();
 // showConfirmed();
+
+
+
+
+
 
 }
 
@@ -261,7 +271,9 @@ var arg = {
 
   signinscreen(context){
 
-    return Column(
+    return 
+    
+    Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Flexible(
@@ -395,8 +407,8 @@ var arg = {
                   )
                 ]),
               ),
-              GetBuilder<Authcontroller>(
-                init: Authcontroller(),
+              GetBuilder<Signupcontroller>(
+                init: Signupcontroller(),
                 builder:(controller) => 
               Flexible(
                   flex: 2,
@@ -419,8 +431,8 @@ var arg = {
                             // Get.isDarkMode ? White : Black,
                             decoration: InputDecoration(),
                             initialCountryCode: 'IN',
-                            onChanged: (value) {
-      
+                            onCountryChanged: (value) {
+                              controller.countryCode = value.dialCode;
                             },
                           ),
                         ),
@@ -441,10 +453,8 @@ var arg = {
                                 Get.snackbar("Invalid Mobile Number", "Please Enter Valid Mobile Number",snackPosition: SnackPosition.BOTTOM);
 
                               }else{
-
-                                sendOtp();
-                            // controller.onSuccessLogin();
-
+                                // sendOtp();
+                                Get.to(MomOrDad());
                               }
                             },
                             child: Row(
@@ -481,11 +491,6 @@ var arg = {
                                 )
                               ]),
                         ),
-
-                        ElevatedButton(onPressed: (){
-
-                          Get.to(MomOrDad());
-                        }, child: Text("Signup"))
                       ],
                     ),
                   )))

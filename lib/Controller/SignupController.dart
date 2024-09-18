@@ -1,9 +1,17 @@
 
 import 'dart:convert';
 
+import 'package:allobaby/API/apiroutes.dart';
+import 'package:allobaby/Screens/Initial/MomOrDad.dart';
+import 'package:allobaby/Screens/Main/MainScreen.dart';
+import 'package:allobaby/Screens/mobileverification/otpverification.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:localstorage/localstorage.dart';
+
 
 class Signupcontroller extends GetxController{
 
@@ -14,7 +22,14 @@ class Signupcontroller extends GetxController{
     "avgLengthOfCycles":28
   };
 
-  String phone = "1234567890";
+TextEditingController phone = TextEditingController();
+String countryCode = "91";
+
+  onSuccessLogin() {
+    print(Apiroutes().getUrl("/login"));
+    Get.offAll(()=>Otpverification(phone: phone.text,),
+    transition: Transition.rightToLeft);
+  }
 
   List<String> pregnancyStatusList = ["Iam trying to Conceive","Iam Pregnant","I have a baby"];
 
@@ -109,6 +124,93 @@ class Signupcontroller extends GetxController{
 
   }
 
+  String convertDateToYMD(String date) {
+  // Parse the input string in DD-MM-YYYY format
+  DateTime parsedDate = DateFormat('dd-MM-yyyy').parse(date);
+  
+  // Format the parsed date into YYYY-MM-DD
+  String formattedDate = DateFormat('yyyy-MM-dd').format(parsedDate);
+  
+  return formattedDate;
+}
+
+Map<String, dynamic> getJsonData() {
+  return {
+    "name": name.text,
+    "phone_number": phone.text,
+    // "date_of_birth": "",
+    "age": int.tryParse(age.text) ?? 0,
+    "blood_group": bloodGroup,
+    "email": emailID.text,
+    "alternate_phone": partnerMobile.text,
+    "country_code": countryCode,
+    "gender": gender,
+    "pregnancy_status": data['pregnancyStatus'],
+    // "picme_rch_id": "",
+    if(lmpDate.text!="")
+    "lmp_date": convertDateToYMD(lmpDate.text),
+    if(eddate.text!="")
+    "ed_date": convertDateToYMD(eddate.text),
+
+    if(dateofdelivery.text!="")
+    "delivery_date":convertDateToYMD(dateofdelivery.text),
+    "average_length_of_cycles": data['avgLengthOfCycles'] ?? 0,
+    "number_of_children": 0,
+    "other_information": "",
+    "door_no": doorNo.text,
+    "street_name": streetName.text,
+    "pincode": pincode.text,
+    "area": selectedArea,
+    // "state": "",
+    "partner_name": partnerName.text,
+    "partner_phone": partnerMobile.text,
+    "partner_phone_verified": false
+  };
+}
+
+
+Future<void> checkUser() async{
+
+  var res = await Apiroutes().getUserByPhone(phone.text);
+
+  if(res==false){
+    print("User Not Found");
+    Get.snackbar("Welcome New User", "Thanks for choosing us",snackPosition: SnackPosition.BOTTOM);
+    Get.to(MomOrDad());
+    return;
+  }
+
+    localStorage.setItem("user", json.encode(res));
+    Get.snackbar("Login Successfull", "Redirecting to Home Page");
+    Get.offAll(MainScreen());
+
+  
+}
+
+
+Future<void> submitUser()async{
+
+  dynamic data = getJsonData();
+
+  // print(data);
+
+  var req = await Apiroutes().createUser(data);
+
+
+
+  if(req==false){
+    print("Failed to create User");
+  print(req);
+
+  }
+    print("SuccessFully created User");
+    print(req);
+    localStorage.setItem('user', json.encode(req));
+    Get.to(MainScreen(),transition: Transition.rightToLeft);
+
+
+  
+}
 
 
 

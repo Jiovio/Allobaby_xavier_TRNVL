@@ -1,16 +1,22 @@
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Screens/Settings/AppInfo.dart';
 import 'package:allobaby/Screens/Settings/EditProfile.dart';
 import 'package:allobaby/Screens/Settings/Help.dart';
 import 'package:allobaby/Screens/Settings/SubscriptionViewApp.dart';
 import 'package:allobaby/Screens/Settings/hospital.dart';
+import 'package:allobaby/Screens/Signin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:allobaby/Components/languagedialog.dart';
+import 'package:localstorage/localstorage.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+   SettingsScreen({super.key});
+
+
+  Maincontroller mainC = Get.put(Maincontroller());
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +85,7 @@ class SettingsScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                    "Senthil Kumar",
+                                    mainC.name.text,
                                     style: TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.w800),
@@ -87,7 +93,7 @@ class SettingsScreen extends StatelessWidget {
                               SizedBox(
                                 height: 4,
                               ),
-                              Text("SenthilKumar@gmail.com"),
+                              Text(mainC.email.text),
                             ])
                       ]),
                     ),
@@ -298,6 +304,9 @@ class SettingsScreen extends StatelessWidget {
                                   TextButton(
                                     child: const Text('Ok'),
                                     onPressed: () async{
+                                      localStorage.clear();
+                                      Get.to(Signin());
+                                      Get.snackbar("Logout Successfull", "",snackPosition: SnackPosition.BOTTOM);
                                       // _googleSignInController.googleSignOut();
                                     },
                                   ),
