@@ -307,7 +307,7 @@ class _HomeState extends State<Home> {
               Center(
                             child: Text(
                               "No News Feed".tr,
-                              style: TextStyle(
+                              style:const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.w600),
                             ),
                           ):

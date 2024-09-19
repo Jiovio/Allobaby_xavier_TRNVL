@@ -22,7 +22,14 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
 
   int i=0;
-    PageController pageController = PageController(initialPage: 0);
+  late  PageController pageController ;
+
+
+    @override
+  void initState() {
+    super.initState();
+   pageController =  PageController(initialPage: 0);
+  }
 
 
 
@@ -53,9 +60,9 @@ class _MainScreenState extends State<MainScreen> {
                   ),
           )
           ,child: Image.asset("assets/BottomSheet/baby_white.png")),
-        onPressed: () {            
+        onPressed: () {        
                           // bottomSheetController.pageChanged = 0;
-                          mainC.getCounterData();
+                          // mainC.getCounterData();
                 showModalBottomSheet(
                     shape: RoundedRectangleBorder(
                       borderRadius:
@@ -65,7 +72,7 @@ class _MainScreenState extends State<MainScreen> {
                     builder: (BuildContext context) => Container(
                           height: Get.height / 2,
                           child:  
-                          bottomQuestionSheet(context),
+                          bottomQuestionSheet(context,0),
                           // Text("Hi")
 
 

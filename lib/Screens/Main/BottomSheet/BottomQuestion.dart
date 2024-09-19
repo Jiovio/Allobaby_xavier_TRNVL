@@ -12,9 +12,14 @@ import 'package:allobaby/Screens/Main/BottomSheet/widgets/watercount.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Widget bottomQuestionSheet(BuildContext context){
+Widget bottomQuestionSheet(BuildContext context, int i){
 
-  PageController pageController = PageController(initialPage: 0);
+  PageController pageController = PageController(initialPage: i);
+
+
+  Maincontroller mc = Get.put(Maincontroller());
+
+  mc.pageChanged(0);
 
   return
   GetBuilder<Maincontroller>(
@@ -86,7 +91,7 @@ children: [
                             pageController.jumpToPage(6);
                                     
                           },
-                          child: Icon(Icons.mic_none_rounded),
+                          child: Icon(Icons.mic_none_rounded,color: White,),
                                                 ),
                         ),
 
