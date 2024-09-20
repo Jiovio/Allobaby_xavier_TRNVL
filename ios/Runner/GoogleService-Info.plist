@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>492221570730-uke4nsigflvfmmku1mu115seo01j23te.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.492221570730-uke4nsigflvfmmku1mu115seo01j23te</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>492221570730-0bgdn40820ooplpsn14undq682ejhcu0.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBbjOuTSEt1EXZPnmIPRqxwkKX4XzpWANQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>492221570730</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.jiovio.allobaby</string>
+	<key>PROJECT_ID</key>
+	<string>savemom-healthcare</string>
+	<key>STORAGE_BUCKET</key>
+	<string>savemom-healthcare.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:492221570730:ios:4dca18407d2438d8ea7ad3</string>
+</dict>
+</plist>

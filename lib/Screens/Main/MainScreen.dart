@@ -7,6 +7,7 @@ import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Screens/Main/BottomSheet/BottomQuestion.dart';
 import 'package:allobaby/Screens/Main/BottomSheet/widgets/Exercise.dart';
 import 'package:allobaby/Screens/Main/BottomSheet/widgets/emoji.dart';
+import 'package:allobaby/temp/ai.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -60,7 +61,10 @@ class _MainScreenState extends State<MainScreen> {
                   ),
           )
           ,child: Image.asset("assets/BottomSheet/baby_white.png")),
-        onPressed: () {        
+        onPressed: () {  
+
+          Get.to(Ai());
+          return;      
                           // bottomSheetController.pageChanged = 0;
                           // mainC.getCounterData();
                 showModalBottomSheet(

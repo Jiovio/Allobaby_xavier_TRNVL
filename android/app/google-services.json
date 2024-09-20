@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "project_number": "492221570730",
+    "project_id": "savemom-healthcare",
+    "storage_bucket": "savemom-healthcare.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492221570730:android:612f24ec6cd2d678ea7ad3",
+        "android_client_info": {
+          "package_name": "com.jiovio.allobaby"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "492221570730-dhebl8o0d0aosga6dsfl3ibme9drncr5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyVPpgSEVJpi77S8Q5aN9VLSsaJjz0UKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "492221570730-dhebl8o0d0aosga6dsfl3ibme9drncr5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "492221570730-uke4nsigflvfmmku1mu115seo01j23te.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.allobaby"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492221570730:android:fd8cfb51ae84f987ea7ad3",
+        "android_client_info": {
+          "package_name": "com.savemom.allobaby"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "492221570730-dhebl8o0d0aosga6dsfl3ibme9drncr5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyVPpgSEVJpi77S8Q5aN9VLSsaJjz0UKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "492221570730-dhebl8o0d0aosga6dsfl3ibme9drncr5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "492221570730-uke4nsigflvfmmku1mu115seo01j23te.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.allobaby"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492221570730:android:72f35b415dd12429ea7ad3",
+        "android_client_info": {
+          "package_name": "demo.savemomhealthworker.healthV1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "492221570730-0bgdn40820ooplpsn14undq682ejhcu0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "demo.savemomhealthworker.healthV1",
+            "certificate_hash": "a735f370fa55eb92bd812421450f550e9c91bca2"
+          }
+        },
+        {
+          "client_id": "492221570730-dhebl8o0d0aosga6dsfl3ibme9drncr5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyVPpgSEVJpi77S8Q5aN9VLSsaJjz0UKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "492221570730-dhebl8o0d0aosga6dsfl3ibme9drncr5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "492221570730-uke4nsigflvfmmku1mu115seo01j23te.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.allobaby"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

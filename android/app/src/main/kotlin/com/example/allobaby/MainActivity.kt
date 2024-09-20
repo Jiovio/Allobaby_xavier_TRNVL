@@ -1,4 +1,4 @@
-package com.example.allobaby
+package com.jiovio.allobaby
 
 import com.otpless.otplessflutter.OtplessFlutterPlugin
 import android.content.Intent

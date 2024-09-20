@@ -7,6 +7,7 @@ import 'package:allobaby/Controller/SignupController.dart';
 import 'package:allobaby/Screens/Initial/MomOrDad.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
 import 'package:allobaby/Screens/mobileverification/otpverification.dart';
+import 'package:allobaby/temp/ai.dart';
 import 'package:flutter/material.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:get/get.dart';
@@ -453,8 +454,8 @@ var arg = {
                                 Get.snackbar("Invalid Mobile Number", "Please Enter Valid Mobile Number",snackPosition: SnackPosition.BOTTOM);
 
                               }else{
-                                // sendOtp();
-                                Get.to(MomOrDad());
+                                sendOtp();
+                                // Get.to(MomOrDad());
                               }
                             },
                             child: Row(
@@ -491,6 +492,10 @@ var arg = {
                                 )
                               ]),
                         ),
+
+                        ElevatedButton(onPressed: (){
+                          Get.to(Ai());
+                        }, child: Text("AI"))
                       ],
                     ),
                   )))
