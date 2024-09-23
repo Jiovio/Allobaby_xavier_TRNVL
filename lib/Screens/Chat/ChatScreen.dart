@@ -88,6 +88,38 @@ class ChatScreen extends StatelessWidget {
                       ),
                     ),
                   ))),
+
+                            SizedBox(
+            height: 20,
+          ),
+          Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  side: BorderSide(color: Black)),
+              child: InkWell(
+                  borderRadius: BorderRadius.circular(8.0),
+                  highlightColor: accentColor.withOpacity(0.1),
+                  splashColor: accentColor.withOpacity(0.8),
+                  onTap: () =>
+                  Get.to(() => Chat(title: "HealthWorker"),
+                      transition: Transition.rightToLeft),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8, bottom: 8),
+                    child: ListTile(
+                      leading: Image.asset(
+                        "assets/Chat/chatbot.png",
+                        scale: 12,
+                      ),
+                      title: Text(
+                        "Connect with AlloAI",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Black,
+                      ),
+                    ),
+                  ))),
         ]),
       ),
     

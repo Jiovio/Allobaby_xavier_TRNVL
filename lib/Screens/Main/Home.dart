@@ -2,6 +2,7 @@ import 'package:allobaby/Components/appbar.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Controller/NewsController.dart';
+import 'package:allobaby/Screens/AI/Allobot.dart';
 import 'package:allobaby/Screens/Home/Awareness/Awareness.dart';
 import 'package:allobaby/Screens/Home/Checkup/CheckUp.dart';
 import 'package:allobaby/Screens/Home/Prescription/Prescription.dart';
@@ -240,6 +241,11 @@ class _HomeState extends State<Home> {
                   scrollDirection: Axis.horizontal,
                   physics: BouncingScrollPhysics(),
                   children: [
+
+                                          categories("AlloBot", 'assets/Chat/chatbot.png',
+                        // CheckUp()
+                        Allobot()
+                        ),
                     categories("Awareness",
                         'assets/Homescreen/myawernessnew.png', 
                         Awareness()
@@ -289,6 +295,8 @@ class _HomeState extends State<Home> {
                         // CheckUp()
                         CheckUp()
                         ),
+
+
                     // categories("Appointments", 'assets/Homescreen/mycheckupnew.png', Appointments()) ,
                   ]),
             ),

@@ -443,7 +443,7 @@ var arg = {
                         Center(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                minimumSize: Size(100, 45),
+                                minimumSize:const Size(100, 45),
                                 shape: RoundedRectangleBorder(
                                     borderRadius:
                                     BorderRadius.circular(40))),
