@@ -174,7 +174,7 @@ class Ultrasound extends StatelessWidget {
                           (t){
                             controller.fetalPresentation = t;
                             controller.update();
-                          }),
+                          },controller.fetalPresentation),
 
             SizedBox(
                 height: 20.0,
@@ -183,7 +183,7 @@ class Ultrasound extends StatelessWidget {
                dropDown("Fetal Movement", ["Present","Absent"],(t){
                 controller.fetalMovement = t;
                 controller.update();
-               }),
+               },controller.fetalMovement),
 
 
               SizedBox(
@@ -194,7 +194,7 @@ class Ultrasound extends StatelessWidget {
                           ["Posterior","Anterior","Fundal","Lateral","Low-lying"],(t){
                             controller.Placenta = t;
                             controller.update();
-                          }),
+                          },controller.Placenta),
 
                            SizedBox(
                 height: 20.0,

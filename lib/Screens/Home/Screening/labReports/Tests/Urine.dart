@@ -161,12 +161,14 @@ class Urine extends StatelessWidget {
                               ),
 
                           dropDown(
+                          
                             "Alpamine Present", 
                             ["Yes", "No"],
                             (text) {
                               controller.alphaminePresent = text;
                               controller.update();
-                            }
+                            },
+                            controller.alphaminePresent
                             ),
 
                          
@@ -179,7 +181,7 @@ class Urine extends StatelessWidget {
                           (text) {
                               controller.sugarPresent = text;
                               controller.update();
-                            }),
+                            },controller.sugarPresent),
 
 
 

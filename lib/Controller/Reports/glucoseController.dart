@@ -1,5 +1,7 @@
 
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Config/OurFirebase.dart';
+import 'package:allobaby/Screens/Home/Screening/Vitals/BloodGlucose.dart';
 import 'package:allobaby/db/dbHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -29,6 +31,7 @@ TextEditingController desc = TextEditingController();
       final bytes = await Io.File(pickedFile.path).readAsBytes();
       fileImage64 = convert.base64Encode(bytes);
       image = File(pickedFile.path);
+      askAI(image);
       Fluttertoast.showToast(
           msg: "Report Updated Successfully", backgroundColor: PrimaryColor);
     } else {
@@ -46,6 +49,7 @@ TextEditingController desc = TextEditingController();
       final bytes = await Io.File(pickedFile.path).readAsBytes();
       fileImage64 = convert.base64Encode(bytes);
       image = File(pickedFile.path);
+      askAI(image);
       Fluttertoast.showToast(
           msg: "Report Updated Successfully", backgroundColor: PrimaryColor);
     } else {
@@ -70,5 +74,26 @@ TextEditingController desc = TextEditingController();
     addReports(data);
 
     // showToast("Please Enter All Details",'Fields are empty. please enter all fields.');
+
+
+  }
+
+
+
+      Future<void> askAI(File img) async {
+
+      String prompt = """This is a health report. 
+      give me bloodGlucose value and the general summary in the schema 
+      {glucoseValue: double ,
+      summary:string}""";
+      dynamic res = json.decode(await OurFirebase.askVertexAi(image, prompt));
+
+      print(res);
+      desc.text = res["summary"]??"";
+      // 
+      glucoseValue= res["glucoseValue"]??70.0;
+
+      // 
+      update();
   }
 }

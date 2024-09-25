@@ -25,8 +25,8 @@ class ScreeningWithReports extends StatefulWidget {
 class _ScreeningWithReportsState extends State<ScreeningWithReports> {
 
   List<LabreportOptions> ls = [
-  LabreportOptions("Symptoms",SelfScreening(initPage: 0,),"hemoglobin.png"),
-  LabreportOptions("Vital Test",SelfScreening(initPage: 1,),"hemoglobin.png"),
+  LabreportOptions("Symptoms",SelfScreening(initPage: 0,),"symptoms.png"),
+  LabreportOptions("Vital Test",SelfScreening(initPage: 1,),"vitals.png"),
   LabreportOptions("Hemoglobin Test",SelfScreening(initPage: 2,),"hemoglobin.png"),
   LabreportOptions("Urine Test",SelfScreening(initPage: 3,),"urinetest.png"),
   LabreportOptions("Glucose Test",SelfScreening(initPage: 4,),"glucose.png"),

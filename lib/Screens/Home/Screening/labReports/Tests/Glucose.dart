@@ -200,7 +200,7 @@ class Glucose extends StatelessWidget {
                           decoration: InputDecoration(
                             labelText: "Description",
                             border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
-                            
+                            controller: controller.desc,
                           maxLines: 5
                         ),
                 

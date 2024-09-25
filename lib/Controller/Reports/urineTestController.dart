@@ -1,4 +1,5 @@
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/db/dbHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -14,8 +15,8 @@ class Urinetestcontroller extends GetxController {
 int hemoGlobinValue = 12;
 
 TextEditingController desc = TextEditingController();
-String alphaminePresent = "";
-String sugarPresent = "";
+String? alphaminePresent = null;
+String? sugarPresent = null;
 
   late File image;
 
@@ -30,6 +31,8 @@ String sugarPresent = "";
       final bytes = await Io.File(pickedFile.path).readAsBytes();
       fileImage64 = convert.base64Encode(bytes);
       image = File(pickedFile.path);
+
+      askAI(image);
       Fluttertoast.showToast(
           msg: "Report Updated Successfully", backgroundColor: PrimaryColor);
     } else {
@@ -42,11 +45,13 @@ String sugarPresent = "";
     final pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
       imageQuality: 20,
+    
     );
     if (pickedFile != null) {
       final bytes = await Io.File(pickedFile.path).readAsBytes();
       fileImage64 = convert.base64Encode(bytes);
       image = File(pickedFile.path);
+      askAI(image);
       Fluttertoast.showToast(
           msg: "Report Updated Successfully", backgroundColor: PrimaryColor);
     } else {
@@ -72,6 +77,27 @@ String sugarPresent = "";
 
     // showToast("Please Enter All Details",'Fields are empty. please enter all fields.');
   }
+
+    Future<void> askAI(File img) async {
+
+      String prompt = """This is a health report. 
+      give me Alpamine present , Sugar present and the general summary in the schema 
+      {alphaminePresent: "Yes" or "No",
+      sugarPresent:"Yes" or "No",
+      summary:string}""";
+      dynamic res = json.decode(await OurFirebase.askVertexAi(image, prompt));
+
+      print(res);
+      desc.text = res["summary"]??"";
+      // 
+      alphaminePresent = res["alphaminePresent"]??null;
+      sugarPresent = res["sugarPresent"]??null;
+
+      // 
+      update();
+  }
+
+
 
 
 }

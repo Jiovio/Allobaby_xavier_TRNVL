@@ -220,18 +220,22 @@ class Hemoglobin extends StatelessWidget {
 
 
                            SizedBox(
-                height: 10.0,
+                height: 50.0,
               ),
 
-                            TFField(label: "Description",mLines: 5,
-                            txtController: controller.desc,),
+                            Text(controller.desc.text),
+
+                            // TFField(label: "Description",mLines: 10,
+                            // txtController: controller.desc,
+                            
+                            // ),
 
 
 
 
 
               const SizedBox(
-                height: 20.0,
+                height: 50.0,
               ),
 
               ElevatedButton(
@@ -239,7 +243,7 @@ class Hemoglobin extends StatelessWidget {
                       minimumSize: Size(300, 50),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
-                  onPressed: controller.submit,
+                  onPressed: controller.uploadImage,
                   child: Text("ADD REPORT"))
 
 

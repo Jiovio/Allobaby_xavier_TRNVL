@@ -63,8 +63,7 @@ class _MainScreenState extends State<MainScreen> {
           ,child: Image.asset("assets/BottomSheet/baby_white.png")),
         onPressed: () {  
 
-          Get.to(Ai());
-          return;      
+  
                           // bottomSheetController.pageChanged = 0;
                           // mainC.getCounterData();
                 showModalBottomSheet(

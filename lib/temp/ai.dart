@@ -13,7 +13,7 @@ class _AiState extends State<Ai> {
   final TextEditingController _controller = TextEditingController();
   final model = FirebaseVertexAI.instance.generativeModel(model: 'gemini-1.5-flash',
   generationConfig: GenerationConfig(
-    responseMimeType: "application/json"
+    // responseMimeType: "application/json"
   ),
   );
 

@@ -35,10 +35,10 @@ searchBox(String hint,List<String> options) {
   }
 
 
-dropDown(String hint,List<String> options,onChanged) {
+dropDown(String hint,List<String> options,onChanged,selected) {
 
     return DropdownSearch<String>(
-
+                selectedItem: selected,
                 dropdownButtonProps: DropdownButtonProps(
                   constraints: BoxConstraints(maxHeight: 170)
                 ),
