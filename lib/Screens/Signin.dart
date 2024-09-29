@@ -7,6 +7,7 @@ import 'package:allobaby/Controller/SignupController.dart';
 import 'package:allobaby/Screens/Initial/MomOrDad.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
 import 'package:allobaby/Screens/mobileverification/otpverification.dart';
+import 'package:allobaby/temp/GoogleSignin.dart';
 import 'package:allobaby/temp/ai.dart';
 import 'package:flutter/material.dart';
 import 'package:allobaby/Config/Color.dart';
@@ -34,200 +35,12 @@ Signupcontroller signupCont = Get.put(Signupcontroller());
 void initState(){
   super.initState();
 
-otpLess.initHeadless("82AR64JHBHZR3T3TEX1Q");
-otpLess.setHeadlessCallback(onHeadlessResult);
-
-// otpLess.openLoginPage((result) {
-//     var message = "";
-//     if (result['data'] != null) {
-//         final token = result['response']['token'];
-//         message = "token: $token";
-//     } else {
-//         message = result['errorMessage'];
-//     }
-// }, arg);
-
 }
 
 
 bool initiate = false;
 
 bool verified = false;
-
-void showWaitingVerification() {
-  Future<void> _launchUrl(Uri _url) async {
-    if (!await launchUrl(_url)) {
-      throw Exception('Could not launch $_url');
-    }
-  }
-
-  showModalBottomSheet(
-    context: context,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-    ),
-    backgroundColor: Colors.white,
-    builder: (context) {
-      return Container(
-        height: Get.height / 2,
-        width: double.infinity,
-        padding: EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "Please accept the verification request on WhatsApp.",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 30),
-            CircularProgressIndicator(
-              color: Colors.greenAccent,
-              strokeWidth: 4,
-            ),
-            SizedBox(height: 30),
-            ElevatedButton.icon(
-              onPressed: () {
-                _launchUrl(Uri.parse("https://wa.me/7639744744")); // Replace with your WhatsApp link
-              },
-              icon: Icon(Icons.gamepad, color: Colors.white),
-              label: Text(
-                "Open in WhatsApp",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                // primary: Colors.green,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
-
-void showConfirmed() {
-  showModalBottomSheet(
-    context: context,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-    ),
-    backgroundColor: Colors.white,
-    builder: (context) {
-      return Container(
-        // height: Get.height / 3, // Adjusted height for a better fit
-        padding: EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.check_circle_outline,
-              color: Colors.green,
-              size: 60,
-            ),
-            SizedBox(height: 20),
-            Text(
-              "Mobile Number Verified!",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              "Your mobile number has been verified successfully.",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[700],
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 30),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                // primary: Colors.green, 
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-              ),
-              onPressed: () {
-                Navigator.pop(context); // Close the bottom sheet
-              },
-              child: Text(
-                "OK",
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
-
-void onHeadlessResult(dynamic result) {
-  print(result);
-
-  if(result["statusCode"]==200){
-      if(result["responseType"]=="INITIATE"){
-        initiate = true;
-        String openChatUrl = result["response"]["destinationUri"];
-        showWaitingVerification();
-      }
-      if(result["responseType"]=="ONETAP" && result["response"]["status"]=="SUCCESS"){
-        Navigator.pop(context);
-        showConfirmed();
-        signupCont.checkUser();
-
-      }
-  }
-}
-
-void sendOtp(){
-
-  debugPrint(signupCont.countryCode);
-debugPrint(signupCont.phone.text);
-
-
-Map<String, dynamic> arg = {};
-arg["channel"] = "PHONE";
-arg["phone"] = signupCont.phone.text;
-arg["countryCode"] = "+${signupCont.countryCode}";
-otpLess.startHeadless(onHeadlessResult, arg);
-// showWaitingVerification();
-// showConfirmed();
-
-
-
-
-
-
-}
-
-var arg = {
-    'appId': "82AR64JHBHZR3T3TEX1Q",
-};
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -249,25 +62,6 @@ var arg = {
       ),
     );
   }
-
-  //   getMobileFormWidget(context){
-  //   return SingleChildScrollView(
-  //     child: Container(
-  //       height: MediaQuery.of(context).size.height,
-  //       child: GetBuilder<GoogleSignInController>(
-  //         builder: (controller) => 
-          
-  //         controller.isloading == true
-  //             ? Center(
-  //             child: CircularProgressIndicator(
-  //               valueColor: AlwaysStoppedAnimation<Color>(White),
-  //               backgroundColor: PrimaryColor,
-  //             ))
-  //             : 
-  //       ),
-  //     ),
-  //   );
-  // }
 
 
   signinscreen(context){
@@ -454,7 +248,7 @@ var arg = {
                                 Get.snackbar("Invalid Mobile Number", "Please Enter Valid Mobile Number",snackPosition: SnackPosition.BOTTOM);
 
                               }else{
-                                sendOtp();
+                                controller.sendOtp(); 
                                 // Get.to(MomOrDad());
                               }
                             },
@@ -495,7 +289,11 @@ var arg = {
 
                         ElevatedButton(onPressed: (){
                           Get.to(Ai());
-                        }, child: Text("AI"))
+                        }, child: Text("AI")),
+
+                                                ElevatedButton(onPressed: (){
+                          Get.to(Googlesignin());
+                        }, child: Text("gs"))
                       ],
                     ),
                   )))

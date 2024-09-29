@@ -1,4 +1,5 @@
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/SignupController.dart';
 import 'package:allobaby/Screens/Main/Home.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,10 @@ import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class Otpverification extends StatelessWidget {
-  String phone;
-   Otpverification({super.key, required this.phone});
+
+   Otpverification({super.key});
+
+   Signupcontroller controller = Get.put(Signupcontroller());
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +58,7 @@ class Otpverification extends StatelessWidget {
                             children: [
                               TextSpan(
                                   // text: "+91 9363286517",
-                                  text: phone,
+                                  text: "+${controller.countryCode} ${controller.phone.text}",
 
                                 
                                   // data.read('mobileNo'),
@@ -68,6 +71,7 @@ class Otpverification extends StatelessWidget {
                         height: 32.0,
                       ),
                       PinCodeTextField(
+                        controller: controller.otp,
                         textStyle: TextStyle(
                           color: 
                           // Get.isDarkMode 
@@ -102,9 +106,7 @@ class Otpverification extends StatelessWidget {
                       ),
                       Center(
                         child: ElevatedButton(
-                          onPressed: () {
-                            Get.to(MainScreen(), transition: Transition.rightToLeft);
-                          },
+                          onPressed: controller.verifyOtp,
                           style: ElevatedButton.styleFrom(
                               minimumSize: Size(100, 50),
                               shape: RoundedRectangleBorder(

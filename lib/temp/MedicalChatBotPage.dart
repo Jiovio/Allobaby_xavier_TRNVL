@@ -1,20 +1,50 @@
-import 'package:allobaby/Controller/AllobotController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:allobaby/Config/Color.dart';
-import 'package:lottie/lottie.dart';
 
-class Allobot extends StatefulWidget {
+class AllobotChatPage extends StatefulWidget {
   @override
-  _AllobotState createState() => _AllobotState();
+  _AllobotChatPageState createState() => _AllobotChatPageState();
 }
 
-class _AllobotState extends State<Allobot> {
+class _AllobotChatPageState extends State<AllobotChatPage> {
+  final List<ChatMessage> _messages = [];
+  final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
+  @override
+  void initState() {
+    super.initState();
+    _addBotMessage(
+      "# Welcome to Allobot\n\n"
+      "I'm your AI medical assistant, here to provide information and guidance. How can I assist you today?\n\n"
+      "- Ask about symptoms\n"
+      "- Get information on medications\n"
+      "- Learn about health conditions\n\n"
+      "_Remember, always consult with a healthcare professional for personalized medical advice._"
+    );
+  }
 
+  void _handleSubmitted(String text) {
+    if (text.isEmpty) return;
+    _textController.clear();
+    setState(() {
+      _messages.add(ChatMessage(text: text, isUserMessage: true));
+    });
+    _scrollToBottom();
+    // Simulate bot response
+    Future.delayed(Duration(seconds: 1), () {
+      _addBotMessage(_generateResponse(text));
+    });
+  }
+
+  void _addBotMessage(String text) {
+    setState(() {
+      _messages.add(ChatMessage(text: text, isUserMessage: false));
+    });
+    _scrollToBottom();
+  }
 
   void _scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -38,8 +68,6 @@ class _AllobotState extends State<Allobot> {
            "_Remember to consult with a healthcare professional for personalized advice._";
   }
 
-  Allobotcontroller controller = Get.put(Allobotcontroller());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,21 +89,13 @@ class _AllobotState extends State<Allobot> {
       ),
       body: Column(
         children: [
-          GetBuilder<Allobotcontroller>(builder: (controller)=>
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
-              itemCount: controller.convs.length,
-              itemBuilder: (context, index) {
-                var d = controller.convs[index];
-
-                return ChatMessage(text: d["msg"], isUserMessage: d["user"]);
-
-              },
+              itemCount: _messages.length,
+              itemBuilder: (context, index) => _messages[index],
             ),
-          )),
-          GetBuilder<Allobotcontroller>(builder: (controller)=>
-          controller.aithinking?buildAIThinkingWidget():Container()),
+          ),
           _buildInputArea(),
         ],
       ),
@@ -99,7 +119,7 @@ class _AllobotState extends State<Allobot> {
         children: [
           Expanded(
             child: TextField(
-              controller: controller.input,
+              controller: _textController,
               decoration: InputDecoration(
                 hintText: 'Ask Allobot a question...',
                 border: OutlineInputBorder(
@@ -110,6 +130,7 @@ class _AllobotState extends State<Allobot> {
                 fillColor: Colors.grey[100],
                 contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
+              onSubmitted: _handleSubmitted,
               style: GoogleFonts.poppins(fontSize: 16),
             ),
           ),
@@ -121,127 +142,13 @@ class _AllobotState extends State<Allobot> {
             ),
             child: IconButton(
               icon: Icon(Icons.send, color: White),
-              onPressed: () {
-                _scrollToBottom();
-                controller.converseWithAI();},
+              onPressed: () => _handleSubmitted(_textController.text),
             ),
           ),
         ],
       ),
     );
   }
-
-Widget buildAIThinkingWidget() {
-  return Container(
-    padding: EdgeInsets.all(16),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // Circular Pulse Animation
-        AnimatedContainer(
-          duration: Duration(seconds: 2),
-          width: 120,
-          height: 120,
-          decoration: BoxDecoration(
-            color: PrimaryColor.withOpacity(0.1),
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: PrimaryColor.withOpacity(0.4),
-                blurRadius: 20.0,
-                spreadRadius: 5.0,
-              ),
-            ],
-          ),
-          child: Center(
-            child: Container(
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: PrimaryColor,
-              ),
-              child: Icon(
-                Icons.child_care, // Maternal AI icon
-                size: 30,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: 16),
-
-        // Text: AI Thinking
-        Text(
-          'Thinking...',
-          style: GoogleFonts.poppins(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: PrimaryColor,
-          ),
-        ),
-
-        SizedBox(height: 8),
-
-        // Subtext (Optional)
-        Text(
-          'Your maternal AI assistant is processing your question',
-          textAlign: TextAlign.center,
-          style: GoogleFonts.poppins(
-            fontSize: 14,
-            color: Colors.grey[600],
-          ),
-        ),
-        SizedBox(height: 16),
-
-        // Row of animated dots
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buildThinkingDot(1),
-            SizedBox(width: 8),
-            _buildThinkingDot(2),
-            SizedBox(width: 8),
-            _buildThinkingDot(3),
-          ],
-        ),
-      ],
-    ),
-  );
-}
-
-// Animated Dot Widget
-Widget _buildThinkingDot(int index) {
-  return TweenAnimationBuilder(
-    tween: Tween(begin: 0.0, end: 1.0),
-    duration: Duration(milliseconds: 100),
-    curve: Curves.easeInOut,
-    builder: (context, double value, child) {
-      return Transform.scale(
-        scale: 0.5 + (value * 0.5),
-        child: Opacity(
-          opacity: 0.3 + (value * 0.7),
-          child: Container(
-            width: 12,
-            height: 12,
-            decoration: BoxDecoration(
-              color: PrimaryColor,
-              shape: BoxShape.circle,
-            ),
-          ),
-        ),
-      );
-    },
-    onEnd: () {
-      Future.delayed(Duration(milliseconds: 300), () {
-        if (context != null) {
-          (context as Element).markNeedsBuild(); // To loop the animation
-        }
-      });
-    },
-  );
-}
-
 }
 
 class ChatMessage extends StatelessWidget {

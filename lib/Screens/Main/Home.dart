@@ -3,6 +3,7 @@ import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Controller/NewsController.dart';
 import 'package:allobaby/Screens/AI/Allobot.dart';
+import 'package:allobaby/Screens/AI/allobotModal.dart';
 import 'package:allobaby/Screens/Home/Awareness/Awareness.dart';
 import 'package:allobaby/Screens/Home/Checkup/CheckUp.dart';
 import 'package:allobaby/Screens/Home/Prescription/Prescription.dart';
@@ -241,10 +242,9 @@ class _HomeState extends State<Home> {
                   scrollDirection: Axis.horizontal,
                   physics: BouncingScrollPhysics(),
                   children: [
-
-                                          categories("AlloBot", 'assets/Chat/chatbot.png',
+                        categories("AlloBot", 'assets/Chat/chatbot.png',
                         // CheckUp()
-                        Allobot()
+                        Container(),() {allobotModal(context);}
                         ),
                     categories("Awareness",
                         'assets/Homescreen/myawernessnew.png', 
@@ -367,7 +367,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Card categories(String title, String image, Widget routes) {
+  Card categories(String title, String image, Widget routes,[Function? func = null]) {
   return Card(
     margin: EdgeInsets.only(left: 18, bottom: 5, top: 5),
     shape: RoundedRectangleBorder(
@@ -378,7 +378,13 @@ class _HomeState extends State<Home> {
       borderRadius: BorderRadius.circular(8.0),
       highlightColor: accentColor.withOpacity(0.1),
       splashColor: accentColor.withOpacity(0.8),
-      onTap: () => Get.to(() => routes, transition: Transition.rightToLeft),
+      onTap: ()  {
+        if(func!=null){
+          func();
+        }else
+        Get.to(() => routes, transition: Transition.rightToLeft);
+        
+        },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),

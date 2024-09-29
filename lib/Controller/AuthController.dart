@@ -12,7 +12,7 @@ String countryCode = "91";
 
   onSuccessLogin() {
     print(Apiroutes().getUrl("/login"));
-    Get.offAll(()=>Otpverification(phone: phone.text,),
+    Get.offAll(()=>Otpverification(),
     transition: Transition.rightToLeft);
   }
 }

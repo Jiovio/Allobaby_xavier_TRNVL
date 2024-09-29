@@ -1,10 +1,15 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:firebase_vertexai/firebase_vertexai.dart';
 
 class OurFirebase {
+
+  static final db = FirebaseFirestore.instance;
 
   static final storage = FirebaseStorage.instance;
 
@@ -14,6 +19,9 @@ class OurFirebase {
   generationConfig: GenerationConfig(
     responseMimeType: "application/json"
   ),
+  );
+
+    static final textai = FirebaseVertexAI.instance.generativeModel(model: 'gemini-1.5-flash',
   );
 
 
@@ -44,5 +52,31 @@ final imagePart = DataPart('image/jpeg', image);
     ]);
         // print(response.text);
         return response.text??"";
+    }
+
+
+    static Future<bool> createDataWithName(String collection,String docName,dynamic data) 
+    async {
+final city = <String, String>{
+  "name": "Los Angeles",
+  "state": "CA",
+  "country": "USA"
+};
+    db
+    .collection(collection)
+    .doc(docName)
+    .set(data)
+    .onError((e, _) {
+      print("Error writing document: $e");
+      return false;
+      });
+      return true;
+    }
+
+
+    static void createUser (phone,data) {
+
+      createDataWithName("AllobabyUsers",phone, data);
+
     }
 }

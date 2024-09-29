@@ -1,7 +1,9 @@
 
 import 'dart:convert';
 
+import 'package:allobaby/API/Requests/OTPApi.dart';
 import 'package:allobaby/API/apiroutes.dart';
+import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Screens/Initial/MomOrDad.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
 import 'package:allobaby/Screens/mobileverification/otpverification.dart';
@@ -11,6 +13,9 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:localstorage/localstorage.dart';
+
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class Signupcontroller extends GetxController{
@@ -27,7 +32,7 @@ String countryCode = "91";
 
   onSuccessLogin() {
     print(Apiroutes().getUrl("/login"));
-    Get.offAll(()=>Otpverification(phone: phone.text,),
+    Get.offAll(()=>Otpverification(),
     transition: Transition.rightToLeft);
   }
 
@@ -169,6 +174,8 @@ Map<String, dynamic> getJsonData() {
 }
 
 
+
+
 Future<void> checkUser() async{
 
   var res = await Apiroutes().getUserByPhone(phone.text);
@@ -176,6 +183,7 @@ Future<void> checkUser() async{
   if(res==false){
     print("User Not Found");
     Get.snackbar("Welcome New User", "Thanks for choosing us",snackPosition: SnackPosition.BOTTOM);
+    await signInWithGoogle();
     Get.to(MomOrDad());
     return;
   }
@@ -196,6 +204,8 @@ Future<void> submitUser()async{
 
   var req = await Apiroutes().createUser(data);
 
+  OurFirebase.createUser(phone.text, data);
+
 
 
   if(req==false){
@@ -211,6 +221,65 @@ Future<void> submitUser()async{
 
   
 }
+
+int? oid = null;
+
+Future<void> sendOtp() async {
+
+  var r = await Otpapi.sendOtp(phone.text);
+
+  if(r["status"]){
+  oid=r["id"];
+  Get.to(Otpverification());
+  }else {
+
+  }
+}
+
+TextEditingController otp = TextEditingController();
+
+Future<void> verifyOtp() async {
+var r = await Otpapi.verifyOTP(otp.text,oid);
+
+if(r){
+  await checkUser();
+}else{
+  Get.snackbar("Invalid OTP", "Please Enter Correct OTP",snackPosition: SnackPosition.BOTTOM);
+}
+}
+
+
+
+  Future<void> signInWithGoogle() async {
+  // Trigger the authentication flow
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  // Obtain the auth details from the request
+  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+  // Create a new credential
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+
+  // Once signed in, return the UserCredential
+  var d = await FirebaseAuth.instance.signInWithCredential(credential);
+
+  Map<String,dynamic>? userdata = d.additionalUserInfo?.profile;
+
+  if(userdata!=null){
+    var first_name = userdata["given_name"];
+    var last_name = userdata["family_name"];
+    var email = userdata["email"];
+    var imgurl = userdata["picture"];
+
+    name.text = "${first_name} ${last_name}";
+    emailID.text = email;
+  }
+
+}
+
 
 
 

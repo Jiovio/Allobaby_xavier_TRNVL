@@ -1,5 +1,6 @@
 import 'package:allobaby/Components/appbar.dart';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Screens/AI/allobotModal.dart';
 import 'package:allobaby/Screens/Chat/Chat.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -100,9 +101,9 @@ class ChatScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8.0),
                   highlightColor: accentColor.withOpacity(0.1),
                   splashColor: accentColor.withOpacity(0.8),
-                  onTap: () =>
-                  Get.to(() => Chat(title: "HealthWorker"),
-                      transition: Transition.rightToLeft),
+                  onTap: () => allobotModal(context),
+                  // Get.to(() => Chat(title: "HealthWorker"),
+                  //     transition: Transition.rightToLeft),
                   child: Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 8),
                     child: ListTile(
@@ -111,7 +112,7 @@ class ChatScreen extends StatelessWidget {
                         scale: 12,
                       ),
                       title: Text(
-                        "Connect with AlloAI",
+                        "Connect with AlloBot",
                         style: TextStyle(fontSize: 18),
                       ),
                       trailing: Icon(
