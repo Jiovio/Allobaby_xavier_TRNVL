@@ -79,4 +79,20 @@ final city = <String, String>{
       createDataWithName("AllobabyUsers",phone, data);
 
     }
+
+
+           static Future<String> audioAI(File aud , String promp) async{
+
+      final prompt = TextPart(promp);
+final audio = await aud.readAsBytes();
+final imagePart = DataPart('audio/aac', audio);
+
+    final response = await ai.generateContent([
+      Content.multi([prompt,imagePart])
+    ]);
+        // print(response.text);
+        return response.text??"";
+    }
+
+
 }

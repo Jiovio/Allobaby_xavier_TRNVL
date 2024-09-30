@@ -287,13 +287,14 @@ bool verified = false;
                               ]),
                         ),
 
-                        ElevatedButton(onPressed: (){
-                          Get.to(Ai());
-                        }, child: Text("AI")),
+                        // ElevatedButton(onPressed: (){
+                        //   Get.to(Ai());
+                        // }, child: Text("AI")),
 
-                                                ElevatedButton(onPressed: (){
-                          Get.to(Googlesignin());
-                        }, child: Text("gs"))
+                        //                         ElevatedButton(onPressed: (){
+                        //   Get.to(Googlesignin());
+                        // }, child: Text("gs"))
+                     
                       ],
                     ),
                   )))

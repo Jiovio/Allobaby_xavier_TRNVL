@@ -1,11 +1,14 @@
 import 'package:allobaby/Components/bottom_nav.dart';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/BabyCry/babyCryController.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Baby extends StatelessWidget {
-  const Baby({super.key});
+   Baby({super.key});
+
+  Babycrycontroller controller = Get.put(Babycrycontroller());
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +72,7 @@ class Baby extends StatelessWidget {
                     children: [
                     Icon(Icons.snooze,size: 30,color: Black,),
                     SizedBox(width: 20,),
-                    Text("Tiredness",style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500,
+                    Text(controller.reason,style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500,
                     color: Black
                     ),)
                     
@@ -96,7 +99,8 @@ class Baby extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: Text("Recommendations",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: PrimaryColor),))
-              
+                ,
+                ...controller.t
             ],
           ),
         ),
@@ -121,6 +125,9 @@ class Baby extends StatelessWidget {
                 // SizedBox(height: 10,),
                 // Divider(color: Colors.grey.shade100,),
                     // const Icon(Icons.close_outlined,color: PrimaryColor,size: 40,),
+
+
+                    
                     
             
             ],),
