@@ -14,7 +14,6 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:localstorage/localstorage.dart';
 
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
@@ -183,7 +182,7 @@ Future<void> checkUser() async{
   if(res==false){
     print("User Not Found");
     Get.snackbar("Welcome New User", "Thanks for choosing us",snackPosition: SnackPosition.BOTTOM);
-    await signInWithGoogle();
+    // await signInWithGoogle();
     Get.to(MomOrDad());
     return;
   }
@@ -250,37 +249,31 @@ if(r){
 
 
 
-  Future<void> signInWithGoogle() async {
-  // Trigger the authentication flow
-  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+//   Future<void> signInWithGoogle() async {
+//   // Trigger the authentication flow
+//   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-  // Obtain the auth details from the request
-  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+//   // Obtain the auth details from the request
+//   final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
-  // Create a new credential
-  final credential = GoogleAuthProvider.credential(
-    accessToken: googleAuth?.accessToken,
-    idToken: googleAuth?.idToken,
-  );
+//   // Create a new credential
+//   final credential = GoogleAuthProvider.credential(
+//     accessToken: googleAuth?.accessToken,
+//     idToken: googleAuth?.idToken,
+//   );
 
-  // Once signed in, return the UserCredential
-  var d = await FirebaseAuth.instance.signInWithCredential(credential);
+//   // Once signed in, return the UserCredential
+//   var d = await FirebaseAuth.instance.signInWithCredential(credential);
 
-  Map<String,dynamic>? userdata = d.additionalUserInfo?.profile;
+//   Map<String,dynamic>? userdata = d.additionalUserInfo?.profile;
 
-  if(userdata!=null){
-    var first_name = userdata["given_name"];
-    var last_name = userdata["family_name"];
-    var email = userdata["email"];
-    var imgurl = userdata["picture"];
-
-    name.text = "${first_name} ${last_name}";
-    emailID.text = email;
-  }
-
-}
-
-
-
-
+//   if(userdata!=null){
+//     var first_name = userdata["given_name"];
+//     var last_name = userdata["family_name"];
+//     var email = userdata["email"];
+//     var imgurl = userdata["picture"];
+//     name.text = "${first_name} ${last_name}";
+//     emailID.text = email;
+//   }
+// }
 }

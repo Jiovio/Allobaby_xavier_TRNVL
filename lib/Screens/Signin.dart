@@ -7,7 +7,6 @@ import 'package:allobaby/Controller/SignupController.dart';
 import 'package:allobaby/Screens/Initial/MomOrDad.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
 import 'package:allobaby/Screens/mobileverification/otpverification.dart';
-import 'package:allobaby/temp/GoogleSignin.dart';
 import 'package:allobaby/temp/ai.dart';
 import 'package:flutter/material.dart';
 import 'package:allobaby/Config/Color.dart';
@@ -287,13 +286,13 @@ bool verified = false;
                               ]),
                         ),
 
-                        ElevatedButton(onPressed: (){
-                          Get.to(Ai());
-                        }, child: Text("AI")),
+                        // ElevatedButton(onPressed: (){
+                        //   Get.to(Ai());
+                        // }, child: Text("AI")),
 
-                                                ElevatedButton(onPressed: (){
-                          Get.to(Googlesignin());
-                        }, child: Text("gs"))
+                        //                         ElevatedButton(onPressed: (){
+                        //   Get.to(Googlesignin());
+                        // }, child: Text("gs"))
                       ],
                     ),
                   )))
