@@ -9,7 +9,7 @@
     <application
         android:label="allobaby"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -31,12 +31,12 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
 <!-- otpless -->
-                  <action android:name="android.intent.action.VIEW" />
+                  <!-- <action android:name="android.intent.action.VIEW" />
                     <category android:name="android.intent.category.DEFAULT" />
                     <category android:name="android.intent.category.BROWSABLE" />
                     <data
                     android:host="otpless"
-                    android:scheme= "otpless.82ar64jhbhzr3t3tex1q"/>
+                    android:scheme= "otpless.82ar64jhbhzr3t3tex1q"/> -->
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

@@ -1,6 +1,10 @@
 
+import 'dart:math';
+
+import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
+import 'package:allobaby/Screens/Home/Report/Report.dart';
 import 'package:allobaby/Screens/Home/Screening/Vitals/BloodGlucose.dart';
 import 'package:allobaby/db/dbHelper.dart';
 import 'package:flutter/material.dart';
@@ -58,21 +62,42 @@ TextEditingController desc = TextEditingController();
     update();
   }
 
-      void submit (){
+      Future<void> submit () async {
     Map<String,dynamic> reportData = {
       "glucose":glucoseValue,
 
     };
 
+    var d = await Userapi.getUser();
+
+    String phone = d["phone_number"];
+   var random = Random();
+  int randomInt = random.nextInt(1000000);
+
+String  url = await OurFirebase.uploadImageToFirebase(phone,"reports","$phone $randomInt.jpg", image);
+
     Map<String,dynamic> data = {
       "reportType":"Glucose",
       "details":json.encode(reportData),
       "reportFile":fileImage64,
-
+      "imageurl":url,
+      "description":desc.text,
+      "phone":phone
     };
 
+
+  
+  // Generates a random integer between 0 and 99
     addReports(data);
 
+  data["created"] = DateTime.now().toString();
+
+    OurFirebase.createDataWithName("reports","$phone $randomInt",data);
+
+
+    print(data);
+
+    Get.to(Report());
     // showToast("Please Enter All Details",'Fields are empty. please enter all fields.');
 
 

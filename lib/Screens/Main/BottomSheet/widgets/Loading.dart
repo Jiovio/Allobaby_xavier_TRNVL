@@ -43,10 +43,10 @@ class _LoadingState extends State<Loading> {
         });
 
 
-            Future.delayed(Duration(seconds: 5), () {
-      Get.to(Baby(),transition: Transition.downToUp);
+      //       Future.delayed(Duration(seconds: 5), () {
+      // Get.to(Baby(),transition: Transition.downToUp);
       
-      });
+      // });
 
         super.initState();
       }

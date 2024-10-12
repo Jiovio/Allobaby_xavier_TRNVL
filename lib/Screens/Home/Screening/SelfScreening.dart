@@ -76,7 +76,7 @@ class _SelfScreeningState extends State<SelfScreening> {
           Glucose(),
           Fetalmonitoring(),
           Ultrasound(),
-          summary(),
+          // summary(),
 
 
 
@@ -119,45 +119,48 @@ class _SelfScreeningState extends State<SelfScreening> {
 
 
 
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          // primary: PrimaryColor,
-                          backgroundColor: PrimaryColor,
-                          foregroundColor: Colors.white
+                      // ElevatedButton(
+                      //   style: ElevatedButton.styleFrom(
+                      //     padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+                      //     shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(20)),
+                      //     // primary: PrimaryColor,
+                      //     backgroundColor: PrimaryColor,
+                      //     foregroundColor: Colors.white
                           
-                        ),
-                        // onPressed: () => serviceController.addCheckupDetails(),
-                        onPressed: () {
+                      //   ),
+                      //   // onPressed: () => serviceController.addCheckupDetails(),
+                      //   onPressed: () {
                           
-                        },
-                        child: Text("SAVE"),
-                      ),
+                      //   },
+                      //   child: Text("SAVE"),
+                      // ),
+
+                      // Container(),
 
 
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          backgroundColor: PrimaryColor,
-                          textStyle: TextStyle(color: White),
-                          foregroundColor: Colors.white
+                      Visibility(
+                        visible: i==6?false:true,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            backgroundColor: PrimaryColor,
+                            textStyle: TextStyle(color: White),
+                            foregroundColor: Colors.white
+                          ),
+                          onPressed: () {
+                        
+                            pg.nextPage(duration: Duration(milliseconds: 300),curve: Curves.linear);
+                            // print(pg.page);
+                        
+                        // _updateCurrentPageIndex(i<1?i++:1);
+                        
+
+                          },
+                          child: Text("NEXT"),
                         ),
-                        onPressed: () {
-
-                          pg.nextPage(duration: Duration(milliseconds: 300),curve: Curves.linear);
-
-
-// _updateCurrentPageIndex(i<1?i++:1);
-
-// setState(() {
-  
-// });
-                        },
-                        child: Text("NEXT"),
                       )
 
         ],),

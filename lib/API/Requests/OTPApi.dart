@@ -5,6 +5,7 @@ import 'package:allobaby/API/authAPI.dart';
 class Otpapi {
   static Future sendOtp(String phone)async{
     var req = await postRequest("/otp/generate-otp", {"phone":phone});
+    print(req);
     return req;
   }
 

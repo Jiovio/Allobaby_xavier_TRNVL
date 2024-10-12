@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Config/OurFirebase.dart';
+import 'package:allobaby/Controller/BabyCry/babyCryController.dart';
 import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Screens/Main/BottomSheet/Baby.dart';
 import 'package:allobaby/Screens/Main/BottomSheet/widgets/Loading.dart';
@@ -8,7 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
+import 'package:path_provider/path_provider.dart';
 import 'dart:ui' as ui;
 import 'package:record/record.dart';
 
@@ -24,11 +27,11 @@ class _VoicerecordState extends State<Voicerecord> {
   final record = AudioRecorder();
   Future check () async {
 
+    
+
     if (await record.hasPermission()) {
-  // Start recording to file
-  // await record.start(const RecordConfig(), path: 'aFullPath/myFile.m4a');
-  // // ... or to stream
-  // final stream = await record.startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
+      startRec();
+
 }
 
   }
@@ -41,19 +44,36 @@ class _VoicerecordState extends State<Voicerecord> {
 
 
       void startRec () async {
-    final stream = await record.startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
+    // final stream = await record.startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
+Directory appDirectory = await getApplicationDocumentsDirectory();
+    const encoder = AudioEncoder.aacLc;
+  const config = RecordConfig(encoder: encoder, numChannels: 1);
+
+   await record.start(config, path: '${appDirectory.path}/rec.aac');
+
+
     }
+
+    Babycrycontroller controller = Get.put(Babycrycontroller());
 
     void stopRec () async {
 
+      if(rec==false){
+
+        return;
+      }
+
+      var file =  await record.stop();
+
       if(rec){
       print("Hi");
-  
 
-      Get.to(Loading());
+           if(file!=null){
+File audioFile = File(file);
+  controller.babydetect(audioFile);
+     }
 
       }
-      await record.stop();
 
       setState(() {
         rec=false;

@@ -1,7 +1,7 @@
 import 'package:allobaby/Controller/AllobotController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:allobaby/Config/Color.dart';
 
 void allobotModal(BuildContext context) {
@@ -73,7 +73,7 @@ Widget _buildHeader() {
         SizedBox(height: 15),
         Text(
           'Allobot',
-          style: GoogleFonts.poppins(
+          style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: PrimaryColor,
@@ -81,7 +81,7 @@ Widget _buildHeader() {
         ),
         Text(
           'Your Maternal AI Assistant',
-          style: GoogleFonts.poppins(
+          style: TextStyle(
             fontSize: 16,
             color: Colors.grey[600],
           ),
@@ -103,7 +103,7 @@ Widget _buildIntroSection() {
         children: [
           Text(
             'Welcome to Allobot!',
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: PrimaryColor,
@@ -112,7 +112,7 @@ Widget _buildIntroSection() {
           SizedBox(height: 10),
           Text(
             'I`m here to support you through your maternal journey. Ask me anything about pregnancy, childbirth, or early motherhood.',
-            style: GoogleFonts.poppins(fontSize: 14),
+            style: TextStyle(fontSize: 14),
           ),
         ],
       ),
@@ -126,7 +126,7 @@ Widget _buildWhatToAskSection() {
     children: [
       Text(
         'What You Can Ask Me:',
-        style: GoogleFonts.poppins(
+        style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
           color: PrimaryColor,
@@ -148,7 +148,7 @@ Widget _buildAskItem(IconData icon, String text) {
       children: [
         Icon(icon, color: accentColor, size: 20),
         SizedBox(width: 10),
-        Text(text, style: GoogleFonts.poppins(fontSize: 14)),
+        Text(text, style: TextStyle(fontSize: 14)),
       ],
     ),
   );
@@ -160,7 +160,7 @@ Widget _buildChatSection() {
     padding: EdgeInsets.symmetric(vertical: 10),
     child: Text(
       'Your conversation will appear here...',
-      style: GoogleFonts.poppins(
+      style: TextStyle(
         fontSize: 14,
         color: Colors.grey[600],
         fontStyle: FontStyle.italic,
@@ -194,7 +194,7 @@ Widget _buildInputSection() {
             controller: controller.input,
             decoration: InputDecoration(
               hintText: 'Ask Allobot...',
-              hintStyle: GoogleFonts.poppins(color: Colors.grey[400]),
+              hintStyle: TextStyle(color: Colors.grey[400]),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(30),
                 borderSide: BorderSide.none,

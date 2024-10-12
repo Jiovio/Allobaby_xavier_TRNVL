@@ -1,5 +1,9 @@
+import 'package:allobaby/API/Requests/ReportAPI.dart';
+import 'package:allobaby/API/Requests/Userapi.dart';
+import 'package:allobaby/API/authAPI.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
+import 'package:allobaby/Screens/Home/Report/Report.dart';
 import 'package:allobaby/db/dbHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -9,12 +13,15 @@ import 'dart:convert' as convert;
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
+import 'dart:math';
 class Hemoglobincontroller extends GetxController {
 
 
 int hemoGlobinValue = 12;
 
 TextEditingController desc = TextEditingController();
+
+String url = "";
 
   late File image;
 
@@ -31,6 +38,8 @@ TextEditingController desc = TextEditingController();
       image = File(pickedFile.path);
 
       askAI(image);
+
+      
       Fluttertoast.showToast(
           msg: "Report Updated Successfully", backgroundColor: PrimaryColor);
     } else {
@@ -58,21 +67,47 @@ TextEditingController desc = TextEditingController();
     update();
   }
 
-  void submit (){
+  Future<void> submit () async {
+
+
+
+    // return;
+
     Map<String,dynamic> reportData = {
       "hemoglobinValue":hemoGlobinValue,
     };
 
+        var d = await Userapi.getUser();
+
+    String phone = d["phone_number"];
+        var random = Random();
+  int randomInt = random.nextInt(1000000);
+
+String  url = await OurFirebase.uploadImageToFirebase(phone,"reports","$phone $randomInt.jpg", image);
     Map<String,dynamic> data = {
       "reportType":"Hemoglobin",
       "details":json.encode(reportData),
       "reportFile":fileImage64,
-
+      "imageurl":url,
+      "description":desc.text,
+      "phone":phone
     };
+
+    // print("________________________________________________________________________");
 
     addReports(data);
 
-    print(data);
+    data["created"] = DateTime.now().toString();
+
+    data.remove("reportFile");
+
+    OurFirebase.createDataWithName("reports","$phone $randomInt",data);
+
+    data.remove("created");
+
+    // print(data);
+    
+    await Reportapi().addReports(data);
 
     // showToast("Please Enter All Details",'Fields are empty. please enter all fields.');
   }
@@ -94,9 +129,9 @@ TextEditingController desc = TextEditingController();
   }
 
 
-  Future<void> uploadImage() async {
+  Future<void> uploadImage(File image) async {
 
-  final spaceRef = OurFirebase.storageRef.child("images/space.jpg");
+  final spaceRef = OurFirebase.storageRef.child("/space.jpg");
 
   print(spaceRef.bucket);
 

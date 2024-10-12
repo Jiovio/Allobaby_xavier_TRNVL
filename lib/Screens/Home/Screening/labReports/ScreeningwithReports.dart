@@ -43,9 +43,9 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
         title: Text("Self Screening"),
       ),
       
-      floatingActionButton: FloatingActionButton(onPressed: getReports,
+      // floatingActionButton: FloatingActionButton(onPressed: getReports,
       
-      ),
+      // ),
 
       body: SingleChildScrollView(
         child: Container(

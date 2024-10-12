@@ -54,7 +54,11 @@ CREATE TABLE sync (
       details TEXT NOT NULL,
       reportFile BLOB,
       created DATETIME DEFAULT CURRENT_TIMESTAMP,
-      synced BOOLEAN DEFAULT FALSE
+      synced BOOLEAN DEFAULT FALSE,
+      imageurl TEXT NOT NULL,
+      phone TEXT NOT NULL,
+      description TEXT NOT NULL
+
     );
   ''');
 

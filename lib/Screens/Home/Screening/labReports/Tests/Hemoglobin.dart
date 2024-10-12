@@ -243,7 +243,7 @@ class Hemoglobin extends StatelessWidget {
                       minimumSize: Size(300, 50),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
-                  onPressed: controller.uploadImage,
+                  onPressed: controller.submit,
                   child: Text("ADD REPORT"))
 
 

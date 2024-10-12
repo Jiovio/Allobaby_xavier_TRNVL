@@ -65,8 +65,11 @@ dependencies:
   firebase_app_check: ^0.3.1
   cloud_firestore: ^5.4.0
   flutter_markdown: ^0.7.3+2
-  google_fonts: ^6.2.1
+  # google_fonts: ^6.2.1
   lottie: ^3.1.2
+  flutter_launcher_icons: ^0.14.1
+
+
 
 dev_dependencies:
   flutter_test:

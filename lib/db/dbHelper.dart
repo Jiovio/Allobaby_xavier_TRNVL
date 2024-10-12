@@ -47,6 +47,7 @@ void addReports(Map<String, Object?> data) async {
 getReports() async {
   Database db = await Sqlite.db();
   var d = await db.query("reports");
+  print(d);
   // print(d);
   // print("Hii");
 

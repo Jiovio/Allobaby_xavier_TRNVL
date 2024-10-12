@@ -2,7 +2,7 @@ import 'package:allobaby/Controller/AllobotController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:lottie/lottie.dart';
 
@@ -47,7 +47,12 @@ class _AllobotState extends State<Allobot> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text('Allobot', style: GoogleFonts.poppins(color: PrimaryColor, fontWeight: FontWeight.w600)),
+        title: Text('Allobot', style: 
+        TextStyle(color: PrimaryColor, fontWeight: FontWeight.w600)
+        // GoogleFonts.poppins(color: PrimaryColor, fontWeight: FontWeight.w600)
+
+        
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: PrimaryColor),
           onPressed: () => Navigator.pop(context),
@@ -110,7 +115,9 @@ class _AllobotState extends State<Allobot> {
                 fillColor: Colors.grey[100],
                 contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
-              style: GoogleFonts.poppins(fontSize: 16),
+              style: 
+              TextStyle(fontSize: 16),
+              // GoogleFonts.poppins(fontSize: 16),
             ),
           ),
           SizedBox(width: 8),
@@ -174,7 +181,9 @@ Widget buildAIThinkingWidget() {
         // Text: AI Thinking
         Text(
           'Thinking...',
-          style: GoogleFonts.poppins(
+          // style: GoogleFonts.poppins
+          style: 
+          TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
             color: PrimaryColor,
@@ -187,7 +196,10 @@ Widget buildAIThinkingWidget() {
         Text(
           'Your maternal AI assistant is processing your question',
           textAlign: TextAlign.center,
-          style: GoogleFonts.poppins(
+          style: 
+          // GoogleFonts.poppins
+          TextStyle
+          (
             fontSize: 14,
             color: Colors.grey[600],
           ),
@@ -270,7 +282,9 @@ class ChatMessage extends StatelessWidget {
                 ),
                 child: Text(
                   text,
-                  style: GoogleFonts.poppins(color: PrimaryColor, fontSize: 16),
+                  style:TextStyle
+                 //GoogleFonts.poppins//
+                 (color: PrimaryColor, fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -294,7 +308,9 @@ class ChatMessage extends StatelessWidget {
                         SizedBox(width: 8),
                         Text(
                           'Allobot',
-                          style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 16, color: PrimaryColor),
+                          style: 
+                          TextStyle
+                          (fontWeight: FontWeight.w600, fontSize: 16, color: PrimaryColor),
                         ),
                       ],
                     ),
@@ -302,11 +318,14 @@ class ChatMessage extends StatelessWidget {
                     MarkdownBody(
                       data: text,
                       styleSheet: MarkdownStyleSheet(
-                        p: GoogleFonts.poppins(fontSize: 16),
-                        h1: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color: PrimaryColor),
-                        h2: GoogleFonts.poppins(fontSize: 22, fontWeight: FontWeight.bold, color: PrimaryColor),
-                        h3: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: PrimaryColor),
-                        code: GoogleFonts.robotoMono(fontSize: 14, backgroundColor: Colors.grey[200]),
+                        p: TextStyle(fontSize: 16),
+                        h1: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: PrimaryColor),
+                        h2: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: PrimaryColor),
+                        h3: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: PrimaryColor),
+                        code: 
+                        // GoogleFonts.robotoMono
+                        TextStyle
+                        (fontSize: 14, backgroundColor: Colors.grey[200]),
                         em: TextStyle(color: Black800),
                         strong: TextStyle(color: PrimaryColor),
                       ),
