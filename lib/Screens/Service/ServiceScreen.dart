@@ -1,8 +1,10 @@
 import 'package:allobaby/Components/appbar.dart';
 import 'package:allobaby/Screens/Service/Appointment.dart';
 import 'package:allobaby/Screens/Service/HealthProfile.dart';
+import 'package:allobaby/temp/CallView.dart';
 import 'package:flutter/material.dart';
 import 'package:allobaby/Config/Color.dart';
+
 import 'package:get/get.dart';
 
 class ServiceScreen extends StatefulWidget {
@@ -162,6 +164,11 @@ class _ServiceScreenState extends State<ServiceScreen> {
                 SizedBox(
                   height: 14,
                 ),
+
+
+                ElevatedButton(onPressed: (){
+                  Get.to(Callview());
+                }, child: Icon(Icons.abc))
           ]
           
           ),

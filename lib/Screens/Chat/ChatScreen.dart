@@ -1,12 +1,17 @@
+import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/Components/appbar.dart';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/ChatController.dart';
 import 'package:allobaby/Screens/AI/allobotModal.dart';
 import 'package:allobaby/Screens/Chat/Chat.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+   ChatScreen({super.key});
+
+
+  Chatcontroller controller = Get.put(Chatcontroller());
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +46,7 @@ class ChatScreen extends StatelessWidget {
                   highlightColor: accentColor.withOpacity(0.1),
                   splashColor: accentColor.withOpacity(0.8),
                   onTap: () => 
-                  Get.to(() => Chat(title: "Doctor"),
-                      transition: Transition.rightToLeft),
+                  controller.checkHospAndSend("doctor"),
                   child: Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 8),
                     child: ListTile(
@@ -70,8 +74,8 @@ class ChatScreen extends StatelessWidget {
                   highlightColor: accentColor.withOpacity(0.1),
                   splashColor: accentColor.withOpacity(0.8),
                   onTap: () =>
-                  Get.to(() => Chat(title: "HealthWorker"),
-                      transition: Transition.rightToLeft),
+                controller.checkHospAndSend("healthworker"),
+
                   child: Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 8),
                     child: ListTile(

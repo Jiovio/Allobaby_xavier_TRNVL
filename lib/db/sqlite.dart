@@ -62,6 +62,16 @@ CREATE TABLE sync (
     );
   ''');
 
+        await db.execute('''
+    CREATE TABLE chats (
+      id TEXT NOT NULL,
+      senderId TEXT NOT NULL,
+      receiverid TEXT NOT NULL,
+      msg TEXT NOT NULL,
+      image TEXT
+    );
+  ''');
+
     // await db.execute('''
     //   insert into my_table (name) values("vijay");
     // ''');
@@ -78,5 +88,10 @@ CREATE TABLE sync (
       },
     );
   }
+
+
+
+
+
 
 }

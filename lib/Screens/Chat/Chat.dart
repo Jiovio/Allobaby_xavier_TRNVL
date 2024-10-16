@@ -1,6 +1,10 @@
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Models/ChatMessage.dart';
+import 'package:allobaby/db/dbHelper.dart';
+import 'package:allobaby/db/sqlite.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher ; 
@@ -10,10 +14,174 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher ; 
 import 'package:path_provider/path_provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io' as Io;
+import 'dart:io' ;
+import 'dart:convert' as convert;
 
-class Chat extends StatelessWidget {
+class Chat extends StatefulWidget {
   String title;
-   Chat({super.key, required this.title});
+  String chatId;
+  String p2;
+  String p1;
+
+  Chat({super.key, required this.title, required this.chatId, required this.p2, required this.p1});
+
+  @override
+  State<Chat> createState() => _ChatState();
+}
+
+class _ChatState extends State<Chat> {
+
+  List<Messages> messages = [];
+  ScrollController _scrollController = ScrollController();
+
+  int limit = 15;
+  bool isLoading = false;
+  int offset = 0;
+
+    @override
+  void initState() {
+    super.initState();
+    _fetchInitialMessages();
+    
+
+    _scrollController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    if (_scrollController.position.pixels == _scrollController.position.minScrollExtent && !isLoading) {
+      _fetchMoreMessages();
+    }
+  }
+
+    Future<void> _fetchMoreMessages() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    List<Messages> newMessages = await getMessages(limit, offset);
+    
+    setState(() {
+      messages.insertAll(0, newMessages);
+      offset += limit;
+      isLoading = false;
+    });
+  }
+
+
+    Future<void> _fetchInitialMessages() async {
+    List<Messages> newMessages = await getMessages(limit, offset);
+
+    print(newMessages);
+    setState(() {
+      messages.addAll(newMessages);
+      offset += limit;
+    });
+
+    }
+
+
+      Future<List<Messages>> getMessages(int limit, int offset) async {
+    final db = await Sqlite.db();
+
+    final data =  await db.query(
+      'chats',
+      orderBy: 'created DESC',
+      where: "id=?",
+      whereArgs: [widget.chatId],
+      limit: limit,
+      offset: offset,
+    );
+
+   return Messages.fromMapList(data);
+  }
+
+  TextEditingController textInput = TextEditingController();
+
+  void submit() async {
+
+    String type = "text";
+
+    if(image!=null){
+      type = "image";
+    }
+
+    // insertMessage(id: widget.chatId,
+    // senderId: widget.p1,
+    // receiverId: widget.p2,
+    // message: textInput.text,
+    // timestamp: DateTime.now()
+    // );
+
+    // print(messages);
+
+    Messages msg = Messages(
+    
+    senderId: widget.p1,
+    receiverId: widget.p2,
+    message: textInput.text,
+    timestamp: DateTime.now(),
+    type: type
+    );
+
+
+    // await OurFirebase.addUser();
+
+    // return;
+
+    await OurFirebase.addMessages(msg,widget.p2);
+    
+
+    messages.add(msg);
+
+    textInput.text = "";
+
+    setState((){
+    });
+  
+  }
+
+  final picker = ImagePicker();
+  late var fileImage64;
+
+   File? image;
+
+  Future getImageFromCamera() async {
+    final pickedFile =
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 20);
+    if (pickedFile != null) {
+      final bytes = await Io.File(pickedFile.path).readAsBytes();
+      fileImage64 = convert.base64Encode(bytes);
+      image = File(pickedFile.path);
+
+      Fluttertoast.showToast(
+          msg: "Report Updated Successfully", backgroundColor: PrimaryColor);
+    } else {
+      print('No image selected.');
+    }
+  setState(() {
+    
+  });
+  }
+
+    Future<void> getImageFromGallery() async {
+    final pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 20,
+    );
+    if (pickedFile != null) {
+      final bytes = await Io.File(pickedFile.path).readAsBytes();
+      fileImage64 = convert.base64Encode(bytes);
+      image = File(pickedFile.path);
+
+      Fluttertoast.showToast(
+          msg: "Report Updated Successfully", backgroundColor: PrimaryColor);
+    } else {
+      print('No image selected.');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,19 +212,13 @@ class Chat extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          title == "Doctor"
-                              ? Text(
-                                  "Dr. Chandrasekar",
+                          Text(
+                                  widget.title,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600),
                                 )
-                              : Text(
-                                  "SenthilKumar",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600),
-                                ),
+                              ,
                           SizedBox(
                             height: 1,
                           ),
@@ -97,6 +259,8 @@ class Chat extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () async {
+
+                        createChatTable();
                         // if (await Permissions
                         //     .cameraAndMicrophonePermissionsGranted()) {
                         //   DocumentSnapshot documentSnapshot = await fireStore
@@ -120,7 +284,7 @@ class Chat extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () async {
-                       title == 'Doctor' ? await urlLauncher.launch('tel:04523500629') : await urlLauncher.launch('tel:04523500630');
+                       widget.title == 'Doctor' ? await urlLauncher.launch('tel:04523500629') : await urlLauncher.launch('tel:04523500630');
                         // if (await Permissions.microphonePermissionsGranted()) {
                         //   DocumentSnapshot documentSnapshot = await fireStore
                         //       .collection(patientCollection)
@@ -157,73 +321,37 @@ class Chat extends StatelessWidget {
               Expanded(
                 child: Scrollbar(
                     radius: Radius.circular(4),
-                    // controller: chatController.scrollController,
+                    controller: _scrollController,
 
                     
                     child: ListView.builder(
-                      itemCount: getTestMessages().length,
+                      itemCount: messages.length,
                       shrinkWrap: true,
                       padding: EdgeInsets.only(top: 10, bottom: 10),
                       physics: AlwaysScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
 
-                        List<Messages> ls = getTestMessages();
+                        // List<Messages> ls = getTestMessages();
+                        
+
 
 
                         return Container(
                                   padding: EdgeInsets.only(
                                       left: 14, right: 14, top: 8),
                                   child: Align(
-                                    alignment: (ls[index].senderId == testUID
+                                    alignment: (messages[index].senderId == widget.p1
                                         ? Alignment.topRight
                                         : Alignment.topLeft),
 
                                     child: chatMessageView(
-                                        ls, index, context),
+                                        messages, index,widget.p1, context),
                                   ),
                                 );
                         
                       },
                     ),
 
-                    
-                    // child: StreamBuilder<List<Messages>>(
-                    //     stream: chatController.getMessages(
-                    //         title == "Doctor"
-                    //             ? chatController.doctorDetails.value.uid!
-                    //             : chatController.healthWorkerDetails.value.uid!,
-                    //         FirebaseAuth.instance.currentUser!.uid),
-           
-                    //     builder: (context,
-                    //         AsyncSnapshot<List<Messages>> userMessages) {
-                    //       if (userMessages.hasData) {
-                    //         List<Messages>? fullMessage = userMessages.data;
-
-                    //         return ListView.builder(
-                    //           itemCount: fullMessage!.length,
-                    //           shrinkWrap: true,
-                    //           reverse: true,
-                    //           padding: EdgeInsets.only(top: 10, bottom: 10),
-                    //           physics: AlwaysScrollableScrollPhysics(),
-                    //           itemBuilder: (context, index) {
-                    //             return Container(
-                    //               padding: EdgeInsets.only(
-                    //                   left: 14, right: 14, top: 8),
-                    //               child: Align(
-                    //                 alignment: (fullMessage[index].senderId ==
-                    //                         FirebaseAuth
-                    //                             .instance.currentUser!.uid
-                    //                     ? Alignment.topRight
-                    //                     : Alignment.topLeft),
-                    //                 child: chatMessageView(
-                    //                     fullMessage, index, context),
-                    //               ),
-                    //             );
-                    //           },
-                    //         );
-                    //       }
-                    //       return Container();
-                    //     })
                         
                         ),
               ),
@@ -271,7 +399,7 @@ class Chat extends StatelessWidget {
                                     ),
                                     child: TextField(
                                       onTap: () {},
-                                      // controller: chatController.chatMessage,
+                                      controller: textInput,
                                       keyboardType: TextInputType.multiline,
                                       maxLines: null,
                                       cursorColor: PrimaryColor,
@@ -317,48 +445,7 @@ class Chat extends StatelessWidget {
                                                     elevation: 0,
                                                     tooltip: "Gallery",
                                                     onPressed: () async {
-                                                      // title == "Doctor"
-                                                      //     ? await chatController.pickImage(
-                                                      //         ImageSource
-                                                      //             .gallery,
-                                                      //         senderId: FirebaseAuth
-                                                      //             .instance
-                                                      //             .currentUser!
-                                                      //             .uid,
-                                                      //         receiverId:
-                                                      //             chatController
-                                                      //                 .doctorDetails
-                                                      //                 .value
-                                                      //                 .uid!,
-                                                      //         type: title,
-                                                      //         receiverDetails:
-                                                      //             searchedUser)
-                                                      //     : await chatController.pickImage(
-                                                      //         ImageSource
-                                                      //             .gallery,
-                                                      //         senderId:
-                                                      //             FirebaseAuth
-                                                      //                 .instance
-                                                      //                 .currentUser!
-                                                      //                 .uid,
-                                                      //         receiverId:
-                                                      //             chatController
-                                                      //                 .healthWorkerDetails
-                                                      //                 .value
-                                                      //                 .uid!,
-                                                      //         type: title,
-                                                      //         receiverDetails:
-                                                      //             searchedUser);
-                                                      // chatController
-                                                      //     .scrollController
-                                                      //     .animateTo(
-                                                      //   0.0,
-                                                      //   curve: Curves.easeOut,
-                                                      //   duration:
-                                                      //       const Duration(
-                                                      //           milliseconds:
-                                                      //               300),
-                                                      // );
+
                                                     },
                                                     child: Icon(Icons.photo,
                                                         color: White)),
@@ -368,46 +455,7 @@ class Chat extends StatelessWidget {
                                                     elevation: 0,
                                                     tooltip: "File",
                                                     onPressed: () async {
-                                                      // title == "Doctor"
-                                                      //     ? await chatController.pickFile(
-                                                      //         FileType.any,
-                                                      //         senderId: FirebaseAuth
-                                                      //             .instance
-                                                      //             .currentUser!
-                                                      //             .uid,
-                                                      //         receiverId:
-                                                      //             chatController
-                                                      //                 .doctorDetails
-                                                      //                 .value
-                                                      //                 .uid!,
-                                                      //         type: title,
-                                                      //         receiverDetails:
-                                                      //             searchedUser)
-                                                      //     : await chatController.pickFile(
-                                                      //         FileType.any,
-                                                      //         senderId:
-                                                      //             FirebaseAuth
-                                                      //                 .instance
-                                                      //                 .currentUser!
-                                                      //                 .uid,
-                                                      //         receiverId:
-                                                      //             chatController
-                                                      //                 .healthWorkerDetails
-                                                      //                 .value
-                                                      //                 .uid!,
-                                                      //         type: title,
-                                                      //         receiverDetails:
-                                                      //             searchedUser);
-                                                      // chatController
-                                                      //     .scrollController
-                                                      //     .animateTo(
-                                                      //   0.0,
-                                                      //   curve: Curves.easeOut,
-                                                      //   duration:
-                                                      //       const Duration(
-                                                      //           milliseconds:
-                                                      //               300),
-                                                      // );
+                                                     
                                                     },
                                                     child: Icon(
                                                       Icons.file_copy,
@@ -474,6 +522,7 @@ class Chat extends StatelessWidget {
                             width: 50,
                             child: FloatingActionButton(
                               onPressed: () {
+                                submit();
                                 // var text = chatController.chatMessage.text;
                                 // if (text != "") {
                                 //   Messages message;
@@ -621,9 +670,9 @@ return ls;
 }
 
   Widget chatMessageView(
-      List<Messages> fullMessage, int index, BuildContext context) {
+      List<Messages> fullMessage, int index,String p1, BuildContext context) {
     DateTime timestamp = fullMessage[index].timestamp!;
-    final String dateTime = "13=07-23";
+    final String dateTime = "14-07-23";
     final dt = fullMessage[index].timestamp;
     final dateString = DateFormat.jm().format(dt!);
     final date = DateFormat("d MMM ").format(dt);
@@ -678,7 +727,7 @@ return ls;
             ),
             padding: EdgeInsets.zero,
             child: Column(
-              crossAxisAlignment: (fullMessage[index].senderId == testUID
+              crossAxisAlignment: (fullMessage[index].senderId == p1
                   ? CrossAxisAlignment.end
                   : CrossAxisAlignment.start),
               children: [
@@ -710,13 +759,13 @@ return ls;
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: (fullMessage[index].senderId ==
-                      testUID
+                      p1
                   ? PrimaryColor
                   : Black200)),
           padding: EdgeInsets.only(left: 12, right: 12, top: 8, bottom: 8),
           child: Column(
             crossAxisAlignment: (fullMessage[index].senderId ==
-                    testUID
+                    p1
                 ? CrossAxisAlignment.end
                 : CrossAxisAlignment.start),
             children: [
@@ -885,7 +934,7 @@ return ls;
                           fullMessage[index].fileSize!,
                           style: TextStyle(
                             fontSize: 12,
-                            color: (fullMessage[index].senderId == testUID
+                            color: (fullMessage[index].senderId == p1
                                 ? Colors.grey[300]
                                 : Black),
                           ),
@@ -914,7 +963,7 @@ return ls;
                                             "%",
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: (fullMessage[index].senderId == testUID
+                                          color: (fullMessage[index].senderId == p1
 
                                               ? Colors.grey[300]
                                               : Black),
@@ -924,7 +973,7 @@ return ls;
                           date + ", " + dateString,
                           style: TextStyle(
                             fontSize: 12,
-                            color: (fullMessage[index].senderId == testUID
+                            color: (fullMessage[index].senderId == p1
                                     
                                 ? Colors.grey[300]
                                 : Colors.grey),

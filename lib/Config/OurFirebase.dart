@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:allobaby/API/Requests/Userapi.dart';
+import 'package:allobaby/Models/ChatMessage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -10,6 +11,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:firebase_vertexai/firebase_vertexai.dart';
 import 'dart:convert';
+import 'package:firebase_database/firebase_database.dart';
 class OurFirebase {
 
   static final db = FirebaseFirestore.instance;
@@ -17,6 +19,8 @@ class OurFirebase {
   static final storage = FirebaseStorage.instance;
 
   static final storageRef = FirebaseStorage.instance.ref();
+
+ static final FirebaseDatabase database = FirebaseDatabase.instance;
 
   static final ai = FirebaseVertexAI.instance.generativeModel(model: 'gemini-1.5-flash',
   generationConfig: GenerationConfig(
@@ -182,6 +186,39 @@ final imagePart = DataPart('audio/aac', audio);
     ]);
         // print(response.text);
         return response.text??"";
+    }
+
+    static Future<void>  addUser() async {
+
+      try {
+         DatabaseReference ref = FirebaseDatabase.instance.ref("users/P1");
+      await ref.set({"name":"Astro"});
+      } catch (e) {
+
+        print(e);
+        
+      }
+
+
+    }
+
+    static Future<void>  addMessages(Messages msg,String to) async {
+
+      try {
+      DatabaseReference ref = FirebaseDatabase.instance.ref("users/$to");
+      DatabaseReference newMessRef = ref.push();
+
+      print(msg.toMap());
+
+      await newMessRef.set(msg.toMap());
+      } catch (e) {
+
+        print(e);
+        
+      }
+
+
+
     }
 
 

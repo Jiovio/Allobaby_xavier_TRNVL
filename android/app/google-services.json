@@ -2,7 +2,8 @@
   "project_info": {
     "project_number": "492221570730",
     "project_id": "savemom-healthcare",
-    "storage_bucket": "savemom-healthcare.appspot.com"
+    "storage_bucket": "savemom-healthcare.appspot.com",
+    "firebase_url": "https://savemom-healthcare-default-rtdb.asia-southeast1.firebasedatabase.app"
   },
   "client": [
     {

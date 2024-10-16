@@ -55,3 +55,57 @@ getReports() async {
   Get.to(ReportListPage(),arguments: d);
 
 }
+
+
+createChatTable() async{
+  Database db = await Sqlite.db();
+  await db.execute('''
+    DROP TABLE chats;
+''');
+
+await db.execute('''
+CREATE TABLE chats (
+  id TEXT NOT NULL,
+  senderId TEXT NOT NULL,
+  receiverId TEXT NOT NULL,
+  type TEXT,
+  message TEXT,
+  timestamp TIMESTAMP NOT NULL,
+  photoUrl TEXT,
+  fileUrl TEXT,
+  fileSize TEXT,
+  fileName TEXT
+);
+''');
+}
+
+
+Future<void> insertMessage( {
+  required String id,
+  required String senderId,
+  required String receiverId,
+  String? type,
+  String? message,
+  DateTime? timestamp,
+  String? photoUrl,
+  String? fileUrl,
+  String? fileSize,
+  String? fileName,
+}) async {
+  Database db = await  Sqlite.db();
+  await db.insert(
+    'chats',
+    {
+      'id': id,
+      'senderId': senderId,
+      'receiverId': receiverId,
+      'type': type,
+      'message': message,
+      'timestamp': (timestamp ?? DateTime.now()).toIso8601String(),
+      'photoUrl': photoUrl,
+      'fileUrl': fileUrl,
+      'fileSize': fileSize,
+      'fileName': fileName,
+    },
+  );
+}
