@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:allobaby/API/Requests/Userapi.dart';
+import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/Models/ChatMessage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -202,7 +203,7 @@ final imagePart = DataPart('audio/aac', audio);
 
     }
 
-    static Future<void>  addMessages(Messages msg,String to) async {
+    static Future<void>  addMessages(Messages msg,String to, dynamic details) async {
 
       try {
       DatabaseReference ref = FirebaseDatabase.instance.ref("users/$to");
@@ -210,7 +211,7 @@ final imagePart = DataPart('audio/aac', audio);
 
       print(msg.toMap());
 
-      await newMessRef.set(msg.toMap());
+      await newMessRef.set({...msg.toMap(),...details});
       } catch (e) {
 
         print(e);
@@ -220,6 +221,21 @@ final imagePart = DataPart('audio/aac', audio);
 
 
     }
+
+
+
+    static Future<dynamic> getCurrentMessages() async{
+      final userid = Storage.getUserID();
+      DatabaseReference ref = FirebaseDatabase.instance.ref();
+      final snapshot = await ref.child("users/P$userid").get();
+      print(userid);
+      print(snapshot);
+      if(snapshot.exists){
+        print(snapshot.value);  
+      }
+      return snapshot.value;
+    }
+
 
 
 }

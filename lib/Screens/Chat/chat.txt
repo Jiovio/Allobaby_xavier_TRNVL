@@ -314,7 +314,12 @@ class _ChatState extends State<Chat> {
                       padding: EdgeInsets.only(top: 10, bottom: 10),
                       physics: AlwaysScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
+
+                        // List<Messages> ls = getTestMessages();
                         
+
+
+
                         return Container(
                                   padding: EdgeInsets.only(
                                       left: 14, right: 14, top: 8),
@@ -356,7 +361,12 @@ class _ChatState extends State<Chat> {
                               children: [
                                 InkWell(
                                     onTap: () {
+                                      // print("Clicked Emoji Picker");
                                       emojiContainer();
+                                      // chatController.emojiShowing.value =
+                                      //     !chatController.emojiShowing.value
+                                      //         .obs();
+                                      // chatController.update();
                                     },
                                     child: Icon(
                                       Icons.emoji_emotions_rounded,
@@ -450,6 +460,32 @@ class _ChatState extends State<Chat> {
                                     ),
                                     InkWell(
                                       onTap: () async {
+                                        // chatController.scrollController
+                                        //     .animateTo(
+                                        //   0.0,
+                                        //   curve: Curves.easeOut,
+                                        //   duration:
+                                        //       const Duration(milliseconds: 300),
+                                        // );
+                                        // title == "Doctor"
+                                        //     ? await chatController.pickImage(
+                                        //         ImageSource.camera,
+                                        //         senderId: FirebaseAuth
+                                        //             .instance.currentUser!.uid,
+                                        //         receiverId: chatController
+                                        //             .doctorDetails.value.uid!,
+                                        //         type: title,
+                                        //         receiverDetails: searchedUser)
+                                        //     : await chatController.pickImage(
+                                        //         ImageSource.camera,
+                                        //         senderId: FirebaseAuth
+                                        //             .instance.currentUser!.uid,
+                                        //         receiverId: chatController
+                                        //             .healthWorkerDetails
+                                        //             .value
+                                        //             .uid!,
+                                        //         type: title,
+                                        //         receiverDetails: searchedUser);
                                       },
                                       child: Icon(
                                         Icons.camera_alt_rounded,
@@ -471,7 +507,43 @@ class _ChatState extends State<Chat> {
                             child: FloatingActionButton(
                               onPressed: () {
                                 submit();
-                                
+                                // var text = chatController.chatMessage.text;
+                                // if (text != "") {
+                                //   Messages message;
+                                //   title == "Doctor"
+                                //       ? message = Messages(
+                                //           receiverId: chatController
+                                //               .doctorDetails.value.uid,
+                                //           senderId: FirebaseAuth
+                                //               .instance.currentUser?.uid,
+                                //           message: text,
+                                //           timestamp: Timestamp.now(),
+                                //           type: 'text')
+                                //       : message = Messages(
+                                //           receiverId: chatController
+                                //               .healthWorkerDetails.value.uid,
+                                //           senderId: FirebaseAuth
+                                //               .instance.currentUser?.uid,
+                                //           message: text,
+                                //           timestamp: Timestamp.now(),
+                                //           type: 'text');
+                                //   chatController.scrollController.animateTo(
+                                //     0.0,
+                                //     curve: Curves.easeOut,
+                                //     duration: const Duration(milliseconds: 300),
+                                //   );
+                                //   String? senderName = title == "Doctor"
+                                //       ? chatController.doctorDetails.value.name
+                                //       : chatController
+                                //           .healthWorkerDetails.value.name;
+                                //   String? deviceToken = title == "Doctor"
+                                //       ? chatController
+                                //           .doctorDetails.value.fcmToken
+                                //       : chatController
+                                //           .healthWorkerDetails.value.fcmToken;
+                                //   chatController.sendMessageToDb(
+                                //       message, title, senderName, deviceToken);
+                                // }
                               },
                               child: Icon(
                                 Icons.send,
@@ -494,7 +566,9 @@ class _ChatState extends State<Chat> {
               
             ],
           ),
+        
 
+      
       );
     
   }
@@ -640,7 +714,100 @@ class _ChatState extends State<Chat> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              
+              // Container(
+              //     height: 42,
+              //     width: 42,
+              //     decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(24), color: White),
+              //     child: GetBuilder<ChatController>(
+              //         builder: (chatController) => chatController
+              //                         .messageIndex ==
+              //                     index &&
+              //                 chatController.progress != 0.0
+              //             ? Stack(alignment: Alignment.center, children: [
+              //                 CircularProgressIndicator(
+              //                   value: chatController.progress.toDouble(),
+              //                   valueColor:
+              //                       AlwaysStoppedAnimation<Color>(PrimaryColor),
+              //                   backgroundColor: White,
+              //                 ),
+              //                 GestureDetector(
+              //                   onTap: () {
+              //                     FlutterDownloader.cancel(taskId: id);
+              //                   },
+              //                   child: Icon(
+              //                     Icons.clear,
+              //                     color: PrimaryColor,
+              //                   ),
+              //                 )
+              //               ])
+              //             : GestureDetector(
+              //                 onTap: () async {
+              //                   final status =
+              //                       await Permission.storage.request();
+              //                   final externalDir =
+              //                       await getExternalStorageDirectory();
+              //                   var a =
+              //                       "${externalDir!.path}/${fullMessage[index].fileName}";
+
+              //                   bool fileExists = await File(a).exists();
+              //                   print(fileExists);
+              //                   if (fileExists) {
+              //                     showDialog(
+              //                         builder: (context) => Container(
+              //                             color: Black,
+              //                             height: Get.height,
+              //                             width: Get.width / 2,
+              //                             child: Column(
+              //                               crossAxisAlignment:
+              //                                   CrossAxisAlignment.start,
+              //                               children: [
+              //                                 Material(
+              //                                   color: Colors.transparent,
+              //                                   child: IconButton(
+              //                                     onPressed: () =>
+              //                                         Navigator.pop(context),
+              //                                     icon: Icon(
+              //                                       Icons.arrow_back,
+              //                                       color: White,
+              //                                     ),
+              //                                   ),
+              //                                 ),
+              //                                 SizedBox(
+              //                                   height: 20,
+              //                                 ),
+              //                                 Expanded(
+              //                                   child: Center(
+              //                                     child: Image.file(
+              //                                       File(a),
+              //                                       fit: BoxFit.contain,
+              //                                     ),
+              //                                   ),
+              //                                 ),
+              //                               ],
+              //                             )),
+              //                         context: context);
+              //                   } else {
+              //                     if (status.isGranted) {
+              //                       final externalDir =
+              //                           await getExternalStorageDirectory();
+              //                       chatController.onMessageIndex(index);
+              //                       id = (await FlutterDownloader.enqueue(
+              //                           url: fullMessage[index].fileUrl!,
+              //                           savedDir: externalDir!.path,
+              //                           fileName: fullMessage[index].fileName,
+              //                           openFileFromNotification: true,
+              //                           showNotification: true))!;
+              //                     } else {
+              //                       print("permission denied");
+              //                     }
+              //                   }
+              //                 },
+              //                 child: Icon(
+              //                   Icons.arrow_downward,
+              //                   color: PrimaryColor,
+              //                 ),
+              //               ))),
               SizedBox(
                 width: 10,
               ),

@@ -1,4 +1,5 @@
 class Messages {
+  String? id; // New field
   String? senderId;
   String? receiverId;
   String? type;
@@ -10,7 +11,8 @@ class Messages {
   String? fileName;
 
   Messages(
-      {this.senderId,
+      {this.id, // New field in constructor
+      this.senderId,
       this.receiverId,
       this.type,
       this.message,
@@ -18,7 +20,8 @@ class Messages {
 
   // Named constructor for image messages
   Messages.imageMessage(
-      {this.senderId,
+      {this.id, // New field in constructor
+      this.senderId,
       this.receiverId,
       this.message,
       this.type,
@@ -27,7 +30,8 @@ class Messages {
 
   // Named constructor for file messages
   Messages.fileMessage(
-      {this.senderId,
+      {this.id, // New field in constructor
+      this.senderId,
       this.receiverId,
       this.message,
       this.type,
@@ -39,6 +43,7 @@ class Messages {
   // Convert regular message to map
   Map toMap() {
     var map = Map<String, dynamic>();
+    map['id'] = this.id; // Include new field
     map['senderId'] = this.senderId;
     map['receiverId'] = this.receiverId;
     map['type'] = this.type;
@@ -50,6 +55,7 @@ class Messages {
   // Convert image message to map
   Map toImageMap() {
     var map = Map<String, dynamic>();
+    map['id'] = this.id; // Include new field
     map['message'] = this.message;
     map['senderId'] = this.senderId;
     map['receiverId'] = this.receiverId;
@@ -62,6 +68,7 @@ class Messages {
   // Convert file message to map
   Map toFileMap() {
     var map = Map<String, dynamic>();
+    map['id'] = this.id; // Include new field
     map['message'] = this.message;
     map['senderId'] = this.senderId;
     map['receiverId'] = this.receiverId;
@@ -75,6 +82,7 @@ class Messages {
 
   // Named constructor to create Message from map
   Messages.fromMap(Map<String, dynamic> map) {
+    this.id = map['id']; // Include new field
     this.senderId = map['senderId'];
     this.receiverId = map['receiverId'];
     this.type = map['type'];
@@ -91,3 +99,6 @@ class Messages {
     return mapList.map((map) => Messages.fromMap(map)).toList();
   }
 }
+
+
+

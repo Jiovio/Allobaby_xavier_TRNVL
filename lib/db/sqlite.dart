@@ -62,13 +62,37 @@ CREATE TABLE sync (
     );
   ''');
 
-        await db.execute('''
-    CREATE TABLE chats (
-      id TEXT NOT NULL,
-      senderId TEXT NOT NULL,
-      receiverid TEXT NOT NULL,
-      msg TEXT NOT NULL,
-      image TEXT
+  await db.execute('''
+    DROP TABLE chats;
+''');
+  await db.execute('''
+    DROP TABLE chatlist;
+''');
+
+await db.execute('''
+CREATE TABLE chats (
+  id TEXT NOT NULL,
+  senderId TEXT NOT NULL,
+  receiverId TEXT NOT NULL,
+  type TEXT,
+  message TEXT,
+  timestamp TIMESTAMP NOT NULL,
+  photoUrl TEXT,
+  fileUrl TEXT,
+  fileSize TEXT,
+  fileName TEXT,
+  fid TEXT
+);
+''');
+
+  await db.execute('''
+    CREATE TABLE chatlist (
+      name TEXT,
+      fid TEXT,
+      id TEXT,
+      type TEXT,
+      lastMessage TEXT,
+      recent TIMESTAMP
     );
   ''');
 

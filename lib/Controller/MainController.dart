@@ -1,4 +1,5 @@
 import 'package:allobaby/API/Requests/Userapi.dart';
+import 'package:allobaby/utils/backgroundservice.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
@@ -12,6 +13,8 @@ class Maincontroller extends GetxController {
   fromJson(d);
   getCounterData();
   print("*********************");
+
+  Backgroundservice.listenForData();
 
   loading.value = false;
   update();

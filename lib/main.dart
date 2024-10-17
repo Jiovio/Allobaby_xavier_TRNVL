@@ -1,3 +1,4 @@
+import 'package:allobaby/Config/background_service.dart';
 import 'package:allobaby/app.dart';
 import 'package:allobaby/db/sqlite.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,6 @@ import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
