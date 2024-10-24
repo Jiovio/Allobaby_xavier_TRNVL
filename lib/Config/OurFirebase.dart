@@ -4,7 +4,9 @@ import 'dart:math';
 
 import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/API/local/Storage.dart';
+import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Models/ChatMessage.dart';
+import 'package:allobaby/temp/CallView.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -13,6 +15,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_vertexai/firebase_vertexai.dart';
 import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:get/get.dart';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:localstorage/localstorage.dart';
 class OurFirebase {
 
   static final db = FirebaseFirestore.instance;
@@ -21,7 +27,14 @@ class OurFirebase {
 
   static final storageRef = FirebaseStorage.instance.ref();
 
- static final FirebaseDatabase database = FirebaseDatabase.instance;
+  static final FirebaseDatabase database = FirebaseDatabase.instance;
+
+  static FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    void getToken() async {
+      String? token = await messaging.getToken();
+      print("FCM Token: $token");
+    }
 
   static final ai = FirebaseVertexAI.instance.generativeModel(model: 'gemini-1.5-flash',
   generationConfig: GenerationConfig(
@@ -33,9 +46,14 @@ class OurFirebase {
   );
 
 
-  static Future<String> uploadImageToFirebase(String phone,String path,String filename,File image) async {
 
 
+  static Future<String> uploadImageToFirebase(String? phone,String path,String filename,File image) async {
+
+  Maincontroller cont = Get.put(Maincontroller());
+
+  phone ??= cont.phoneNumber.text;
+  
 
   final spaceRef = OurFirebase.storageRef.child("/Allobaby/$phone/$path/$filename");
 
@@ -131,13 +149,27 @@ static Future<List<Map<String, dynamic>>> getReports() async {
 
   static Future<Map<String, dynamic>> getAIAppointments() async {
     try {
+
       var d = await Userapi.getUser();
+
+      final local = await localStorage.getItem("${d.toString()}/aiappointment");
+
+
+      if(local!=null){
+
+        return json.decode(local);
+        
+      }
+
+      
       print(d);
       var status = d["pregnancy_status"];
       var lmp_date = d["lmp_date"];
       var ed_date = d["ed_date"];
       
       String date = DateTime.now().toString();
+
+
 
 
       String temp = """
@@ -166,6 +198,9 @@ calculate the EDD date and monthly ANC appointment date every month one ANC and 
         Map<String, dynamic> data = json.decode(res.text as String);
         print("******************************");
         print(data);
+
+        localStorage.setItem("${d.toString()}/aiappointment", res.text as String);
+
         return data;
       } else {
         throw Exception('No response from AI');
@@ -213,16 +248,9 @@ final imagePart = DataPart('audio/aac', audio);
 
       await newMessRef.set({...msg.toMap(),...details});
       } catch (e) {
-
         print(e);
-        
       }
-
-
-
     }
-
-
 
     static Future<dynamic> getCurrentMessages() async{
       final userid = Storage.getUserID();
@@ -235,6 +263,50 @@ final imagePart = DataPart('audio/aac', audio);
       }
       return snapshot.value;
     }
+
+
+    static Future<void>  createCall(String p2, String p1,String type) async {
+      Maincontroller controller = Get.put(Maincontroller());
+      final token = await Userapi.getCallToken(p1);
+      if(token==null){
+        Get.snackbar("Call Failed", "Error Making Call");
+        return;
+      }
+      try {
+      DatabaseReference ref = FirebaseDatabase.instance.ref("calls/$p2");
+     await  ref.set({
+      "call":true, 
+      "callerName":controller.name.text,
+      "p1":p1,
+      "p2":p2,
+      "token":token,
+      "type":type
+      });
+      Get.to(Callview(channel: p1,token: token,path: p2,));
+      } catch (e) {
+        print(e);
+      }
+    }
+
+        static Future<bool>  cutCall(String path) async {
+      try {
+      DatabaseReference ref = FirebaseDatabase.instance.ref("calls/$path");
+     await  ref.set({
+      "call":false
+      });
+
+      return true;
+      
+      } catch (e) {
+        print(e);
+
+        return false;
+      }
+    }
+
+
+    
+
 
 
 

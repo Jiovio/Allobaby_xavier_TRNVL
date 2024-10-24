@@ -3,11 +3,8 @@ import 'package:get/get.dart';
 import 'package:localstorage/localstorage.dart';
 
 class Apiroutes {
-  // String baseUrl = "https://dev.savemom.app/";
-  String baseUrl = "http://10.0.2.2:8000";
-
-
-
+  String baseUrl = "https://dev.savemom.app";
+  // String baseUrl = "http://10.0.2.2:8000";
 
   static checkUser () {
     if(localStorage.getItem("user")==null){
@@ -16,17 +13,12 @@ class Apiroutes {
     return true;
   }
 
-
-
-
   String otpSessionCreation = "/auth/otp";
 
   String getUrl(String route){
 
     return baseUrl+route;
   }
-
-
 
   Future<dynamic> getUserByPhone(phone) async {
       try {
@@ -62,8 +54,6 @@ class Apiroutes {
 
 
   Future<void> checkAuth() async {
-
-    
 
       var d = await getRequest("/auth/protected");
 

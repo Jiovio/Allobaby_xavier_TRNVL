@@ -3,92 +3,135 @@ import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Screens/Settings/ViewHospital.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-class MyHospital extends StatelessWidget {
-  const MyHospital({super.key});
+class MyHospital extends StatefulWidget {
+  const MyHospital({Key? key}) : super(key: key);
+
+  @override
+  _MyHospitalState createState() => _MyHospitalState();
+}
+
+class _MyHospitalState extends State<MyHospital> {
+  List<dynamic> _hospitals = [];
+  bool _isLoading = true;
+  bool _isSearching = false;
+  TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchHospitals();
+  }
+
+  Future<void> _fetchHospitals() async {
+    try {
+      final hospitals = await Hospitalapi.getHospitalList();
+      setState(() {
+        _hospitals = hospitals;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      print("Error fetching hospitals: $e");
+    }
+  }
+
+  Future<void> _searchHospitals(String query) async {
+    if (query.isEmpty) {
+      _fetchHospitals();
+      return;
+    }
+
+    setState(() {
+      _isSearching = true;
+    });
+
+    try {
+      final searchResults = await Hospitalapi.searchHospital(query);
+      setState(() {
+        _hospitals = searchResults;
+        _isSearching = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isSearching = false;
+      });
+      print("Error searching hospitals: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100.0),
-        child: Container(
-          padding: EdgeInsets.only(top: 24, bottom: 8),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 14.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "My Hospital",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                    color: darkGrey2,
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.local_hospital,
-                    color: Black800,
-                  ),
-                  onPressed: () {},
-                )
-              ],
-            ),
+      appBar: AppBar(
+        title: Text(
+          "My Hospital",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: darkGrey2,
           ),
         ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Black800),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.local_hospital, color: Black800),
+            onPressed: () {},
+          )
+        ],
       ),
-      body: FutureBuilder(
-        future: Hospitalapi.getHospitalList(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text("No Hospitals available"));
-          } else {
-            final hospitals = snapshot.data!;
-            return ListView.builder(
-              itemCount: hospitals.length,
-              itemBuilder: (context, index) {
-                final hospital = hospitals[index];
-                return Card(
-                  margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  elevation: 2,
-                  child: ListTile(
-                    title: Text(
-                      hospital['name'],
-                      style: TextStyle(fontWeight: FontWeight.bold, color: PrimaryColor),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("District: ${hospital['district']}"),
-                        Text("Address: ${hospital['address']}"),
-                        Text("State: ${hospital['state']}"),
-                      ],
-                    ),
-                    trailing: Icon(Icons.arrow_forward_ios, color: PrimaryColor),
-                    onTap: () 
-                    => Get.to(() => Viewhospital(hospital: hospital)),
-                  ),
-                );
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: "Search hospitals...",
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onChanged: (value) {
+                _searchHospitals(value);
               },
-            );
-          }
-        },
+            ),
+          ),
+          Expanded(
+            child: _isLoading || _isSearching
+                ? Center(child: CircularProgressIndicator())
+                : _hospitals.isEmpty
+                    ? Center(child: Text("No hospitals found"))
+                    : ListView.builder(
+                        itemCount: _hospitals.length,
+                        itemBuilder: (context, index) {
+                          final hospital = _hospitals[index];
+                          return Card(
+                            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            elevation: 2,
+                            child: ListTile(
+                              title: Text(
+                                hospital['name'],
+                                style: TextStyle(fontWeight: FontWeight.bold, color: PrimaryColor),
+                              ),
+                              subtitle: Text("District: ${hospital['district']}"),
+                              trailing: Icon(Icons.arrow_forward_ios, color: PrimaryColor),
+                              onTap: () => Get.to(() => Viewhospital(hospital: hospital)),
+                            ),
+                          );
+                        },
+                      ),
+          ),
+        ],
       ),
     );
-  }
-
-  _launchURL(String url) async {
-    if (await canLaunchUrl(Uri.https(url))) {
-      await launchUrl(Uri.https(url));
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 }

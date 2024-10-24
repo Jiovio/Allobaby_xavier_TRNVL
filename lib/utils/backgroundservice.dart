@@ -1,9 +1,12 @@
 import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
+import 'package:allobaby/Screens/AI/Allobot.dart';
 import 'package:allobaby/db/dbHelper.dart';
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 
 class Backgroundservice {
 
@@ -217,7 +220,30 @@ class Backgroundservice {
      await  processData(key, value);
 
       });
-      
+  }
+
+  static listenForCall() async {
+
+    
+      final userid =  Storage.getUserID();
+      final uid = "P$userid";
+
+      DatabaseReference ref = FirebaseDatabase.instance.ref("calls/P$userid");
+
+      ref.onValue.listen((DatabaseEvent event) {
+          dynamic data = event.snapshot.value;
+
+
+          if(data!=null){
+
+
+
+
+          }
+
+
+          
+      });
 
 
   }

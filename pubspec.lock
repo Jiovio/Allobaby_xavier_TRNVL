@@ -393,6 +393,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.5+14"
+  firebase_messaging:
+    dependency: "direct main"
+    description:
+      name: firebase_messaging
+      sha256: "29941ba5a3204d80656c0e52103369aa9a53edfd9ceae05a2bb3376f24fda453"
+      url: "https://pub.dev"
+    source: hosted
+    version: "15.1.0"
+  firebase_messaging_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_messaging_platform_interface
+      sha256: "26c5370d3a79b15c8032724a68a4741e28f63e1f1a45699c4f0a8ae740aadd72"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.5.43"
+  firebase_messaging_web:
+    dependency: transitive
+    description:
+      name: firebase_messaging_web
+      sha256: "58276cd5d9e22a9320ef9e5bc358628920f770f93c91221f8b638e8346ed5df4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.8.13"
   firebase_storage:
     dependency: "direct main"
     description:
@@ -474,10 +498,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_cache_manager
-      sha256: "395d6b7831f21f3b989ebedbb785545932adb9afe2622c1ffacf7f4b53a7e544"
+      sha256: a77f77806a790eb9ba0118a5a3a936e81c4fea2b61533033b2b0c3d50bbde5ea
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.2"
+    version: "3.4.0"
   flutter_downloader:
     dependency: "direct main"
     description:
@@ -598,6 +622,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.21"
+  flutter_ringtone_player:
+    dependency: "direct main"
+    description:
+      name: flutter_ringtone_player
+      sha256: d0277a04e629a6582d776f5dcc2a879a733f7326ba073b872a9ccfbff9d9b51f
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0+3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -1156,10 +1188,10 @@ packages:
     dependency: transitive
     description:
       name: rxdart
-      sha256: "0c7c0cedd93788d996e33041ffecda924cc54389199cde4e6a34b440f50044cb"
+      sha256: "5c3004a4a8dbb94bd4bf5412a4def4acdaa12e12f269737a5751369e12d1a962"
       url: "https://pub.dev"
     source: hosted
-    version: "0.27.7"
+    version: "0.28.0"
   shared_preferences:
     dependency: transitive
     description:
@@ -1261,6 +1293,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.1"
+  stop_watch_timer:
+    dependency: "direct main"
+    description:
+      name: stop_watch_timer
+      sha256: "86482d05a58bba03909781cd97683b91def80273e071a8cde6f9f423f59e291d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.1"
   stream_channel:
     dependency: transitive
     description:

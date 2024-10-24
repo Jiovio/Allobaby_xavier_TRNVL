@@ -35,8 +35,8 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.jiovio.allobaby"
-    compileSdk = flutter.compileSdkVersion
-    // compileSdk = 34
+    // compileSdk = flutter.compileSdkVersion
+    compileSdk = 34
     // ndkVersion = 34
 
     ndkVersion = flutter.ndkVersion
@@ -44,6 +44,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+
     }
 
     defaultConfig {
@@ -56,6 +57,8 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
+
+        multiDexEnabled true
     }
 
         signingConfigs {
@@ -76,6 +79,8 @@ android {
         }
     }
 }
+
+
 
 flutter {
     source = "../.."

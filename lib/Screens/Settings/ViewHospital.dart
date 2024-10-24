@@ -38,7 +38,7 @@ class Viewhospital extends StatelessWidget {
   
             
             )async {
-                await Userapi.updateDefaultHospital(hospital["id"]);
+                await Userapi.updateDefaultHospital(hospital);
                 print(hospital);
               
             },

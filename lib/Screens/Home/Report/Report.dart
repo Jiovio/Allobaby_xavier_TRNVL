@@ -2,6 +2,7 @@ import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Screens/Home/Report/AddReport.dart';
 import 'package:allobaby/Screens/Home/Report/ViewReport.dart';
+import 'package:allobaby/Screens/Home/Screening/labReports/ScreeningwithReports.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,7 +22,7 @@ class Report extends StatelessWidget {
               style: OutlinedButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
               ),
-              onPressed: () => Get.to(() => AddReport(), transition: Transition.rightToLeft),
+              onPressed: () => Get.to(() => ScreeningWithReports(), transition: Transition.rightToLeft),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -61,8 +62,6 @@ class Report extends StatelessWidget {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(12),
                             onTap: () { 
-                              print(report);
-                              
                               Get.to(
                               () => ViewReport(reportDetails: report),
                               transition: Transition.rightToLeft,

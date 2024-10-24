@@ -6,6 +6,7 @@ import 'package:allobaby/Screens/Settings/Help.dart';
 import 'package:allobaby/Screens/Settings/SubscriptionViewApp.dart';
 import 'package:allobaby/Screens/Settings/hospital.dart';
 import 'package:allobaby/Screens/Signin.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -71,8 +72,14 @@ class SettingsScreen extends StatelessWidget {
                         CircleAvatar(
                             backgroundColor: Colors.transparent,
                             radius: 36.0,
-                            child: Image.asset(
-                                "assets/General/avatar.png") //  MemoryImage(base64Decode(
+                            child: mainC.profile_pic==null?Image.asset(
+                                "assets/General/avatar.png") :
+
+                                CachedNetworkImage(imageUrl: mainC.profile_pic as String)
+                                
+                                
+                                
+                                //  MemoryImage(base64Decode(
                             //     mainScreenController
                             //         .patientDetails[0].imageUrl)
                             // )

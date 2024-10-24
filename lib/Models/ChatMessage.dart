@@ -16,7 +16,8 @@ class Messages {
       this.receiverId,
       this.type,
       this.message,
-      this.timestamp});
+      this.timestamp,
+      this.photoUrl});
 
   // Named constructor for image messages
   Messages.imageMessage(

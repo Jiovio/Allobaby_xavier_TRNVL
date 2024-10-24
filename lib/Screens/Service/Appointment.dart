@@ -1,19 +1,26 @@
+import 'dart:convert';
+
+import 'package:allobaby/API/Requests/HospitalAPI.dart';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/AppointmentController.dart';
 import 'package:allobaby/Screens/Service/MyAppointment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:get/get_rx/get_rx.dart';
+import 'package:localstorage/localstorage.dart';
+import 'package:intl/intl.dart';
 
-class Appointment extends StatefulWidget {
-  const Appointment({super.key});
+class Appointment extends StatelessWidget {
+   Appointment({super.key});
 
-  @override
-  State<Appointment> createState() => _AppointmentState();
-}
+AppointmentController cont = Get.put(AppointmentController());
 
-class _AppointmentState extends State<Appointment> {
+final formKey = GlobalKey<FormState>();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +31,7 @@ class _AppointmentState extends State<Appointment> {
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Form(
-              // key: _formKey,
+              key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -40,44 +47,62 @@ class _AppointmentState extends State<Appointment> {
                           textTheme: const TextTheme(
                               titleMedium: TextStyle(color: PrimaryColor)),
                         ),
-                        child: DropdownSearch<String>(
-                          validator: (v) =>
-                              v == null ? "Select Hospital".tr : null,
-                          popupProps: PopupProps.modalBottomSheet(
-                            modalBottomSheetProps: ModalBottomSheetProps(
-                              shape:BeveledRectangleBorder(borderRadius: BorderRadius.zero)
-                            ),
-                            showSearchBox: true,
-                            showSelectedItems: true,
-                          ),
+    child: 
+    GetBuilder(
+      init: AppointmentController(),
+
+      builder: (controller) => 
+      DropdownSearch<Hospital>(
+      
+      selectedItem: cont.hospital,
+      
+        popupProps: PopupProps.modalBottomSheet(
+      modalBottomSheetProps: ModalBottomSheetProps(
+        shape: BeveledRectangleBorder(borderRadius: BorderRadius.zero),
+      ),
+      showSearchBox: true, 
+      itemBuilder: (context, item, isSelected) {
+        return ListTile(
+          title: Text(item.name),
+          selected: isSelected,  // Highlight selected item
+        );
+      },
+        ),
+      
+        dropdownBuilder: (context, selectedItem) {
+      // Show the selected hospital in the dropdown
+      return Text(selectedItem?.name ?? "Select Hospital");
+        },
+      
+        // Label and decoration for the dropdown
+        dropdownDecoratorProps: DropDownDecoratorProps(
+      dropdownSearchDecoration: InputDecoration(
+        border: OutlineInputBorder(),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+          borderSide: BorderSide(width: 3, color: Colors.grey),
+        ),
+        labelText: "Select Hospital".tr,
+        labelStyle: const TextStyle(color: Colors.black),  // Ensure proper color reference
+      ),
+        ),
+      
+      
+        items: controller.hospitals,
+        onChanged: (value) {
+      if (value != null) {
+      
+        
+          controller.hospital = value;
+      
+         controller. fetchDoctors();
+      }
+        },
+    )),
+    ),
+
                           
-                          // label: "Select Doctor",
-                          items: ["JioVio", "Savemom"],
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                             dropdownSearchDecoration:InputDecoration(
-                              border: OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12)),
-                              borderSide:
-                                  BorderSide(width: 3, color: Colors.grey),
-                            ),
-                            labelText: "Select Hospital".tr,
-                            labelStyle: const TextStyle(color: Black),
-                          )
-                          )
-                         ,
-                          // maxHeight: Get.height * 0.15,
-                          onChanged: (value) {
-                            // controller.doctor = value;
-                            // int index = controller.doctorsList.indexOf(value!);
-                            // print(index);
-                            // controller.doctorId =
-                            //     controller.doctorsIDList[index];
-                            // controller.update();
-                          },
-                        ),
-                          )),
+                          ),
                     SizedBox(
                         height: 18,
                     ),
@@ -96,43 +121,61 @@ class _AppointmentState extends State<Appointment> {
                           textTheme: const TextTheme(
                               titleMedium: TextStyle(color: PrimaryColor)),
                         ),
-                        child: DropdownSearch<String>(
-                          validator: (v) =>
-                              v == null ? "Select Doctor".tr : null,
-                          popupProps: PopupProps.modalBottomSheet(
-                            modalBottomSheetProps: ModalBottomSheetProps(
-                              shape:BeveledRectangleBorder(borderRadius: BorderRadius.zero)
-                            ),
-                            showSearchBox: true,
-                            showSelectedItems: true,
-                          ),
+                        child: 
+                        
+    GetBuilder<AppointmentController>(
+      
+      builder: (controller) =>  DropdownSearch<Hospital>(
+      
+      selectedItem: controller.doctor,
+      
+        popupProps: PopupProps.modalBottomSheet(
+      modalBottomSheetProps: ModalBottomSheetProps(
+        shape: BeveledRectangleBorder(borderRadius: BorderRadius.zero),
+      ),
+      showSearchBox: true, 
+      itemBuilder: (context, item, isSelected) {
+        return ListTile(
+          title: Text(item.name),
+          selected: isSelected,  // Highlight selected item
+        );
+      },
+        ),
+      
+        dropdownBuilder: (context, selectedItem) {
+      // Show the selected hospital in the dropdown
+      return Text(selectedItem?.name ?? "Select Doctor");
+        },
+      
+        // Label and decoration for the dropdown
+        dropdownDecoratorProps: DropDownDecoratorProps(
+      dropdownSearchDecoration: InputDecoration(
+        border: OutlineInputBorder(),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+          borderSide: BorderSide(width: 3, color: Colors.grey),
+        ),
+        labelText: "Select Doctor".tr,
+        labelStyle: const TextStyle(color: Colors.black),  // Ensure proper color reference
+      ),
+        ),
+      
+      
+        items: controller.doctors,
+        onChanged: (value) {
+      if (value != null) {
+          
+            controller.doctor = value;
+
+            controller.update();
+          
+      }
+        },
+      ),
+    ),
+
                           
-                          // label: "Select Doctor",
-                          items: ["Dr.Senthil kumar", "Dr.Savemom"],
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                             dropdownSearchDecoration:InputDecoration(
-                              border: OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12)),
-                              borderSide:
-                                  BorderSide(width: 3, color: Colors.grey),
-                            ),
-                            labelText: "Select Doctor".tr,
-                            labelStyle: const TextStyle(color: Black),
-                          )
-                          )
-                         ,
-                          // maxHeight: Get.height * 0.15,
-                          onChanged: (value) {
-                            // controller.doctor = value;
-                            // int index = controller.doctorsList.indexOf(value!);
-                            // print(index);
-                            // controller.doctorId =
-                            //     controller.doctorsIDList[index];
-                            // controller.update();
-                          },
-                        ),
+                          
                           )),
                     
                     
@@ -140,41 +183,49 @@ class _AppointmentState extends State<Appointment> {
                     SizedBox(
                         height: 18,
                       ),
-                       TextFormField(
-                    // controller: controller.appointmentDate,
-                    decoration: InputDecoration(
-                        suffix: SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: true
-                                ? CircularProgressIndicator()
-                                : Container()),
-                        labelText: "Appointment Date".tr,
-                        border: OutlineInputBorder()),
-                    readOnly: true,
-                    onTap: () {
-                      showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime(2025),
-                      ).then((selectedDate) {
-                        // final localization = MaterialLocalizations.of(context);
-                        // controller.appointmentDate.text =
-                        //     DateFormat('dd-MM-yyyy')
-                        //         .format(DateTime.parse(selectedDate.toString()))
-                        //         .toString();
-
-                        // controller.getDoctorTimeSlot(selectedDate, context);
-                      });
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please select Appointment Date'.tr;
-                      }
-                      return null;
-                    },
-                  ),
+                       GetBuilder<AppointmentController>(
+                         builder: (controller) =>  TextFormField(
+                                             controller: cont.dateController,
+                                             
+                                             decoration: InputDecoration(
+                          // suffix: SizedBox(
+                          //     height: 20,
+                          //     width: 20,
+                          //     child: true
+                          //         ? CircularProgressIndicator()
+                          //         : Container()),
+                          labelText: "Appointment Date".tr,
+                          border: OutlineInputBorder()),
+                                             readOnly: true,
+                                             onTap: () {
+                                               showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(2025),
+                                               ).then((selectedDate) {
+                         
+                          if(selectedDate!=null){
+                            print(selectedDate);
+                            controller.selDate = selectedDate;
+                         
+                            controller.dateController.text = DateFormat('dd-MM-yyyy').format(selectedDate);
+                         
+                            controller.update();
+                            
+                            controller.fetchTimeSlots(selectedDate);
+                         
+                          }
+                                               });
+                                             },
+                                             validator: (value) {
+                                               if (value == null || value.isEmpty) {
+                          return 'Please select Appointment Date'.tr;
+                                               }
+                                               return null;
+                                             },
+                                           ),
+                       ),
                    SizedBox(
                     height: 18,
                   ),
@@ -184,7 +235,10 @@ class _AppointmentState extends State<Appointment> {
                         onPressed: () {
                           showModalBottomSheet(
                             context: context,
-                            builder: (context) => Container(
+                            builder: (context) => 
+                            
+                            
+                            Container(
                               height: MediaQuery.of(context).size.height / 2,
                               child: SingleChildScrollView(
                                   child: Column(
@@ -194,85 +248,96 @@ class _AppointmentState extends State<Appointment> {
                                       padding: const EdgeInsets.all(20.0),
                                       child: Text(
                                         "Available slots".tr,
-                                        style: TextStyle(
+                                        style:const TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 18),
                                       )),
-                                        SizedBox(
+                                      const  SizedBox(
                                     height: 10,
                                   ),
                                    Center(
-                                      child: Wrap(
-                                              spacing: 10.0,
-                                              children: List.generate(
-                                                1,
-                                                (slotIndex) => ChoiceChip(
-                                                  shadowColor: Colors.grey,
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20.0)),
-                                                  label: Text(
-                                                    "9:00 : 10:00",
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        color: Colors.black),
-                                                  ),
-                                                  selectedColor: PrimaryColor,
-                                                      // controller.indexTS ==
-                                                      //         slotIndex
-                                                      //     ? PrimaryColor
-                                                      //     : Colors.white,
-                                                  // ignore: unrelated_type_equality_checks
-                                                  selected: true,
-                                                  onSelected: (value) {
-                                                    // controller.indexTS =
-                                                    //     slotIndex;
-                                                    // controller.timeSlotOne =
-                                                    //     controller.timeSlotList[
-                                                    //             slotIndex]
-                                                    //         ['startTime'];
-                                                    // controller.timeSlot =
-                                                    //     "${controller.timeSlotList[slotIndex]['startTime']} : ${controller.timeSlotList[slotIndex]['endTime']}";
-                                                    // controller.update();
-                                                  },
-                                                  labelStyle: TextStyle(
-                                                      // ignore: unrelated_type_equality_checks
-                                                      color: White),
+                                      child: GetBuilder<AppointmentController>(
+                                        
+                                        builder: (c) =>  Wrap(
+                                                spacing: 10.0,
+                                                children: 
+                                        List.generate(
+                                          c.timeslots.length,
+                                          (index) => ChoiceChip(
+                                            shadowColor: Colors.grey,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(20.0)
+                                            ),
+                                            label: Text(
+                                              "${c.timeslots[index].start} : ${c.timeslots[index].end}",
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black
+                                              ),
+                                            ),
+                                            selectedColor: PrimaryColor,
+                                            backgroundColor: White,
+                                            selected: index == c.timeslotInd,
+                                            onSelected: (value) {
+                                              
+                                                if (value) {
+                                                  c.timeslotInd = index;
+                                                } else {
+                                                  c.timeslotInd = null; // Or any invalid ID to deselect
+                                                }
+                                              
+                                              c.update();
+                                            },
+                                            labelStyle: TextStyle(color: White),
+                                          ),
+                                        )                             
                                                 ),
-                                              ))),
+                                      )),
+                                
                                 ],
                               )),
                             ),
+                          
+                          
                           );
+                        
+                        
                         },
                          child: Text(
                           "View Available Slots",
                           style: TextStyle(fontSize: 18),
                         )),
                   ),
-                   Wrap(
+
+                  GetBuilder<AppointmentController>(
+                    builder:(c) => 
+                  c.timeslotInd !=null?
+                  Wrap(
                     children: [
                       Text(
                         "Start time from selected time slot:".tr,
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                        "9:00-9:30",
+                        "${c.timeslots[c.timeslotInd as int].start}-${c.timeslots[c.timeslotInd as int].end}",
                         style: TextStyle(fontSize: 18),
                       ),
                     ],
-                  ),
+                  ):Container()
+                  
+                  )
+                   ,
 
                   SizedBox(
                     height: 20,
                   ),
                   TextFormField(
+
                     decoration: InputDecoration(
                         labelText: "Diagnosis Desc".tr,
                         border: OutlineInputBorder()),
                     keyboardType: TextInputType.text,
-                    // controller: controller.diagnostics,
+                    controller: cont.descController,
                     maxLines: 5,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -295,20 +360,29 @@ class _AppointmentState extends State<Appointment> {
                                 borderRadius: BorderRadius.circular(40))),
                         onPressed: () {
 
-                          Get.to(MyAppointment());
-                          // if (_formKey.currentState!.validate() &&
-                          //     controller.timeSlot != null &&
-                          //     controller.timeSlotOne != null &&
-                          //     controller.doctor != null &&
-                          //     controller.hospital != null &&
-                          //     controller.hospital != null &&
-                          //     controller.doctorId != null) {
-                          //   controller.addAppointment();
-                          // } else {
-                          //   showSnackBar(
-                          //       "All fields are mandatory to book appointment",
-                          //       "error");
-                          // }
+                          
+
+
+                          if(formKey.currentState!.validate() &&
+                          cont.hospital!=null &&
+                          cont.doctor !=null &&
+                          cont.selDate !=null &&
+                          cont.timeslotInd !=null &&
+                          cont.descController.text!=""
+                          
+                          ) {
+
+                          cont.addAppointment();
+
+                          
+                          }else{
+                          Get.snackbar(
+                                "All fields are mandatory to book appointment",
+                                "error",
+                                snackPosition: SnackPosition.BOTTOM
+                                );
+
+                          }
                         },
                         child: Text("Book".tr),
                       )
@@ -321,4 +395,8 @@ class _AppointmentState extends State<Appointment> {
         ),
       );
     }
-  }
+}
+
+
+
+

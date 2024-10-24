@@ -37,8 +37,8 @@ class MyAppointment extends StatelessWidget {
 
             floatingActionButton: IconButton(icon:Icon(Icons.add_circle_rounded,size: 70,),
             onPressed: () {
-              OurFirebase.getAIAppointments();
-              // Get.to(Appointment(),transition: Transition.rightToLeft);
+              // OurFirebase.getAIAppointments();
+              Get.to(Appointment(),transition: Transition.rightToLeft);
             },),
 
 

@@ -64,15 +64,12 @@ class InitialDetails extends StatelessWidget {
                                         // ),
                                         child: CircleAvatar(
                                           backgroundColor: Colors.transparent,
-                                          backgroundImage: true
-                                          // controller.fileImage64 == null
+                                          backgroundImage: 
+                                          controller.profile_pic == null
                                               ? AssetImage(
                                                   "assets/General/avatar.png",
                                                 )
-                                              : MemoryImage(base64Decode(
-                                                      // controller.fileImage64
-                                                      ""
-                                                      ))
+                                              : NetworkImage(controller.profile_pic as String)
                                                   as ImageProvider,
                                           radius: 58,
                                         ),
@@ -108,9 +105,9 @@ class InitialDetails extends StatelessWidget {
                                             FloatingActionButton(
                                                 elevation: 0,
                                                 tooltip: "Camera",
-                                                onPressed: () => {},
-                                                    // initialDetailsController
-                                                    //     .getImageFromCamera(),
+                                                onPressed: () =>
+                                                    controller
+                                                        .getImageFromCamera(),
                                                 backgroundColor:
                                                     Colors.amberAccent,
                                                 child: Image.asset(
@@ -121,9 +118,9 @@ class InitialDetails extends StatelessWidget {
                                                 elevation: 0,
                                                 focusColor: Colors.greenAccent,
                                                 tooltip: "Gallery",
-                                                onPressed: () => {},
-                                                    // initialDetailsController
-                                                    //     .getImageFromGallery(),
+                                                onPressed: () => 
+                                                    controller
+                                                        .getImageFromGallery(),
                                                 backgroundColor:
                                                     Colors.indigoAccent,
                                                 child: Image.asset(
@@ -255,7 +252,7 @@ class InitialDetails extends StatelessWidget {
 Form detailsForm(
   GlobalKey<FormState> formKey,
   // InitialDetailsController initialDetailsController,
-  initialDetailsController,
+  Signupcontroller initialDetailsController,
   BuildContext context,
 ) {
   return Form(
@@ -284,12 +281,7 @@ Form detailsForm(
             onTap: () {},
             decoration: InputDecoration(
                 labelText: "Enter Email Id", border: OutlineInputBorder()),
-            // validator: (value) {
-            //   if (value == null || value.isEmpty) {
-            //     return 'Please enter your email id';
-            //   }
-            //   return null;
-            // },
+
           ),
           SizedBox(
             height: 8,
@@ -341,14 +333,14 @@ Form detailsForm(
             height: 60.0,
             child: DropdownSearch<String>(
               validator: (v) => v == null ? "Select Blood Group" : null,
-              dropdownDecoratorProps: DropDownDecoratorProps(
+              dropdownDecoratorProps:const DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
                       label: Text("Select Blood Group"),
                       border: OutlineInputBorder()
                     )),
                   
               items: BG,
-              // label: "Blood Group",
+    
               onChanged: (value) =>
                   initialDetailsController.bloodGroup = value!,
             ),

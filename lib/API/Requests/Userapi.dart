@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:allobaby/API/Requests/HospitalAPI.dart';
 import 'package:allobaby/API/authAPI.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
 import 'package:get/route_manager.dart';
@@ -12,18 +15,39 @@ class Userapi {
   }
 
 
-  static Future<void> updateDefaultHospital(int hospitalId) async {
+  static Future<bool> updateUser(data) async {
+
+    var req = await putRequest("/user/updateuser",data);
+
+    return req;
+  }
+
+
+  static Future<void> updateDefaultHospital(dynamic hospital) async {
     try {
-    bool req = await postRequest("/user/setdefaulthospital", {"hospitalId" : hospitalId});
+    bool req = await postRequest("/user/setdefaulthospital", {"hospitalId" : hospital["id"]});
     print(req);
     if(req){
-      localStorage.setItem("defaultHospital", hospitalId.toString());
-      Get.to(MainScreen());
+      final d = await Hospitalapi.getDefaultChatAgent(hospital["id"]);
+      localStorage.setItem("defaultHospital", json.encode(hospital));
+      localStorage.setItem("defaultChat", json.encode(d));
+
+      Get.offAll(MainScreen());
     }else {
       Get.snackbar("Error", "Please Try Again Later", snackPosition: SnackPosition.BOTTOM);
     }
     } catch (e) {
       Get.snackbar("Error", "Please Try Again Later", snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+
+  static Future<String?> getCallToken(String cname) async {
+    try {
+    final req = await getRequest("/ws/generateToken?cname=$cname");
+    return req["token"]; 
+    } catch (e) {
+        return null;
     }
   }
 }

@@ -1,23 +1,83 @@
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:allobaby/API/Requests/OTPApi.dart';
 import 'package:allobaby/API/apiroutes.dart';
+import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Screens/Initial/MomOrDad.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
 import 'package:allobaby/Screens/mobileverification/otpverification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:localstorage/localstorage.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+
+import 'dart:io' as Io;
+import 'dart:convert' as convert;
 
 
 class Signupcontroller extends GetxController{
+
+  // image
+  late File image;
+
+  final picker = ImagePicker();
+
+  var fileImage64;
+
+
+    String? profile_pic;
+
+
+  Future getImageFromCamera() async {
+    final pickedFile =
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 20);
+    if (pickedFile != null) {
+      image = File(pickedFile.path);
+
+     String url =  await OurFirebase.uploadImageToFirebase(phone.text, "/profilepics", "${DateTime.now().toIso8601String()}.jpg", image);
+
+     profile_pic = url;
+
+      Fluttertoast.showToast(
+          msg: "Profile Uploaded", backgroundColor: PrimaryColor);
+    } else {
+      print('No image selected.');
+    }
+    update();
+  }
+
+    Future<void> getImageFromGallery() async {
+    final pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 20,
+    );
+    if (pickedFile != null) {
+      image = File(pickedFile.path);
+
+           String url =  await OurFirebase.uploadImageToFirebase(phone.text, "/profilepics", "${DateTime.now().toIso8601String()}.jpg", image);
+
+     profile_pic = url;
+
+      Fluttertoast.showToast(
+          msg: "Profile Uploaded", backgroundColor: PrimaryColor);
+    } else {
+      print('No image selected.');
+    }
+    update();
+  }
+
+
 
 
   Map<String,dynamic> data = {
@@ -34,6 +94,9 @@ String countryCode = "91";
     Get.offAll(()=>Otpverification(),
     transition: Transition.rightToLeft);
   }
+
+
+  String? imgUrl;
 
   List<String> pregnancyStatusList = ["Iam trying to Conceive","Iam Pregnant","I have a baby"];
 
@@ -168,7 +231,8 @@ Map<String, dynamic> getJsonData() {
     // "state": "",
     "partner_name": partnerName.text,
     "partner_phone": partnerMobile.text,
-    "partner_phone_verified": false
+    "partner_phone_verified": false,
+    "profile_pic":profile_pic
   };
 }
 
@@ -182,7 +246,7 @@ Future<void> checkUser() async{
   if(res==false){
     print("User Not Found");
     Get.snackbar("Welcome New User", "Thanks for choosing us",snackPosition: SnackPosition.BOTTOM);
-    // await signInWithGoogle();
+    await signInWithGoogle();
     Get.to(MomOrDad());
     return;
   }
@@ -254,31 +318,35 @@ if(r){
 
 
 
-//   Future<void> signInWithGoogle() async {
-//   // Trigger the authentication flow
-//   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  Future<void> signInWithGoogle() async {
+  // Trigger the authentication flow
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-//   // Obtain the auth details from the request
-//   final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+  // Obtain the auth details from the request
+  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
-//   // Create a new credential
-//   final credential = GoogleAuthProvider.credential(
-//     accessToken: googleAuth?.accessToken,
-//     idToken: googleAuth?.idToken,
-//   );
+  // Create a new credential
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
 
-//   // Once signed in, return the UserCredential
-//   var d = await FirebaseAuth.instance.signInWithCredential(credential);
+  // Once signed in, return the UserCredential
+  var d = await FirebaseAuth.instance.signInWithCredential(credential);
 
-//   Map<String,dynamic>? userdata = d.additionalUserInfo?.profile;
+  Map<String,dynamic>? userdata = d.additionalUserInfo?.profile;
 
-//   if(userdata!=null){
-//     var first_name = userdata["given_name"];
-//     var last_name = userdata["family_name"];
-//     var email = userdata["email"];
-//     var imgurl = userdata["picture"];
-//     name.text = "${first_name} ${last_name}";
-//     emailID.text = email;
-//   }
-// }
+  print(userdata);
+
+  if(userdata!=null){
+    var first_name = userdata["given_name"];
+    var last_name = userdata["family_name"];
+    var email = userdata["email"];
+    var imgurl = userdata["picture"];
+    name.text = "$first_name $last_name";
+    emailID.text = email;
+    profile_pic = imgurl;
+
+  }
+}
 }

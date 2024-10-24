@@ -8,6 +8,8 @@ class Maincontroller extends GetxController {
 
   RxBool loading = true.obs;
 
+  String? profile_pic;
+
   Future<void> initScreen() async {
   var d = await Userapi.getUser();
   fromJson(d);
@@ -15,6 +17,7 @@ class Maincontroller extends GetxController {
   print("*********************");
 
   Backgroundservice.listenForData();
+  // Backgroundservice.listenForCall();
 
   loading.value = false;
   update();
@@ -80,6 +83,8 @@ class Maincontroller extends GetxController {
     gender = data['gender'] ?? 'Female';
     bloodGroup = data['blood_group'] ?? 'A+';
     created = data["created_at"]??"";
+    profile_pic = data["profile_pic"];
+
   }
 
 

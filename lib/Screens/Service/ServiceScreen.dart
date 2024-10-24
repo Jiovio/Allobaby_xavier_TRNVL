@@ -166,9 +166,9 @@ class _ServiceScreenState extends State<ServiceScreen> {
                 ),
 
 
-                ElevatedButton(onPressed: (){
-                  Get.to(Callview());
-                }, child: Icon(Icons.abc))
+                // ElevatedButton(onPressed: (){
+                //   // Get.to(Callview());
+                // }, child: Icon(Icons.abc))
           ]
           
           ),
