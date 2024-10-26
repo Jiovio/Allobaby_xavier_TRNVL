@@ -447,7 +447,7 @@ class EditProfile extends StatelessWidget {
                     // showSelectedItem: true,
                     // selectedItem: settingsController.quarantineStatus.value,
                     selectedItem: mainc.pregnancyStatus,
-                    items: ["Iam trying to Conceive","Iam Pregnant","I have a baby"],
+                    items: ["Iam trying to conceive","Iam pregnant","I have a baby"],
                     dropdownDecoratorProps: DropDownDecoratorProps(
                                 dropdownSearchDecoration: InputDecoration(
                                   hintText:  "Status",

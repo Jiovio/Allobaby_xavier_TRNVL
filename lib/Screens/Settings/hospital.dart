@@ -124,7 +124,7 @@ class _MyHospitalState extends State<MyHospital> {
                               ),
                               subtitle: Text("District: ${hospital['district']}"),
                               trailing: Icon(Icons.arrow_forward_ios, color: PrimaryColor),
-                              onTap: () => Get.to(() => Viewhospital(hospital: hospital)),
+                              onTap: () => Get.to(() => ViewHospital(hospital: hospital)),
                             ),
                           );
                         },

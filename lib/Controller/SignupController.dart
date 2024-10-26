@@ -45,7 +45,7 @@ class Signupcontroller extends GetxController{
     if (pickedFile != null) {
       image = File(pickedFile.path);
 
-     String url =  await OurFirebase.uploadImageToFirebase(phone.text, "/profilepics", "${DateTime.now().toIso8601String()}.jpg", image);
+     String url =  await OurFirebase.uploadImageToFirebase( "/profilepics", "${DateTime.now().toIso8601String()}.jpg", image,phone.text,);
 
      profile_pic = url;
 
@@ -65,7 +65,7 @@ class Signupcontroller extends GetxController{
     if (pickedFile != null) {
       image = File(pickedFile.path);
 
-           String url =  await OurFirebase.uploadImageToFirebase(phone.text, "/profilepics", "${DateTime.now().toIso8601String()}.jpg", image);
+           String url =  await OurFirebase.uploadImageToFirebase( "/profilepics", "${DateTime.now().toIso8601String()}.jpg", image,phone.text);
 
      profile_pic = url;
 
@@ -98,7 +98,7 @@ String countryCode = "91";
 
   String? imgUrl;
 
-  List<String> pregnancyStatusList = ["Iam trying to Conceive","Iam Pregnant","I have a baby"];
+  List<String> pregnancyStatusList = ["Iam trying to conceive","Iam pregnant","I have a baby"];
 
 
   updateData(String key, dynamic value){
@@ -276,10 +276,8 @@ Future<void> submitUser()async{
   print(req);
 
   }
-    print("SuccessFully created User");
-    print(req);
     localStorage.setItem('user', json.encode(req));
-    Get.to(MainScreen(),transition: Transition.rightToLeft);
+    Get.offAll(()=>const MainScreen(),transition: Transition.rightToLeft);
 
 
   

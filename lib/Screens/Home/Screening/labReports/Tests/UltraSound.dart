@@ -158,11 +158,11 @@ class Ultrasound extends StatelessWidget {
                                                 label: Text("Upload Report")),
 
 
-                                       TextButton.icon(onPressed: (){
+                                      //  TextButton.icon(onPressed: (){
                                           
-                                         }, 
-                                         icon: Icon(Icons.account_tree_sharp),
-                                         label: Text("Automatic"),) 
+                                      //    }, 
+                                      //    icon: Icon(Icons.account_tree_sharp),
+                                      //    label: Text("Automatic"),) 
                             ],
                           ),
 

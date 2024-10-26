@@ -145,7 +145,9 @@ class AddReport extends StatelessWidget {
                 height: 10.0,
               ),
 
-                          searchBox("Report of ?",["Mother", "Child"]),
+                          searchBox("Report of ?",["Mother", "Child"],(v){
+
+                          }),
 
                            SizedBox(
                 height: 10.0,
@@ -162,7 +164,9 @@ class AddReport extends StatelessWidget {
                   "Mammogram",
                   "MRI",
                   "Others"
-                ]),
+                ],(v){
+
+                }),
 
                                            SizedBox(
                 height: 10.0,

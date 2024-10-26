@@ -6,6 +6,7 @@ import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Controller/MainController.dart';
+import 'package:allobaby/Screens/Main/MainScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -56,7 +57,7 @@ class Editprofilecontroller extends GetxController {
     if (pickedFile != null) {
       image = File(pickedFile.path);
 
-    String url =  await OurFirebase.uploadImageToFirebase(phoneNumber.text, "/profilepics", "${DateTime.now().toIso8601String()}.jpg", image);
+    String url =  await OurFirebase.uploadImageToFirebase( "/profilepics", "${DateTime.now().toIso8601String()}.jpg", image,phoneNumber.text,);
 
      profile_pic = url;
      setUpdateData("profile_pic",profile_pic);
@@ -78,7 +79,7 @@ class Editprofilecontroller extends GetxController {
 
       image = File(pickedFile.path);
 
-    String url =  await OurFirebase.uploadImageToFirebase(phoneNumber.text, "/profilepics", "${DateTime.now().toIso8601String()}.jpg", image);
+    String url =  await OurFirebase.uploadImageToFirebase( "/profilepics", "${DateTime.now().toIso8601String()}.jpg", image,phoneNumber.text,);
 
      profile_pic = url;
      setUpdateData("profile_pic",profile_pic);
@@ -200,8 +201,8 @@ class Editprofilecontroller extends GetxController {
    var req =  await Userapi.updateUser(updateData);
 
    if(req){
-   await cont.initScreen();
-    Get.back();
+   await cont.updateUser();
+    Get.offAll(MainScreen());
 
     Get.snackbar("Updated Successfully !", "User Details are updated successfully"
       ,snackPosition: SnackPosition.BOTTOM);

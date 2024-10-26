@@ -10,14 +10,20 @@ class CheckUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      appBar: AppBar(title: Text("Checkup")),
+      appBar: AppBar(title:const Text("Checkup")),
 
-      body: ListView.separated(
+      body: 
+      true?
+     const Center(
+        child: Text("No Checkup Found"),
+      )
+      :
+      ListView.separated(
             padding: EdgeInsets.only(top: 20, left: 20, right: 20),
             separatorBuilder: (BuildContext context, int index) => SizedBox(
               height: 10,
             ),
-            itemCount: 1,
+            itemCount: 0,
             itemBuilder: (BuildContext context, int index) => Card(
               elevation: 2,
               shape: Border(left: BorderSide(color: PrimaryColor, width: 4)),

@@ -1,8 +1,8 @@
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Screens/Home/Prescription/ViewPrescription.dart';
 import 'package:allobaby/Screens/Home/Prescription/addprescription.dart';
-import 'package:allobaby/Screens/Home/Report/AddReport.dart';
-import 'package:allobaby/Screens/Home/Report/ViewReport.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,10 +11,9 @@ class Prescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        return Scaffold(
+    return Scaffold(
       appBar: AppBar(title: Text("Prescription")),
       body: Column(
-
         children: [
           Padding(
               padding: const EdgeInsets.only(
@@ -23,9 +22,8 @@ class Prescription extends StatelessWidget {
                   style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.only(
                           left: 20, right: 40, top: 14, bottom: 14)),
-                  onPressed: () => Get.to(() => Addprescription(),
+                  onPressed: () => Get.to(() => AddPrescription(),
                       transition: Transition.rightToLeft),
-
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -33,123 +31,88 @@ class Prescription extends StatelessWidget {
                       Text("Scan and Add new Prescription".toUpperCase())
                     ],
                   ))),
-SizedBox(height: 10,),
+          SizedBox(height: 10),
+          
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('Prescription')
+                  .orderBy('createdAt', descending: true)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(child: CircularProgressIndicator());
+                }
 
-                Card(
-                elevation: 1,
-                shape: Border(left: BorderSide(color: PrimaryColor, width: 4)),
-                child: InkWell(
-                    highlightColor: accentColor.withOpacity(0.1),
-                    splashColor: accentColor.withOpacity(0.8),
-                    onTap: () 
-                    => Get.to(
-                        () => ViewPrescription(),
-                        transition: Transition.rightToLeft),
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 20, right: 40, bottom: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          // Image.memory(
-                          //   base64Decode(reportController
-                          //       .reportDetailsList[index].reportImg),
-                          //   height: 100,
-                          //   width: 100,
-                          // ),
+                var prescriptions = snapshot.data!.docs;
 
-                          Image.network(
-"https://media.istockphoto.com/id/1341785038/photo/business-graphs-charts-and-magnifying-glass-on-table-financial-development-banking-account.jpg?s=612x612&w=0&k=20&c=w7AFU8dx6N2z1P_ZAME8IxYpjK9iaDrWGQ7Ue1T1MpM=",
-                            height: 100,
-                            width: 100,
-                          ),
+                if (prescriptions.isEmpty) {
+                  return Center(child: Text('No prescriptions found.'));
+                }
 
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                return ListView.builder(
+                  itemCount: prescriptions.length,
+                  itemBuilder: (context, index) {
+                    var prescription = prescriptions[index];
+
+                    return Card(
+                      elevation: 1,
+                      shape: Border(left: BorderSide(color: PrimaryColor, width: 4)),
+                      child: InkWell(
+                        highlightColor: accentColor.withOpacity(0.1),
+                        splashColor: accentColor.withOpacity(0.8),
+onTap: () => Get.to(
+  () => ViewPrescription(
+    prescription: prescription.data() as Map<String, dynamic>,
+  ),
+  transition: Transition.rightToLeft,
+),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 20, right: 40, bottom: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text(
-                                "View Prescription",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w500),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text("This is a temporary Text"
-                                // reportController
-                                //   .reportDetailsList[index].reportDate
-                                //   .split(" ")[0]
-                                  
-                                  )
+
+                              CachedNetworkImage(
+                                imageUrl: prescription['imageUrl'],
+                                height: 100,
+                                width: 100,
+                                errorWidget: (context, url, error) => const Icon(Icons.error),
+                                ),
+
+                              
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    prescription['prescriptionType'],
+                                    style: TextStyle(
+                                        fontSize: 20, fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    prescription['description'] ?? 'No description',
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    prescription['createdAt'].toDate().toString().split(' ')[0],
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                ],
+                              )
                             ],
-                          )
-                        ],
+                          ),
+                        ),
                       ),
-                    )),
-              ),
-            
-
-          //                   Expanded(
-          //     child: Obx(
-          //   () => ListView.separated(
-          //     padding: EdgeInsets.only(top: 10, left: 10, right: 10),
-          //     separatorBuilder: (BuildContext context, int index) => SizedBox(
-          //       height: 10,
-          //     ),
-          //     itemCount: reportController.reportDetailsList.length,
-          //     itemBuilder: (BuildContext context, int index) => Card(
-          //       elevation: 1,
-          //       shape: Border(left: BorderSide(color: PrimaryColor, width: 4)),
-          //       child: InkWell(
-          //           highlightColor: accentColor.withOpacity(0.1),
-          //           splashColor: accentColor.withOpacity(0.8),
-          //           onTap: () => Get.to(
-          //               () => ViewReport(
-          //                   reportDetails:
-          //                       reportController.reportDetailsList[index]),
-          //               transition: Transition.rightToLeft),
-          //           child: Padding(
-          //             padding:
-          //                 const EdgeInsets.only(top: 20, right: 40, bottom: 20),
-          //             child: Row(
-          //               mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //               children: [
-          //                 Image.memory(
-          //                   base64Decode(reportController
-          //                       .reportDetailsList[index].reportImg),
-          //                   height: 100,
-          //                   width: 100,
-          //                 ),
-          //                 Column(
-          //                   crossAxisAlignment: CrossAxisAlignment.start,
-          //                   children: [
-          //                     Text(
-          //                       reportController
-          //                           .reportDetailsList[index].reportType,
-          //                       style: TextStyle(
-          //                           fontSize: 20, fontWeight: FontWeight.w500),
-          //                     ),
-          //                     SizedBox(
-          //                       height: 8,
-          //                     ),
-          //                     Text(reportController
-          //                         .reportDetailsList[index].reportDate
-          //                         .split(" ")[0])
-          //                   ],
-          //                 )
-          //               ],
-          //             ),
-          //           )),
-          //     ),
-          //   ),
-          // ))
-
-
+                    );
+                  },
+                );
+              },
+            ),
+          ),
         ],
-
       ),
-
     );
- 
   }
 }

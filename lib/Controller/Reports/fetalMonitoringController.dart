@@ -77,13 +77,13 @@ TextEditingController desc = TextEditingController();
 
     };
 
-var d = await Userapi.getUser();
+    var d = await Userapi.getUser();
 
     String phone = d["phone_number"];
         var random = Random();
   int randomInt = random.nextInt(1000000);
 
-        String  url = await OurFirebase.uploadImageToFirebase(phone,"reports","$phone $randomInt.jpg", image);
+        String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image,phone);
 
     Map<String,dynamic> data = {
       "reportType":"Fetal Monitoring",

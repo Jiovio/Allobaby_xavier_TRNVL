@@ -23,7 +23,7 @@ class Userapi {
   }
 
 
-  static Future<void> updateDefaultHospital(dynamic hospital) async {
+  static Future<bool> updateDefaultHospital(dynamic hospital) async {
     try {
     bool req = await postRequest("/user/setdefaulthospital", {"hospitalId" : hospital["id"]});
     print(req);
@@ -32,12 +32,16 @@ class Userapi {
       localStorage.setItem("defaultHospital", json.encode(hospital));
       localStorage.setItem("defaultChat", json.encode(d));
 
-      Get.offAll(MainScreen());
+      return true;
     }else {
       Get.snackbar("Error", "Please Try Again Later", snackPosition: SnackPosition.BOTTOM);
+
+      return false;
     }
     } catch (e) {
       Get.snackbar("Error", "Please Try Again Later", snackPosition: SnackPosition.BOTTOM);
+
+      return false;
     }
   }
 

@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:allobaby/API/Requests/Userapi.dart';
+import 'package:allobaby/Models/DailyScreening.dart';
+import 'package:allobaby/db/dbHelper.dart';
 import 'package:allobaby/utils/backgroundservice.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:intl/intl.dart';
+import 'package:localstorage/localstorage.dart';
 
 class Maincontroller extends GetxController {
 
@@ -10,8 +16,39 @@ class Maincontroller extends GetxController {
 
   String? profile_pic;
 
+  RxString? lastScreened;
+
+
+  Future<void> updateUser() async{
+    var d = await Userapi.getUser();
+  fromJson(d);
+
+
+
+
+  update();
+  }
+
   Future<void> initScreen() async {
   var d = await Userapi.getUser();
+  localStorage.setItem("phone",d["phone_number"]);
+
+
+  dynamic bs = await getTodayData("daily");
+
+  print(bs["data"]);
+
+  if(bs!=null){
+  bottomSheetData = json.decode(bs["data"]);
+  }
+
+  final ls = localStorage.getItem("lastScreened");
+
+  if(ls!=null){
+    lastScreened = ls.obs;
+  }
+
+
   fromJson(d);
   getCounterData();
   print("*********************");
@@ -114,14 +151,14 @@ double ccomp = 0;
     var d = "2024-09-01";
 
     switch (pregnancyStatus.text) {
-      case "Iam trying to Conceive":
+      case "Iam trying to conceive":
         ctotalDays = int.parse(averageLengthOfCycles.text);
         cdaysPassed = calcdaysPassed(d
           // lmpDate.text
           ) % ctotalDays;
         break;
 
-      case "Iam Pregnant":
+      case "Iam pregnant":
         ctotalDays = 1000;
         cdaysPassed = calcdaysPassed(lmpDate.text);
         break;  
@@ -154,8 +191,20 @@ double ccomp = 0;
 
   int currpage = 0;
   void pageChanged(int i){
-    currpage=i;
-    update();
+
+          currpage=i;
+          update();
+
+
+    // try {
+    //       currpage=i;
+    //       update();
+      
+    // } catch (e) {
+    //       currpage=i;
+      
+    // }
+
   }
 
   // Bottom Sheet
@@ -176,17 +225,33 @@ TextEditingController waketime = TextEditingController();
   };
 
 
+  Future<void> submitBottomSheetData() async {
+
+    print(bottomSheetData);
+
+    await insertDailyRecord(bottomSheetData);
 
 
-  void setBottomSheetData(key,value){
+
+    
+
+  }
+
+
+
+
+  void setBottomSheetData(key,value) async{
     if(bottomSheetData.containsKey(key)){
       bottomSheetData[key] = value;
+
+      await insertOrUpdateDaily(json.encode(bottomSheetData), "daily");
       update();
     }
   }
-  void setbottomSheetDataArray(key,val){
+  void setbottomSheetDataArray(key,val) async {
 
     List<dynamic> ls = bottomSheetData[key];
+
 
     if(!ls.contains(val))
     ls.add(val);
@@ -194,6 +259,19 @@ TextEditingController waketime = TextEditingController();
     ls.remove(val);
 
     bottomSheetData[key] = ls;
+
+    await insertOrUpdateDaily(json.encode(bottomSheetData), "daily");
+
+
+    
+
+
+    if(key=="symptoms"){
+      localStorage.setItem("lastScreened", DateFormat('dd-MM-yyyy').format(DateTime.now()));
+
+      lastScreened = DateFormat('dd-MM-yyyy').format(DateTime.now()).obs;
+    }
+
     update();
   }
 

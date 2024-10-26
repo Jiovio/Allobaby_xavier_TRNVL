@@ -50,24 +50,17 @@ CREATE TABLE sync (
     CREATE TABLE reports (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       reportId TEXT,
-      reportType TEXT NOT NULL,
-      details TEXT NOT NULL,
+      reportType TEXT ,
+      details TEXT ,
       reportFile BLOB,
       created DATETIME DEFAULT CURRENT_TIMESTAMP,
       synced BOOLEAN DEFAULT FALSE,
-      imageurl TEXT NOT NULL,
-      phone TEXT NOT NULL,
-      description TEXT NOT NULL
+      imageurl TEXT ,
+      phone TEXT ,
+      description TEXT 
 
     );
   ''');
-
-  await db.execute('''
-    DROP TABLE chats;
-''');
-  await db.execute('''
-    DROP TABLE chatlist;
-''');
 
 await db.execute('''
 CREATE TABLE chats (
@@ -95,6 +88,53 @@ CREATE TABLE chats (
       recent TIMESTAMP
     );
   ''');
+
+
+  await db.execute('''
+CREATE TABLE dailyscreening (
+    id INTEGER PRIMARY KEY,
+    date DATE NOT NULL,
+    feeling TEXT,
+    glassOfWater INTEGER,
+    bedTime TEXT,
+    wakeUpTime TEXT,
+    sleepDuration INTEGER,
+    exercises TEXT,
+    tabletsTaken TEXT,
+    symptoms TEXT,
+    created DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+''');
+
+
+  await db.execute('''
+CREATE TABLE symptoms (
+    data TEXT NOT NULL,
+    date DATE DEFAULT (DATE('now')) PRIMARY KEY,
+    synced BOOLEAN DEFAULT 0,
+    uid INTEGER
+);
+''');
+
+  await db.execute('''
+CREATE TABLE vitals (
+    data TEXT NOT NULL,
+    date DATE DEFAULT (DATE('now')) PRIMARY KEY,
+    synced BOOLEAN DEFAULT 0,
+    uid INTEGER
+);
+''');
+
+  await db.execute('''
+CREATE TABLE daily (
+    data TEXT NOT NULL,
+    date DATE DEFAULT (DATE('now')) PRIMARY KEY,
+    synced BOOLEAN DEFAULT 0,
+    uid INTEGER
+);
+''');
+
+
 
     // await db.execute('''
     //   insert into my_table (name) values("vijay");

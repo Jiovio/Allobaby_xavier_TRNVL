@@ -16,6 +16,9 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
 
 
+  Timer? timer;
+
+
       List<String> ls = ["Analyzing Emotions","Correcting Audio","Predicting Recommendations"];
 
       int i = 0;
@@ -26,14 +29,18 @@ class _LoadingState extends State<Loading> {
         
 
         i = 0;
-        Timer.periodic(Duration(seconds: 2),(timer){
+      timer = Timer.periodic(Duration(seconds: 2),(timer){
 
           if(i<ls.length-1){
+
+            
           
           setState(() {
             i++;
           });
           }else {
+
+
                       setState(() {
             i=0;
           });
@@ -50,6 +57,14 @@ class _LoadingState extends State<Loading> {
 
         super.initState();
       }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer!.cancel();
+    
+  }
 
 
 

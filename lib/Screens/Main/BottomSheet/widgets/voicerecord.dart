@@ -25,6 +25,9 @@ class Voicerecord extends StatefulWidget {
 class _VoicerecordState extends State<Voicerecord> {
 
   final record = AudioRecorder();
+
+
+  Timer? timer;
   Future check () async {
 
     
@@ -86,7 +89,7 @@ File audioFile = File(file);
     check();
 
         c = 10;
-        Timer.periodic(Duration(seconds: 1),(timer){
+      timer =   Timer.periodic(const Duration(seconds: 1),(timer){
 
           if(c>0){
           c--;
@@ -110,6 +113,13 @@ File audioFile = File(file);
     super.initState();
   }
 
+
+  @override
+  void dispose() {
+    if(timer!=null)
+    timer!.cancel();
+    super.dispose();
+  }
   
   // Widget loading = Column(
   //   children: [

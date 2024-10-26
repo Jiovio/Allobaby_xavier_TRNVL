@@ -14,7 +14,16 @@ class Storage {
     return hospital;
   }
 
-  static getUserID() {
+  static getUserPhone() {
+    final id = localStorage.getItem("phone");
+
+    if(id!=null){
+      return id;
+    }
+    return id;
+  }
+
+    static getUserID() {
     final id = localStorage.getItem("user");
 
     if(id!=null){

@@ -149,37 +149,40 @@ class _HomeState extends State<Home> {
 
                             child: Row(children: [
                                                                 Container(
-                                    padding: EdgeInsets.all(4),
+                                    padding:const EdgeInsets.all(4),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(40),
                                         color: Colors.green),
-                                    child: Icon(
+                                    child:const Icon(
                                       Icons.arrow_forward_ios_rounded,
                                       size: 16,
                                       color: Black,
                                     ),
                                   ),
 
-                                  SizedBox(width: 8,),
+                                  const SizedBox(width: 8,),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                             Text(
-                                            "2021-11-20",
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: PrimaryColor,
-                                                fontWeight: FontWeight.w700),
-                                          ),
-                                                                                Text("Last Screened",
+                                             Obx( () => Text(
+                                                  mainC.lastScreened==null?
+                                                  "- - - ":
+                                                  mainC.lastScreened!.value,
+                                                  style:const TextStyle(
+                                                  fontSize: 18,
+                                                  color: PrimaryColor,
+                                                  fontWeight: FontWeight.w700),
+                                                                                         ),
+                                             ),
+                                          Text("Last Screened",
                                           style: TextStyle(
                                               color: Black.withOpacity(0.6),
-                                              fontSize: 14)),
+                                              fontSize: 14)
+                                              ),
                                   ],)
                             ],),
                           ),
-
 
                           InkWell(
 
@@ -232,7 +235,7 @@ class _HomeState extends State<Home> {
 
             ),
 
-                        SizedBox(
+            const SizedBox(
               height: 8,
             ),
 

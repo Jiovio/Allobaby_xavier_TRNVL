@@ -14,7 +14,7 @@ Widget symptoms(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Padding(
+       const Padding(
           padding: EdgeInsets.fromLTRB(20.0, 20, 20, 0),
           child: Text(
             "Do you have any of these Symptoms?",
@@ -29,8 +29,8 @@ Widget symptoms(BuildContext context) {
             child: 
           
               ListView.separated(
-                padding: EdgeInsets.only(left: 10, right: 10),
-                separatorBuilder: (BuildContext context, int index) => SizedBox(
+                padding:const EdgeInsets.only(left: 10, right: 10),
+                separatorBuilder: (BuildContext context, int index) => const SizedBox(
                   width: 10,
                 ),
                 scrollDirection: Axis.horizontal,
@@ -40,10 +40,9 @@ Widget symptoms(BuildContext context) {
                     OutlinedButton(
                         style: OutlinedButton.styleFrom(
                           side: controller.bottomSheetData["symptoms"].contains(symptomsList[index].title)
-                          //  controller.symptomsSelected.contains(index)
-                              ? BorderSide(color: PrimaryColor, width: 1.5)
+                              ? const BorderSide(color: PrimaryColor, width: 1.5)
                               : null,
-                          padding: EdgeInsets.all(14),
+                          padding:const EdgeInsets.all(14),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
@@ -59,7 +58,6 @@ Widget symptoms(BuildContext context) {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8.0),
                                 color: controller.bottomSheetData["symptoms"].contains(symptomsList[index].title)
-                                    // controller.symptomsSelected.contains(index)
                                         ? PrimaryColor
                                         : Colors.grey,
                               ),
@@ -77,8 +75,6 @@ Widget symptoms(BuildContext context) {
                               symptomsList[index].title,
                               style: TextStyle(
                                   color: controller.bottomSheetData["symptoms"].contains(symptomsList[index].title)
-                                  // controller.symptomsSelected
-                                  //         .contains(index)
                                       ? PrimaryColor
                                       : Black),
                               textAlign: TextAlign.center,
@@ -87,7 +83,7 @@ Widget symptoms(BuildContext context) {
                         )),
               ),
             ),
-        SizedBox(
+       const SizedBox(
           height: 40,
         ),
       ])

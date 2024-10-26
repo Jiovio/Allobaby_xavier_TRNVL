@@ -2,7 +2,7 @@
   import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
-searchBox(String hint,List<String> options) {
+searchBox(String hint,List<String> options,Function onChange) {
 
     return DropdownSearch<String>(
 
@@ -28,6 +28,7 @@ searchBox(String hint,List<String> options) {
                 items: options,
                 // label: "Report of ?",
                 onChanged: (value) {
+                  onChange(value);
                   // reportController.reportOf = value!;
                 },
               );

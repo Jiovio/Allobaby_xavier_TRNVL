@@ -95,7 +95,7 @@ class LastCycleUI extends StatelessWidget {
                       ],
 
 
-                if(controller.data["pregnancyStatus"]=="Iam Pregnant" && controller.eddate.text!="")
+                if(controller.data["pregnancyStatus"]=="Iam pregnant" && controller.eddate.text!="")
                 Column(
                   children: [
                 TextField(
@@ -205,19 +205,21 @@ class LastCycleUI extends StatelessWidget {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Flexible(
-                        child: OutlinedButton(
-                          onPressed: () => Get.to(() => AddressDetails(),
-                              transition: Transition.rightToLeft),
-                          style: ElevatedButton.styleFrom(
-                              side: BorderSide(color: PrimaryColor),
-                              minimumSize: Size(100, 40),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(40),
-                              )),
-                          child: Text(("Skip").toUpperCase()),
-                        ),
-                      ),
+                      Container(),
+                      // Flexible(
+                      //   child: OutlinedButton(
+                      //     onPressed: () => Get.to(() => AddressDetails(),
+                      //         transition: Transition.rightToLeft),
+                      //     style: ElevatedButton.styleFrom(
+                      //         side: BorderSide(color: PrimaryColor),
+                      //         minimumSize: Size(100, 40),
+                      //         shape: RoundedRectangleBorder(
+                      //           borderRadius: BorderRadius.circular(40),
+                      //         )),
+                      //     child:
+                      //     Text(("Skip").toUpperCase()),
+                      //   ),
+                      // ),
                       SizedBox(
                         width: 4,
                       ),

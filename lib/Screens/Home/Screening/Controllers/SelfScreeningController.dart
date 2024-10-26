@@ -1,26 +1,58 @@
+import 'dart:convert';
+
+import 'package:allobaby/API/local/Storage.dart';
+import 'package:allobaby/db/dbHelper.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Selfscreeningcontroller extends GetxController {
 
 
+  @override
+  void onInit () async {
+    super.onInit();
+
+
+    var d = await getTodayData("symptoms");
+
+    if(d!=null){
+      symptomsMap = json.decode(d["data"]) as Map<String,dynamic>;
+    }
+
+
+    var vitals = await getTodayData("vitals");
+
+    if(vitals!=null){
+      healthData = json.decode(vitals["data"]);
+    }
+
+  }
+
+
     List symptomsSelected = [];
       List symptomsSelectedItems = [];
     
-        Map<String,bool> symptomsMap = {
+        Map<String,dynamic> symptomsMap = {
           'Normal' : false,
-'Body pain' : false,
-'Burning Stomach' : false,
-'Cold cough' : false,
- 'Dizziness' : false,
- 'Headache' : false,
- 'Vomiting' : false,
- 'Other' : false
-    }.obs;
+          'Body pain' : false,
+          'Burning Stomach' : false,
+          'Cold cough' : false,
+          'Dizziness' : false,
+          'Headache' : false,
+          'Vomiting' : false,
+          'Other' : false
+    };
 
- void symptomSelect(String symptom) {
+    TextEditingController symptomDesc = TextEditingController();
+
+ void symptomSelect(String symptom) async {
     if (symptomsMap.containsKey(symptom)) {
       symptomsMap[symptom] = !symptomsMap[symptom]!; 
       // symptomsMap[symptom] = true; 
+
+      // createChatTable();
+
+     await  insertOrUpdateDaily(json.encode(symptomsMap),"symptoms");
 
       update(); 
     }
@@ -48,12 +80,36 @@ class Selfscreeningcontroller extends GetxController {
 
   void updateVitals(String key, dynamic value){
 
+
+    insertOrUpdateDaily(json.encode(healthData), "vitals");
+
     if(healthData.containsKey(key)){
       healthData[key] = value;
       update();
     }
   }
 
+
+  void submitSymptoms () async {
+
+
+    int phone = await Storage.getUserID();
+
+
+
+        Map<String,dynamic> data = {
+      "reportType":"Symptoms",
+      "details":json.encode(symptomsMap),
+      "description":symptomDesc.text,
+      "phone":phone
+    };
+
+  //  int ins = await insertOrUpdateSymptom(json.encode(symptomsMap));
+
+   Get.back();
+
+
+  }
 
 
 }

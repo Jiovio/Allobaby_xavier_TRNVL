@@ -104,6 +104,7 @@ class _AllobotState extends State<Allobot> {
         children: [
           Expanded(
             child: TextField(
+              autofocus: true,
               controller: controller.input,
               decoration: InputDecoration(
                 hintText: 'Ask Allobot a question...',

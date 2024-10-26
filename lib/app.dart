@@ -44,19 +44,19 @@ class _MyAppState extends State<MyApp> {
   }
 
 
-  //   void _setupForegroundNotificationListeners() {
-  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  //     print("Received foreground message: ${message.messageId}");
+    void _setupForegroundNotificationListeners() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("Received foreground message: ${message.messageId}");
 
-  //   });
-  // }
+    });
+  }
 
 
   @override
   void initState() {
     super.initState();
     _requestNotificationPermissions();
-    // _setupForegroundNotificationListeners();
+    _setupForegroundNotificationListeners();
     
   }
 

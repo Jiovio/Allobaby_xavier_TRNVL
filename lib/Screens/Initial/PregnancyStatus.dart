@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 class Pregnancystatus extends StatelessWidget {
    Pregnancystatus({super.key});
 
-   List<String> ls = ["Iam trying to Conceive","Iam Pregnant","I have a baby"];
+   List<String> ls = ["Iam trying to conceive","Iam pregnant","I have a baby"];
 
 
 

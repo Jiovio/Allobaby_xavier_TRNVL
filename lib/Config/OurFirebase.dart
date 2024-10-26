@@ -48,7 +48,7 @@ class OurFirebase {
 
 
 
-  static Future<String> uploadImageToFirebase(String? phone,String path,String filename,File image) async {
+  static Future<String> uploadImageToFirebase(String path,String filename,File image,[String? phone]) async {
 
   Maincontroller cont = Get.put(Maincontroller());
 
@@ -303,6 +303,29 @@ final imagePart = DataPart('audio/aac', audio);
         return false;
       }
     }
+
+
+    static Future<void> addPrescription({
+    required int userId,
+    required String imageUrl,
+    required String prescriptionType,
+    required String description,
+  }) async {
+    
+
+    try {
+      await db.collection('Prescription').add({
+        'userId': userId,
+        'imageUrl': imageUrl,
+        'prescriptionType': prescriptionType,
+        'description': description,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      throw Exception('Failed to add prescription: $e');
+    }
+  }
+
 
 
     

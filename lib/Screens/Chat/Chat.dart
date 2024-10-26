@@ -58,7 +58,7 @@ class _ChatState extends State<Chat> {
     if(image!=null){
       type = "image";
       imgUrl = await OurFirebase.uploadImageToFirebase(
-        null,"/chats","${DateTime.now().toIso8601String()}.jpg",image as File
+        "/chats","${DateTime.now().toIso8601String()}.jpg",image as File
       );
     }
 

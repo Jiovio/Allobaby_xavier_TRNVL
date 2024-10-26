@@ -157,11 +157,11 @@ class Fetalmonitoring extends StatelessWidget {
                                                 icon: Icon(Icons.add_a_photo),
                                                 label: Text("Upload Report")),
 
-                                         TextButton.icon(onPressed: (){
-                                          Get.to(Hemoglobinscan());
-                                         }, 
-                                         icon: Icon(Icons.account_tree_sharp),
-                                         label: Text("Automatic"),)       
+                                        //  TextButton.icon(onPressed: (){
+                                        //   Get.to(Hemoglobinscan());
+                                        //  }, 
+                                        //  icon: Icon(Icons.account_tree_sharp),
+                                        //  label: Text("Automatic"),)       
                             ],
                           ),
 

@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:allobaby/Screens/AI/allobotModal.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -64,6 +65,11 @@ class _MainScreenState extends State<MainScreen> {
               )
               ,child: Image.asset("assets/BottomSheet/baby_white.png")),
             onPressed: () {  
+
+                              showAllobotModalWithEmoji(context);
+
+                              return;
+
         
           
                               // bottomSheetController.pageChanged = 0;

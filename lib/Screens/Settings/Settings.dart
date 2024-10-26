@@ -70,12 +70,14 @@ class SettingsScreen extends StatelessWidget {
                       child: Row(children: [
                         //  Obx(() =>
                         CircleAvatar(
+                          
                             backgroundColor: Colors.transparent,
                             radius: 36.0,
                             child: mainC.profile_pic==null?Image.asset(
                                 "assets/General/avatar.png") :
 
-                                CachedNetworkImage(imageUrl: mainC.profile_pic as String)
+                                CachedNetworkImage(imageUrl: mainC.profile_pic as String,fit: BoxFit.cover,
+                                height: double.infinity,width: double.infinity,)
                                 
                                 
                                 
@@ -340,11 +342,9 @@ class SettingsScreen extends StatelessWidget {
   }
 
     _launchURL(String url) async {
-      await launchUrl(Uri.https(url));
-    if (await canLaunchUrl(Uri.https(url))) {
-      await launchUrl(Uri.https(url));
-    } else {
-      throw 'Could not launch $url';
-    }
+      print(Uri.https(Uri.encodeComponent(url)));
+      // await launchUrl(Uri.https(Uri.encodeComponent(url)));
+      await launchUrl(Uri.parse(url));
+
   }
 }

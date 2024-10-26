@@ -3,7 +3,7 @@ import 'package:allobaby/Controller/MainController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-// ignore: non_constant_identifier_names
+
 Column emojiPage() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -16,7 +16,6 @@ Column emojiPage() {
           children: [
             Text(
               "Hi Patient",
-              // ${mainScreenController.patientDetails[0].name},
             
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
             ),
@@ -102,3 +101,7 @@ class Emojis {
   String emoji;
   Emojis({required this.title, required this.emoji});
 }
+
+
+
+

@@ -109,12 +109,7 @@ class AIAppointmentPage extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.blue.shade100,
-              Colors.blue.shade50,
-            ],
-          ),
+          color: PrimaryColor,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
@@ -122,25 +117,25 @@ class AIAppointmentPage extends StatelessWidget {
             Icon(
               isPregnant ? Icons.child_care : Icons.healing,
               size: 40,
-              color: PrimaryColor,
+              color: White,
             ),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                 const Text(
                     'Pregnancy Status',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: PrimaryColor,
+                      color: White,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     isPregnant ? 'Pregnant' : 'Not Pregnant',
-                    style: const TextStyle(fontSize: 16),
+                    style:const TextStyle(fontSize: 16, color: White),
                   ),
                 ],
               ),

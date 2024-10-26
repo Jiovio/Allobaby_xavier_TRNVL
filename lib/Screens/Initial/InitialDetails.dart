@@ -320,6 +320,11 @@ Form detailsForm(
                     if (value == null || value.isEmpty) {
                       return 'Please enter age';
                     }
+
+                    if(value.length>2 || int.parse(value)<16){
+                      return 'Please enter corrent age';
+                    }
+                    // if()
                     return null;
                   },
                 ),

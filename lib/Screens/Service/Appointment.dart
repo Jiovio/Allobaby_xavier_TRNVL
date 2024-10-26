@@ -236,8 +236,6 @@ final formKey = GlobalKey<FormState>();
                           showModalBottomSheet(
                             context: context,
                             builder: (context) => 
-                            
-                            
                             Container(
                               height: MediaQuery.of(context).size.height / 2,
                               child: SingleChildScrollView(
@@ -301,12 +299,13 @@ final formKey = GlobalKey<FormState>();
                           
                           );
                         
-                        
                         },
-                         child: Text(
-                          "View Available Slots",
-                          style: TextStyle(fontSize: 18),
-                        )),
+                         child: GetBuilder<AppointmentController>(
+                           builder: (controller) =>  Text(
+                            controller.timeslots.isEmpty? "No Slots Available":"View Available Slots",
+                            style: TextStyle(fontSize: 18),
+                                                   ),
+                         )),
                   ),
 
                   GetBuilder<AppointmentController>(
@@ -334,14 +333,14 @@ final formKey = GlobalKey<FormState>();
                   TextFormField(
 
                     decoration: InputDecoration(
-                        labelText: "Diagnosis Desc".tr,
+                        labelText: "Diagnosis Description".tr,
                         border: OutlineInputBorder()),
                     keyboardType: TextInputType.text,
                     controller: cont.descController,
                     maxLines: 5,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter Diagnosis Desc'.tr;
+                        return 'Please enter Diagnosis Description'.tr;
                       }
                       return null;
                     },
@@ -352,39 +351,45 @@ final formKey = GlobalKey<FormState>();
                         Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            minimumSize:
-                                Size(MediaQuery.of(context).size.width / 2, 42),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(40))),
-                        onPressed: () {
 
-                          
-
-
-                          if(formKey.currentState!.validate() &&
-                          cont.hospital!=null &&
-                          cont.doctor !=null &&
-                          cont.selDate !=null &&
-                          cont.timeslotInd !=null &&
-                          cont.descController.text!=""
-                          
-                          ) {
-
-                          cont.addAppointment();
-
-                          
-                          }else{
-                          Get.snackbar(
-                                "All fields are mandatory to book appointment",
-                                "error",
-                                snackPosition: SnackPosition.BOTTOM
-                                );
-
-                          }
-                        },
-                        child: Text("Book".tr),
+                      
+                      GetBuilder<AppointmentController>(
+                        builder: (controller) => 
+                        controller.timeslotInd ==null?Container():
+                         ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              minimumSize:
+                                  Size(MediaQuery.of(context).size.width / 2, 42),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40))),
+                          onPressed: () {
+                        
+                            
+                        
+                        
+                            if(formKey.currentState!.validate() &&
+                            cont.hospital!=null &&
+                            cont.doctor !=null &&
+                            cont.selDate !=null &&
+                            cont.timeslotInd !=null &&
+                            cont.descController.text!=""
+                            
+                            ) {
+                        
+                            cont.addAppointment();
+                        
+                            
+                            }else{
+                            Get.snackbar(
+                                  "All fields are mandatory to book appointment",
+                                  "error",
+                                  snackPosition: SnackPosition.BOTTOM
+                                  );
+                        
+                            }
+                          },
+                          child: Text("Book".tr),
+                        ),
                       )
                     ],
                   )

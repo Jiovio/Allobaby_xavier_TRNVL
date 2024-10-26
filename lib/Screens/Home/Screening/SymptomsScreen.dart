@@ -84,37 +84,57 @@ SingleChildScrollView SymptomsScreen() => SingleChildScrollView(
                                     fontSize: 16),
                                 textAlign: TextAlign.center,
                               ),
+
+                              
                             ],
                           )),
                 ),
               ),
             ),
+
+             GetBuilder<Selfscreeningcontroller>(
+
+               builder: (controller) =>  Column(
+                 children: [
+                   Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15.0),
+                    child: TextField(
+                      onTap: () {},
+                      controller: controller.symptomDesc,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      cursorColor: PrimaryColor,
+                      textAlignVertical: TextAlignVertical.center,
+                      textAlign: TextAlign.left,
+                      onChanged: (val) {},
+                      decoration: InputDecoration(
+                        hintText: "Add your symptom description",
+                        hintStyle: TextStyle(fontSize: 18),
+                        border:
+                            OutlineInputBorder(borderSide: BorderSide.none),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 5),
+                        filled: true,
+                        fillColor: Black100,
+                      ),
+                    ),
+                               ),
+
+
+                               SizedBox(
+                                width: double.infinity,
+                                height: 50,
+                                 child: ElevatedButton(onPressed: (){
+                                  controller.submitSymptoms();
+                                 }, child: 
+                                                               const Text("Submit")),
+                               )
+                 ],
+               ),
+             )
+     
              
-                  true
-                    ? Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        child: TextField(
-                          onTap: () {},
-                          // controller: controller.otherSymptom,
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          cursorColor: PrimaryColor,
-                          textAlignVertical: TextAlignVertical.center,
-                          textAlign: TextAlign.left,
-                          onChanged: (val) {},
-                          decoration: InputDecoration(
-                            hintText: "Add your symptom description",
-                            hintStyle: TextStyle(fontSize: 18),
-                            border:
-                                OutlineInputBorder(borderSide: BorderSide.none),
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 5),
-                            filled: true,
-                            fillColor: Black100,
-                          ),
-                        ),
-                      )
-                    : Container(),
+
           ],
         ),
       ),

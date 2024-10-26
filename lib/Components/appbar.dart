@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Screens/Service/HealthProfile.dart';
-// import 'package:Allobaby/Screens/Home/Health%20Profile%20Details/View/healthProfileDetails.dart';
-// import 'package:Allobaby/Screens/MainScreen/Controller/MainScreenController.dart';
-// import 'package:Allobaby/Screens/Settings/View/subscription/Subscription.dart';
-// import 'package:Allobaby/Screens/Notification/View.dart';
 import 'package:allobaby/Screens/Signin.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'languageDialog.dart';
@@ -14,6 +12,8 @@ PreferredSize customAppBar(
     {required String title, required BuildContext context}) {
   // MainScreenController mainScreenController = Get.put(MainScreenController());
   // print(mainScreenController.patientDetails[0].imageUrl);
+
+  Maincontroller controller = Get.put(Maincontroller());
   return PreferredSize(
       preferredSize: Size.fromHeight(100.0),
       child: Material(
@@ -59,22 +59,38 @@ PreferredSize customAppBar(
                       onTap: () => Get.to(() => Healthprofile(),
                           transition: Transition.rightToLeft),
                       child:
-                          // mainScreenController.patientDetails[0].imageUrl
-                          //         .contains('.png')
-                          //     ?
-                          CircleAvatar(
+
+
+                      controller.profile_pic==null?
+                                              CircleAvatar(
                               backgroundColor: Colors.transparent,
-                              radius: 10.0,
-                              child: Image.asset(
-                                  "assets/General/avatar.png")
-                                  ) // : CircleAvatar(
-                      //     backgroundColor: Colors.transparent,
-                      //     radius: 16.0,
-                      //     backgroundImage: MemoryImage(base64Decode(
-                      //         mainScreenController
-                      //             .patientDetails[0].imageUrl)))
-                      ,
-                      // )
+                              radius: 13.0,
+                              backgroundImage: AssetImage(
+                                "assets/General/avatar.png"
+                              ),
+                              
+                                              ):
+
+SizedBox(
+  child: Container(
+    width: 26.0,  // Circle diameter (2 * radius)
+    height: 26.0,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      image: DecorationImage(
+        image: CachedNetworkImageProvider(controller.profile_pic as String),
+        fit: BoxFit.cover,
+      ),
+    ),
+    child: CircleAvatar(
+      radius: 13.0,
+      backgroundColor: Colors.transparent,  // To ensure only image shows
+    ),
+  ),
+)
+
+
+                          
                     ),
                   ],
                 )

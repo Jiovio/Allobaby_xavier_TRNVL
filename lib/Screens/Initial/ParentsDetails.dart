@@ -33,7 +33,7 @@ class ParentDetails extends StatelessWidget {
                   height: 40,
                 ),
                 Text(
-                  "Enter your Partner mobile number.",
+                  "Enter your Partner Details",
                   style: TextStyle(
                       color: PrimaryColor,
                       fontSize: 24,
