@@ -27,7 +27,8 @@ class Glucose extends StatelessWidget {
             init: Glucosecontroller(),
             builder: (controller) => 
           Column(
-
+            
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
                         SizedBox(
@@ -113,6 +114,9 @@ class Glucose extends StatelessWidget {
               ),
 
 
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
                           TextButton.icon(
                   onPressed: () => showModalBottomSheet(
                       context: context,
@@ -124,7 +128,7 @@ class Glucose extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text(
+                               const Text(
                                   "Choose photo from :",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
@@ -156,6 +160,13 @@ class Glucose extends StatelessWidget {
                           )),
                   icon: Icon(Icons.add_a_photo),
                   label: Text("Upload Report")),
+
+
+                    ],
+                  ),
+
+
+
 
                                 SizedBox(
                 height: 10.0,

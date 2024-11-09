@@ -148,11 +148,11 @@ class Urine extends StatelessWidget {
                                                 label:const Text("Upload Report")),
 
 
-                                       TextButton.icon(onPressed: (){
-                                            Get.to(CameraCapture());
-                                         }, 
-                                         icon: Icon(Icons.account_tree_sharp),
-                                         label: Text("Automatic"),) 
+                                      //  TextButton.icon(onPressed: (){
+                                      //       Get.to(CameraCapture());
+                                      //    }, 
+                                      //    icon: Icon(Icons.account_tree_sharp),
+                                      //    label: Text("Automatic"),) 
                             ],
                           ),
 

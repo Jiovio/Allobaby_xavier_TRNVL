@@ -64,7 +64,6 @@ Widget emojis(int index) {
           style: TextButton.styleFrom(
               padding: EdgeInsets.all(14),
               shape: controller.bottomSheetData["feeling"]==val
-              // (controller.mood == index)
                   ? RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       side: BorderSide(color: PrimaryColor, width: 1.5))
@@ -82,7 +81,7 @@ Widget emojis(int index) {
               Text(
                 emojiList[index].title,
                 style: TextStyle(
-                    color:true ? PrimaryColor : Black),
+                    color:controller.bottomSheetData["feeling"]==val ? PrimaryColor : Black),
               ),
             ],
           )));

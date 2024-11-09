@@ -46,16 +46,33 @@ class Selfscreeningcontroller extends GetxController {
     TextEditingController symptomDesc = TextEditingController();
 
  void symptomSelect(String symptom) async {
-    if (symptomsMap.containsKey(symptom)) {
+
+  if(symptom =="Normal"){
+    symptomsMap = {
+          'Normal' : true,
+          'Body pain' : false,
+          'Burning Stomach' : false,
+          'Cold cough' : false,
+          'Dizziness' : false,
+          'Headache' : false,
+          'Vomiting' : false,
+          'Other' : false
+    };
+  }else{
+        if (symptomsMap.containsKey(symptom)) {
       symptomsMap[symptom] = !symptomsMap[symptom]!; 
+      symptomsMap["Normal"] = false; 
+
       // symptomsMap[symptom] = true; 
-
       // createChatTable();
+    }
+  }
 
-     await  insertOrUpdateDaily(json.encode(symptomsMap),"symptoms");
+       await  insertOrUpdateDaily(json.encode(symptomsMap),"symptoms");
 
       update(); 
-    }
+
+
   }
 
   RxBool iBloodGlucoseValue = true.obs;

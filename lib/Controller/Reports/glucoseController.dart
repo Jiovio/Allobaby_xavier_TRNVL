@@ -1,7 +1,9 @@
 
 import 'dart:math';
 
+import 'package:allobaby/API/Requests/ReportAPI.dart';
 import 'package:allobaby/API/Requests/Userapi.dart';
+import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Screens/Home/Report/Report.dart';
@@ -94,10 +96,13 @@ String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomI
 
     OurFirebase.createDataWithName("reports","$phone $randomInt",data);
 
+    await Reportapi().addReports(data);
 
-    print(data);
+    showToast("Success","Report Added Successfully");
 
     Get.to(Report());
+
+
     // showToast("Please Enter All Details",'Fields are empty. please enter all fields.');
 
 

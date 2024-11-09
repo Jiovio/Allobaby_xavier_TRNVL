@@ -358,7 +358,6 @@ Future<int> insertOrUpdateDaily(String jsonData,String tablename) async {
     );
 
     if (result.isNotEmpty) {
-      print(result.first);
       return result.first;
     } else {
       return null; 

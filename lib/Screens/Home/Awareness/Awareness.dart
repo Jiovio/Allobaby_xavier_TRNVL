@@ -48,28 +48,50 @@ class _AwarenessState extends State<Awareness> {
               onPressed: () => Get.back(),
             ),
           ),
-          // title: Container(
-          //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-          //   decoration: BoxDecoration(
-          //     color: Colors.black.withOpacity(0.3),
-          //     borderRadius: BorderRadius.circular(20),
-          //   ),
-          //   child:const Text(
-          //     "Awareness",
-          //     style: const TextStyle(
-          //       color: Colors.white,
-          //       fontSize: 18,
-          //       fontWeight: FontWeight.w600,
-          //     ),
-          //   ),
-          // ),
+
         ),
       ),
       body: FutureBuilder(
-        future: Newsapi.getReels(),
+        future: 
+        Newsapi.getReels(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final data = snapshot.data;
+
+
+            if(data.isEmpty){
+
+
+              return Container(
+            color: Colors.black,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.video_library_outlined,
+                    size: 48,
+                    color: Colors.white.withOpacity(0.6),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    "Sorry No Awareness Post".tr,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                      color: Colors.white.withOpacity(0.8),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+
+
+
+            }
+
+
             return Stack(
               children: [
                 // PageView

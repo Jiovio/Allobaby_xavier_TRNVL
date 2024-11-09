@@ -15,6 +15,19 @@ class Userapi {
   }
 
 
+  static Future<dynamic> getCheckups () async {
+    var req = await getRequest("/user/checkups");
+    return req;
+  }
+
+    static Future<dynamic> getCheckupByID (int id) async {
+    var req = await getRequest("/checkup/getbyid?id=${id.toString()}");
+    return req;
+  }
+
+
+
+
   static Future<bool> updateUser(data) async {
 
     var req = await putRequest("/user/updateuser",data);

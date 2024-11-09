@@ -48,57 +48,185 @@ final formKey = GlobalKey<FormState>();
                               titleMedium: TextStyle(color: PrimaryColor)),
                         ),
     child: 
-    GetBuilder(
-      init: AppointmentController(),
+    // GetBuilder(
+    //   init: AppointmentController(),
 
-      builder: (controller) => 
-      DropdownSearch<Hospital>(
+    //   builder: (controller) => 
+    //   DropdownSearch<Hospital>(
       
-      selectedItem: cont.hospital,
+    //   selectedItem: cont.hospital,
       
-        popupProps: PopupProps.modalBottomSheet(
-      modalBottomSheetProps: ModalBottomSheetProps(
-        shape: BeveledRectangleBorder(borderRadius: BorderRadius.zero),
-      ),
-      showSearchBox: true, 
-      itemBuilder: (context, item, isSelected) {
-        return ListTile(
-          title: Text(item.name),
-          selected: isSelected,  // Highlight selected item
-        );
-      },
-        ),
+    //     popupProps: PopupProps.modalBottomSheet(
+    //   modalBottomSheetProps: ModalBottomSheetProps(
+    //     shape: BeveledRectangleBorder(borderRadius: BorderRadius.zero),
+    //   ),
+    //   showSearchBox: true, 
+    //   itemBuilder: (context, item, isSelected) {
+    //     return ListTile(
+    //       title: Text(item.name),
+    //       selected: isSelected,  // Highlight selected item
+    //     );
+    //   },
+    //     ),
       
-        dropdownBuilder: (context, selectedItem) {
-      // Show the selected hospital in the dropdown
-      return Text(selectedItem?.name ?? "Select Hospital");
-        },
+    //     dropdownBuilder: (context, selectedItem) {
+    //   // Show the selected hospital in the dropdown
+    //   return Text(selectedItem?.name ?? "Select Hospital");
+    //     },
       
-        // Label and decoration for the dropdown
-        dropdownDecoratorProps: DropDownDecoratorProps(
-      dropdownSearchDecoration: InputDecoration(
-        border: OutlineInputBorder(),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          borderSide: BorderSide(width: 3, color: Colors.grey),
-        ),
-        labelText: "Select Hospital".tr,
-        labelStyle: const TextStyle(color: Colors.black),  // Ensure proper color reference
-      ),
-        ),
+    //     // Label and decoration for the dropdown
+    //     dropdownDecoratorProps: DropDownDecoratorProps(
+    //   dropdownSearchDecoration: InputDecoration(
+    //     border: OutlineInputBorder(),
+    //     focusedBorder: OutlineInputBorder(
+    //       borderRadius: BorderRadius.all(Radius.circular(12)),
+    //       borderSide: BorderSide(width: 3, color: Colors.grey),
+    //     ),
+    //     labelText: "Select Hospital".tr,
+    //     labelStyle: const TextStyle(color: Colors.black),  // Ensure proper color reference
+    //   ),
+    //     ),
       
       
-        items: controller.hospitals,
-        onChanged: (value) {
-      if (value != null) {
+    //     items: controller.hospitals,
+    //     onChanged: (value) {
+    //   if (value != null) {
       
         
-          controller.hospital = value;
+    //       controller.hospital = value;
       
-         controller. fetchDoctors();
+    //      controller. fetchDoctors();
+    //   }
+    //     },
+    // )),
+    
+
+    GetBuilder(
+  init: AppointmentController(),
+  builder: (controller) => DropdownSearch<Hospital>(
+    selectedItem: controller.hospital,
+    popupProps: PopupProps.modalBottomSheet(
+      modalBottomSheetProps: ModalBottomSheetProps(
+        shape: RoundedRectangleBorder(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+      ),
+      showSearchBox: true,
+      searchFieldProps: TextFieldProps(
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.search, color: Colors.grey),
+          hintText: "Search hospital...",
+          hintStyle: const TextStyle(color: Colors.grey),
+          filled: true,
+          fillColor: Colors.grey[100],
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(
+              color: Theme.of(context).primaryColor,
+              width: 2,
+            ),
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
+        ),
+      ),
+      itemBuilder: (context, item, isSelected) {
+        return ListTile(
+          title: Text(
+            item.name,
+            style: TextStyle(
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              color: isSelected ? Theme.of(context).primaryColor : null,
+            ),
+          ),
+          selected: isSelected,
+          selectedTileColor: Theme.of(context).primaryColor.withOpacity(0.1),
+        );
+      },
+      searchDelay: const Duration(milliseconds: 300),
+      title: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: const Offset(0, 1),
+            ),
+          ],
+        ),
+        child: Text(
+          "Select Hospital",
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            // color: Theme.of(context).primaryColor,
+          ),
+        ),
+      ),
+    ),
+    dropdownBuilder: (context, selectedItem) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        child: Text(
+          selectedItem?.name ?? "Select Hospital",
+          style: TextStyle(
+            fontSize: 16,
+            // color: selectedItem != null ? null : Theme.of(context).primaryColor.withOpacity(0.7),
+          ),
+        ),
+      );
+    },
+    dropdownDecoratorProps: DropDownDecoratorProps(
+      dropdownSearchDecoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            width: 2,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            // color: Theme.of(context).primaryColor.withOpacity(0.5),
+          ),
+        ),
+        labelText: "Select Hospital".tr,
+        labelStyle: TextStyle(
+          // color: Theme.of(context).primaryColor,
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
+      ),
+    ),
+    items: controller.hospitals,
+    onChanged: (value) {
+      if (value != null) {
+        controller.hospital = value;
+        controller.fetchDoctors();
       }
-        },
-    )),
+    },
+  ),
+)
+    
     ),
 
                           
@@ -123,58 +251,158 @@ final formKey = GlobalKey<FormState>();
                         ),
                         child: 
                         
-    GetBuilder<AppointmentController>(
-      
-      builder: (controller) =>  DropdownSearch<Hospital>(
-      
-      selectedItem: controller.doctor,
-      
-        popupProps: PopupProps.modalBottomSheet(
-      modalBottomSheetProps: ModalBottomSheetProps(
-        shape: BeveledRectangleBorder(borderRadius: BorderRadius.zero),
+    // GetBuilder<AppointmentController>(
+    //   builder: (controller) =>  DropdownSearch<Hospital>(
+    //   selectedItem: controller.doctor,
+    //     popupProps: PopupProps.modalBottomSheet(
+    //   modalBottomSheetProps: ModalBottomSheetProps(
+    //     shape: BeveledRectangleBorder(borderRadius: BorderRadius.zero),
+    //   ),
+    //   showSearchBox: true, 
+    //   itemBuilder: (context, item, isSelected) {
+    //     return ListTile(
+    //       title: Text(item.name),
+    //       selected: isSelected,  // Highlight selected item
+    //     );
+    //   },
+    //     ),
+    //     dropdownBuilder: (context, selectedItem) {
+    //   return Text(selectedItem?.name ?? "Select Doctor");
+    //     },
+    //     dropdownDecoratorProps: DropDownDecoratorProps(
+    //   dropdownSearchDecoration: InputDecoration(
+    //     border:const OutlineInputBorder(),
+    //     focusedBorder:const OutlineInputBorder(
+    //       borderRadius: BorderRadius.all(Radius.circular(12)),
+    //       borderSide: BorderSide(width: 3, color: Colors.grey),
+    //     ),
+    //     labelText: "Select Doctor".tr,
+    //     labelStyle: const TextStyle(color: Colors.black),  // Ensure proper color reference
+    //   ),
+    //     ),
+    //     items: controller.doctors,
+    //     onChanged: (value) {
+    //   if (value != null) {
+    //         controller.doctor = value;
+    //         controller.update();
+    //   }
+    //     },
+    //   ),
+    // ),
+
+GetBuilder<AppointmentController>(
+  builder: (controller) => DropdownSearch<Hospital>(
+    selectedItem: controller.doctor,
+    popupProps: PopupProps.modalBottomSheet(
+      modalBottomSheetProps: const ModalBottomSheetProps(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
       ),
-      showSearchBox: true, 
+      showSearchBox: true,
+      searchFieldProps: TextFieldProps(
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.search, color: Colors.grey),
+          hintText: "Search doctor...",
+          hintStyle: const TextStyle(color: Colors.grey),
+          filled: true,
+          fillColor: Colors.grey[100],
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: PrimaryColor, width: 2),
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
+        ),
+      ),
       itemBuilder: (context, item, isSelected) {
         return ListTile(
-          title: Text(item.name),
-          selected: isSelected,  // Highlight selected item
+          title: Text(
+            item.name,
+            style: TextStyle(
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+          selected: isSelected,
+          selectedTileColor: PrimaryColor.withOpacity(0.1),
         );
       },
+      searchDelay: const Duration(milliseconds: 300),
+      title: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: const Offset(0, 1),
+            ),
+          ],
         ),
-      
-        dropdownBuilder: (context, selectedItem) {
-      // Show the selected hospital in the dropdown
-      return Text(selectedItem?.name ?? "Select Doctor");
-        },
-      
-        // Label and decoration for the dropdown
-        dropdownDecoratorProps: DropDownDecoratorProps(
-      dropdownSearchDecoration: InputDecoration(
-        border: OutlineInputBorder(),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          borderSide: BorderSide(width: 3, color: Colors.grey),
+        child: const Text(
+          "Select Doctor",
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        labelText: "Select Doctor".tr,
-        labelStyle: const TextStyle(color: Colors.black),  // Ensure proper color reference
-      ),
-        ),
-      
-      
-        items: controller.doctors,
-        onChanged: (value) {
-      if (value != null) {
-          
-            controller.doctor = value;
-
-            controller.update();
-          
-      }
-        },
       ),
     ),
+    dropdownBuilder: (context, selectedItem) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        child: Text(
+          selectedItem?.name ?? "Select Doctor",
+          style: const TextStyle(fontSize: 16),
+        ),
+      );
+    },
+    dropdownDecoratorProps: DropDownDecoratorProps(
+      dropdownSearchDecoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(width: 2, color: PrimaryColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          // borderSide: const BorderSide(color: Colors.grey),
+        ),
+        labelText: "Select Doctor".tr,
+        // labelStyle: const TextStyle(color: Colors.grey),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
+      ),
+    ),
+    items: controller.doctors,
+    onChanged: (value) {
+      if (value != null) {
+        controller.doctor = value;
 
-                          
+        if(controller.selDate!=null){
+        controller.fetchTimeSlots(controller.selDate);}
+
+        controller.update();
+      }
+    },
+  ),
+)                          
                           
                           )),
                     
@@ -188,14 +416,10 @@ final formKey = GlobalKey<FormState>();
                                              controller: cont.dateController,
                                              
                                              decoration: InputDecoration(
-                          // suffix: SizedBox(
-                          //     height: 20,
-                          //     width: 20,
-                          //     child: true
-                          //         ? CircularProgressIndicator()
-                          //         : Container()),
                           labelText: "Appointment Date".tr,
-                          border: OutlineInputBorder()),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12)
+                          )),
                                              readOnly: true,
                                              onTap: () {
                                                showDatePicker(
@@ -262,6 +486,9 @@ final formKey = GlobalKey<FormState>();
                                         List.generate(
                                           c.timeslots.length,
                                           (index) => ChoiceChip(
+
+                                            checkmarkColor: Colors.white,
+                                            
                                             shadowColor: Colors.grey,
                                             shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(20.0)
@@ -270,7 +497,7 @@ final formKey = GlobalKey<FormState>();
                                               "${c.timeslots[index].start} : ${c.timeslots[index].end}",
                                               style: TextStyle(
                                                 fontSize: 12,
-                                                color: Colors.black
+                                                color: c.timeslotInd==index ? White : Black800
                                               ),
                                             ),
                                             selectedColor: PrimaryColor,
@@ -283,6 +510,8 @@ final formKey = GlobalKey<FormState>();
                                                 } else {
                                                   c.timeslotInd = null; // Or any invalid ID to deselect
                                                 }
+
+                                                Navigator.pop(context);
                                               
                                               c.update();
                                             },
@@ -312,15 +541,32 @@ final formKey = GlobalKey<FormState>();
                     builder:(c) => 
                   c.timeslotInd !=null?
                   Wrap(
+                    
                     children: [
-                      Text(
-                        "Start time from selected time slot:".tr,
-                        style: TextStyle(fontSize: 18),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Start time Slot:".tr,
+                            style:const TextStyle(fontSize: 18),
+                          ),
+
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 6),
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                            
+                          ),
+                          child: Text(
+                          "${c.timeslots[c.timeslotInd as int].start}-${c.timeslots[c.timeslotInd as int].end}",
+                          style:const TextStyle(fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          ),
+                         ),
+                        ),
+                        ],
                       ),
-                      Text(
-                        "${c.timeslots[c.timeslotInd as int].start}-${c.timeslots[c.timeslotInd as int].end}",
-                        style: TextStyle(fontSize: 18),
-                      ),
+
                     ],
                   ):Container()
                   
@@ -334,7 +580,9 @@ final formKey = GlobalKey<FormState>();
 
                     decoration: InputDecoration(
                         labelText: "Diagnosis Description".tr,
-                        border: OutlineInputBorder()),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12)
+                        )),
                     keyboardType: TextInputType.text,
                     controller: cont.descController,
                     maxLines: 5,

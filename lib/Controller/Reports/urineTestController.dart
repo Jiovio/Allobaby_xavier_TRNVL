@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:allobaby/API/Requests/ReportAPI.dart';
 import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
@@ -97,6 +98,8 @@ String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomI
 
 
     print(data);
+
+    await Reportapi().addReports(data);
 
     Get.to(Report());
 

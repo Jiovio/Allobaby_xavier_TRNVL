@@ -147,15 +147,17 @@ static Future<List<Map<String, dynamic>>> getReports() async {
   }
 
 
-  static Future<Map<String, dynamic>> getAIAppointments() async {
+  static Future<Map<String, dynamic>> getAIAppointments([bool reload = false]) async {
     try {
 
       var d = await Userapi.getUser();
 
-      final local = await localStorage.getItem("${d.toString()}/aiappointment");
+      final local = localStorage.getItem("${d.toString()}/aiappointment");
 
 
-      if(local!=null){
+      if(local!=null && reload ==false){
+
+        print("got from location");
 
         return json.decode(local);
         
@@ -174,14 +176,22 @@ static Future<List<Map<String, dynamic>>> getReports() async {
 
       String temp = """
       This is my lmp date $lmp_date my status is $status current date is $date. 
+      if my status is iam trying to conceive iam not pregnant
       check whether iam pregnant 
       and generate dates for my whole pregnancy of upcoming regular checkup appointment till the ed date 
       if not pregnant return dates as {} 
 """;
       
       String prompt = """
-pregnant women with LMP Date of $lmp_date. my details are $d 
-calculate the EDD date and monthly ANC appointment date every month one ANC and weekly pregnancy information for 40 weeks starting from next month date and tell my the current pregnancy week and
+iam ${d["pregnancy_status"]}.
+
+ my details are $d with LMP Date of $lmp_date .
+ current date is $date.
+Note : if iam trying to conceive , iam not pregnant.
+ if am pregnant,
+calculate the EDD date and monthly once ANC appointment date every month 
+for 40 weeks starting from one month from lmp date , give short summary
+ and dont give dates in summary
 
       in the schema {
         is_pregnant:bool,
@@ -191,6 +201,8 @@ calculate the EDD date and monthly ANC appointment date every month one ANC and 
         }
       }
       """;
+
+      print(prompt);
       
       var res = await ai.generateContent([Content.text(prompt)]);
       

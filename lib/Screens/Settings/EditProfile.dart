@@ -227,13 +227,22 @@ class EditProfile extends StatelessWidget {
                       ),
                       Flexible(
                         child: TextFormField(
-                          onChanged: (value) => 
-                      mainc.setUpdateData("age", int.parse(value))
+                          minLines: 1,
+                          buildCounter: (context, {required currentLength, required isFocused, required maxLength}) {
+                            
+                          },
+                          maxLines: 2,
+                          maxLength: 2,
+                          onChanged: (value)  {
+                      mainc.setUpdateData("age", int.parse(value));
+                      
+                      }
                           ,
                           controller: mainc.age,
                           decoration: InputDecoration(
                               labelText: "age", border: OutlineInputBorder()),
                           keyboardType: TextInputType.number,
+                          
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter age';
@@ -242,6 +251,8 @@ class EditProfile extends StatelessWidget {
                           },
                         ),
                       ),
+                    
+                    
                     ],
                   ),
                   SizedBox(

@@ -286,7 +286,9 @@ class _ChatState extends State<Chat> {
                     IconButton(
                       onPressed: () async {
 
-                        // createChatTable();
+                       await Permission.microphone.request();
+                       await Permission.camera.request();
+
                         
                         if (await Permission.camera.isGranted &&
                         await Permission.microphone.isGranted
@@ -317,19 +319,6 @@ class _ChatState extends State<Chat> {
                     IconButton(
                       onPressed: () async {
                        widget.title == 'Doctor' ? await urlLauncher.launch('tel:04523500629') : await urlLauncher.launch('tel:04523500630');
-                        // if (await Permissions.microphonePermissionsGranted()) {
-                        //   DocumentSnapshot documentSnapshot = await fireStore
-                        //       .collection(patientCollection)
-                        //       .doc(authUser!.uid)
-                        //       .get();
-                        //   Users users = Users.fromMap(
-                        //       documentSnapshot.data() as Map<String, dynamic>);
-                        //   CallUtils.dial(
-                        //     from: users,
-                        //     to: searchedUser,
-                        //     callType: "voice",
-                        //   );
-                        // } else {}
                       
                       },
                       icon: Icon(
@@ -532,57 +521,57 @@ class _ChatState extends State<Chat> {
                                 Wrap(
                                   crossAxisAlignment: WrapCrossAlignment.center,
                                   children: [
-                                    Transform.rotate(
-                                      angle: 100,
-                                      child: InkWell(
-                                        onTap: () => Get.bottomSheet(
-                                          Container(
-                                            padding: EdgeInsets.only(
-                                                top: 18.0, bottom: 18.0),
-                                            color: Get.isDarkMode
-                                                ? darkGrey2
-                                                : White,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                FloatingActionButton(
-                                                    backgroundColor:
-                                                        PrimaryColor,
-                                                    elevation: 0,
-                                                    tooltip: "Gallery",
-                                                    onPressed: () async {
+                                    // Transform.rotate(
+                                    //   angle: 100,
+                                    //   child: InkWell(
+                                    //     onTap: () => Get.bottomSheet(
+                                    //       Container(
+                                    //         padding: EdgeInsets.only(
+                                    //             top: 18.0, bottom: 18.0),
+                                    //         color: Get.isDarkMode
+                                    //             ? darkGrey2
+                                    //             : White,
+                                    //         child: Row(
+                                    //           mainAxisAlignment:
+                                    //               MainAxisAlignment.spaceEvenly,
+                                    //           crossAxisAlignment:
+                                    //               CrossAxisAlignment.center,
+                                    //           children: [
+                                    //             FloatingActionButton(
+                                    //                 backgroundColor:
+                                    //                     PrimaryColor,
+                                    //                 elevation: 0,
+                                    //                 tooltip: "Gallery",
+                                    //                 onPressed: () async {
 
-                                                    },
-                                                    child: Icon(Icons.photo,
-                                                        color: White)),
-                                                FloatingActionButton(
-                                                    backgroundColor:
-                                                        PrimaryColor,
-                                                    elevation: 0,
-                                                    tooltip: "File",
-                                                    onPressed: () async {
+                                    //                 },
+                                    //                 child: Icon(Icons.photo,
+                                    //                     color: White)),
+                                    //             FloatingActionButton(
+                                    //                 backgroundColor:
+                                    //                     PrimaryColor,
+                                    //                 elevation: 0,
+                                    //                 tooltip: "File",
+                                    //                 onPressed: () async {
                                                      
-                                                    },
-                                                    child: Icon(
-                                                      Icons.file_copy,
-                                                      color: White,
-                                                    )),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        child: Icon(
-                                          Icons.attach_file_rounded,
-                                          color: Black700,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
+                                    //                 },
+                                    //                 child: Icon(
+                                    //                   Icons.file_copy,
+                                    //                   color: White,
+                                    //                 )),
+                                    //           ],
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //     child: Icon(
+                                    //       Icons.attach_file_rounded,
+                                    //       color: Black700,
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                    // SizedBox(
+                                    //   width: 8,
+                                    // ),
                                     InkWell(
                                       onTap: () async {
 
@@ -767,6 +756,21 @@ class _ChatState extends State<Chat> {
                     placeholder: (context, url) => const CircularProgressIndicator(),
                   ),
                 ),
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.only(top: 5),
+                  decoration: 
+                  BoxDecoration(color: fullMessage[index].senderId ==
+                      p1
+                  ? PrimaryColor
+                  : Black200,
+                  borderRadius: BorderRadius.circular(5)
+                  ),
+                  child: Center(child: Text(fullMessage[index].message as String,
+                  style: TextStyle(color: fullMessage[index].senderId ==
+                      p1
+                  ? White
+                  : Black),))),
                 SizedBox(
                   height: 4,
                 ),

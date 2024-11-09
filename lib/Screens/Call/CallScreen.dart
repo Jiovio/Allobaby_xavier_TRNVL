@@ -1,4 +1,11 @@
+
+import 'package:allobaby/Config/OurFirebase.dart';
+import 'package:allobaby/Screens/Call/CallView.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
+import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class CallScreen extends StatelessWidget {
   final String callerName;
@@ -6,12 +13,20 @@ class CallScreen extends StatelessWidget {
 
   final String type;
 
+  final String channel;
+  final String token;
+
+  final String to;
+
 
   const CallScreen({
     Key? key,
     required this.callerName,
     this.imageUrl,
-    required this.type
+    required this.type,
+    required this.channel,
+    required this.token,
+    required this.to
   }) : super(key: key);
 
   @override
@@ -75,15 +90,20 @@ class CallScreen extends StatelessWidget {
                     _buildActionButton(
                       icon: Icons.call_end,
                       color: Colors.red.shade400,
-                      onPressed: () {
-                        // Handle call rejection
+                      onPressed: () async {
+                       await OurFirebase.cutCall(to);
+                       FlutterRingtonePlayer().stop();
                       },
                     ),
                     _buildActionButton(
                       icon: Icons.call,
                       color: Colors.green.shade400,
-                      onPressed: () {
+                      onPressed: () async {
+                        await Permission.camera.request();
+                        await Permission.microphone.request();
+
                         // Handle call acceptance
+                        Get.to(Callview(channel: channel, token: token,path: to,));
                       },
                     ),
                   ],

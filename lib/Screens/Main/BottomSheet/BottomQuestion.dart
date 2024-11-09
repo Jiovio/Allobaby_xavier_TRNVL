@@ -1,5 +1,7 @@
 
 
+import 'dart:convert';
+
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Screens/Main/BottomSheet/widgets/Exercise.dart';
@@ -121,12 +123,26 @@ children: [
                           if(controller.currpage==5)
                           Visibility(
                             visible: controller.currpage==5,
-                            child: Text(""),),
+                            child: ElevatedButton(
+                              child: Text("Finish"),
+                              onPressed: () async {
+
+                               await controller.updateDailyScreening();
+
+                                Get.snackbar("Success !", 
+                                "Screening Completed Successfully !",
+                                snackPosition: SnackPosition.BOTTOM);
+
+
+                                Navigator.pop(context);
+                                
+                              },
+                              ),),
                           
 
                   
                     
-                    if(controller.currpage!=5 )
+                    if(controller.currpage <5 )
                     (
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(

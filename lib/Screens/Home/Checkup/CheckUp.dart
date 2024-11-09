@@ -1,3 +1,4 @@
+import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Screens/Home/Checkup/CheckUpReport.dart';
 import 'package:flutter/material.dart';
@@ -7,40 +8,67 @@ import 'package:intl/intl.dart';
 class CheckUp extends StatelessWidget {
   const CheckUp({super.key});
 
+  String getCheckupStatus(Map<String, dynamic> checkup) {
+    if (checkup['doctorInputDate'] != null) {
+      return "Checkup Completed";
+    } else if (checkup['symptoms'] != null && checkup['vitals'] != null) {
+      return "Waiting for Doctor Feedback";
+    } else {
+      return "Checkup need to be done";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(title:const Text("Checkup")),
+    return Scaffold(
+      appBar: AppBar(title: const Text("Checkup")),
+      body: FutureBuilder(
+        future: Userapi.getCheckups(),
+        builder: (context, dynamic snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-      body: 
-      true?
-     const Center(
-        child: Text("No Checkup Found"),
-      )
-      :
-      ListView.separated(
-            padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-            separatorBuilder: (BuildContext context, int index) => SizedBox(
+          if (snapshot.hasError) {
+            return Center(child: Text("Error: ${snapshot.error}"));
+          }
+
+          final checkups = snapshot.data ?? [];
+
+          if (checkups.isEmpty) {
+            return const Center(child: Text("No Checkup Found"));
+          }
+
+          return ListView.separated(
+            shrinkWrap: true,
+            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+            separatorBuilder: (BuildContext context, int index) => const SizedBox(
               height: 10,
             ),
-            itemCount: 0,
-            itemBuilder: (BuildContext context, int index) => Card(
-              elevation: 2,
-              shape: Border(left: BorderSide(color: PrimaryColor, width: 4)),
-              child: InkWell(
+            itemCount: checkups.length,
+            itemBuilder: (BuildContext context, int index) {
+              final checkup = checkups[index];
+              final createdDate = DateTime.parse(checkup['createdDate']);
+
+              print(checkup);
+
+              return Card(
+                elevation: 2,
+                shape: Border(left: BorderSide(color: PrimaryColor, width: 4)),
+                child: InkWell(
                   highlightColor: accentColor.withOpacity(0.1),
                   splashColor: accentColor.withOpacity(0.8),
-                  onTap: () => { 
-                    Get.to(
-        () => CheckUpReport(),
-        transition: Transition.rightToLeft)
-                   },
-                  // serviceController.getCaseReport(
-                  //     serviceController.caseHistory[index]["id"],
-                  //     patientDetails),
+                  onTap: () => Get.to(
+                    () => CheckUpReport(data: checkup,),
+                    transition: Transition.rightToLeft,
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 20, left: 10, right: 20, bottom: 20),
+                      top: 20,
+                      left: 10,
+                      right: 20,
+                      bottom: 20,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -49,70 +77,53 @@ class CheckUp extends StatelessWidget {
                           child: Column(
                             children: <Widget>[
                               Text(
-                                // DateFormat.d()
-                                //     .format(DateTime.parse(serviceController
-                                //         .caseHistory[index]["checkup_date"]))
-                                //     .toString(),
-                                "1",
+                                DateFormat.d().format(createdDate),
                                 style: TextStyle(
-                                    color: Get.isDarkMode
-                                        ? Colors.grey
-                                        : PrimaryColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700),
+                                  color: Get.isDarkMode ? Colors.grey : PrimaryColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                               Text(
-                                  // DateFormat.MMMM()
-                                  //     .format(DateTime.parse(serviceController
-                                  //         .caseHistory[index]["checkup_date"]))
-                                  //     .toString().substring(0,3),
-                                  "Jul",
-                                  style: TextStyle(
-                                      color: Get.isDarkMode
-                                          ? Colors.grey
-                                          : PrimaryColor,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700)),
+                                DateFormat.MMM().format(createdDate),
+                                style: TextStyle(
+                                  color: Get.isDarkMode ? Colors.grey : PrimaryColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                        SizedBox(
-                          width: 28.0,
-                        ),
+                        const SizedBox(width: 28.0),
                         Flexible(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(
+                              const Text(
                                 "Checkup Details",
                                 style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w500),
-                              ),
-                              SizedBox(height: 6.0),
-                              Text(
-
-                                "Checkup need to be done",
-                                // serviceController.caseHistory[index]
-                                //             ["checkup_status"] ==
-                                //         0
-                                //     ? "Checkup need to be done"
-                                //     : serviceController.caseHistory[index]
-                                //                 ["checkup_status"] ==
-                                //             1
-                                //         ? "Waiting for Doctor FeedBack"
-                                //         : "Checkup Completed",
-                                style: TextStyle(
-                                  color: Black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
                                 ),
+                              ),
+                              const SizedBox(height: 6.0),
+                              Text(
+                                getCheckupStatus(checkup),
+                                style: TextStyle(color: Black),
                               ),
                             ],
                           ),
                         ),
                       ],
                     ),
-                  )),
-            ),
-          ),
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

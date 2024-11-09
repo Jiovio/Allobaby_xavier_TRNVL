@@ -14,41 +14,52 @@ void allobotModal(BuildContext context) {
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     builder: (context) {
-      return DraggableScrollableSheet(
-        initialChildSize: 0.6,
-        minChildSize: 0.5,
-        maxChildSize: 0.95,
-        builder: (context, scrollController) {
-          return Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-            ),
-            child: Column(
-              children: [
-                _buildHeader(),
-                Expanded(
-                  child: ListView(
-                    controller: scrollController,
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    children: [
-                      _buildIntroSection(),
-                      SizedBox(height: 20),
-                      _buildWhatToAskSection(),
-                      SizedBox(height: 20),
-                      // _buildChatSection(),
-                    ],
-                  ),
+      return Padding(
+        // This ensures the modal takes keyboard height into account
+        padding: MediaQuery.of(context).viewInsets,
+        child: Container(
+          // Constrain height to ensure modal doesn't take full screen
+          height: MediaQuery.of(context).size.height * 0.95,
+          child: DraggableScrollableSheet(
+            initialChildSize: 0.6,
+            minChildSize: 0.5,
+            maxChildSize: 0.95,
+            builder: (context, scrollController) {
+              return Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
                 ),
-                _buildInputSection(),
-              ],
-            ),
-          );
-        },
+                child: Column(
+                  children: [
+                    _buildHeader(),
+                    Expanded(
+                      child: ListView(
+                        controller: scrollController,
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        children: [
+                          _buildIntroSection(),
+                          SizedBox(height: 20),
+                          _buildWhatToAskSection(),
+                          SizedBox(height: 20),
+                          // _buildChatSection(),
+                        ],
+                      ),
+                    ),
+                    SafeArea(
+                      child: _buildInputSection(),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
       );
     },
   );
 }
+
 
 Widget _buildHeader() {
   return Container(

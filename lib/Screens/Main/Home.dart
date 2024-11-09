@@ -165,16 +165,18 @@ class _HomeState extends State<Home> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                             Obx( () => Text(
-                                                  mainC.lastScreened==null?
-                                                  "- - - ":
-                                                  mainC.lastScreened!.value,
-                                                  style:const TextStyle(
-                                                  fontSize: 18,
-                                                  color: PrimaryColor,
-                                                  fontWeight: FontWeight.w700),
-                                                                                         ),
-                                             ),
+                                               GetBuilder<Maincontroller>(
+                                                 builder: (controller) =>  Text(
+                                                    mainC.lastScreened==null?
+                                                    "- - - ":
+                                                    mainC.lastScreened!,
+                                                    style:const TextStyle(
+                                                    fontSize: 18,
+                                                    color: PrimaryColor,
+                                                    fontWeight: FontWeight.w700),
+                                                                                           ),
+                                               ),
+                                             
                                           Text("Last Screened",
                                           style: TextStyle(
                                               color: Black.withOpacity(0.6),

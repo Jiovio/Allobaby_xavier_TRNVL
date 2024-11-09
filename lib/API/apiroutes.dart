@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:localstorage/localstorage.dart';
 
 class Apiroutes {
-  // String baseUrl = "https://dev.savemom.app";
-  String baseUrl = "http://10.0.2.2:8000";
+  String baseUrl = "https://dev.savemom.app";
+  // String baseUrl = "http://10.0.2.2:8000";
 
   static checkUser () {
     if(localStorage.getItem("user")==null){
@@ -22,7 +22,7 @@ class Apiroutes {
 
   Future<dynamic> getUserByPhone(phone) async {
       try {
-      var d = await postRequest("/user/login/${phone}",{});
+      var d = await postRequest("/user/login/$phone",{});
       if(d!=null){
         print(d);
         return d;

@@ -5,11 +5,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
-import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class PickUpLayout extends StatelessWidget {
   final Widget scaffold;
-  final StopWatchTimer stopWatchTimer = StopWatchTimer(); 
 
   PickUpLayout({Key? key, required this.scaffold}) : super(key: key);
 
@@ -36,19 +34,21 @@ class PickUpLayout extends StatelessWidget {
           if(callData!=null){
 
            if(callData["call"]){
-            // FlutterRingtonePlayer().playRingtone(); // Play ringtone for video call
-// FlutterRingtonePlayer().stop();
+            FlutterRingtonePlayer().playRingtone();
+
             return CallScreen(callerName: callData["callerName"],
-            type: "Doctor",
+            type: callData["type"],
+            channel: callData["p1"],
+            token: callData["token"],
+            to : callData["p2"]
             );
 
 
-             // Play ringtone for video call
 
 
 
           }else{
-
+ FlutterRingtonePlayer().stop();
             
           }
 
@@ -60,24 +60,7 @@ class PickUpLayout extends StatelessWidget {
 
           return scaffold;
 
-          // If it's an incoming video call and the user hasn't dialed
-          if (!callData['hasDialled'] && callData['callType'] == "video") {
-            FlutterRingtonePlayer().playRingtone(); // Play ringtone for video call
-            // return VideoPickupScreen(call: callData);
-          } 
-          // If it's an incoming voice call and the user hasn't dialed
-          else if (!callData['hasDialled'] && callData['callType'] == "voice") {
-            FlutterRingtonePlayer().playRingtone(); // Play ringtone for voice call
-            // return VoicePickupScreen(call: callData);
-          } 
-          // If the call is outgoing or has been answered, show the normal UI
-          else {
-            // stopWatchTime .onExecute.add(StopWatchExecute.reset); // Reset stopwatch
-            FlutterRingtonePlayer().stop(); // Stop the ringtone
-            return scaffold;
-          }
-
-          return scaffold;
+   
         } 
         // If no call data is available, return the default scaffold (normal UI)
         else {

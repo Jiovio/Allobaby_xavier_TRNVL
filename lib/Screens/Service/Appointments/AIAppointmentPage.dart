@@ -1,22 +1,51 @@
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
+import 'package:allobaby/Controller/AppointmentController.dart';
+import 'package:allobaby/Screens/Service/Appointment.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
-class AIAppointmentPage extends StatelessWidget {
+class AIAppointmentPage extends StatefulWidget {
   const AIAppointmentPage({Key? key}) : super(key: key);
 
+  @override
+  State<AIAppointmentPage> createState() => _AIAppointmentPageState();
+}
+
+class _AIAppointmentPageState extends State<AIAppointmentPage> {
+
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<Map<String, dynamic>>(
+
+                        floatingActionButton: IconButton(icon:Icon(Icons.replay_circle_filled,size: 70,),
+            onPressed: () async {
+              setState(() {
+                loading = true;
+              });
+          await OurFirebase.getAIAppointments(true);
+
+            setState(() {
+              loading = false;
+            });
+            },),
+
+
+
+      body: 
+      loading ?
+      const Center(child: CircularProgressIndicator(),)
+      : 
+      FutureBuilder<Map<String, dynamic>>(
         future: OurFirebase.getAIAppointments(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -244,27 +273,135 @@ class AIAppointmentPage extends StatelessWidget {
                       color: PrimaryColor,
                     ),
                   ),
+
+
+
                   const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: entry.value.map((dateStr) {
-                      DateTime? date;
-                      try {
-                        date = DateTime.parse(dateStr);
-                      } catch (e) {
-                        print('Error parsing date: $dateStr');
-                        return const SizedBox.shrink();
-                      }
-                      
-                      return Chip(
-                        backgroundColor: PrimaryColor.withOpacity(0.1),
-                        label: Text(
-                          DateFormat('MMM d').format(date),
-                          style: TextStyle(color: PrimaryColor),
-                        ),
-                      );
-                    }).toList(),
+                  GetBuilder<AppointmentController>(
+                    init: AppointmentController(),
+
+                    builder: (controller) =>  Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: entry.value.map((dateStr) {
+                        DateTime? date;
+                        try {
+                          date = DateTime.parse(dateStr);
+                        } catch (e) {
+                          print('Error parsing date: $dateStr');
+                          return const SizedBox.shrink();
+                        }
+                        
+                        return 
+                        Card(
+                            elevation: 1,
+                            shape: const Border(
+                              left: BorderSide(
+                                color: true
+                                    ? Colors.green
+                                    : Colors.redAccent,
+                                width: 4,
+                              ),
+                            ),
+                            child: 
+                            
+                            
+                            InkWell(
+                              highlightColor: Colors.green.withOpacity(0.1),
+                              splashColor: Colors.green.withOpacity(0.8),
+                              onTap: () => {},
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 20, left: 10, right: 20, bottom: 20),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      children: <Widget>[
+                                        // Text(
+                                        //   DateFormat('dd-MM-yyyy')
+                                        //       .format(DateTime.parse(
+                                        //           appointment['appointment_date']))
+                                        //       .toString(),
+                                        //   style: TextStyle(
+                                        //     color: Colors.green,
+                                        //     fontSize: 18,
+                                        //     fontWeight: FontWeight.w700,
+                                        //   ),
+                                        // ),
+                                        Text(
+                                          DateFormat('MMM d').format(date),
+                                          style: TextStyle(
+                                            color: Colors.green,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    // Flexible(
+                                    //   child: Column(
+                                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                                    //     children: <Widget>[
+                                    //       Text(
+                                    //         "Appointment Status".tr,
+                                    //         style: TextStyle(
+                                    //           fontSize: 18,
+                                    //         ),
+                                    //       ),
+                                    //       SizedBox(height: 6.0),
+                                    //       Text(
+                                    //         'status',
+                                    //         style: TextStyle(
+                                    //           fontWeight: FontWeight.bold,
+                                    //           color:
+                                    //               true
+                                    //                   ? Colors.orange
+                                    //                   : Colors.redAccent,
+                                    //         ),
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
+                                const SizedBox(width: 24),           
+                    
+                    
+                                Expanded(
+                                child: Center(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      controller.selDate = date;
+                                      controller.dateController.text = DateFormat('dd-MM-yyyy').format(date as DateTime);
+                                      Get.to(Appointment());
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                                    ),
+                                    child: Text(
+                    "Book Appointment",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                                  
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        
+                        
+                        
+                    
+                      }).toList(),
+                    ),
                   ),
                   const SizedBox(height: 16),
                 ],

@@ -67,8 +67,7 @@ class _VideoPlayerScreenState extends State<Storyplayer> {
               }
             },
           ),
-          
-          // Bottom text overlay
+
           Positioned(
             left: 0,
             right: 0,
@@ -89,7 +88,7 @@ class _VideoPlayerScreenState extends State<Storyplayer> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Title
+       
                   Text(
                     widget.title,
                     style: const TextStyle(
@@ -106,7 +105,7 @@ class _VideoPlayerScreenState extends State<Storyplayer> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  // Description
+
                   Text(
                     widget.description,
                     style: const TextStyle(
@@ -129,7 +128,7 @@ class _VideoPlayerScreenState extends State<Storyplayer> {
             ),
           ),
 
-
+          // Play/Pause button overlay
           // Positioned(
           //   left: 0,
           //   right: 0,

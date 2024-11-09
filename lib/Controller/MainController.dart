@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:allobaby/API/Requests/Userapi.dart';
@@ -16,27 +17,56 @@ class Maincontroller extends GetxController {
 
   String? profile_pic;
 
-  RxString? lastScreened;
+  String? lastScreened;
 
 
   Future<void> updateUser() async{
     var d = await Userapi.getUser();
   fromJson(d);
 
-
-
-
   update();
   }
 
+
+  Timer? timer;
+
   Future<void> initScreen() async {
-  var d = await Userapi.getUser();
-  localStorage.setItem("phone",d["phone_number"]);
+
+    timer?.cancel();
+
+
+    try {
+
+      var d = await Userapi.getUser();
+
+      fromJson(d);
+  
+
+    if(localStorage.getItem("phone")==null){
+    localStorage.setItem("phone",d["phone_number"]);}
+
+
+      Backgroundservice.listenForData();
+
+  loading.value = false;
+  update();
+      
+    } catch (e) {
+
+      timer = Timer.periodic(const Duration(seconds: 5), (t){
+        initScreen();
+
+      return;
+      });
+      
+    }
+
+    try {
+
+  getCounterData();
 
 
   dynamic bs = await getTodayData("daily");
-
-  print(bs["data"]);
 
   if(bs!=null){
   bottomSheetData = json.decode(bs["data"]);
@@ -45,19 +75,15 @@ class Maincontroller extends GetxController {
   final ls = localStorage.getItem("lastScreened");
 
   if(ls!=null){
-    lastScreened = ls.obs;
+    lastScreened = ls;
   }
+      
+  } catch (e) {
 
 
-  fromJson(d);
-  getCounterData();
-  print("*********************");
+      
+    }
 
-  Backgroundservice.listenForData();
-  // Backgroundservice.listenForCall();
-
-  loading.value = false;
-  update();
 
   }
 
@@ -148,13 +174,16 @@ double ccomp = 0;
 
   getCounterData(){
 
-    var d = "2024-09-01";
+    print(averageLengthOfCycles);
+
+    // var d = "2024-09-01";
 
     switch (pregnancyStatus.text) {
       case "Iam trying to conceive":
         ctotalDays = int.parse(averageLengthOfCycles.text);
-        cdaysPassed = calcdaysPassed(d
-          // lmpDate.text
+        cdaysPassed = calcdaysPassed(
+          // d,
+          lmpDate.text
           ) % ctotalDays;
         break;
 
@@ -237,14 +266,18 @@ TextEditingController waketime = TextEditingController();
 
   }
 
+  Future<void> updateDailyScreening() async {
 
+      await insertOrUpdateDaily(json.encode(bottomSheetData), "daily");
+
+  }
 
 
   void setBottomSheetData(key,value) async{
     if(bottomSheetData.containsKey(key)){
       bottomSheetData[key] = value;
 
-      await insertOrUpdateDaily(json.encode(bottomSheetData), "daily");
+      // await insertOrUpdateDaily(json.encode(bottomSheetData), "daily");
       update();
     }
   }
@@ -260,7 +293,7 @@ TextEditingController waketime = TextEditingController();
 
     bottomSheetData[key] = ls;
 
-    await insertOrUpdateDaily(json.encode(bottomSheetData), "daily");
+    // await insertOrUpdateDaily(json.encode(bottomSheetData), "daily");
 
 
     
@@ -269,7 +302,7 @@ TextEditingController waketime = TextEditingController();
     if(key=="symptoms"){
       localStorage.setItem("lastScreened", DateFormat('dd-MM-yyyy').format(DateTime.now()));
 
-      lastScreened = DateFormat('dd-MM-yyyy').format(DateTime.now()).obs;
+      lastScreened = DateFormat('dd-MM-yyyy').format(DateTime.now());
     }
 
     update();

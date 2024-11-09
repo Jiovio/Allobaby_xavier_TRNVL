@@ -59,7 +59,6 @@ Widget medicineListView(int index) {
               ),
               textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
           onPressed: () => 
-          
           controller.setbottomSheetDataArray("tabletsTaken",val),
           child: Column(
             children: [
@@ -70,10 +69,10 @@ Widget medicineListView(int index) {
               Text(
                 medicineList[index].title,
                 style: TextStyle(
-                    color: true
-                    // controller.medicineSelected.contains(index)
+                    color:
+                    controller.bottomSheetData["tabletsTaken"].contains(val)
                         ? PrimaryColor
-                        : Black),
+                        : darkGrey2),
               ),
             ],
           ))

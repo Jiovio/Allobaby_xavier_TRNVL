@@ -20,7 +20,7 @@ class VitalsScreen extends StatelessWidget {
         List<vitals> vitalsList = [
       vitals(
           title: 'Blood Pressure',
-          image: 'assets/BottomSheet/Vitals/blood-pressure-gauge.png',
+          image: 'assets/Vitals/blood-pressure-gauge.png',
           value: GetBuilder<Selfscreeningcontroller>(
               builder: (controller) => Text(
                   controller.healthData["bloodPressureH"].toString() +
@@ -30,14 +30,16 @@ class VitalsScreen extends StatelessWidget {
           vitalsWidget: BloodPressure()),
       vitals(
           title: 'Temperature',
-          image: 'assets/BottomSheet/Vitals/thermometer.png',
+          image: 'assets/Vitals/thermometer.png',
           value: GetBuilder<Selfscreeningcontroller>(
               builder: (controller) => Text(
-                  "${controller.healthData["celsius"].toString()} °C - ${controller.healthData["temperature"].toString()} °F")),
+                  "${controller.healthData["temperature"].toString()} °${controller.healthData["temperatureMetric"].toString()}"
+                  )
+                  ),
           vitalsWidget: Temperature()),
       vitals(
           title: 'Blood Saturation',
-          image: 'assets/BottomSheet/Vitals/blood.png',
+          image: 'assets/Vitals/blood.png',
           value: GetBuilder<Selfscreeningcontroller>(
               builder: (controller) => Text(
                   "${controller.healthData["bloodSaturationBW"].toString()}" +
@@ -46,7 +48,7 @@ class VitalsScreen extends StatelessWidget {
           vitalsWidget: BloodSaturation()),
       vitals(
           title: 'Heart Rate',
-          image: 'assets/BottomSheet/Vitals/cardiogram.png',
+          image: 'assets/Vitals/cardiogram.png',
           value: GetBuilder<Selfscreeningcontroller>(
               builder: (controller) => Text(
                   "${controller.healthData["heartRateBW"].toString()} bpm" +
@@ -55,7 +57,7 @@ class VitalsScreen extends StatelessWidget {
           vitalsWidget: HeartRate()),
       vitals(
           title: 'Blood Glucose',
-          image: 'assets/BottomSheet/Vitals/glucose-meter.png',
+          image: 'assets/Vitals/glucose-meter.png',
           value: GetBuilder<Selfscreeningcontroller>(
               builder: (controller) => Text(
                   "${controller.healthData["bloodGlucoseBF"].toString()} f " +
@@ -64,7 +66,7 @@ class VitalsScreen extends StatelessWidget {
           vitalsWidget: BloodGlucose()),
       vitals(
           title: 'BMI',
-          image: 'assets/BottomSheet/Vitals/bmi.png',
+          image: 'assets/Vitals/bmi.png',
           value: GetBuilder<Selfscreeningcontroller>(
               builder: (controller) => Text(
                   " (${controller.healthData["bmiHeight"].toString()} H" +
@@ -73,14 +75,14 @@ class VitalsScreen extends StatelessWidget {
           vitalsWidget: BMI()),
       vitals(
           title: 'Respiratory Rate',
-          image: 'assets/BottomSheet/Vitals/peak-flow-meter.png',
+          image: 'assets/Vitals/peak-flow-meter.png',
           value: GetBuilder<Selfscreeningcontroller>(
               builder: (controller) =>
                   Text(controller.healthData["respiratoryRate"].toString())),
           vitalsWidget: RespiratoryRate()),
       vitals(
           title: 'HRV',
-          image: 'assets/BottomSheet/Vitals/computer.png',
+          image: 'assets/Vitals/computer.png',
           value: GetBuilder<Selfscreeningcontroller>(
               builder: (controller) => Text("${controller.healthData["hrv"].toString()} ms")),
           vitalsWidget: HeartRateVariability())

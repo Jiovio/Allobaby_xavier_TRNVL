@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Screens/Settings/AppInfo.dart';
 import 'package:allobaby/Screens/Settings/EditProfile.dart';
 import 'package:allobaby/Screens/Settings/Help.dart';
 import 'package:allobaby/Screens/Settings/SubscriptionViewApp.dart';
+import 'package:allobaby/Screens/Settings/ViewHospital.dart';
 import 'package:allobaby/Screens/Settings/hospital.dart';
 import 'package:allobaby/Screens/Signin.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -135,8 +138,17 @@ class SettingsScreen extends StatelessWidget {
                           color: Black,
                         ),
                         onTap: () {
+                          
+                          final d = localStorage.getItem("defaultHospital");
+
+                          if(d==null){
                           Get.to(() => MyHospital(),
                               transition: Transition.rightToLeft);
+                          }else{
+                            Get.to(()=> ViewHospital(hospital: json.decode(d), def: true,));
+                          }
+
+
                         },
                       ),
 
@@ -240,7 +252,7 @@ class SettingsScreen extends StatelessWidget {
                         //     transition: Transition.rightToLeft),
                         onTap: () async {
                           const url =
-                              'https://www.jiovio.com/jioviopolicy.php';
+                              'https://savemom.in/terms.html';
                           _launchURL(url);
                         },
                       ),
@@ -256,7 +268,7 @@ class SettingsScreen extends StatelessWidget {
                         //     transition: Transition.rightToLeft),
                         onTap: () async {
                           const url =
-                              'https://www.jiovio.com/jioviopolicy.php';
+                              'https://savemom.in/privacy.html';
                           _launchURL(url);
                         },
                       ),

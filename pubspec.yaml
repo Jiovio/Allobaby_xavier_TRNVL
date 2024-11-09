@@ -75,7 +75,6 @@ dependencies:
   flutter_background_service: ^5.0.10
   flutter_local_notifications: ^17.2.3
   flutter_ringtone_player: ^4.0.0+3
-  stop_watch_timer: ^3.2.1
   firebase_messaging: ^15.1.0
 
 
@@ -122,6 +121,8 @@ flutter:
       - assets/Services/Appointment/
       - assets/Hospital/
       - assets/labReports/
+      - assets/Vitals/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

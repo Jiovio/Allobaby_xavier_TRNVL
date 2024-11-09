@@ -237,7 +237,7 @@ class _HealthprofileState extends State<Healthprofile> {
                               height: 12,
                             ),
                             Text(mc.lastScreened==null?
-                            "- - -": mc.lastScreened!.value,
+                            "- - -": mc.lastScreened!,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,

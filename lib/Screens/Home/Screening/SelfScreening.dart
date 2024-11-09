@@ -30,6 +30,7 @@ class _SelfScreeningState extends State<SelfScreening> {
     void initState() {
       super.initState();
       initP = widget.initPage;
+      i=initP;
       pg = PageController(initialPage: initP);
 
     }
@@ -161,7 +162,14 @@ class _SelfScreeningState extends State<SelfScreening> {
                           },
                           child: Text("NEXT"),
                         ),
-                      )
+                      ),
+
+                      if(i==6)
+                      ElevatedButton(onPressed: () {
+                        Get.back();
+                        
+                      }, 
+                      child: Text("Finish"),)
 
         ],),
       ),

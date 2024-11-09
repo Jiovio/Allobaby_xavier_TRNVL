@@ -1,3 +1,4 @@
+import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Screens/Home/Prescription/ViewPrescription.dart';
 import 'package:allobaby/Screens/Home/Prescription/addprescription.dart';
@@ -38,6 +39,7 @@ class Prescription extends StatelessWidget {
               stream: FirebaseFirestore.instance
                   .collection('Prescription')
                   .orderBy('createdAt', descending: true)
+                  .where('userId', isEqualTo: Storage.getUserID())
                   .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {

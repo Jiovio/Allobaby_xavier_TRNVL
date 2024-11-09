@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CheckUpReport extends StatelessWidget {
-  const CheckUpReport({super.key});
 
+  dynamic data;
+  CheckUpReport({super.key , required this.data});
+
+  
   @override
   Widget build(BuildContext context) {
 
@@ -12,59 +15,79 @@ class CheckUpReport extends StatelessWidget {
       vitals(
         title: 'Blood Pressure',
         image: 'assets/blood-pressure-gauge.png',
-        value: "66",
+        value: "${data["vitals"]["bloodPressureL"]}/${data["vitals"]["bloodPressureH"]}",
       ),
       vitals(
         title: 'Temperature',
         image: 'assets/thermometer.png',
-        value: "40",
+        value: "${data["vitals"]["temperature"]} ${data["vitals"]["temperatureMetric"]}",
       ),
       vitals(
         title: 'Blood Saturation',
         image: 'assets/blood.png',
-        value: "96",
+        value: "${data["vitals"]["bloodSaturationBW"]} | ${data["vitals"]["bloodSaturationAW"]}",
       ),
       vitals(
         title: 'Heart Rate',
         image: 'assets/cardiogram.png',
-        value: "10",
+        value: "${data["vitals"]["heartRateBW"]} | ${data["vitals"]["heartRateAW"]}",
       ),
       vitals(
         title: 'Blood Glucose',
         image: 'assets/glucose-meter.png',
-        value: "10",
+        value: "${data["vitals"]["bloodGlucoseBF"]} | ${data["vitals"]["bloodGlucoseAF"]}",
       ),
       vitals(
         title: 'BMI',
         image: 'assets/bmi.png',
-        value: "10 H" +
+        value: "${data["vitals"]["bmiHeight"]} H" +
             " - " +
-            "10 W",
+            "${data["vitals"]["bmiWeight"]} W",
       ),
       vitals(
         title: 'Respiratory Rate',
         image: 'assets/peak-flow-meter.png',
-        value: "100",
+        value: "${data["vitals"]["respiratoryRate"]}",
       ),
       vitals(
         title: 'HRV',
         image: 'assets/computer.png',
-        value: "10",
+        value: "${data["vitals"]["hrv"]}",
       )
     ];
     
+      List<String> ls = [];
 
+
+
+      if(data["symptoms"]!=null){
+
+        data["symptoms"].forEach((key, value) {
+        if(value){
+          ls.add(key);
+        }
+        });
+        
+
+      }
     return Scaffold(
       appBar: AppBar(
         title: Text("Checkup Details"),
       ),
 
-      body: SingleChildScrollView(
+      body: 
+      data == null ?
+      Center(
+        child: Text("Checkup Details Not Available"),
+      )
+      :
+      SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
                     child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if(data["doctorInputDate"]!=null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -131,6 +154,8 @@ class CheckUpReport extends StatelessWidget {
               SizedBox(
                 height: 12.0,
               ),
+              
+              if(data["summary"]!=null)
               Text(
                 "Case Summary",
                 style: TextStyle(
@@ -138,26 +163,32 @@ class CheckUpReport extends StatelessWidget {
                     fontSize: 18,
                     fontWeight: FontWeight.w600),
               ),
+              if(data["summary"]!=null)
               SizedBox(
                 height: 8.0,
               ),
+              if(data["summary"]!=null)
               Text(
-                
-                // serviceController.checkupDetails.caseSummary == null
-                //     ? ""
-                //     : serviceController.checkupDetails.caseSummary,
-
-                "Case Summary",
-                style: TextStyle(
+                data["summary"],
+                style:const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     height: 1.5,
                     letterSpacing: 0.15),
                 textAlign: TextAlign.justify,
               ),
-              SizedBox(
+              
+              
+
+              if(data["prescription"]!=null)
+              Column(
+                children: [
+
+                               SizedBox(
                 height: 12.0,
               ),
+
+               
               Text(
                 "Prescription",
                 style: TextStyle(
@@ -168,16 +199,12 @@ class CheckUpReport extends StatelessWidget {
               SizedBox(
                 height: 12.0,
               ),
-              // serviceController.checkupDetails.prescription == null
-              //     ? Container()
-              //     : 
+
                   Scrollbar(
-                      // isAlwaysShown: true,
-                      // controller: _scrollController,
+
                       child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           physics: BouncingScrollPhysics(),
-                          // controller: _scrollController,
                           child: DataTable(
                             headingRowColor: MaterialStateColor.resolveWith(
                               (states) => PrimaryColor,
@@ -213,58 +240,53 @@ class CheckUpReport extends StatelessWidget {
               SizedBox(
                 height: 12.0,
               ),
-              Text(
-                "Requested lab supported",
-                style: TextStyle(
-                    color: PrimaryColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                height: 12.0,
-              ),
-              // serviceController.checkupDetails.requestedLabReport == null
-              //     ? Container()
-              //     : 
-                  Wrap(
-                      spacing: 12.0,
-                      children: List.generate(1, (index) {
-                        return Chip(
-                          backgroundColor:
-                              Get.isDarkMode ? darkGrey3 : PrimaryColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0)),
-                          label: Text("Symptom"),
-                          labelStyle: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: White,
-                              fontSize: 18),
-                        );
-                      }),
-                    ),
-              SizedBox(
-                height: 18,
-              ),
-              Text(
-                "Next Appointment Date",
-                style: TextStyle(
-                    color: Get.isDarkMode ? Colors.grey : PrimaryColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600),
-              ),
-              Text(
-                // serviceController.checkupDetails.nextAppointmentDate == null
-                //     ? ""
-                //     : serviceController.checkupDetails.nextAppointmentDate,
-                "13-07-24",
 
 
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                ],
               ),
-              SizedBox(
-                height: 18,
-              ),
-              Text(
+
+              
+              
+
+              // Text(
+              //   "Requested lab supported",
+              //   style: TextStyle(
+              //       color: PrimaryColor,
+              //       fontSize: 18,
+              //       fontWeight: FontWeight.w600),
+              // ),
+              // SizedBox(
+              //   height: 12.0,
+              // ),
+              //     Wrap(
+              //         spacing: 12.0,
+              //         children: List.generate(1, (index) {
+              //           return Chip(
+              //             backgroundColor:
+              //                 Get.isDarkMode ? darkGrey3 : PrimaryColor,
+              //             shape: RoundedRectangleBorder(
+              //                 borderRadius: BorderRadius.circular(4.0)),
+              //             label: Text("Symptom"),
+              //             labelStyle: TextStyle(
+              //                 fontWeight: FontWeight.w600,
+              //                 color: White,
+              //                 fontSize: 18),
+              //           );
+              //         }),
+              //       ),
+              // SizedBox(
+              //   height: 18,
+              // ),
+
+
+
+
+              if(data["nextAppointmentDate"]!=null)
+              Column(
+                children: [
+
+
+                                Text(
                 "Next Appointment Time",
                 style: TextStyle(
                     color: Get.isDarkMode ? Colors.grey : PrimaryColor,
@@ -272,28 +294,36 @@ class CheckUpReport extends StatelessWidget {
                     fontWeight: FontWeight.w600),
               ),
               Text(
-                // serviceController.checkupDetails.nextAppointmentTime == null
-                //     ? ""
-                //     : serviceController.checkupDetails.nextAppointmentTime,
                 "13-07-24",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
               SizedBox(
                 height: 18,
               ),
-              Text(
+
+
+                ],
+              ),
+
+
+              if(data["symptoms"]!=null)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                                Text(
                 "Symptoms",
                 style: TextStyle(
                     color: Get.isDarkMode ? Colors.grey : PrimaryColor,
                     fontSize: 18,
                     fontWeight: FontWeight.w600),
               ),
-              
-              
-              Wrap(
+
+
+                Wrap(
                 spacing: 12.0,
                 children: List.generate(
-                    1, (index) {
+                    ls.length, (index) {
                   return Chip(
                     backgroundColor: Colors.transparent,
                     shape: RoundedRectangleBorder(
@@ -301,24 +331,38 @@ class CheckUpReport extends StatelessWidget {
                             color: Get.isDarkMode ? Colors.grey : PrimaryColor,
                             width: 1.5),
                         borderRadius: BorderRadius.circular(4.0)),
-                    label: Text("Symptoms"),
+                    label: Text(ls[index]),
                     labelStyle: TextStyle(
                         color: Get.isDarkMode ? White : Black,
                         fontWeight: FontWeight.w600),
                   );
                 }),
               ),
-              SizedBox(
+             const SizedBox(
                 height: 18,
               ),
-              Text(
+
+
+                ],
+              ),
+
+
+              
+
+              if(data["vitals"]!=null)
+              Column(
+                children: [
+
+                                Text(
                 "Vitals",
                 style: TextStyle(
                     color: Get.isDarkMode ? Colors.grey : PrimaryColor,
                     fontSize: 18,
                     fontWeight: FontWeight.w600),
               ),
-              GridView.count(
+
+
+                            GridView.count(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   crossAxisCount: 2,
@@ -351,6 +395,14 @@ class CheckUpReport extends StatelessWidget {
                     );
                   }))
             
+
+
+                ],
+              ),
+              
+
+
+
             ],
           ),
         

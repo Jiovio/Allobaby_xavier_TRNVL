@@ -1,6 +1,7 @@
 import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
+import 'package:allobaby/Screens/Settings/hospital.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,10 +9,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ViewHospital extends StatelessWidget {
   final Map<String, dynamic> hospital;
+
+  final bool def;
   
   const ViewHospital({
     super.key,
     required this.hospital,
+    required this.def
   });
 
   Future<void> _updateHospital() async {
@@ -66,7 +70,7 @@ class ViewHospital extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: _buildFloatingButtons(),
+      floatingActionButton: _buildFloatingButtons(def),
     );
   }
 
@@ -338,19 +342,21 @@ class ViewHospital extends StatelessWidget {
     );
   }
 
-  Widget _buildFloatingButtons() {
+  Widget _buildFloatingButtons(bool def) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton(
+          if(def==false)
+        FloatingActionButton(
             heroTag: 'cancel',
             backgroundColor: Colors.red[50],
             onPressed: () => Get.back(),
             child: Icon(Icons.close, color: Colors.red[700], size: 28),
           ),
           const SizedBox(width: 16),
+          if(def==false)
           FloatingActionButton.extended(
             heroTag: 'confirm',
             backgroundColor: PrimaryColor,
@@ -364,6 +370,27 @@ class ViewHospital extends StatelessWidget {
               ),
             ),
           ),
+
+          if(def)
+          FloatingActionButton.extended(
+            heroTag: 'confirm',
+            backgroundColor: PrimaryColor,
+            onPressed:() {
+              Get.back();
+              Get.to(()=> const MyHospital());
+            },
+            icon: const Icon(Icons.update, color: Colors.white),
+            label: Text(
+              'Change Default',
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+
+
+
         ],
       ),
     );
