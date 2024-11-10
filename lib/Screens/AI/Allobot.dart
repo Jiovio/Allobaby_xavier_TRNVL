@@ -308,7 +308,7 @@ class ChatMessage extends StatelessWidget {
                         ),
                         SizedBox(width: 8),
                         Text(
-                          'Allobot',
+                          'Allobot'.tr,
                           style: 
                           TextStyle
                           (fontWeight: FontWeight.w600, fontSize: 16, color: PrimaryColor),

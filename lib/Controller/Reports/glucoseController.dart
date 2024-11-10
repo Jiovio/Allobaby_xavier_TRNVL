@@ -98,7 +98,7 @@ String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomI
 
     await Reportapi().addReports(data);
 
-    showToast("Success","Report Added Successfully");
+    showToast("Report Added Successfully",true);
 
     Get.to(Report());
 

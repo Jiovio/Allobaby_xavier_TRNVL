@@ -49,8 +49,7 @@ class CheckUp extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               final checkup = checkups[index];
               final createdDate = DateTime.parse(checkup['createdDate']);
-
-              print(checkup);
+              
 
               return Card(
                 elevation: 2,

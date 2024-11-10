@@ -185,7 +185,7 @@ class Fetalmonitoring extends StatelessWidget {
                             onTap: () {
                               showDialog(context: context, builder:(context) {
                                 return AlertDialog(
-                                  title: Text("Heart Rate "),
+                                  title: Text("Heart Rate"),
                                   content: Row(
                                     children: [
                                       fetalHeartMonitoring(),
@@ -206,7 +206,7 @@ class Fetalmonitoring extends StatelessWidget {
                             ListTile(      
                             leading: Icon(Icons.airline_seat_legroom_normal_rounded,size: 40,),
                             title: Text("Kick Count : ${controller.kickCount}"),
-                            subtitle: Text("Tap to Increase the Count "),
+                            subtitle: Text("Tap to Increase the Count."),
                             iconColor: PrimaryColor,
                             shape: OutlineInputBorder(borderSide: BorderSide(
                               color: Colors.grey

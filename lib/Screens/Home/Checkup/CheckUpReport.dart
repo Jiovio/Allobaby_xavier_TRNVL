@@ -1,11 +1,13 @@
 import 'package:allobaby/Config/Color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class CheckUpReport extends StatelessWidget {
 
   dynamic data;
   CheckUpReport({super.key , required this.data});
+
 
   
   @override
@@ -70,9 +72,16 @@ class CheckUpReport extends StatelessWidget {
         
 
       }
+
+      List<dynamic> items = [];
+      
+   if (data?["prescription"]?["items"] != null) {
+  items = data["prescription"]["items"];
+}
+      
     return Scaffold(
       appBar: AppBar(
-        title: Text("Checkup Details"),
+        title: const Text("Checkup Details"),
       ),
 
       body: 
@@ -102,7 +111,7 @@ class CheckUpReport extends StatelessWidget {
                             fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        "Dr Velmurugan",
+                        data["doctorName"],
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
@@ -118,8 +127,8 @@ class CheckUpReport extends StatelessWidget {
                                   fontWeight: FontWeight.w600),
                               children: [
                             TextSpan(
-                                text: "13-07-24",
-                                style: TextStyle(
+                                text: DateFormat('dd-MM-yyyy').format(DateTime.parse(data["doctorInputDate"])) ,
+                                style: const TextStyle(
                                     color: Black,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600))
@@ -135,15 +144,16 @@ class CheckUpReport extends StatelessWidget {
                       //         scale: 4,
                       //       ),
 
-                      Image.network(
-                              'https://img.freepik.com/free-vector/hand-drawn-doctor-cartoon-illustration_23-2150680327.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1720828800&semt=ais_user',
-                              scale: 4,
-                            ),
+                 
+                      // Image.network(
+                      //         'https://img.freepik.com/free-vector/hand-drawn-doctor-cartoon-illustration_23-2150680327.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1720828800&semt=ais_user',
+                      //         scale: 4,
+                      //       ),
 
 
 
                       Text(
-                        "Health Status: " + "Good",
+                        "Health Status: " + data["healthStatus"],
                         style: TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 16),
                       )
@@ -182,6 +192,7 @@ class CheckUpReport extends StatelessWidget {
 
               if(data["prescription"]!=null)
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
 
                                SizedBox(
@@ -227,15 +238,15 @@ class CheckUpReport extends StatelessWidget {
                                 ),
                               ),
                             ],
-                            rows: [
-                              DataRow(
-                                cells: <DataCell>[
-                                  DataCell(Text('Paracetamol')),
-                                  DataCell(Text('5')),
-                                  DataCell(Text('Morning,Night')),
-                                ],
-                              ),
-                            ],
+                            rows: items.map((e) => 
+                    DataRow(
+                    cells: <DataCell>[
+                      DataCell(Text(e["tablets"])),
+                      DataCell(Text(e["units"])),
+                      DataCell(Text(e["timings"].join(","))),
+                    ],
+                    ),
+                    ).toList(),
                           ))),
               SizedBox(
                 height: 12.0,
@@ -283,6 +294,7 @@ class CheckUpReport extends StatelessWidget {
 
               if(data["nextAppointmentDate"]!=null)
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
 
 
@@ -294,7 +306,7 @@ class CheckUpReport extends StatelessWidget {
                     fontWeight: FontWeight.w600),
               ),
               Text(
-                "13-07-24",
+                DateFormat('dd-MM-yyyy').format(DateTime.parse(data["nextAppointmentDate"])),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
               SizedBox(

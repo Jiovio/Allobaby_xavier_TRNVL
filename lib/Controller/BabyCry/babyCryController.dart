@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
@@ -20,6 +21,8 @@ class Babycrycontroller extends GetxController {
  List<Widget> t = [];
 
  List<dynamic> stepsToComfortTheBaby = [];
+
+ File? audio;
 
 
 Future<void> babydetect(audioFile) async {
@@ -72,6 +75,8 @@ if(data["babyCryDetected"]==true){
   Get.to(Baby());
 
   OurFirebase.uploadAudioToStorage("audio",audioFile);
+
+  audio = audioFile;
 
 }else {
 

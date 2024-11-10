@@ -13,10 +13,12 @@ class Pregnancystatus extends StatelessWidget {
    Pregnancystatus({super.key});
 
    List<String> ls = ["Iam trying to conceive","Iam pregnant","I have a baby"];
+   List<String> lm = ["Trying to conceive","Pregnant","I have a baby"];
 
 
 
-  Selfscreeningcontroller sc = Get.put(Selfscreeningcontroller());
+  Signupcontroller sc = Get.put(Signupcontroller());
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class Pregnancystatus extends StatelessWidget {
               height: 20,
             ),
                 Text(
-                  "Pregnancy Status",
+                  sc.gender=="Female" ?"Pregnancy Status" : "Partner Pregnancy Status",
                   style: TextStyle(
                       color: PrimaryColor,
                       fontSize: 24,
@@ -93,7 +95,7 @@ class Pregnancystatus extends StatelessWidget {
                             //   scale: 12,
                             // ),
                             title: Text(
-                              ls[index],
+                             sc.gender=="Female"?ls[index] : lm[index],
                               style: TextStyle(fontSize: 18,
                               color: controller.data["pregnancyStatus"]==ls[index]?White:Black,
                               fontWeight: controller.data["pregnancyStatus"]==ls[index]?FontWeight.bold:FontWeight.normal

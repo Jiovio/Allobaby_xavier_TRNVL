@@ -31,7 +31,7 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
   LabreportOptions("Urine Test",SelfScreening(initPage: 3,),"urinetest.png"),
   LabreportOptions("Glucose Test",SelfScreening(initPage: 4,),"glucose.png"),
   LabreportOptions("Fetal Monitoring",SelfScreening(initPage: 5,),"fetalmon.png"),
-  LabreportOptions("UltraSound Test",SelfScreening(initPage: 6,),"ultrasound.png")
+  LabreportOptions("Ultrasound Test",SelfScreening(initPage: 6,),"ultrasound.png")
   ];
 
   Selfscreeningcontroller sc = Get.put(Selfscreeningcontroller());

@@ -148,7 +148,7 @@ class _CallviewState extends State<Callview> {
       );
     } else {
       return const Text(
-        'Please wait for remote user to join',
+        'Waiting',
         textAlign: TextAlign.center,
       );
     }

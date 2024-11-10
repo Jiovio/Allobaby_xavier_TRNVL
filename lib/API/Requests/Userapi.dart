@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:allobaby/API/Requests/HospitalAPI.dart';
 import 'package:allobaby/API/authAPI.dart';
+import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
 import 'package:get/route_manager.dart';
 import 'package:localstorage/localstorage.dart';
@@ -67,4 +68,38 @@ class Userapi {
         return null;
     }
   }
+
+
+
+    static Future<bool> addScreeningData(dynamic bottomsheetdata, dynamic vitals ) async {
+    try {
+      
+      Map<String,dynamic> data = {
+        "screening_date" : DateTime.now().toIso8601String(),
+      };
+
+
+
+      if(bottomsheetdata!=null) {
+        data["bottomsheet"] = bottomsheetdata;
+        }
+
+      print("***********************************************");
+
+
+      if(vitals!=null) {data["vitals"] = vitals;}
+
+
+      
+
+    final req = await postRequest("/screening/add",data);
+    return req["status"]; 
+    } catch (e) {
+
+      print(e);
+        return false;
+    }
+  }
+
+
 }

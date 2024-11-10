@@ -15,8 +15,7 @@ Column emojiPage() {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Hi Patient",
-            
+              "Hi!",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
             ),
             SizedBox(

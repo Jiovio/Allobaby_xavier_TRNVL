@@ -129,9 +129,7 @@ children: [
 
                                await controller.updateDailyScreening();
 
-                                Get.snackbar("Success !", 
-                                "Screening Completed Successfully !",
-                                snackPosition: SnackPosition.BOTTOM);
+           
 
 
                                 Navigator.pop(context);

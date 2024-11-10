@@ -65,7 +65,7 @@ Widget summary() {
               SizedBox(
                 // width: double.infinity,
                 child: Text(
-                      " Summary Report",
+                      "Summary Report",
                       style: TextStyle(
                           color: Get.isDarkMode ? Colors.grey : PrimaryColor,
                           fontSize: 18,

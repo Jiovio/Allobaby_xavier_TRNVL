@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:allobaby/Components/bottom_nav.dart';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Controller/MainController.dart';
+import 'package:allobaby/Controller/UserController.dart';
 import 'package:allobaby/Screens/Settings/AppInfo.dart';
 import 'package:allobaby/Screens/Settings/EditProfile.dart';
 import 'package:allobaby/Screens/Settings/Help.dart';
@@ -17,8 +20,7 @@ import 'package:allobaby/Components/languagedialog.dart';
 import 'package:localstorage/localstorage.dart';
 
 class SettingsScreen extends StatelessWidget {
-   SettingsScreen({super.key});
-
+  SettingsScreen({super.key});
 
   Maincontroller mainC = Get.put(Maincontroller());
 
@@ -36,7 +38,7 @@ class SettingsScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                     const Text(
                         "Settings",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -44,7 +46,7 @@ class SettingsScreen extends StatelessWidget {
                             color: darkGrey2),
                       ),
                       IconButton(
-                        icon: Icon(
+                        icon:const Icon(
                           Icons.notifications_none_rounded,
                           color: Black800,
                         ),
@@ -90,7 +92,7 @@ class SettingsScreen extends StatelessWidget {
                             // )
                             // )
                             ),
-                        SizedBox(
+                       const SizedBox(
                           width: 24.0,
                         ),
                         Column(
@@ -98,11 +100,11 @@ class SettingsScreen extends StatelessWidget {
                             children: [
                               Text(
                                     mainC.name.text,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.w800),
                                   ),
-                              SizedBox(
+                             const SizedBox(
                                 height: 4,
                               ),
                               Text(mainC.email.text),
@@ -172,52 +174,52 @@ class SettingsScreen extends StatelessWidget {
 
 
 
-                      ListTile(
-                        title: Text(
-                          'Notification',
-                        ),
-                        leading: Icon(
-                          Icons.notifications_none_outlined,
-                          color: Black,
-                        ),
-                        subtitle: Text("YES"),
-                        // Obx(() => Text(
-                        //       settingsController.nIcon.value == false
-                        //           ? "ON"
-                        //           : "OFF",
-                        //     )),
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                  title: Text("Notification"),
-                                  content: ListTile(
-                                      title: Text(
-                                        'ON/OFF',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                      leading: ValueBuilder<bool?>(
-                                        initialValue: true,
-                                            // settingsController.nIcon.value
-                                            //     ? false
-                                            //     : true,
-                                        builder: (isChecked, updateFn) =>
-                                            Switch(
-                                          activeColor: PrimaryColor,
-                                          value: isChecked!,
-                                          onChanged: (newValue) {
-                                            // settingsController.nIcon.value =
-                                            //     !settingsController.nIcon.value
-                                            //         .obs();
-                                            // settingsController.update();
-                                            // updateFn(newValue);
-                                          },
-                                        ),
-                                      ))));
-                        },
-                      ),
+                      // ListTile(
+                      //   title: Text(
+                      //     'Notification',
+                      //   ),
+                      //   leading: Icon(
+                      //     Icons.notifications_none_outlined,
+                      //     color: Black,
+                      //   ),
+                      //   subtitle: Text("YES"),
+                      //   // Obx(() => Text(
+                      //   //       settingsController.nIcon.value == false
+                      //   //           ? "ON"
+                      //   //           : "OFF",
+                      //   //     )),
+                      //   onTap: () {
+                      //     showDialog(
+                      //         context: context,
+                      //         builder: (context) => AlertDialog(
+                      //             title: Text("Notification"),
+                      //             content: ListTile(
+                      //                 title: Text(
+                      //                   'ON/OFF',
+                      //                   style: TextStyle(
+                      //                     fontSize: 18,
+                      //                   ),
+                      //                 ),
+                      //                 leading: ValueBuilder<bool?>(
+                      //                   initialValue: true,
+                      //                       // settingsController.nIcon.value
+                      //                       //     ? false
+                      //                       //     : true,
+                      //                   builder: (isChecked, updateFn) =>
+                      //                       Switch(
+                      //                     activeColor: PrimaryColor,
+                      //                     value: isChecked!,
+                      //                     onChanged: (newValue) {
+                      //                       // settingsController.nIcon.value =
+                      //                       //     !settingsController.nIcon.value
+                      //                       //         .obs();
+                      //                       // settingsController.update();
+                      //                       // updateFn(newValue);
+                      //                     },
+                      //                   ),
+                      //                 ))));
+                      //   },
+                      // ),
                       
                       
                       ListTile(
@@ -325,6 +327,14 @@ class SettingsScreen extends StatelessWidget {
                                   TextButton(
                                     child: const Text('Ok'),
                                     onPressed: () async{
+                                      
+                                      OurFirebase.setStatus(false);
+
+                                      Get.delete<Maincontroller>();
+                                      Get.delete<Usercontroller>();
+                                      Get.delete<NavController>();
+
+
                                       localStorage.clear();
                                       Get.to(Signin());
                                       Get.snackbar("Logout Successfull", "",snackPosition: SnackPosition.BOTTOM);

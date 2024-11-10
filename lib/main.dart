@@ -11,6 +11,8 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+import 'package:just_audio_background/just_audio_background.dart';
+
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Handling a background message: ${message.messageId}');
@@ -19,6 +21,14 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  //   await JustAudioBackground.init(
+  //   androidNotificationChannelId: 'com.example.allobaby.channel.audio',
+  //   androidNotificationChannelName: 'Audio playback',
+  //   androidNotificationOngoing: true,
+  // );
+
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await Firebase.initializeApp(

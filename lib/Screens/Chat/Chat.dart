@@ -6,6 +6,7 @@ import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Models/ChatMessage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -41,6 +42,40 @@ class _ChatState extends State<Chat> {
 
   List<Messages> messages = [];
   final ScrollController _scrollController = ScrollController();
+
+
+  late StreamSubscription _statusSubscription;
+
+  bool isOnline = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    print(widget.p2);
+
+
+    DatabaseReference ref = FirebaseDatabase.instance.ref("online/${widget.p2}");
+    _statusSubscription = ref.onValue.listen((event) {
+      if (mounted) {
+        setState(() {
+          isOnline = event.snapshot.value as bool? ?? false;
+        });
+        print("Status updated: $isOnline");
+      }
+    });
+    
+  }
+
+    @override
+  void dispose() {
+    print("Unsubscribing from status for user ${widget.p2}");
+    _statusSubscription.cancel();
+    super.dispose();
+  }
+
+
 
   
 
@@ -250,7 +285,7 @@ class _ChatState extends State<Chat> {
                           ),
 
                                  Text(
-                                  "Online",
+                                  isOnline?"Online":"Offline",
                                   style: TextStyle(
                                       color: Colors.grey.shade600,
                                       fontSize: 13),

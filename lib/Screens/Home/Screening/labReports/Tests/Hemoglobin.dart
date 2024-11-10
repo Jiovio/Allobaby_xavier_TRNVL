@@ -35,7 +35,7 @@ class Hemoglobin extends StatelessWidget {
                                       SizedBox(
                               width: double.infinity,
                               child: Text(
-                                              "Add HemoGlobin Report",
+                                              "Add Hemoglobin Report",
                                               style: TextStyle(
                                                 fontSize: 20,
                                               ),

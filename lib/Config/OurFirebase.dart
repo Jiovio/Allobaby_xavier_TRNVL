@@ -340,6 +340,15 @@ final imagePart = DataPart('audio/aac', audio);
 
 
 
+
+
+
+    static setStatus(bool status) async {
+  final id = Storage.getUserID();
+
+     DatabaseReference ref = FirebaseDatabase.instance.ref("online/P${id.toString()}");
+     await  ref.set(status);
+    }
     
 
 

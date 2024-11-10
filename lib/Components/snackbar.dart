@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void showToast(String title,String desc){
-    Get.snackbar(title,
+void showToast(String desc,bool success){
+    Get.snackbar(!success?"Failed !": "Success !",
       desc,
       snackPosition: SnackPosition.BOTTOM,
-      icon: Icon(Icons.error),
+      icon:!success? Icon(Icons.error) : Icon(Icons.check),
       );
 }

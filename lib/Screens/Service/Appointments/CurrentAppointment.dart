@@ -1,5 +1,6 @@
 import 'package:allobaby/API/Requests/HospitalAPI.dart';
 import 'package:allobaby/API/Requests/Userapi.dart';
+import 'package:allobaby/Components/Loadingbar.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Screens/Home/Checkup/CheckUpReport.dart';
 import 'package:allobaby/Screens/Service/Appointment.dart';
@@ -84,7 +85,13 @@ class _CurrentappointmentState extends State<Currentappointment> {
                             try {
                             final req = await Userapi.getCheckupByID(appointment["id"]);
 
-                            print(req);
+                            // print("************************************");
+                            // print(req);
+                            // print("************************************");
+
+
+
+                            // print(req);
                             Get.to(()=>CheckUpReport(data: req,));
                               
                             } catch (e) {
@@ -102,7 +109,7 @@ class _CurrentappointmentState extends State<Currentappointment> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Dr.${appointment["doctor"]["name"]}",
+                                  "${appointment["doctor"]["name"]}",
                                   style: TextStyle(
                                     color: White,
                                     fontSize: 20,
@@ -281,21 +288,25 @@ class _CurrentappointmentState extends State<Currentappointment> {
 
                                         try {
 
-                                          Get.dialog(
-    Center(child: CircularProgressIndicator()),
-    barrierDismissible: false, // Prevents closing the dialog by tapping outside
-  );
+  //                                         Get.dialog(
+  //   Center(child: CircularProgressIndicator()),
+  //   barrierDismissible: false, // Prevents closing the dialog by tapping outside
+  // );
 
                                 final req = await Userapi.getCheckupByID(appointment["id"]);
 
-                                print(req);
+                                print(req["prescription"]);
 
-                                Get.back();
+                              //  print( DateFormat('dd-MM-yyyy').format(DateTime.parse(req["doctorInputDate"])));
+
+                                // Get.back();
                                 Get.to(()=>CheckUpReport(data: req,));
                                           
                                         } catch (e) {
 
-                                Get.back();
+                                          print(e);
+
+                                // Get.back();
                                           Get.snackbar("Failed", "Failed to Fetch Appointment");
                                           
                                         }
@@ -368,8 +379,17 @@ class _CurrentappointmentState extends State<Currentappointment> {
                                   ? Colors.orange.withOpacity(0.1)
                                   :appointment['status'] == 'Cancelled'?  Colors.redAccent.withOpacity(0.1)
                                   : Colors.green.withOpacity(0.1),
-                            onTap: () {},
-                            // => Get.to(CheckUpReport()),
+                            onTap: () 
+                             async { 
+
+                              Loadingbar.show("Loading Checkup Data");
+
+                              final req = await Userapi.getCheckupByID(appointment["id"]);
+
+                              Loadingbar.close();
+                              Get.to(CheckUpReport(data: req));
+                              
+                              },
                             child: Padding(
                               padding: const EdgeInsets.only(
                                   top: 20, left: 10, right: 20, bottom: 20),

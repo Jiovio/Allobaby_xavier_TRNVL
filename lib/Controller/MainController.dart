@@ -2,10 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:allobaby/API/Requests/Userapi.dart';
+import 'package:allobaby/Components/Loadingbar.dart';
+import 'package:allobaby/Components/snackbar.dart';
+import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Models/DailyScreening.dart';
 import 'package:allobaby/db/dbHelper.dart';
 import 'package:allobaby/utils/backgroundservice.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:intl/intl.dart';
@@ -91,6 +95,34 @@ class Maincontroller extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+      SystemChannels.lifecycle.setMessageHandler((message) async {
+    print("Lifecycle state: $message"); // Debug all states
+
+    if (message == AppLifecycleState.paused.toString()) {
+      print("App paused/background");
+      // Do cleanup here
+      OurFirebase.setStatus(false);
+    }
+    
+    if (message == AppLifecycleState.resumed.toString()) {
+      print("App resumed");
+      OurFirebase.setStatus(true);
+    }
+
+    if (message == AppLifecycleState.inactive.toString()) {
+      print("App inactive");
+      OurFirebase.setStatus(false);
+    }
+
+    if (message == AppLifecycleState.detached.toString()) {
+      print("App detached");
+      OurFirebase.setStatus(false);
+    }
+    
+    return null;
+  });
+
   initScreen();
 
   }
@@ -268,7 +300,28 @@ TextEditingController waketime = TextEditingController();
 
   Future<void> updateDailyScreening() async {
 
+
+      Loadingbar.show("Updating Screening");
+
+      final req = await Userapi.addScreeningData(bottomSheetData,null);
+
+      print(req);
+
+
+      if(req==false){
+        Loadingbar.close();
+        showToast("Failed to add Screening", false);
+        return;
+      }
+
       await insertOrUpdateDaily(json.encode(bottomSheetData), "daily");
+      localStorage.setItem("lastScreened", DateFormat('dd-MM-yyyy').format(DateTime.now()));
+      lastScreened = DateFormat('dd-MM-yyyy').format(DateTime.now());
+
+
+      Loadingbar.close();
+
+      showToast("Screening Added Successfully", true);
 
   }
 
@@ -294,16 +347,6 @@ TextEditingController waketime = TextEditingController();
     bottomSheetData[key] = ls;
 
     // await insertOrUpdateDaily(json.encode(bottomSheetData), "daily");
-
-
-    
-
-
-    if(key=="symptoms"){
-      localStorage.setItem("lastScreened", DateFormat('dd-MM-yyyy').format(DateTime.now()));
-
-      lastScreened = DateFormat('dd-MM-yyyy').format(DateTime.now());
-    }
 
     update();
   }

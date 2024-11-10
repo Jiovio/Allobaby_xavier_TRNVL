@@ -20,7 +20,7 @@ class MyAppointment extends StatelessWidget {
               appBar: AppBar(
             elevation: 0,
             title: Text(
-              " Appointments".tr,
+              "Appointments".tr,
               style: TextStyle(color: Black),
             ),
 

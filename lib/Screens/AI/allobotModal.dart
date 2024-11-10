@@ -87,7 +87,7 @@ Widget _buildHeader() {
         // ),
         // SizedBox(height: 15),
         Text(
-          'Allobot',
+          'Allobot'.tr,
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -95,7 +95,7 @@ Widget _buildHeader() {
           ),
         ),
         Text(
-          'Your Maternal AI Assistant',
+          'Your Maternal AI Assistant'.tr,
           style: TextStyle(
             fontSize: 16,
             color: Colors.grey[600],
@@ -117,7 +117,7 @@ Widget _buildIntroSection() {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Welcome to Allobot!',
+            'Welcome to Allobot!'.tr,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -126,7 +126,7 @@ Widget _buildIntroSection() {
           ),
           SizedBox(height: 10),
           Text(
-            'I`m here to support you through your maternal journey. Ask me anything about pregnancy, childbirth, or early motherhood.',
+            'I`m here to support you through your maternal journey. Ask me anything about pregnancy, childbirth, or early motherhood.'.tr,
             style: TextStyle(fontSize: 14),
           ),
         ],
@@ -140,7 +140,7 @@ Widget _buildWhatToAskSection() {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
-        'What You Can Ask Me:',
+        'What You Can Ask Me:'.tr,
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
@@ -148,10 +148,10 @@ Widget _buildWhatToAskSection() {
         ),
       ),
       SizedBox(height: 10),
-      _buildAskItem(Icons.favorite, 'Pregnancy health tips'),
-      _buildAskItem(Icons.restaurant, 'Nutrition advice'),
-      _buildAskItem(Icons.child_care, 'Baby care basics'),
-      _buildAskItem(Icons.calendar_today, 'Trimester milestones'),
+      _buildAskItem(Icons.favorite, 'Pregnancy health tips'.tr),
+      _buildAskItem(Icons.restaurant, 'Nutrition advice'.tr),
+      _buildAskItem(Icons.child_care, 'Baby care basics'.tr),
+      _buildAskItem(Icons.calendar_today, 'Trimester milestones'.tr),
     ],
   );
 }
@@ -268,7 +268,7 @@ Widget _buildInputSectionMic(context) {
               },
             controller: controller.input,
             decoration: InputDecoration(
-              hintText: 'Ask Allobot...',
+              hintText: 'Ask Allobot...'.tr,
               hintStyle: TextStyle(color: Colors.grey[400]),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(30),
