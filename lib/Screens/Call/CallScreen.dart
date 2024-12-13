@@ -71,9 +71,9 @@ class CallScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    const Text(
-                      'Incoming Call',
-                      style: TextStyle(
+                     Text(
+                      'Incoming Call'.tr,
+                      style:const TextStyle(
                         fontSize: 18,
                         color: Colors.white70,
                         letterSpacing: 1.2,

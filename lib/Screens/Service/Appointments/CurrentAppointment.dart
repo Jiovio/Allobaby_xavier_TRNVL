@@ -81,26 +81,6 @@ class _CurrentappointmentState extends State<Currentappointment> {
                           highlightColor: accentColor.withOpacity(0.3),
                           splashColor: accentColor.withOpacity(0.5),
                           onTap: () async {
-
-                            try {
-                            final req = await Userapi.getCheckupByID(appointment["id"]);
-
-                            // print("************************************");
-                            // print(req);
-                            // print("************************************");
-
-
-
-                            // print(req);
-                            Get.to(()=>CheckUpReport(data: req,));
-                              
-                            } catch (e) {
-                              
-                            }
-
-
-
-                            
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -288,11 +268,6 @@ class _CurrentappointmentState extends State<Currentappointment> {
 
                                         try {
 
-  //                                         Get.dialog(
-  //   Center(child: CircularProgressIndicator()),
-  //   barrierDismissible: false, // Prevents closing the dialog by tapping outside
-  // );
-
                                 final req = await Userapi.getCheckupByID(appointment["id"]);
 
                                 print(req["prescription"]);
@@ -307,7 +282,7 @@ class _CurrentappointmentState extends State<Currentappointment> {
                                           print(e);
 
                                 // Get.back();
-                                          Get.snackbar("Failed", "Failed to Fetch Appointment");
+                                          Get.snackbar("Doctor FeedBack Not Available", "Please Try Again Later",snackPosition: SnackPosition.BOTTOM);
                                           
                                         }
 
@@ -442,8 +417,9 @@ class _CurrentappointmentState extends State<Currentappointment> {
                                             fontWeight: FontWeight.bold,
                                             color:
                                                 appointment['status'] == 'Scheduled'
-                                                    ? Colors.orange
-                                                    : Colors.redAccent,
+                                  ? Colors.orange
+                                  :appointment['status'] == 'Cancelled'?  Colors.redAccent
+                                  : Colors.green,
                                           ),
                                         ),
                                       ],
@@ -462,7 +438,7 @@ class _CurrentappointmentState extends State<Currentappointment> {
                       itemCount: appointments.length,
                     );
                   } else {
-                    return Text('No appointments found');
+                    return Text('No appointments found'.tr);
                   }
                 } else {
                   return CircularProgressIndicator();

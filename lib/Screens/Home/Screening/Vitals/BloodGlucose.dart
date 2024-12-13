@@ -34,7 +34,7 @@ Wrap BloodGlucose() {
                     Text("mmol/L"),
                   ],
                 ),
-                Text("Fasting"),
+                Text("Fasting".tr),
                 Row(
                   children: [
                     DecimalNumberPicker(

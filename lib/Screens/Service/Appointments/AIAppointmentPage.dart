@@ -88,8 +88,8 @@ class _AIAppointmentPageState extends State<AIAppointmentPage> {
           }
 
           if (!snapshot.hasData) {
-            return const Center(
-              child: Text('No data available'),
+            return Center(
+              child: Text('No data available'.tr),
             );
           }
 
@@ -153,8 +153,8 @@ class _AIAppointmentPageState extends State<AIAppointmentPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                 const Text(
-                    'Pregnancy Status',
+                  Text(
+                    'Pregnancy Status'.tr,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -163,7 +163,7 @@ class _AIAppointmentPageState extends State<AIAppointmentPage> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    isPregnant ? 'Pregnant' : 'Not Pregnant',
+                    isPregnant ? 'Pregnant'.tr : 'Not Pregnant'.tr,
                     style:const TextStyle(fontSize: 16, color: White),
                   ),
                 ],
@@ -188,7 +188,7 @@ class _AIAppointmentPageState extends State<AIAppointmentPage> {
                 Icon(Icons.summarize, color: PrimaryColor),
                 const SizedBox(width: 8),
                 Text(
-                  'Summary',
+                  'Summary'.tr,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -222,7 +222,7 @@ class _AIAppointmentPageState extends State<AIAppointmentPage> {
                   Icon(Icons.calendar_month, color: PrimaryColor),
                   const SizedBox(width: 8),
                   Text(
-                    'Upcoming Appointments',
+                    'Upcoming Appointments'.tr,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -232,7 +232,7 @@ class _AIAppointmentPageState extends State<AIAppointmentPage> {
                 ],
               ),
               const SizedBox(height: 16),
-              const Text('No appointments scheduled'),
+              Text('No appointments scheduled'.tr),
             ],
           ),
         ),

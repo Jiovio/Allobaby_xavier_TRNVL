@@ -397,7 +397,7 @@ Widget _buildInputSectionMic(context) {
                                 // ),
                                 SizedBox(height: 10),
                                 Text(
-                                  "How do you feel today?",
+                                  "How do you feel today ?".tr,
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w800,

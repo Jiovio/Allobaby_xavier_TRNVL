@@ -171,7 +171,7 @@ class _AddPrescriptionState extends State<AddPrescription> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add Prescription"),
+        title:  Text("Add Prescription".tr),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -193,14 +193,14 @@ class _AddPrescriptionState extends State<AddPrescription> {
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: descriptionController,
-                  decoration: const InputDecoration(
-                    labelText: "Write Description",
-                    border: OutlineInputBorder(),
+                  decoration:  InputDecoration(
+                    labelText: "Write Description".tr,
+                    border:const OutlineInputBorder(),
                   ),
                   maxLines: 5,
                   validator: (value) {
                     if (value?.isEmpty ?? true) {
-                      return 'Please enter description';
+                      return 'Please enter description'.tr;
                     }
                     return null;
                   },
@@ -218,7 +218,7 @@ class _AddPrescriptionState extends State<AddPrescription> {
                     ),
                     child: isLoading
                       ? const CircularProgressIndicator()
-                      : const Text("ADD PRESCRIPTION"),
+                      :  Text("ADD PRESCRIPTION".tr),
                   ),
                 ),
               ],
@@ -279,9 +279,9 @@ class _ImagePreview extends StatelessWidget {
           borderRadius: BorderRadius.circular(4),
         ),
         child: imageUrl == null
-            ? const Center(
+            ?  Center(
                 child: Text(
-                  "Click to Add Image",
+                  "Click to Add Image".tr,
                   style: TextStyle(fontSize: 18),
                 ),
               )

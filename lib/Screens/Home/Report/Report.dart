@@ -13,7 +13,7 @@ class Report extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Report")),
+      appBar: AppBar(title: Text("Report".tr)),
       body: Column(
         children: [
           Padding(
@@ -28,7 +28,7 @@ class Report extends StatelessWidget {
                 children: [
                   Icon(Icons.camera),
                   SizedBox(width: 10),
-                  Text("Scan and Add new Report".toUpperCase())
+                  Text("Scan and Add new Report".tr.toUpperCase())
                 ],
               ),
             ),
@@ -42,7 +42,7 @@ class Report extends StatelessWidget {
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(child: Text('No reports found'));
+                  return Center(child: Text('No reports found'.tr));
                 } else {
                   List<Map<String, dynamic>> reports = snapshot.data!;
 

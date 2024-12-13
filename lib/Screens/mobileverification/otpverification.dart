@@ -26,7 +26,7 @@ class Otpverification extends StatelessWidget {
               ))
             : Scaffold(
                 appBar: AppBar(
-                  title: Text("OTP Verification")
+                  title: Text("OTP Verification".tr)
                 ),
                 body: Padding(
                   padding:
@@ -35,7 +35,7 @@ class Otpverification extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "OTP VERIFICATION",
+                        "OTP VERIFICATION".tr,
                         style: TextStyle(
                           color: 
                           // Get.isDarkMode 
@@ -49,7 +49,7 @@ class Otpverification extends StatelessWidget {
                       ),
                       RichText(
                         text: TextSpan(
-                            text: "Enter OTP sent to ",
+                            text: "Enter OTP sent to ".tr,
                             style: TextStyle(
                                 color: 
                                 // Get.isDarkMode 
@@ -114,7 +114,7 @@ class Otpverification extends StatelessWidget {
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(("Verify and proceed").toUpperCase()),
+                                Text(("Verify and proceed".tr).toUpperCase()),
                                 SizedBox(
                                   width: 18.0,
                                 ),

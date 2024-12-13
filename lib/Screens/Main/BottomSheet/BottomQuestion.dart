@@ -71,7 +71,7 @@ children: [
                           //     duration: Duration(milliseconds: 300),
                           //     curve: Curves.easeInOut);
                         },
-                        child: Text("BACK"),
+                        child: Text("BACK".tr),
                       ),
                     ),
 
@@ -124,7 +124,7 @@ children: [
                           Visibility(
                             visible: controller.currpage==5,
                             child: ElevatedButton(
-                              child: Text("Finish"),
+                              child: Text("Finish".tr),
                               onPressed: () async {
 
                                await controller.updateDailyScreening();
@@ -160,7 +160,7 @@ children: [
                     
                                       
                         },
-                        child: Text("NEXT"),
+                        child: Text("NEXT".tr),
                     ))
         ],),
           )

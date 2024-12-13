@@ -2,6 +2,7 @@
 import 'package:allobaby/Components/CameraCapture.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 
 class Hemoglobinscan extends StatelessWidget {
@@ -24,13 +25,13 @@ class Hemoglobinscan extends StatelessWidget {
 
                               SizedBox(height: 20,),
 
-                Text("Hemoglobin Test", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                Text("Hemoglobin Test".tr, style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,),
 
 
               SizedBox(height: 20,),
           
-                Text("Easily get your Reading by Performing the scans below",
+                Text("Easily get your Reading by Performing the scans below".tr,
                             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
               textAlign: TextAlign.center,),
 

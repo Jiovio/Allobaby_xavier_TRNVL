@@ -12,7 +12,7 @@ GetBuilder BMI() {
   Wrap(
     crossAxisAlignment: WrapCrossAlignment.start,
     children: [
-      Text("Select Height"),
+      Text("Select Height".tr),
       Row(
         children: [
 
@@ -27,7 +27,7 @@ GetBuilder BMI() {
           Text("cm")
         ],
       ),
-      Text("Select Weight"),
+      Text("Select Weight".tr),
       Row(
         children: [
 DecimalNumberPicker(

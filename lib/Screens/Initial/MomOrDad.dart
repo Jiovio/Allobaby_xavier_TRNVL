@@ -31,7 +31,7 @@ class MomOrDad extends StatelessWidget {
                   height: 40,
                 ),
                 Text(
-                  "Are you my mom or dad?",
+                  "Are you my mom or dad?".tr,
                   style: TextStyle(
                       color: PrimaryColor,
                       fontSize: 24,
@@ -86,7 +86,7 @@ class MomOrDad extends StatelessWidget {
                                 height: 8,
                               ),
                               Text(
-                                "Dad",
+                                "Dad".tr,
                                 style: TextStyle(
                                     color: 
                                         controller.data["parentType"] == "Dad"
@@ -145,7 +145,7 @@ class MomOrDad extends StatelessWidget {
                                 height: 8,
                               ),
                               Text(
-                                "Mom",
+                                "Mom".tr,
                                 style: TextStyle(
                                     color: controller.data["parentType"] == "Mom"
                                         // initialDetailsController.parentType == "Mom"
@@ -211,7 +211,7 @@ class MomOrDad extends StatelessWidget {
                               minimumSize: Size(100, 40),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(40))),
-                          child: Text(("Continue").toUpperCase()),
+                          child: Text(("Continue".tr).toUpperCase()),
                         ),
                       ),
                     ])

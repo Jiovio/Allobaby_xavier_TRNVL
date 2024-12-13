@@ -10,7 +10,7 @@ SingleChildScrollView SymptomsScreen() => SingleChildScrollView(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Select Symptoms",
+              "Select Symptoms".tr,
               style: TextStyle(
                 fontSize: 20,
               ),
@@ -127,7 +127,7 @@ SingleChildScrollView SymptomsScreen() => SingleChildScrollView(
                                  child: ElevatedButton(onPressed: (){
                                   controller.submitSymptoms();
                                  }, child: 
-                                                               const Text("Submit")),
+                                 Text("Submit".tr)),
                                )
                  ],
                ),
@@ -141,21 +141,21 @@ SingleChildScrollView SymptomsScreen() => SingleChildScrollView(
     );
 
 List<Symptoms> symptomsList = [
-  Symptoms(title: 'Normal', image: 'assets/BottomSheet/Symptoms/normal.png'),
+  Symptoms(title: 'Normal'.tr, image: 'assets/BottomSheet/Symptoms/normal.png'),
   Symptoms(
-      title: 'Body pain', image: 'assets/BottomSheet/Symptoms/boad_pain.png'),
+      title: 'Body pain'.tr, image: 'assets/BottomSheet/Symptoms/boad_pain.png'),
   Symptoms(
-      title: 'Burning Stomach',
+      title: 'Burning Stomach'.tr,
       image: 'assets/BottomSheet/Symptoms/burning_in_stomach.png'),
   Symptoms(
-      title: 'Cold cough', image: 'assets/BottomSheet/Symptoms/cold_cough.png'),
+      title: 'Cold cough'.tr, image: 'assets/BottomSheet/Symptoms/cold_cough.png'),
   Symptoms(
-      title: 'Dizziness', image: 'assets/BottomSheet/Symptoms/dizziness.png'),
+      title: 'Dizziness'.tr, image: 'assets/BottomSheet/Symptoms/dizziness.png'),
   Symptoms(
-      title: 'Headache', image: 'assets/BottomSheet/Symptoms/headache.png'),
+      title: 'Headache'.tr, image: 'assets/BottomSheet/Symptoms/headache.png'),
   Symptoms(
-      title: 'Vomiting', image: 'assets/BottomSheet/Symptoms/vomiting.png'),
-  Symptoms(title: 'Other'.tr, image: 'assets/BottomSheet/Symptoms/sad.png')
+      title: 'Vomiting'.tr, image: 'assets/BottomSheet/Symptoms/vomiting.png'),
+  Symptoms(title: 'Other'.tr.tr, image: 'assets/BottomSheet/Symptoms/sad.png')
 ];
 
 class Symptoms {

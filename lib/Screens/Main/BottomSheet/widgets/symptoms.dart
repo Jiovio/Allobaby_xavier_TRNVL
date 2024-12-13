@@ -14,10 +14,10 @@ Widget symptoms(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-       const Padding(
+        Padding(
           padding: EdgeInsets.fromLTRB(20.0, 20, 20, 0),
           child: Text(
-            "Do you have any of these Symptoms?",
+            "Do you have any of these Symptoms?".tr,
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w500,

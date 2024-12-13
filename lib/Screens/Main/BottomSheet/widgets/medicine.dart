@@ -10,10 +10,10 @@ Column medicine() {
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
-     const Padding(
+      Padding(
         padding: EdgeInsets.fromLTRB(20.0, 10, 20, 0),
         child: Text(
-          "Select tablets that you have taken",
+          "Select tablets that you have taken".tr,
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.w500,

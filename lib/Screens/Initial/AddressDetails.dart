@@ -31,7 +31,7 @@ class AddressDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Address Information",
+                    "Address Information".tr,
                     style: TextStyle(
                         color: PrimaryColor,
                         fontSize: 24,
@@ -43,11 +43,11 @@ class AddressDetails extends StatelessWidget {
                   TextFormField(
                     controller: controller.doorNo,
                     decoration: InputDecoration(
-                        labelText: "Door No", border: OutlineInputBorder()),
+                        labelText: "Door No".tr, border: OutlineInputBorder()),
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter Door No';
+                        return 'Please enter Door No'.tr;
                       }
                       return null;
                     },
@@ -58,11 +58,11 @@ class AddressDetails extends StatelessWidget {
                   TextFormField(
                      controller: controller.streetName,
                     decoration: InputDecoration(
-                        labelText: "Street Name", border: OutlineInputBorder()),
+                        labelText: "Street Name".tr, border: OutlineInputBorder()),
                     keyboardType: TextInputType.text,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter Street Name';
+                        return 'Please enter Street Name'.tr;
                       }
                       return null;
                     },
@@ -82,11 +82,11 @@ class AddressDetails extends StatelessWidget {
                                         width: 15,
                                         child: CircularProgressIndicator())
                                     : SizedBox(),
-                            labelText: "Pincode",
+                            labelText: "Pincode".tr,
                             border: OutlineInputBorder()),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter Pincode';
+                            return 'Please enter Pincode'.tr;
                           }
                           return null;
                         },
@@ -112,7 +112,7 @@ class AddressDetails extends StatelessWidget {
 
                             dropdownDecoratorProps: DropDownDecoratorProps(
                               dropdownSearchDecoration: InputDecoration(
-                              labelText: "Search Area",
+                              labelText: "Search Area".tr,
                               border: OutlineInputBorder()
                             )
                             ),
@@ -123,12 +123,12 @@ class AddressDetails extends StatelessWidget {
                             selectedItem: controller.selectedArea,
                             
                             validator: (v) =>
-                                v == null ? "Select Area Name" : null,
+                                v == null ? "Select Area Name".tr : null,
                             // mode: Mode.BOTTOM_SHEET,
                             popupProps: PopupProps.bottomSheet(
                               showSearchBox: true,
                               searchFieldProps: TextFieldProps(
-                                  decoration: InputDecoration(label: Text("Search"),
+                                  decoration: InputDecoration(label: Text("Search".tr),
                                   border: OutlineInputBorder())
                               )
 
@@ -177,7 +177,7 @@ class AddressDetails extends StatelessWidget {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(("Continue").toUpperCase()),
+                            Text(("Continue".tr).toUpperCase()),
                             SizedBox(
                               width: 18.0,
                             ),

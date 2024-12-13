@@ -65,7 +65,7 @@ Widget summary() {
               SizedBox(
                 // width: double.infinity,
                 child: Text(
-                      "Summary Report",
+                      "Summary Report".tr,
                       style: TextStyle(
                           color: Get.isDarkMode ? Colors.grey : PrimaryColor,
                           fontSize: 18,
@@ -80,7 +80,7 @@ Widget summary() {
               SizedBox(
                 width: double.infinity,
                 child: Text(
-                  "Symptoms",
+                  "Symptoms".tr,
                   style: TextStyle(
                       color: Get.isDarkMode ? Colors.grey : PrimaryColor,
                       fontSize: 18,
@@ -99,7 +99,7 @@ Widget summary() {
                             color: Get.isDarkMode ? Colors.grey : PrimaryColor,
                             width: 1.5),
                         borderRadius: BorderRadius.circular(4.0)),
-                    label: Text("Symptoms"),
+                    label: Text("Symptoms".tr),
                     labelStyle: TextStyle(
                         color: Get.isDarkMode ? White : Black,
                         fontWeight: FontWeight.w600),
@@ -114,7 +114,7 @@ Widget summary() {
               SizedBox(
                 width: double.infinity,
                 child: Text(
-                  "Vitals",
+                  "Vitals".tr,
                   style: TextStyle(
                       color: Get.isDarkMode ? Colors.grey : PrimaryColor,
                       fontSize: 18,

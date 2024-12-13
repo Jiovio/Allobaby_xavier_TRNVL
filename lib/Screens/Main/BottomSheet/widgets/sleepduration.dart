@@ -20,7 +20,7 @@ sleepDuration(BuildContext context,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
-            "Sleep Duration",
+            "Sleep Duration".tr,
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w500,
@@ -168,13 +168,13 @@ sleepDuration(BuildContext context,
          
                       },
                       decoration: InputDecoration(
-                          labelText: "Bed Time", border: OutlineInputBorder()),
+                          labelText: "Bed Time".tr, border: OutlineInputBorder()),
                       keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter Date of Birth';
+                          return 'Please enter Date of Birth'.tr;
                         }
-                        return "Hi";
+                        return null;
                       },
                     ),
                   ),
@@ -201,12 +201,12 @@ sleepDuration(BuildContext context,
                         });
                       },
                       decoration: InputDecoration(
-                          labelText: "Wake Up Time",
+                          labelText: "Wake Up Time".tr,
                           border: OutlineInputBorder()),
                       keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter Date of Birth';
+                          return 'Please enter Date of Birth'.tr;
                         }
                         return null;
                       },

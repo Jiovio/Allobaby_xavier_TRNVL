@@ -13,7 +13,12 @@ class CheckUpReport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-        List<vitals> vitalsList = [
+        List<vitals> vitalsList = [];
+
+
+        if(data["vitals"]!=null){
+
+          vitalsList = [
       vitals(
         title: 'Blood Pressure',
         image: 'assets/blood-pressure-gauge.png',
@@ -57,6 +62,12 @@ class CheckUpReport extends StatelessWidget {
         value: "${data["vitals"]["hrv"]}",
       )
     ];
+
+
+        }
+        
+        
+        
     
       List<String> ls = [];
 
@@ -81,13 +92,13 @@ class CheckUpReport extends StatelessWidget {
       
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Checkup Details"),
+        title:  Text("Checkup Details".tr),
       ),
 
       body: 
       data == null ?
       Center(
-        child: Text("Checkup Details Not Available"),
+        child: Text("Checkup Details Not Available".tr),
       )
       :
       SingleChildScrollView(
@@ -104,7 +115,7 @@ class CheckUpReport extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Doctor Name",
+                        "Doctor Name".tr,
                         style: TextStyle(
                             color: PrimaryColor,
                             fontSize: 18,
@@ -120,7 +131,7 @@ class CheckUpReport extends StatelessWidget {
                       ),
                       RichText(
                           text: TextSpan(
-                              text: "Date:  ",
+                              text: "Date:  ".tr,
                               style: TextStyle(
                                   color: PrimaryColor,
                                   fontSize: 16,
@@ -153,7 +164,7 @@ class CheckUpReport extends StatelessWidget {
 
 
                       Text(
-                        "Health Status: " + data["healthStatus"],
+                        "Health Status: ".tr + data["healthStatus"],
                         style: TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 16),
                       )
@@ -167,7 +178,7 @@ class CheckUpReport extends StatelessWidget {
               
               if(data["summary"]!=null)
               Text(
-                "Case Summary",
+                "Case Summary".tr,
                 style: TextStyle(
                     color: PrimaryColor,
                     fontSize: 18,
@@ -201,7 +212,7 @@ class CheckUpReport extends StatelessWidget {
 
                
               Text(
-                "Prescription",
+                "Prescription".tr,
                 style: TextStyle(
                     color: PrimaryColor,
                     fontSize: 18,
@@ -224,17 +235,17 @@ class CheckUpReport extends StatelessWidget {
                             columns: [
                               DataColumn(
                                 label: Text(
-                                  'Tablets',
+                                  'Tablets'.tr,
                                 ),
                               ),
                               DataColumn(
                                 label: Text(
-                                  'Units',
+                                  'Units'.tr,
                                 ),
                               ),
                               DataColumn(
                                 label: Text(
-                                  'Timing',
+                                  'Timing'.tr,
                                 ),
                               ),
                             ],
@@ -299,7 +310,7 @@ class CheckUpReport extends StatelessWidget {
 
 
                                 Text(
-                "Next Appointment Time",
+                "Next Appointment Time".tr,
                 style: TextStyle(
                     color: Get.isDarkMode ? Colors.grey : PrimaryColor,
                     fontSize: 18,
@@ -324,7 +335,7 @@ class CheckUpReport extends StatelessWidget {
                 children: [
 
                                 Text(
-                "Symptoms",
+                "Symptoms".tr,
                 style: TextStyle(
                     color: Get.isDarkMode ? Colors.grey : PrimaryColor,
                     fontSize: 18,
@@ -366,7 +377,7 @@ class CheckUpReport extends StatelessWidget {
                 children: [
 
                                 Text(
-                "Vitals",
+                "Vitals".tr,
                 style: TextStyle(
                     color: Get.isDarkMode ? Colors.grey : PrimaryColor,
                     fontSize: 18,

@@ -47,7 +47,7 @@ class _AllobotState extends State<Allobot> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text('Allobot', style: 
+        title: Text('Allobot'.tr, style: 
         TextStyle(color: PrimaryColor, fontWeight: FontWeight.w600)
         // GoogleFonts.poppins(color: PrimaryColor, fontWeight: FontWeight.w600)
 
@@ -181,7 +181,7 @@ Widget buildAIThinkingWidget() {
 
         // Text: AI Thinking
         Text(
-          'Thinking...',
+          'Thinking...'.tr,
           // style: GoogleFonts.poppins
           style: 
           TextStyle(
@@ -195,7 +195,7 @@ Widget buildAIThinkingWidget() {
 
         // Subtext (Optional)
         Text(
-          'Your maternal AI assistant is processing your question',
+          'Your maternal AI assistant is processing your question'.tr,
           textAlign: TextAlign.center,
           style: 
           // GoogleFonts.poppins

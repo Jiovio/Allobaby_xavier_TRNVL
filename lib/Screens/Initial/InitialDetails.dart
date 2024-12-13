@@ -97,7 +97,7 @@ class InitialDetails extends StatelessWidget {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "Choose photo from :",
+                                              "Choose photo from :".tr,
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 18),
@@ -188,7 +188,7 @@ class InitialDetails extends StatelessWidget {
                                   height: 12,
                                 ),
                                 Text(
-                                  "Phone Number",
+                                  "Phone Number".tr,
                                   style: TextStyle(
                                       color: PrimaryColor,
                                       fontSize: 18,
@@ -208,7 +208,7 @@ class InitialDetails extends StatelessWidget {
                           height: 20.0,
                         ),
                         Text(
-                          "Profile Details",
+                          "Profile Details".tr,
                           style: TextStyle(
                               color: PrimaryColor,
                               fontSize: 18,
@@ -238,7 +238,7 @@ class InitialDetails extends StatelessWidget {
                                 // initialDetailsController.sendInitialDetails();
                               }
                             },
-                            child: Text(("Finish").toUpperCase()),
+                            child: Text(("Finish".tr).toUpperCase()),
                           ),
                         )
                       ],
@@ -265,10 +265,10 @@ Form detailsForm(
             controller: initialDetailsController.name,
             onTap: () {},
             decoration: InputDecoration(
-                labelText: "Enter your Name", border: OutlineInputBorder()),
+                labelText: "Enter your Name".tr, border: OutlineInputBorder()),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your name';
+                return 'Please enter your name'.tr;
               }
               return null;
             },
@@ -280,7 +280,7 @@ Form detailsForm(
             controller: initialDetailsController.emailID,
             onTap: () {},
             decoration: InputDecoration(
-                labelText: "Enter Email Id", border: OutlineInputBorder()),
+                labelText: "Enter Email Id".tr, border: OutlineInputBorder()),
 
           ),
           SizedBox(
@@ -293,13 +293,13 @@ Form detailsForm(
                   validator: (v) => v == null ? "Please Select Gender" : null,
                   dropdownDecoratorProps: DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      label: Text("Gender"),
+                      label: Text("Gender".tr),
                       border: OutlineInputBorder()
                     )
                   ),
                   // mode: Mode.MENU,
                   // showSelectedItem: true,
-                  items: ["Male", "Female"],
+                  items: ["Male".tr, "Female".tr],
                   // label: "Gender",
                   // maxHeight: 120,
                   onChanged: (value) {
@@ -314,11 +314,11 @@ Form detailsForm(
                 child: TextFormField(
                   controller: initialDetailsController.age,
                   decoration: InputDecoration(
-                      labelText: "Age", border: OutlineInputBorder()),
+                      labelText: "Age".tr, border: OutlineInputBorder()),
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter age';
+                      return 'Please enter age'.tr;
                     }
 
                     if(value.length>2 || int.parse(value)<16){
@@ -338,9 +338,9 @@ Form detailsForm(
             height: 60.0,
             child: DropdownSearch<String>(
               validator: (v) => v == null ? "Select Blood Group" : null,
-              dropdownDecoratorProps:const DropDownDecoratorProps(
+              dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
-                      label: Text("Select Blood Group"),
+                      label: Text("Select Blood Group".tr),
                       border: OutlineInputBorder()
                     )),
                   

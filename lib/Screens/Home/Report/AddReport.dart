@@ -2,6 +2,7 @@ import 'package:allobaby/Components/forms.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:get/get.dart';
 
 class AddReport extends StatelessWidget {
   const AddReport({super.key});
@@ -10,7 +11,7 @@ class AddReport extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add Report"),
+        title: Text("Add Report".tr),
       ),
 
       body: SingleChildScrollView(
@@ -32,7 +33,7 @@ class AddReport extends StatelessWidget {
                                 child: Stack(
                                   children: [
                                     InteractiveViewer(
-                                      child:const Center(
+                                      child: Center(
                                         child: 
                                         // controller.fileImage64 == null
                                         //     ? Text(
@@ -44,7 +45,7 @@ class AddReport extends StatelessWidget {
                                         //         controller.fileImage64)),
 
                                               Text(
-                                                "NO IMAGE",
+                                                "NO IMAGE".tr,
                                                 style: TextStyle(
                                                     fontSize: 18, color: White),
                                               )
@@ -83,9 +84,9 @@ class AddReport extends StatelessWidget {
                         //       ))
                         //     : Image.memory(
                         //         base64Decode(controller.fileImage64)),
-                              const Center(
+                               Center(
                                 child: Text(
-                                "Click Add Image Button",
+                                "Click Add Image Button".tr,
                                 style: TextStyle(fontSize: 18),
                               ))
 
@@ -109,7 +110,7 @@ class AddReport extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Choose photo from :",
+                                  "Choose photo from :".tr,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 18),
@@ -139,7 +140,7 @@ class AddReport extends StatelessWidget {
                             ),
                           )),
                   icon: Icon(Icons.add_a_photo),
-                  label: Text("ADD IMAGE")),
+                  label: Text("ADD IMAGE".tr)),
 
                                 SizedBox(
                 height: 10.0,
@@ -175,13 +176,13 @@ class AddReport extends StatelessWidget {
                             TextFormField(
                 // controller: reportController.reportDesc,
                 decoration: InputDecoration(
-                    labelText: "Write Description",
+                    labelText: "Write Description".tr,
                     border: OutlineInputBorder()),
                 keyboardType: TextInputType.text,
                 maxLines: 5,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter Description';
+                    return 'Please enter Description'.tr;
                   }
                   return null;
                 },
@@ -197,7 +198,7 @@ class AddReport extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
                   onPressed: () => {},
-                  child: Text("ADD REPORT"))
+                  child: Text("ADD REPORT".tr))
 
 
 

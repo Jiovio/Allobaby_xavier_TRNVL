@@ -98,7 +98,7 @@ bool verified = false;
                           padding: const EdgeInsets.only(
                               left: 24.0, right: 24.0),
                           child: Text(
-                            'Personalised Pregnancy Care',
+                            'Personalised Pregnancy Care'.tr,
                             style: TextStyle(
                                 color: darkGrey3,
                                 fontSize: Responsive.isMobile(context)
@@ -130,7 +130,7 @@ bool verified = false;
                           padding: const EdgeInsets.only(
                               left: 24.0, right: 24.0),
                           child: Text(
-                            'Helps you to consult Doctor Virtually',
+                            'Helps you to consult Doctor Virtually'.tr,
                             style: TextStyle(
                                 color: darkGrey3,
                                 fontSize: Responsive.isMobile(context)
@@ -159,7 +159,7 @@ bool verified = false;
                           padding: const EdgeInsets.only(
                               left: 24.0, right: 24.0),
                           child: Text(
-                            'Engage with Doctor through video and audio',
+                            'Engage with Doctor through video and audio'.tr,
                             style: TextStyle(
                                 color: darkGrey3,
                                 fontSize: Responsive.isMobile(context)
@@ -188,7 +188,7 @@ bool verified = false;
                           padding: const EdgeInsets.only(
                               left: 24.0, right: 24.0),
                           child: Text(
-                            'Keep on track your Health',
+                            'Keep on track your Health'.tr,
                             style: TextStyle(
                                 color: darkGrey3,
                                 fontSize: Responsive.isMobile(context)
@@ -212,7 +212,7 @@ bool verified = false;
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Enter Mobile Number",
+                          "Enter Mobile Number".tr,
                           style: TextStyle(
                               fontSize: 14, color: PrimaryColor),
                         ),
@@ -256,7 +256,7 @@ bool verified = false;
                                 MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    ("SEND OTP"),
+                                    ("SEND OTP".tr),
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -274,11 +274,11 @@ bool verified = false;
                           textAlign: TextAlign.center,
                           text: TextSpan(
                               text:
-                              'By continuing, You agree that you have read and accept our ',
+                              'By continuing, You agree that you have read and accept our '.tr,
                               style: TextStyle(color: Black700),
                               children: [
                                 TextSpan(
-                                  text: 'T&C and Privacy Policy ',
+                                  text: 'T&C and Privacy Policy '.tr,
                                   style: TextStyle(
                                     color: PrimaryColor,
                                   ),

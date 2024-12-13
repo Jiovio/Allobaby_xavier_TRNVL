@@ -35,10 +35,20 @@ class _HomeState extends State<Home> {
 
   Newscontroller newsC = Get.put(Newscontroller());
 
+    Locale currentLocale = Get.locale as Locale;
+
+    ValueNotifier<Locale> currentLocaleNotifier = ValueNotifier(Get.locale as Locale);
+
+
+  
+
   @override
   Widget build(BuildContext context) {
+
+
+
     return Scaffold(
-      appBar: customAppBar(title: "AlloBaby", context: context),
+      appBar: customAppBar(title: "AlloBaby".tr, context: context),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -86,18 +96,18 @@ class _HomeState extends State<Home> {
                                       backgroundColor: accentColor.withOpacity(0.3),
                                       radius: 80.0,
                                       lineWidth: 15.0,
-                                      percent: mainC.ccomp,
+                                      percent: mainC.ccomp<0 ? mainC.ccomp*-1 : mainC.ccomp,
                               
                                       center: true
                                           ? Text(
-                                              "Day ${mainC.ctotalDays - (mainC.ctotalDays - mainC.cdaysPassed)}",
+                                              "Day".tr +" " +"${mainC.ctotalDays - (mainC.ctotalDays - mainC.cdaysPassed)}",
                                               style: TextStyle(
                                                 fontSize: 24,
                                                 fontWeight: FontWeight.w700,
                                               ),
                                             )
                                           : Text(
-                                              "Not yet started",
+                                              "Not yet started".tr,
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w700),
                                             )
@@ -137,7 +147,7 @@ class _HomeState extends State<Home> {
                                                 color: PrimaryColor,
                                                 fontWeight: FontWeight.w700),
                                           ),
-                                           Text("Health Status",
+                                           Text("Health Status".tr,
                                           style: TextStyle(
                                               color: Black.withOpacity(0.6),
                                               fontSize: 14)),
@@ -146,6 +156,7 @@ class _HomeState extends State<Home> {
                           )
                         
                                 ,InkWell(
+                                  
 
                             child: Row(children: [
                                                                 Container(
@@ -177,10 +188,15 @@ class _HomeState extends State<Home> {
                                                                                            ),
                                                ),
                                              
-                                          Text("Last Screened",
+                                          Text("Last Screened".tr ,
+                                          maxLines: 2,
                                           style: TextStyle(
                                               color: Black.withOpacity(0.6),
-                                              fontSize: 14)
+                                              fontSize:currentLocale.languageCode == 'ta' ||currentLocale.languageCode == 'ka'  
+                                              ? 10: 14
+                                              ),
+                                                softWrap: true,
+                                                overflow: TextOverflow.visible,
                                               ),
                                   ],)
                             ],),
@@ -207,13 +223,13 @@ class _HomeState extends State<Home> {
                                         CrossAxisAlignment.start,
                                     children: [
                                              Text(
-                                            "GOLD",
+                                            "FREE",
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 color: PrimaryColor,
                                                 fontWeight: FontWeight.w700),
                                           ),
-                                                                                Text("Subscription Plan",
+                                                                                Text("Subscription Plan".tr,
                                           style: TextStyle(
                                               color: Black.withOpacity(0.6),
                                               fontSize: 14)),
@@ -247,30 +263,30 @@ class _HomeState extends State<Home> {
                   scrollDirection: Axis.horizontal,
                   physics: BouncingScrollPhysics(),
                   children: [
-                        categories("AlloBot", 'assets/Chat/chatbot.png',
+                        categories("Allobot".tr, 'assets/Chat/chatbot.png',
                         // CheckUp()
                         Container(),() {allobotModal(context);}
                         ),
-                    categories("Awareness",
+                    categories("Awareness".tr,
                         'assets/Homescreen/myawernessnew.png', 
                         Awareness()
                         // Signin()
                         ),
 
-                        categories("Appointments",
+                        categories("Appointments".tr,
                         'assets/Homescreen/appointment.png', 
                         MyAppointment()
                         // Signin()
                         ),
 
 
-                    categories("Screening", 'assets/Homescreen/virus.png',
+                    categories("Screening".tr, 'assets/Homescreen/virus.png',
                         // SelfScreening()
                         // Hemoglobin()
                         ScreeningWithReports()
                         ),
                     categories(
-                        "Report",
+                        "Report".tr,
                         'assets/Homescreen/medical_report.png',
                         // Report(
                         //   patientId:
@@ -284,7 +300,7 @@ class _HomeState extends State<Home> {
                         ),
 
                         categories(
-                        "Prescription",
+                        "Prescription".tr,
                         'assets/Homescreen/prescription.png',
                         // Report(
                         //   patientId:
@@ -296,7 +312,7 @@ class _HomeState extends State<Home> {
                         Prescription()
                         
                         ),
-                    categories("Checkup", 'assets/Homescreen/mycheckupnew.png',
+                    categories("Checkup".tr, 'assets/Homescreen/mycheckupnew.png',
                         // CheckUp()
                         CheckUp()
                         ),
@@ -408,7 +424,7 @@ class _HomeState extends State<Home> {
               ),
               Text(
                 title,
-                style: TextStyle(fontSize: 14),
+                style: TextStyle(fontSize: currentLocale.languageCode == 'ta'?12:14),
               )
             ],
           ),

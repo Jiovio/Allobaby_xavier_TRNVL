@@ -64,7 +64,7 @@ class _HealthprofileState extends State<Healthprofile> {
           await showDialog( 
             context: context,
             builder: (context) => AlertDialog(
-                  title: Text("Update"),
+                  title: Text("Update".tr),
                   content: 
                   Container(
                     child: vitals[i],
@@ -183,28 +183,28 @@ class _HealthprofileState extends State<Healthprofile> {
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Column(
-                          children: [
-                          const  Icon(Icons.double_arrow),
-                          const SizedBox(
-                              height: 12,
-                            ),
-                                  Text(
-                                      "280",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600),
-                            ),    SizedBox(
-                              height: 8,
-                            ),
-                            Text("PDay",
-                                style: TextStyle(
-                                    color: Black.withOpacity(0.6),
-                                    fontSize: 14)),
-                          ],
-                        ),
+                        // Column(
+                        //   children: [
+                        //   const  Icon(Icons.double_arrow),
+                        //   const SizedBox(
+                        //       height: 12,
+                        //     ),
+                        //           Text(
+                        //               "280",
+                        //               style: TextStyle(
+                        //                   fontSize: 18,
+                        //                   fontWeight: FontWeight.w600),
+                        //     ),    SizedBox(
+                        //       height: 8,
+                        //     ),
+                        //     Text("PDay",
+                        //         style: TextStyle(
+                        //             color: Black.withOpacity(0.6),
+                        //             fontSize: 14)),
+                        //   ],
+                        // ),
                         Column(
                           children: [
                             Icon(Icons.double_arrow),
@@ -255,9 +255,12 @@ class _HealthprofileState extends State<Healthprofile> {
                     ),
                   ),
                 ),
+               
                const SizedBox(
                   height: 8,
                 ),
+                 
+                 
                  Card(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12)),
@@ -1221,7 +1224,7 @@ class _HealthprofileState extends State<Healthprofile> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Heart Rate",
+                                "Heart Rate".tr,
                                 style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500,
@@ -1287,7 +1290,7 @@ class _HealthprofileState extends State<Healthprofile> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Respiratory Rate",
+                                "Respiratory Rate".tr,
                                 style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500,
@@ -1427,7 +1430,7 @@ class _HealthprofileState extends State<Healthprofile> {
           child: Column(
             children: [
               emojiList[index].title == "none"
-                  ?const Center(child: Text("None"))
+                  ? Center(child: Text("None".tr))
                   : Image.asset(emojiList[index].emoji, height: 58, width: 58),
              const SizedBox(
                 height: 10,

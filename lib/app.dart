@@ -9,9 +9,12 @@ import 'package:get/route_manager.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:localstorage/localstorage.dart';
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+
+  final Locale initLang;
+  const MyApp({super.key , required this.initLang});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -57,6 +60,17 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     _requestNotificationPermissions();
     _setupForegroundNotificationListeners();
+
+    // final loc = localStorage.getItem("lang");
+
+    // if(loc!=null){
+    //   print("-------------------------------------");
+    //   print(loc);
+    //   print("-------------------------------------");
+
+    //   TranslationService().changeLocale(loc);
+
+    // }
     
   }
 
@@ -68,7 +82,7 @@ class _MyAppState extends State<MyApp> {
         home: Apiroutes.checkUser() ?MainScreen():Signin(),
         debugShowCheckedModeBanner: false,
         theme: Themes().lightTheme,
-          locale: TranslationService.locale,
+          locale: widget.initLang,
           fallbackLocale: TranslationService.fallbackLocale,
           translations: TranslationService(),
       

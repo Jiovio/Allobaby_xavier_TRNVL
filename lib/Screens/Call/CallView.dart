@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Fill in the app ID obtained from the Agora Console
@@ -147,8 +148,8 @@ class _CallviewState extends State<Callview> {
         ),
       );
     } else {
-      return const Text(
-        'Waiting',
+      return  Text(
+        'Waiting'.tr,
         textAlign: TextAlign.center,
       );
     }

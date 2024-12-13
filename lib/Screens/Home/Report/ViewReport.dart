@@ -2,6 +2,8 @@ import 'package:allobaby/Config/Color.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
+import 'package:get/get.dart';
+
 class ViewReport extends StatelessWidget {
   final Map<String, dynamic> reportDetails;
 
@@ -15,7 +17,7 @@ class ViewReport extends StatelessWidget {
     
     return Scaffold(
       appBar: AppBar(
-        title: Text('Report Details'),
+        title: Text('Report Details'.tr),
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -62,7 +64,7 @@ class ViewReport extends StatelessWidget {
                 children: [
                   // Report Type
                   Text(
-                    reportDetails['reportType'] ?? 'Unknown Report Type',
+                    reportDetails['reportType'] ?? 'Unknown Report Type'.tr,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -102,7 +104,7 @@ class ViewReport extends StatelessWidget {
                   // Details
                   if (details.isNotEmpty) ...[
                     Text(
-                      'Test Results',
+                      'Test Results'.tr,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -219,7 +221,7 @@ Widget _buildDetailItem({required String key, required String value}) {
   // Convert the key to a more readable format
   String formattedKey = key
     .split(RegExp('(?=[A-Z])'))
-    .map((word) => word.capitalize())
+    .map((word) => word.capitalizeFirst!)
     .join(' ');
 
   return Padding(
@@ -282,19 +284,19 @@ Widget _buildDetailItem({required String key, required String value}) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Delete Report'),
-        content: Text('Are you sure you want to delete this report?'),
+        title: Text('Delete Report'.tr),
+        content: Text('Are you sure you want to delete this report?'.tr),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('CANCEL'),
+            child: Text('CANCEL'.tr),
           ),
           TextButton(
             onPressed: () {
               // Implement delete functionality
               Navigator.pop(context);
             },
-            child: Text('DELETE', style: TextStyle(color: Colors.red)),
+            child: Text('DELETE'.tr, style: TextStyle(color: Colors.red)),
           ),
         ],
       ),

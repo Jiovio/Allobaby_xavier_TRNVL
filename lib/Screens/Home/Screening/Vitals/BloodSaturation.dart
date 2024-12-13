@@ -8,7 +8,7 @@ Wrap BloodSaturation() {
   return Wrap(
     crossAxisAlignment: WrapCrossAlignment.start,
     children: [
-      Text("At rest"),
+      Text("At rest".tr),
       Row(
         children: [
           GetBuilder<Selfscreeningcontroller>(
@@ -28,7 +28,7 @@ Wrap BloodSaturation() {
           Flexible(child: Text("%"))
         ],
       ),
-      Text("After Walk"),
+      Text("After Walk".tr),
       Row(
         children: [
                     GetBuilder<Selfscreeningcontroller>(

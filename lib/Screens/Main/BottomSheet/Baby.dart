@@ -315,7 +315,7 @@ bottomNavigationBar: Container(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Probable Reason",
+                                "Probable Reason".tr,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey,
@@ -343,7 +343,7 @@ bottomNavigationBar: Container(
               
               // Recommendations Section
               Text(
-                "Recommendations",
+                "Recommendations".tr,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

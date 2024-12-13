@@ -15,14 +15,14 @@ Column emojiPage() {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Hi!",
+              "Hi!".tr,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
             ),
             SizedBox(
               height: 10,
             ),
             Text(
-              "How do you feel today?",
+              "How do you feel today?".tr,
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w500,

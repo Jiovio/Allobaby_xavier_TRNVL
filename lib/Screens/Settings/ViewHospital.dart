@@ -189,7 +189,7 @@ class ViewHospital extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Based on patient reviews",
+                    "Based on patient reviews".tr,
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       color: Colors.grey[600],
@@ -248,7 +248,7 @@ class ViewHospital extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Working Hours",
+                        "Working Hours".tr,
                         style: GoogleFonts.poppins(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -283,7 +283,7 @@ class ViewHospital extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Contact Information",
+              "Contact Information".tr,
               style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -363,7 +363,7 @@ class ViewHospital extends StatelessWidget {
             onPressed: _updateHospital,
             icon: const Icon(Icons.check, color: Colors.white),
             label: Text(
-              'Select Hospital',
+              'Select Hospital'.tr,
               style: GoogleFonts.poppins(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
@@ -381,7 +381,7 @@ class ViewHospital extends StatelessWidget {
             },
             icon: const Icon(Icons.update, color: Colors.white),
             label: Text(
-              'Change Default',
+              'Change Default'.tr,
               style: GoogleFonts.poppins(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,

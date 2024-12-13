@@ -34,7 +34,7 @@ class Glucose extends StatelessWidget {
                         SizedBox(
                               width: double.infinity,
                               child: Text(
-                                              "Add Glucose Report",
+                                              "Add Glucose Report".tr,
                                               style: TextStyle(
                                                 fontSize: 20,
                                               ),
@@ -63,7 +63,7 @@ class Glucose extends StatelessWidget {
                                         child: 
                                         controller.fileImage64 == null
                                             ? Text(
-                                                "NO IMAGE",
+                                                "NO IMAGE".tr,
                                                 style: TextStyle(
                                                     fontSize: 18, color: White),
                                               )
@@ -100,7 +100,7 @@ class Glucose extends StatelessWidget {
                               controller.fileImage64 == null
                             ? Center(
                                 child: Text(
-                                "Click Add Image Button",
+                                "Click Add Image Button".tr,
                                 style: TextStyle(fontSize: 18),
                               ))
                             : Image.memory(
@@ -128,8 +128,8 @@ class Glucose extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                               const Text(
-                                  "Choose photo from :",
+                                Text(
+                                  "Choose photo from :".tr,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 18),
@@ -159,7 +159,7 @@ class Glucose extends StatelessWidget {
                             ),
                           )),
                   icon: Icon(Icons.add_a_photo),
-                  label: Text("Upload Report")),
+                  label: Text("Upload Report".tr)),
 
 
                     ],
@@ -187,8 +187,8 @@ class Glucose extends StatelessWidget {
 
                           ListTile(
                             leading: Image.asset("assets/labReports/hemoglobin.png"),
-                            title: Text("Blood Glucose Value : ${controller.glucoseValue.toString()}"),
-                            subtitle: Text("Tap to Change"),
+                            title: Text("Blood Glucose Value : ${controller.glucoseValue.toString()}".tr),
+                            subtitle: Text("Tap to Change".tr),
                             shape: OutlineInputBorder(borderSide: BorderSide(
                               color: Colors.grey
                             )),
@@ -196,7 +196,7 @@ class Glucose extends StatelessWidget {
                             onTap: () {
                               showDialog(context: context, builder:(context) {
                                 return AlertDialog(
-                                  title: Text("Blood Glucose Value"),
+                                  title: Text("Blood Glucose Value".tr),
 
                                   content: glucoseSelector());
                               },);
@@ -209,7 +209,7 @@ class Glucose extends StatelessWidget {
 
                                       TextFormField(
                           decoration: InputDecoration(
-                            labelText: "Description",
+                            labelText: "Description".tr,
                             border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
                             controller: controller.desc,
                           maxLines: 5
@@ -227,7 +227,7 @@ class Glucose extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
                   onPressed: controller.submit,
-                  child: Text("ADD REPORT"))
+                  child: Text("ADD REPORT".tr))
 
 
 

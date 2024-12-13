@@ -12,7 +12,7 @@ Widget averageCycleLength() {
     init: Signupcontroller(),
     builder:(controller) => 
   AlertDialog(
-                        title: Text("Average Length of Cycles"),
+                        title: Text("Average Length of Cycles".tr),
                         content: Container(
                           
                           color: White,

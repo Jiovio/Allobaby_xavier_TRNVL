@@ -23,8 +23,8 @@ class Babycryfailed extends StatelessWidget {
                 size: 100,
               ),
               const SizedBox(height: 30),
-              const Text(
-                'Baby Cry Not Detected.',
+              Text(
+                'Baby Cry Not Detected.'.tr,
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -32,8 +32,8 @@ class Babycryfailed extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 15),
-              const Text(
-                'The baby cry detection process failed. Please check your connection or try again.',
+               Text(
+                'The baby cry detection process failed. Please check your connection or try again.'.tr,
                 style: TextStyle(
                   fontSize: 16,
                 ),
@@ -54,8 +54,8 @@ class Babycryfailed extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text(
-                    'Retry',
+                  child: Text(
+                    'Retry'.tr,
                     style: TextStyle(fontSize: 18),
                   ),
                 ),

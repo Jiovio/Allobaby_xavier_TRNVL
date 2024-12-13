@@ -10,18 +10,18 @@ class CheckUp extends StatelessWidget {
 
   String getCheckupStatus(Map<String, dynamic> checkup) {
     if (checkup['doctorInputDate'] != null) {
-      return "Checkup Completed";
+      return "Checkup Completed".tr;
     } else if (checkup['symptoms'] != null && checkup['vitals'] != null) {
-      return "Waiting for Doctor Feedback";
+      return "Waiting for Doctor Feedback".tr;
     } else {
-      return "Checkup need to be done";
+      return "Checkup need to be done".tr;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Checkup")),
+      appBar: AppBar(title:  Text("Checkup".tr)),
       body: FutureBuilder(
         future: Userapi.getCheckups(),
         builder: (context, dynamic snapshot) {
@@ -36,7 +36,7 @@ class CheckUp extends StatelessWidget {
           final checkups = snapshot.data ?? [];
 
           if (checkups.isEmpty) {
-            return const Center(child: Text("No Checkup Found"));
+            return  Center(child: Text("No Checkup Found".tr));
           }
 
           return ListView.separated(
@@ -99,8 +99,8 @@ class CheckUp extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              const Text(
-                                "Checkup Details",
+                               Text(
+                                "Checkup Details".tr,
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,

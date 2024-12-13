@@ -1,6 +1,7 @@
 import 'package:allobaby/Config/background_service.dart';
 import 'package:allobaby/app.dart';
 import 'package:allobaby/db/sqlite.dart';
+import 'package:allobaby/intl/TranslationService.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:get_storage/get_storage.dart';
@@ -59,5 +60,16 @@ void main() async {
   
   await Sqlite.db();
   await initLocalStorage();
-  runApp( MyApp());
+
+  final lang = localStorage.getItem("lang");
+  print("*********************");
+  print(lang);
+  print("*********************");
+
+  final Locale initialLocale = 
+  lang != null ?
+  TranslationService().getLocaleFromLanguage(lang) as Locale : TranslationService.fallbackLocale;
+  // localStorage.getItem("lang");
+
+  runApp( MyApp(initLang: initialLocale));
 }

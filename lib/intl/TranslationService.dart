@@ -1,15 +1,21 @@
 import 'dart:ui';
 import 'package:get/get.dart';
+import 'package:localstorage/localstorage.dart';
 import '../main.dart';
 import 'en.dart';
 import 'hi.dart';
 import 'ta.dart';
+import 'ch.dart';
+import 'ka.dart';
+import 'ma.dart';
+
+
 
 class TranslationService extends Translations {
   // Default locale
   static final locale = Locale("en");
   // fallbackLocale saves the day when the locale gets in trouble
-  static final fallbackLocale = Locale('ta');
+  static final fallbackLocale = Locale('en');
 
   // Supported languages
   // Needs to be same order with locales
@@ -17,6 +23,9 @@ class TranslationService extends Translations {
     'English',
     'Hindi(हिन्दी)',
     'Tamil(தமிழ்)',
+    'Kannada(ಕನ್ನಡ)',
+    'Marathi (मराठी)',
+    "Chinese"
   ];
 
   // Supported locales
@@ -25,6 +34,9 @@ class TranslationService extends Translations {
     Locale('en'),
     Locale('hi'),
     Locale('ta'),
+    Locale('ka'),
+    Locale('ma'),
+    Locale('ch')
   ];
 
   // Keys and their translations
@@ -34,13 +46,22 @@ class TranslationService extends Translations {
         'en': en,
         'hi': hi,
         'ta': ta,
+        'ch': ch,
+        'ka':ka,
+        'ma':ma
       };
 
   // Gets locale from language, and updates the locale
   void changeLocale(String lang) {
-    print(lang);
+    // print(lang);
     final locale = getLocaleFromLanguage(lang);
-    print(locale);
+    // print("---------------------------------|");
+
+    // print(locale!.toLanguageTag());
+
+    // print("---------------------------------|");
+
+    localStorage.setItem("lang", locale!.toLanguageTag());
     Get.updateLocale(locale!);
   }
 

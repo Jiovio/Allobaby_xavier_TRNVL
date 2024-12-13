@@ -55,7 +55,7 @@ class _SelfScreeningState extends State<SelfScreening> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Self Screening"),
+        title: Text("Self Screening".tr),
       ),
 
 
@@ -114,7 +114,7 @@ class _SelfScreeningState extends State<SelfScreening> {
   
 // });
                           },
-                          child: Text("BACK"),
+                          child: Text("BACK".tr),
                         ),
                       ),
 
@@ -160,7 +160,8 @@ class _SelfScreeningState extends State<SelfScreening> {
                         
 
                           },
-                          child: Text("NEXT"),
+                          child: Text("NEXT".tr
+                          ),
                         ),
                       ),
 
@@ -169,7 +170,7 @@ class _SelfScreeningState extends State<SelfScreening> {
                         Get.back();
                         
                       }, 
-                      child: Text("Finish"),)
+                      child: Text("Finish".tr),)
 
         ],),
       ),

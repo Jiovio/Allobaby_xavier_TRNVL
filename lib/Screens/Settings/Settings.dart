@@ -38,22 +38,22 @@ class SettingsScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                     const Text(
-                        "Settings",
+                      Text(
+                        "Settings".tr,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 24,
                             color: darkGrey2),
                       ),
-                      IconButton(
-                        icon:const Icon(
-                          Icons.notifications_none_rounded,
-                          color: Black800,
-                        ),
-                        onPressed: () {} 
-                        // Get.to(() => NotificationView(),
-                        //     transition: Transition.rightToLeft),
-                      )
+                      // IconButton(
+                      //   icon:const Icon(
+                      //     Icons.notifications_none_rounded,
+                      //     color: Black800,
+                      //   ),
+                      //   onPressed: () {} 
+                      //   // Get.to(() => NotificationView(),
+                      //   //     transition: Transition.rightToLeft),
+                      // )
                     ],
                   ),
                 ),
@@ -75,22 +75,13 @@ class SettingsScreen extends StatelessWidget {
                       child: Row(children: [
                         //  Obx(() =>
                         CircleAvatar(
-                          
                             backgroundColor: Colors.transparent,
                             radius: 36.0,
-                            child: mainC.profile_pic==null?Image.asset(
-                                "assets/General/avatar.png") :
+                            backgroundImage: 
+                            mainC.profile_pic!=null ?
+                            CachedNetworkImageProvider(mainC.profile_pic as String):
+                           const AssetImage("assets/General/avatar.png") as ImageProvider
 
-                                CachedNetworkImage(imageUrl: mainC.profile_pic as String,fit: BoxFit.cover,
-                                height: double.infinity,width: double.infinity,)
-                                
-                                
-                                
-                                //  MemoryImage(base64Decode(
-                            //     mainScreenController
-                            //         .patientDetails[0].imageUrl)
-                            // )
-                            // )
                             ),
                        const SizedBox(
                           width: 24.0,
@@ -119,7 +110,7 @@ class SettingsScreen extends StatelessWidget {
                     children: [
                       ListTile(
                         title: Text(
-                          'Edit Profile',
+                          'Edit Profile'.tr,
                         ),
                         leading: Icon(
                           Icons.edit,
@@ -133,7 +124,7 @@ class SettingsScreen extends StatelessWidget {
 
                                             ListTile(
                         title: Text(
-                          'My Hospital',
+                          'My Hospital'.tr,
                         ),
                         leading: Icon(
                           Icons.local_hospital,
@@ -157,7 +148,7 @@ class SettingsScreen extends StatelessWidget {
 
                       ListTile(
                         title: Text(
-                          'My Subscription',
+                          'My Subscription'.tr,
                         ),
                         leading: Icon(
                           Icons.payment,
@@ -222,25 +213,33 @@ class SettingsScreen extends StatelessWidget {
                       // ),
                       
                       
-                      ListTile(
-                        title: Text(
-                          'Language'.tr,
-                        ),
-                        subtitle: Text("English"),
-                        // GetBuilder<LanguageController>(
-                        //     builder: (controller) => Text(
-                        //           controller.selectedLang,
-                        //         )),
-                        leading: Icon(
-                          Icons.translate_rounded,
-                          color: Black,
-                        ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 16,
-                        ),
-                        onTap: () =>
-                        languageSelectDialog(context),
+                      GetBuilder<Usercontroller>(
+                        init: Usercontroller(),
+                        builder: (c) {
+                          return 
+                          ListTile(
+                            title: Text(
+                              'Language'.tr,
+                            ),
+                            subtitle: Text(c.locale),
+                            // GetBuilder<LanguageController>(
+                            //     builder: (controller) => Text(
+                            //           controller.selectedLang,
+                            //         )),
+                            leading: Icon(
+                              Icons.translate_rounded,
+                              color: Black,
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 16,
+                            ),
+                            onTap: () {
+                            languageSelectDialog(context);
+                          
+                            }
+                          );
+                        }
                       ),
                       ListTile(
                         title: Text(
@@ -313,19 +312,19 @@ class SettingsScreen extends StatelessWidget {
                             barrierDismissible: true, // user must tap button!
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: const Text('Log Out'),
+                                title: Text('Log Out'.tr),
                                 content: SingleChildScrollView(
-                                  child: Text('Are you sure to logout?'),
+                                  child: Text('Are you sure to logout?'.tr),
                                 ),
                                 actions: <Widget>[
                                   TextButton(
-                                    child: const Text('Cancel'),
+                                    child: Text('Cancel'.tr),
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
                                   ),
                                   TextButton(
-                                    child: const Text('Ok'),
+                                    child: Text('Ok'.tr),
                                     onPressed: () async{
                                       
                                       OurFirebase.setStatus(false);
@@ -337,7 +336,7 @@ class SettingsScreen extends StatelessWidget {
 
                                       localStorage.clear();
                                       Get.to(Signin());
-                                      Get.snackbar("Logout Successfull", "",snackPosition: SnackPosition.BOTTOM);
+                                      Get.snackbar("Logout Successfull".tr, "",snackPosition: SnackPosition.BOTTOM);
                                       // _googleSignInController.googleSignOut();
                                     },
                                   ),

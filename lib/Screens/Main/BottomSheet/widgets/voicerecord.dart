@@ -141,7 +141,7 @@ File audioFile = File(file);
       
       SizedBox(height: 10,),
 
-      Text("Baby Voice is Recording",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,
+      Text("Baby Voice is Recording".tr,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,
       color: PrimaryColor),),
 
 
@@ -172,7 +172,7 @@ File audioFile = File(file);
                           // Navigator.pop(context);
           
                         },
-                        child: Text("STOP"),
+                        child: Text("STOP".tr),
                       )
     ],
   ):Column(
@@ -184,7 +184,7 @@ File audioFile = File(file);
        Image.asset("assets/BottomSheet/voiceTrans.gif",height: 130,),
       SizedBox(height: 20,),
       Center(
-        child: Text("Click the Record Button to Start Recording",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600,
+        child: Text("Click the Record Button to Start Recording".tr,style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600,
         color: PrimaryColor),),
       ),
       
@@ -220,7 +220,7 @@ File audioFile = File(file);
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Record"),
+                              Text("Record".tr),
                               Icon(Icons.mic)
                             ],
                           ),

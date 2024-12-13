@@ -16,7 +16,7 @@ Column exercise() {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Select Exercise that have you done today?",
+              "Select Exercise that have you done today?".tr,
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w500,
@@ -58,7 +58,7 @@ Column exercise() {
                         () => 
                         controller.setbottomSheetDataArray("exercises",index),
                         child: emojiList[index] == "none"
-                            ? Center(child: Text("None"))
+                            ? Center(child: Text("None".tr))
                             : Image.asset(emojiList[index],
                                 height: 58, width: 58))),
         )

@@ -41,7 +41,7 @@ class Pregnancystatus extends StatelessWidget {
               height: 20,
             ),
                 Text(
-                  sc.gender=="Female" ?"Pregnancy Status" : "Partner Pregnancy Status",
+                  sc.gender=="Female" ?"Pregnancy Status".tr : "Partner Pregnancy Status".tr,
                   style: TextStyle(
                       color: PrimaryColor,
                       fontSize: 24,
@@ -160,7 +160,7 @@ class Pregnancystatus extends StatelessWidget {
                               minimumSize: Size(100, 40),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(40))),
-                          child: Text(("Continue").toUpperCase()),
+                          child: Text(("Continue".tr).toUpperCase()),
                         )),
                       ),
                     ])

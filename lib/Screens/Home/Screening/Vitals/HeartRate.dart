@@ -8,7 +8,7 @@ Wrap HeartRate() {
   return Wrap(
     crossAxisAlignment: WrapCrossAlignment.start,
     children: [
-      Text("At rest"),
+      Text("At rest".tr),
       Row(
         children: [
           GetBuilder<Selfscreeningcontroller>(builder:(c) => 
@@ -23,10 +23,10 @@ Wrap HeartRate() {
                       c.updateVitals("heartRateBW", value);
                     },
                   )),
-          Flexible(child: Text("BPM"))
+          Flexible(child: Text("BPM".tr))
         ],
       ),
-      Text("After walk"),
+      Text("After walk".tr),
       Row(
         children: [
           GetBuilder<Selfscreeningcontroller>(builder:(c) => 

@@ -31,8 +31,8 @@ class LastCycleUI extends StatelessWidget {
              const   SizedBox(
                   height: 40,
                 ),
-               const Text(
-                  "Select Last cycle Date",
+                Text(
+                  "Select Last cycle Date".tr,
                   style: TextStyle(
                       color: PrimaryColor,
                       fontSize: 24,
@@ -79,7 +79,7 @@ class LastCycleUI extends StatelessWidget {
                           });
                         },
                         decoration: InputDecoration(
-                            labelText: "LMP Date", border: OutlineInputBorder()),
+                            labelText: "LMP Date".tr, border: OutlineInputBorder()),
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -102,7 +102,7 @@ class LastCycleUI extends StatelessWidget {
                   enabled: false,
                   controller: controller.eddate,
                   decoration: InputDecoration(
-                      labelText: "ED Date", border: OutlineInputBorder()),
+                      labelText: "ED Date".tr, border: OutlineInputBorder()),
                   keyboardType: TextInputType.number,
                 ),
                 SizedBox(
@@ -124,7 +124,7 @@ class LastCycleUI extends StatelessWidget {
                     },);
                     },
                     decoration: InputDecoration(
-                        labelText: "Average Length of Cycles", border: OutlineInputBorder()),
+                        labelText: "Average Length of Cycles".tr, border: OutlineInputBorder()),
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -161,7 +161,7 @@ class LastCycleUI extends StatelessWidget {
                           });
                         },
                         decoration: InputDecoration(
-                            labelText: "Date of delivery", border: OutlineInputBorder()),
+                            labelText: "Date of delivery".tr, border: OutlineInputBorder()),
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -245,7 +245,7 @@ class LastCycleUI extends StatelessWidget {
                               minimumSize: Size(100, 40),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(40))),
-                          child: Text(("Continue").toUpperCase()),
+                          child: Text(("Continue".tr).toUpperCase()),
                         ),
                       ),
                     ])

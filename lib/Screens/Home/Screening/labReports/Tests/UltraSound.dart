@@ -33,7 +33,7 @@ class Ultrasound extends StatelessWidget {
               SizedBox(
                               width: double.infinity,
                               child: Text(
-                                              "Ultra Sound",
+                                              "Ultra Sound".tr,
                                               style: TextStyle(
                                                 fontSize: 20,
                                               ),
@@ -59,8 +59,8 @@ class Ultrasound extends StatelessWidget {
                                       child: Center(
                                         child: 
                                         controller.fileImage64 == null
-                                            ?const Text(
-                                                "NO IMAGE",
+                                            ? Text(
+                                                "NO IMAGE".tr,
                                                 style: TextStyle(
                                                     fontSize: 18, color: White),
                                               )
@@ -97,7 +97,7 @@ class Ultrasound extends StatelessWidget {
                               controller.fileImage64 == null
                             ? Center(
                                 child: Text(
-                                "Click Add Image Button",
+                                "Click Add Image Button".tr,
                                 style: TextStyle(fontSize: 18),
                               ))
                             : Image.memory(
@@ -125,7 +125,7 @@ class Ultrasound extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "Choose photo from :",
+                                      "Choose photo from :".tr,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 18),
@@ -155,7 +155,7 @@ class Ultrasound extends StatelessWidget {
                                 ),
                               )),
                                                 icon: Icon(Icons.add_a_photo),
-                                                label: Text("Upload Report")),
+                                                label: Text("Upload Report".tr)),
 
 
                                       //  TextButton.icon(onPressed: (){
@@ -203,8 +203,8 @@ class Ultrasound extends StatelessWidget {
 
                                         ListTile(
                             leading: Image.asset("assets/labReports/heart.png"),
-                            title: Text("Heart Rate : ${controller.heartRate} BPM"),
-                            subtitle: Text("Tap to Change "),
+                            title: Text("Heart Rate : ${controller.heartRate} BPM".tr),
+                            subtitle: Text("Tap to Change ".tr),
                             shape: OutlineInputBorder(borderSide: BorderSide(
                               color: Colors.grey
                             )),
@@ -212,7 +212,7 @@ class Ultrasound extends StatelessWidget {
                             onTap: () {
                               showDialog(context: context, builder:(context) {
                                 return AlertDialog(
-                                  title: Text("Heart Rate "),
+                                  title: Text("Heart Rate ".tr),
 
                                   content: Row(
                                     children: [
@@ -220,7 +220,7 @@ class Ultrasound extends StatelessWidget {
 
                                                         SizedBox(width: 10,),
 
-                                                        Text("BPM",
+                                                        Text("BPM".tr,
                                                         style: TextStyle(fontSize: 14),)
                                     ],
                                   ),);
@@ -273,7 +273,7 @@ class Ultrasound extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
                   onPressed: controller.submit,
-                  child: Text("ADD REPORT"))
+                  child: Text("ADD REPORT".tr))
 
 
 

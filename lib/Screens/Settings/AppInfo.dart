@@ -1,6 +1,7 @@
 
 import 'package:allobaby/Config/Color.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AppInfo extends StatelessWidget {
   @override
@@ -8,7 +9,7 @@ class AppInfo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "App Info",
+          "App Info".tr,
         ),
         leading: IconButton(
             icon: Icon(
@@ -55,7 +56,7 @@ class AppInfo extends StatelessWidget {
                   style: ElevatedButton.styleFrom(minimumSize: Size(50, 40)),
                   onPressed: () {},
                   icon: Icon(Icons.arrow_forward),
-                  label: Text("CHECK FOR UPDATES"),
+                  label: Text("CHECK FOR UPDATES".tr),
                 ),
                 SizedBox(
                   height: 16,
@@ -68,7 +69,7 @@ class AppInfo extends StatelessWidget {
                   height: 8,
                 ),
                 Text(
-                  'JioVio Healthcare'.toUpperCase(),
+                  'JioVio Healthcare'.tr.toUpperCase(),
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                   ),

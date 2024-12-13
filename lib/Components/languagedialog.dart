@@ -6,6 +6,7 @@ import 'package:allobaby/intl/TranslationService.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:localstorage/localstorage.dart';
 
 languageSelectDialog(BuildContext context) {
   final Usercontroller usercontroller = Get.put(Usercontroller());
@@ -46,11 +47,11 @@ languageSelectDialog(BuildContext context) {
                               // print(controller.locale);
 
                               controller.update();
-                              // data.write(
-                              //     'lang',
-                              //     TranslationService()
-                              //         .getLocaleFromLanguage(val.toString())
-                              //         .toString());
+
+                              print(val.toString());
+
+                              localStorage.setItem("lang", val.toString());
+                              
                               Fluttertoast.showToast(
                                   msg: "Language Changed to $val",
                                   toastLength: Toast.LENGTH_SHORT,

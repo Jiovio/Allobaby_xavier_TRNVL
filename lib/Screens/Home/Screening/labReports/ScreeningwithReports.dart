@@ -25,13 +25,13 @@ class ScreeningWithReports extends StatefulWidget {
 class _ScreeningWithReportsState extends State<ScreeningWithReports> {
 
   List<LabreportOptions> ls = [
-  LabreportOptions("Symptoms",SelfScreening(initPage: 0,),"symptoms.png"),
-  LabreportOptions("Vital Test",SelfScreening(initPage: 1,),"vitals.png"),
-  LabreportOptions("Hemoglobin Test",SelfScreening(initPage: 2,),"hemoglobin.png"),
-  LabreportOptions("Urine Test",SelfScreening(initPage: 3,),"urinetest.png"),
-  LabreportOptions("Glucose Test",SelfScreening(initPage: 4,),"glucose.png"),
-  LabreportOptions("Fetal Monitoring",SelfScreening(initPage: 5,),"fetalmon.png"),
-  LabreportOptions("Ultrasound Test",SelfScreening(initPage: 6,),"ultrasound.png")
+  LabreportOptions("Symptoms".tr,SelfScreening(initPage: 0,),"symptoms.png"),
+  LabreportOptions("Vital Test".tr,SelfScreening(initPage: 1,),"vitals.png"),
+  LabreportOptions("Hemoglobin Test".tr,SelfScreening(initPage: 2,),"hemoglobin.png"),
+  LabreportOptions("Urine Test".tr,SelfScreening(initPage: 3,),"urinetest.png"),
+  LabreportOptions("Glucose Test".tr,SelfScreening(initPage: 4,),"glucose.png"),
+  LabreportOptions("Fetal Monitoring".tr,SelfScreening(initPage: 5,),"fetalmon.png"),
+  LabreportOptions("Ultrasound Test".tr,SelfScreening(initPage: 6,),"ultrasound.png")
   ];
 
   Selfscreeningcontroller sc = Get.put(Selfscreeningcontroller());
@@ -40,7 +40,7 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        title: Text("Self Screening"),
+        title: Text("Self Screening".tr),
       ),
       
       // floatingActionButton: FloatingActionButton(onPressed: getReports,
@@ -63,7 +63,7 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
               height: 20,
             ),
             Text(
-              "Let's begin the test",
+              "Let's begin the test".tr,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,
             ),

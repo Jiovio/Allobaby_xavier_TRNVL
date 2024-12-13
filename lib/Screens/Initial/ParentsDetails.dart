@@ -33,7 +33,7 @@ class ParentDetails extends StatelessWidget {
                   height: 40,
                 ),
                 Text(
-                  "Enter your Partner Details",
+                  "Enter your Partner Details".tr,
                   style: TextStyle(
                       color: PrimaryColor,
                       fontSize: 24,
@@ -51,12 +51,12 @@ class ParentDetails extends StatelessWidget {
                         controller: controller.partnerName,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter Partner Name';
+                            return 'Please enter Partner Name'.tr;
                           }
                           return null;
                         },
                         decoration: InputDecoration(
-                            labelText: "Partner Name",
+                            labelText: "Partner Name".tr,
                             border: OutlineInputBorder()),
                         // keyboardType: TextInputType.number,
                       ),
@@ -66,7 +66,7 @@ class ParentDetails extends StatelessWidget {
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty || value.length<10) {
-                            return 'Please enter Partner Mobile Number';
+                            return 'Please enter Partner Mobile Number'.tr;
                           }
                           return null;
                         },
@@ -74,7 +74,7 @@ class ParentDetails extends StatelessWidget {
                         controller:controller.partnerMobile,
                         maxLength: 10,
                         decoration: InputDecoration(
-                            labelText: "Partner Mobile Number",
+                            labelText: "Partner Mobile Number".tr,
                             border: OutlineInputBorder()),
                         keyboardType: TextInputType.number,
                       ),
@@ -171,7 +171,7 @@ class ParentDetails extends StatelessWidget {
                               minimumSize: Size(100, 40),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(40))),
-                          child: Text(("Continue").toUpperCase()),
+                          child: Text(("Continue".tr).toUpperCase()),
                         ),
                       ),
                     ])

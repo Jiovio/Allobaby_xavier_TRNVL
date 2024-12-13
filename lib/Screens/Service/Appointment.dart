@@ -168,7 +168,7 @@ final formKey = GlobalKey<FormState>();
           ],
         ),
         child: Text(
-          "Select Hospital",
+          "Select Hospital".tr,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -181,7 +181,7 @@ final formKey = GlobalKey<FormState>();
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: Text(
-          selectedItem?.name ?? "Select Hospital",
+          selectedItem?.name ?? "Select Hospital".tr,
           style: TextStyle(
             fontSize: 16,
             // color: selectedItem != null ? null : Theme.of(context).primaryColor.withOpacity(0.7),
@@ -351,8 +351,8 @@ GetBuilder<AppointmentController>(
             ),
           ],
         ),
-        child: const Text(
-          "Select Doctor",
+        child: Text(
+          "Select Doctor".tr,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -531,7 +531,7 @@ GetBuilder<AppointmentController>(
                         },
                          child: GetBuilder<AppointmentController>(
                            builder: (controller) =>  Text(
-                            controller.timeslots.isEmpty? "No Slots Available":"View Available Slots",
+                            controller.timeslots.isEmpty? "No Slots Available".tr:"View Available Slots".tr,
                             style: TextStyle(fontSize: 18),
                                                    ),
                          )),

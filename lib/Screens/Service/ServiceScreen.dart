@@ -6,19 +6,34 @@ import 'package:flutter/material.dart';
 import 'package:allobaby/Config/Color.dart';
 
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ServiceScreen extends StatefulWidget {
-  const ServiceScreen({super.key});
+   ServiceScreen({super.key});
 
   @override
   State<ServiceScreen> createState() => _ServiceScreenState();
 }
 
 class _ServiceScreenState extends State<ServiceScreen> {
+
+  void _makeCall(String num) async{
+    final Uri phoneUri = Uri(
+      scheme: 'tel',
+      path: num,
+    );
+    if (await canLaunchUrl(phoneUri)) {
+      await launchUrl(phoneUri);
+    } else {
+      // Handle error - unable to launch phone app
+      print('Could not launch phone app');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(title: "Services", context: context),
+      appBar: customAppBar(title: "Services".tr, context: context),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.only(top: 40, left: 20, right: 20),
@@ -32,7 +47,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
               height: 20,
             ),
                Text(
-              "As a companion in your pregnancy we help you with the following",
+              "As a companion in your pregnancy we help you with the following".tr,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,
             ),
@@ -59,7 +74,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                           scale: 6,
                         ),
                         title: Text(
-                          "Book An Appointment",
+                          "Book An Appointment".tr,
                           style: TextStyle(fontSize: 18),
                         ),
                         trailing:
@@ -99,7 +114,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                           scale: 6,
                         ),
                         title: Text(
-                          "Pregnancy Monitoring",
+                          "Pregnancy Monitoring".tr,
                           style: TextStyle(fontSize: 18),
                         ),
                         trailing:
@@ -125,7 +140,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                         scale: 12,
                       ),
                       title: Text(
-                        "Help Line",
+                        "Help Line".tr,
                         style: TextStyle(fontSize: 18),
                       ),
                       trailing: Icon(
@@ -138,21 +153,21 @@ class _ServiceScreenState extends State<ServiceScreen> {
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                        title: Text("Help Line"),
+                        title: Text("Help Line".tr),
                         content: Wrap(
                           children: [
-                            ListTile(
-                              leading: Icon(Icons.call),
-                              title: Text("105"),
-                              onTap: () {
-                                // _makePhoneCall("105");
-                              },
-                            ),
+ListTile(
+  leading: Icon(Icons.call),
+  title: Text("105"),
+  onTap: () async {
+    _makeCall("105");
+  },
+),
                             ListTile(
                               leading: Icon(Icons.call),
                               title: Text("0452 - 2851454"),
                               onTap: () {
-                                // _makePhoneCall("04522851454");
+                                _makeCall("04522851454");
                               },
                             ),
                           ],

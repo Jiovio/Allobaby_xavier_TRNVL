@@ -30,7 +30,7 @@ class ChatScreen extends StatelessWidget {
             height: 20,
           ),
           Text(
-            "Get Connected with doctors",
+            "Get Connected with doctors".tr,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             textAlign: TextAlign.center,
           ),
@@ -55,7 +55,7 @@ class ChatScreen extends StatelessWidget {
                         scale: 12,
                       ),
                       title: Text(
-                        "Connect with Doctor",
+                        "Connect with Doctor".tr,
                         style: TextStyle(fontSize: 18),
                       ),
                       trailing:
@@ -84,7 +84,7 @@ class ChatScreen extends StatelessWidget {
                         scale: 12,
                       ),
                       title: Text(
-                        "Connect with Health worker",
+                        "Connect with Health worker".tr,
                         style: TextStyle(fontSize: 18),
                       ),
                       trailing: Icon(
@@ -116,7 +116,7 @@ class ChatScreen extends StatelessWidget {
                         scale: 12,
                       ),
                       title: Text(
-                        "Connect with AlloBot",
+                        "Connect with AlloBot".tr,
                         style: TextStyle(fontSize: 18),
                       ),
                       trailing: Icon(

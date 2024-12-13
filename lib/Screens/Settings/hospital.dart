@@ -67,7 +67,7 @@ class _MyHospitalState extends State<MyHospital> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "My Hospital",
+          "My Hospital".tr,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -109,7 +109,7 @@ class _MyHospitalState extends State<MyHospital> {
             child: _isLoading || _isSearching
                 ? Center(child: CircularProgressIndicator())
                 : _hospitals.isEmpty
-                    ? Center(child: Text("No hospitals found"))
+                    ? Center(child: Text("No hospitals found".tr))
                     : ListView.builder(
                         itemCount: _hospitals.length,
                         itemBuilder: (context, index) {
@@ -122,7 +122,7 @@ class _MyHospitalState extends State<MyHospital> {
                                 hospital['name'],
                                 style: TextStyle(fontWeight: FontWeight.bold, color: PrimaryColor),
                               ),
-                              subtitle: Text("District: ${hospital['district']}"),
+                              subtitle: Text("District: ".tr+ "${hospital['district']}"),
                               trailing: Icon(Icons.arrow_forward_ios, color: PrimaryColor),
                               onTap: () => Get.to(() => ViewHospital(hospital: hospital, def: false,)),
                             ),

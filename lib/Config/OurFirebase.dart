@@ -209,7 +209,7 @@ for 40 weeks starting from one month from lmp date , give short summary
       if (res.text != null) {
         Map<String, dynamic> data = json.decode(res.text as String);
         print("******************************");
-        print(data);
+        // print(data);
 
         localStorage.setItem("${d.toString()}/aiappointment", res.text as String);
 

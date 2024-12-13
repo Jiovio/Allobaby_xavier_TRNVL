@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:allobaby/Config/Color.dart';
+import 'package:get/get.dart';
 
 class ViewPrescription extends StatelessWidget {
   final Map<String, dynamic> prescription;
@@ -13,7 +14,7 @@ class ViewPrescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("View Prescription"),
+        title:  Text("View Prescription".tr),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -31,8 +32,8 @@ class ViewPrescription extends StatelessWidget {
                 child: Image.network(
                   prescription['imageUrl'],
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => const Center(
-                    child: Text("Error loading image"),
+                  errorBuilder: (context, error, stackTrace) =>  Center(
+                    child: Text("Error loading image".tr),
                   ),
                 ),
               ),
@@ -49,8 +50,8 @@ class ViewPrescription extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Prescription Type",
+                     Text(
+                      "Prescription Type".tr,
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 12,
@@ -80,9 +81,9 @@ class ViewPrescription extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Date Added",
-                      style: TextStyle(
+                     Text(
+                      "Date Added".tr,
+                      style:const TextStyle(
                         color: Colors.grey,
                         fontSize: 12,
                       ),
@@ -111,8 +112,8 @@ class ViewPrescription extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Description",
+                     Text(
+                      "Description".tr,
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 12,
@@ -120,7 +121,7 @@ class ViewPrescription extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      prescription['description'] ?? 'No description available',
+                      prescription['description'] ?? 'No description available'.tr,
                       style: const TextStyle(
                         fontSize: 16,
                       ),

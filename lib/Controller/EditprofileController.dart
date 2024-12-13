@@ -20,6 +20,8 @@ class Editprofilecontroller extends GetxController {
 
   RxBool loading = true.obs;
 
+  List<String> pregnancyList = ["Iam trying to conceive","Iam pregnant","I have a baby"];
+
   Future<void> initScreen() async {
   var d = await Userapi.getUser();
   fromJson(d);

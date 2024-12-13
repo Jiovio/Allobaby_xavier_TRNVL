@@ -13,7 +13,7 @@ class Prescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Prescription")),
+      appBar: AppBar(title: Text("Prescription".tr)),
       body: Column(
         children: [
           Padding(
@@ -29,7 +29,7 @@ class Prescription extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Icon(Icons.camera),
-                      Text("Scan and Add new Prescription".toUpperCase())
+                      Text("Scan and Add new Prescription.".tr.toUpperCase())
                     ],
                   ))),
           SizedBox(height: 10),
@@ -49,7 +49,7 @@ class Prescription extends StatelessWidget {
                 var prescriptions = snapshot.data!.docs;
 
                 if (prescriptions.isEmpty) {
-                  return Center(child: Text('No prescriptions found.'));
+                  return Center(child: Text('No prescriptions found.'.tr));
                 }
 
                 return ListView.builder(

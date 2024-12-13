@@ -21,9 +21,9 @@ class SubscriptionViewApp extends StatelessWidget {
             color: PrimaryColor,
             borderRadius: BorderRadius.circular(10)
             ),
-            child: Center(child: Text("Subscribe",style: TextStyle(fontSize: 16,color: White,fontWeight:FontWeight.w600),))) ),
+            child: Center(child: Text("Subscribe".tr,style: TextStyle(fontSize: 16,color: White,fontWeight:FontWeight.w600),))) ),
 
-      appBar: AppBar(title: Text("Subscription"),),
+      appBar: AppBar(title: Text("Subscription".tr),),
 
       body: SingleChildScrollView(
         child: Padding(
@@ -40,7 +40,7 @@ class SubscriptionViewApp extends StatelessWidget {
             builder: (controller)=>
                controller.plan!=""?Column(
                  children: [
-                Container(child: Text("Current Plan",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: PrimaryColor,), ),width: double.infinity,),
+                Container(child: Text("Current Plan".tr,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: PrimaryColor,), ),width: double.infinity,),
             
                 SizedBox(height: 20,),
 
@@ -97,10 +97,10 @@ Widget _tabSection(BuildContext context,) {
            enableFeedback: true,
             dividerHeight: 0,
             tabs: [
-            Container(child: Tab(child: Text("Monthly",style: TextStyle(color: controller.planType==0.obs?White:Black),),) , width: double.infinity,
+            Container(child: Tab(child: Text("Monthly".tr,style: TextStyle(color: controller.planType==0.obs?White:Black),),) , width: double.infinity,
             decoration: BoxDecoration(color: controller.planType==0.obs?PrimaryColor:Colors.transparent,borderRadius: BorderRadius.circular(20)),),
 
-                        Container(child: Tab(child: Text("Yearly",style: TextStyle(color: controller.planType==1.obs?White:Black),),) , width: double.infinity,
+                        Container(child: Tab(child: Text("Yearly".tr,style: TextStyle(color: controller.planType==1.obs?White:Black),),) , width: double.infinity,
             decoration: BoxDecoration(color: controller.planType==1.obs?PrimaryColor:Colors.transparent,borderRadius: BorderRadius.circular(20)),),
             
 
@@ -239,9 +239,7 @@ Widget monthlyList() {
                           Text("INR ${c.price}",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),)
                         ],
                       ),
-SizedBox(height: 5,),
-
-            
+                      SizedBox(height: 5,),
                       Visibility(
                         visible: c.details!="",
                         child: Text.rich(

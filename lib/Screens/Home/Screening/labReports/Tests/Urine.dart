@@ -30,7 +30,7 @@ class Urine extends StatelessWidget {
                                       SizedBox(
                               width: double.infinity,
                               child: Text(
-                                              "Add Urine Test Report",
+                                              "Add Urine Test Report".tr,
                                               style: TextStyle(
                                                 fontSize: 20,
                                               ),
@@ -53,7 +53,7 @@ class Urine extends StatelessWidget {
                                         child: 
                                         controller.fileImage64 == null
                                             ? Text(
-                                                "NO IMAGE",
+                                                "NO IMAGE".tr,
                                                 style: TextStyle(
                                                     fontSize: 18, color: White),
                                               )
@@ -89,7 +89,7 @@ class Urine extends StatelessWidget {
                         controller.fileImage64 == null
                             ? Center(
                                 child: Text(
-                                "Click Add Image Button",
+                                "Click Add Image Button".tr,
                                 style: TextStyle(fontSize: 18),
                               ))
                             : Image.memory(base64Decode(controller.fileImage64)),
@@ -115,8 +115,8 @@ class Urine extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                   const Text(
-                                      "Choose photo from :",
+                                    Text(
+                                      "Choose photo from :".tr,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 18),
@@ -145,7 +145,7 @@ class Urine extends StatelessWidget {
                                 ),
                               )),
                                                 icon:const Icon(Icons.add_a_photo),
-                                                label:const Text("Upload Report")),
+                                                label: Text("Upload Report".tr)),
 
 
                                       //  TextButton.icon(onPressed: (){
@@ -227,7 +227,7 @@ class Urine extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
                   onPressed: controller.submit,
-                  child: Text("ADD REPORT"))
+                  child: Text("ADD REPORT".tr))
 
 
 

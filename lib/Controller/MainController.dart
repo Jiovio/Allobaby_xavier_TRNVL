@@ -19,6 +19,8 @@ class Maincontroller extends GetxController {
 
   RxBool loading = true.obs;
 
+  String? language;
+
   String? profile_pic;
 
   String? lastScreened;
@@ -124,6 +126,9 @@ class Maincontroller extends GetxController {
   });
 
   initScreen();
+
+
+
 
   }
 

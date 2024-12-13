@@ -285,7 +285,7 @@ class _ChatState extends State<Chat> {
                           ),
 
                                  Text(
-                                  isOnline?"Online":"Offline",
+                                  isOnline?"Online".tr:"Offline".tr,
                                   style: TextStyle(
                                       color: Colors.grey.shade600,
                                       fontSize: 13),
@@ -396,7 +396,7 @@ class _ChatState extends State<Chat> {
         }
 
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: Text('No messages yet'));
+          return Center(child: Text('No messages yet'.tr));
         }
 
         List<Messages> messages = snapshot.data!;
@@ -450,7 +450,7 @@ class _ChatState extends State<Chat> {
                                                               crossAxisAlignment: CrossAxisAlignment.start,
                                                               children: [
                                                 Text(
-                                                  "Image Uploaded",
+                                                  "Image Uploaded".tr,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 16,
@@ -541,7 +541,7 @@ class _ChatState extends State<Chat> {
                                       textAlign: TextAlign.left,
                                       onChanged: (val) {},
                                       decoration: InputDecoration(
-                                        hintText: "Type a message",
+                                        hintText: "Type a message".tr,
                                         hintStyle: TextStyle(fontSize: 18),
                                         border: OutlineInputBorder(
                                             borderSide: BorderSide.none),
@@ -622,7 +622,7 @@ class _ChatState extends State<Chat> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "Choose photo from :",
+                                              "Choose photo from :".tr,
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 18),

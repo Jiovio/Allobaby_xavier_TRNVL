@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 
+import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/EditprofileController.dart';
 import 'package:allobaby/Controller/MainController.dart';
@@ -8,6 +9,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class EditProfile extends StatelessWidget {
 
@@ -27,6 +29,14 @@ class EditProfile extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.check),
               onPressed: () async {
+
+
+                if(mainc.age.text.length>2){
+                  showToast("Invalid Age , Please Enter Correct Age !",false);
+                  return;
+                }
+              
+
                await mainc.updateProfile();
               })
         ],
@@ -73,7 +83,7 @@ class EditProfile extends StatelessWidget {
                                           builder: (controller) => 
                                           controller.profile_pic==null?
                                           Image.asset(
-                                              "assets/General/avatar.png"):
+                                              "assets/avatar.png"):
 
                                               CachedNetworkImage(imageUrl: controller.profile_pic as String)
                                         )
@@ -118,7 +128,7 @@ class EditProfile extends StatelessWidget {
                                                 backgroundColor:
                                                     Colors.amberAccent,
                                                 child: Image.asset(
-                                                  'assets/General/camera.png',
+                                                  'assets/camera.png',
                                                   scale: 16,
                                                 )),
                                             FloatingActionButton(
@@ -132,7 +142,7 @@ class EditProfile extends StatelessWidget {
                                                 backgroundColor:
                                                     Colors.indigoAccent,
                                                 child: Image.asset(
-                                                  'assets/General/gallery.png',
+                                                  'assets/gallery.png',
                                                   scale: 16,
                                                 )),
                                           ],
@@ -200,9 +210,10 @@ class EditProfile extends StatelessWidget {
                         child: DropdownSearch<String>(
                           validator: (v) =>
                               v == null ? "Please Select Gender" : null,
-                              popupProps: PopupProps.menu(
-                                showSelectedItems: true
-                              ),
+                              popupProps:const PopupProps.menu(
+                      constraints: BoxConstraints(maxHeight: 120),
+                      showSelectedItems: true
+                    ),
         
                               dropdownDecoratorProps: DropDownDecoratorProps(
                                 dropdownSearchDecoration: InputDecoration(
@@ -227,32 +238,26 @@ class EditProfile extends StatelessWidget {
                       ),
                       Flexible(
                         child: TextFormField(
-                          minLines: 1,
-                          buildCounter: (context, {required currentLength, required isFocused, required maxLength}) {
-                            
-                          },
-                          maxLines: 2,
                           maxLength: 2,
-                          onChanged: (value)  {
-                      mainc.setUpdateData("age", int.parse(value));
-                      
-                      }
+                          
+                          onChanged: (value) => 
+                      mainc.setUpdateData("age", int.parse(value))
                           ,
                           controller: mainc.age,
                           decoration: InputDecoration(
+                            counterText: "",
                               labelText: "age", border: OutlineInputBorder()),
                           keyboardType: TextInputType.number,
-                          
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter age';
+                              
                             }
+
+                            
                             return null;
                           },
                         ),
                       ),
-                    
-                    
                     ],
                   ),
                   SizedBox(
@@ -278,25 +283,25 @@ class EditProfile extends StatelessWidget {
                       },
                     ),
                   ),
-                  SizedBox(
-                    height: 12.0,
-                  ),
-                  DropdownSearch<String>(
-                    validator: (v) =>
-                        v == null ? "Please Select Health Status" : null,
+                  // SizedBox(
+                  //   height: 12.0,
+                  // ),
+                  // DropdownSearch<String>(
+                  //   validator: (v) =>
+                  //       v == null ? "Please Select Health Status" : null,
 
-                    items: ["Normal", "Low", "High"],
-                    dropdownDecoratorProps:const DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                  hintText:  "Health Status",
-                                  border: OutlineInputBorder()
-                                )
-                              ),
+                  //   items: ["Normal", "Low", "High"],
+                  //   dropdownDecoratorProps:const DropDownDecoratorProps(
+                  //               dropdownSearchDecoration: InputDecoration(
+                  //                 hintText:  "Health Status",
+                  //                 border: OutlineInputBorder()
+                  //               )
+                  //             ),
 
-                    onChanged: (value) {
-                      // settingsController.healthStatus.value = value!;
-                    },
-                  ),
+                  //   onChanged: (value) {
+                  //     // settingsController.healthStatus.value = value!;
+                  //   },
+                  // ),
                   SizedBox(
                     height: 20.0,
                   ),
@@ -382,9 +387,54 @@ class EditProfile extends StatelessWidget {
                   SizedBox(
                     height: 12.0,
                   ),
-                  Form(
-                    // key: _formKey,
-                    child: TextFormField(
+
+                    GetBuilder<Editprofilecontroller>
+                    (builder:(controller) {
+
+
+
+                      return Column(
+                        children: [
+
+
+
+
+
+                                        SizedBox(
+                    height: 12.0,
+                  ),
+                  DropdownSearch<String>(
+                    
+                    validator: (v) =>
+                        v == null ? "Please Select Pregnant Status" : null,
+
+                    selectedItem: mainc.pregnancyStatus,
+                    items: mainc.pregnancyList,
+                    dropdownDecoratorProps:const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  hintText:  "Status",
+                                  border: OutlineInputBorder(),
+
+                                )
+                              ),
+                    popupProps: PopupProps.menu(
+                      constraints: BoxConstraints(maxHeight: 200)
+                    ),
+                    onChanged: (value) {
+                      controller.pregnancyStatus = value;
+                      controller.setUpdateData("pregnancy_status",value);
+                      controller.update();
+
+                    },
+                  ),
+
+                  
+                  SizedBox(
+                    height: 12.0,
+                  ),
+
+                          if(controller.pregnancyStatus != controller.pregnancyList[2])
+                      TextFormField(
                       readOnly: true,
                       controller: mainc.lmpDate,
                       onTap: () {
@@ -394,20 +444,21 @@ class EditProfile extends StatelessWidget {
                           firstDate: DateTime.now().subtract(Duration(days: 305)),
                           lastDate: DateTime.now(),
                         ).then((selectedDate) {
-                          // settingsController.qStartDate = selectedDate.toString();
-                          // settingsController.qEndDate =
-                              selectedDate!.add(Duration(days: 280)).toString();
-                          final localization = MaterialLocalizations.of(context);
-                          var startDate = selectedDate;
-                          // settingsController.quarantineEndDate.text =
-                              localization.formatShortDate(
-                                  startDate.add(Duration(days: 280)));
-                          // settingsController.quarantineStartDate.text =
-                              localization.formatShortDate(selectedDate);
+                          
+
+                          controller.setUpdateData("lmp_date", selectedDate!.toIso8601String());
+
+                            DateTime endDate =  selectedDate.add(Duration(days: 280));
+
+                            controller.lmpDate.text = DateFormat('dd-MM-yyyy').format(selectedDate);
+                            controller.edDate.text = DateFormat('dd-MM-yyyy').format(endDate);
 
 
+                          controller.setUpdateData("ed_date", endDate.toIso8601String());
 
-                              mainc.setUpdateData("lmp_date", selectedDate.toIso8601String());
+                          controller.update();
+
+                              
                         });
                       },
                       decoration: InputDecoration(
@@ -420,25 +471,16 @@ class EditProfile extends StatelessWidget {
                         return null;
                       },
                     ),
-                  ),
-                  // TextFormField(
-                  //   // readOnly: true,
-                  //   controller: settingsController.quarantineStartDate,
-                  //   validator: (value) {
-                  //     if (value == null || value.isEmpty) {
-                  //       return 'Please enter LMP Date';
-                  //     }
-                  //     return null;
-                  //   },
-                  //   decoration: InputDecoration(
-                  //       labelText: "LMP Date", border: OutlineInputBorder()),
-                  // ),
+                  
+
+                  if(controller.pregnancyStatus == controller.pregnancyList[1])
                   SizedBox(
                     height: 12.0,
                   ),
+                  if(controller.pregnancyStatus == controller.pregnancyList[1])
                   TextFormField(
                     enabled: false,
-                    controller: mainc.edDate,
+                    controller: controller.edDate,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter ED date';
@@ -448,31 +490,82 @@ class EditProfile extends StatelessWidget {
                     decoration: InputDecoration(
                         labelText: "ED Date", border: OutlineInputBorder()),
                   ),
+
+                  if(controller.pregnancyStatus == controller.pregnancyList[0])
                   SizedBox(
                     height: 12.0,
                   ),
-                  DropdownSearch<String>(
-                    validator: (v) =>
-                        v == null ? "Please Select Pregnant Status" : null,
-                    // mode: Mode.MENU,
-                    // showSelectedItem: true,
-                    // selectedItem: settingsController.quarantineStatus.value,
-                    selectedItem: mainc.pregnancyStatus,
-                    items: ["Iam trying to conceive","Iam pregnant","I have a baby"],
-                    dropdownDecoratorProps: DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                  hintText:  "Status",
-                                  border: OutlineInputBorder()
-                                )
-                              ),
-                    // label: "Status",
-                    // maxHeight: 160,
+                  if(controller.pregnancyStatus == controller.pregnancyList[0])
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    
+                    controller: controller.averageLengthOfCycles,
                     onChanged: (value) {
-                      mainc.pregnancyStatus = value;
-                      mainc.setUpdateData("pregnancy_status",value);
-                      // settingsController.quarantineStatus.value = value!;
+                      controller.setUpdateData("average_length_of_cycles", mainc.averageLengthOfCycles.text);
+                      
                     },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter between 28 to 41';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                        labelText: "Average Length of Cycles", border: OutlineInputBorder()),
                   ),
+
+                  if(controller.pregnancyStatus == controller.pregnancyList[2])
+                  SizedBox(
+                    height: 12.0,
+                  ),
+
+
+                  if(controller.pregnancyStatus == controller.pregnancyList[2])
+                                    TextFormField(
+                    readOnly: true,
+                    onTap: () {
+
+                      showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime.now(),
+                      ).then((selectedDate) {
+
+                        controller.deliveryDate.text = DateFormat('dd-MM-yyyy').format(selectedDate!);
+                        controller.setUpdateData("delivery_date", selectedDate.toIso8601String());
+
+                      });
+                      
+                    },
+                    controller: controller.deliveryDate,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Delivery date';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                        labelText: "Delivery Date", border: OutlineInputBorder()),
+                  ),
+
+
+                        ],
+                      );
+                      
+                    },),
+
+
+
+
+
+
+
+
+
+
+
+    
                   SizedBox(
                     height: 20.0,
                   ),
@@ -563,6 +656,7 @@ class EditProfile extends StatelessWidget {
 
                   TextFormField(
                     controller: mainc.pincode,
+                    maxLength: 6,
                     onChanged: (value) => 
                     mainc.setUpdateData("pincode",value),
                     validator: (value) {
@@ -581,6 +675,7 @@ class EditProfile extends StatelessWidget {
         ),
       ),
     );
+  
   }
 }
 

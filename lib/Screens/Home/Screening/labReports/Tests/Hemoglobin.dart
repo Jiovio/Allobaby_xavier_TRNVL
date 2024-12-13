@@ -35,7 +35,7 @@ class Hemoglobin extends StatelessWidget {
                                       SizedBox(
                               width: double.infinity,
                               child: Text(
-                                              "Add Hemoglobin Report",
+                                              "Add Hemoglobin Report".tr,
                                               style: TextStyle(
                                                 fontSize: 20,
                                               ),
@@ -59,7 +59,7 @@ class Hemoglobin extends StatelessWidget {
                                         
                                         controller.fileImage64 == null
                                             ? Text(
-                                                "NO IMAGE",
+                                                "NO IMAGE".tr,
                                                 style: TextStyle(
                                                     fontSize: 18, color: White),
                                               )
@@ -101,7 +101,7 @@ class Hemoglobin extends StatelessWidget {
                         controller.fileImage64 == null
                             ? Center(
                                 child: Text(
-                                "Click Add Image Button",
+                                "Click Add Image Button".tr,
                                 style: TextStyle(fontSize: 18),
                               ))
                             : Image.memory(
@@ -134,7 +134,7 @@ class Hemoglobin extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "Choose photo from :",
+                                      "Choose photo from :".tr,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 18),
@@ -164,7 +164,7 @@ class Hemoglobin extends StatelessWidget {
                                 ),
                               )),
                                                 icon: Icon(Icons.add_a_photo),
-                                                label: Text("Upload Report")),
+                                                label: Text("Upload Report".tr)),
 
                                         //  TextButton.icon(onPressed: (){
                                         //   Get.to(Hemoglobinscan());
@@ -186,12 +186,12 @@ class Hemoglobin extends StatelessWidget {
                           ListTile(
                             leading: Image.asset("assets/labReports/hemoglobin.png"),
                             title: 
-                            Text("Hemoglobin Value : ${controller.hemoGlobinValue}",
+                            Text("Hemoglobin Value : ${controller.hemoGlobinValue}".tr,
                             ),
                             
                             
                             
-                            subtitle: Text("Tap to Change "),
+                            subtitle: Text("Tap to Change".tr),
                             shape: OutlineInputBorder(borderSide: BorderSide(
                               color: Colors.grey
                             )),
@@ -199,7 +199,7 @@ class Hemoglobin extends StatelessWidget {
                             onTap: () {
                               showDialog(context: context, builder:(context) {
                                 return AlertDialog(
-                                  title: Text("Hemogolin Value"),
+                                  title: Text("Hemogolin Value".tr),
 
                                   content: HemoglobinSelector());
                               },);
@@ -244,7 +244,7 @@ class Hemoglobin extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
                   onPressed: controller.submit,
-                  child: Text("ADD REPORT"))
+                  child: Text("ADD REPORT".tr))
 
 
 

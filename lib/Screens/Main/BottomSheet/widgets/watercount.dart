@@ -13,10 +13,10 @@ Widget waterCount() {
     crossAxisAlignment: CrossAxisAlignment.center,
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
-     const Padding(
+    Padding(
         padding: EdgeInsets.fromLTRB(20.0, 10, 20, 0),
         child:  Text(
-          "How many Glass of water have you drunk today?",
+          "How many Glass of water have you drunk today?".tr,
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.w500,

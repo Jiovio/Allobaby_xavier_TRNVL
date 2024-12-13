@@ -36,7 +36,7 @@ class Fetalmonitoring extends StatelessWidget {
                                       SizedBox(
                               width: double.infinity,
                               child: Text(
-                                              "Fetal Monitoring",
+                                              "Fetal Monitoring".tr,
                                               style: TextStyle(
                                                 fontSize: 20,
                                               ),
@@ -58,8 +58,8 @@ class Fetalmonitoring extends StatelessWidget {
                                       child: Center(
                                         child: 
                                         controller.fileImage64 == null
-                                            ? const Text(
-                                                "NO IMAGE",
+                                            ?  Text(
+                                                "NO IMAGE".tr,
                                                 style: TextStyle(
                                                     fontSize: 18, color: White),
                                               )
@@ -96,7 +96,7 @@ class Fetalmonitoring extends StatelessWidget {
                         controller.fileImage64 == null
                             ? Center(
                                 child: Text(
-                                "Click Add Image Button",
+                                "Click Add Image Button".tr,
                                 style: TextStyle(fontSize: 18),
                               ))
                             : Image.memory(
@@ -155,7 +155,7 @@ class Fetalmonitoring extends StatelessWidget {
                                 ),
                               )),
                                                 icon: Icon(Icons.add_a_photo),
-                                                label: Text("Upload Report")),
+                                                label: Text("Upload Report".tr)),
 
                                         //  TextButton.icon(onPressed: (){
                                         //   Get.to(Hemoglobinscan());
@@ -177,7 +177,7 @@ class Fetalmonitoring extends StatelessWidget {
                           ListTile(
                             leading: Image.asset("assets/labReports/heart.png"),
                             title: Text("Heart Rate : ${controller.heartRate} BPM"),
-                            subtitle: Text("Tap to Change "),
+                            subtitle: Text("Tap to Change ".tr),
                             shape: OutlineInputBorder(borderSide: BorderSide(
                               color: Colors.grey
                             )),
@@ -185,14 +185,14 @@ class Fetalmonitoring extends StatelessWidget {
                             onTap: () {
                               showDialog(context: context, builder:(context) {
                                 return AlertDialog(
-                                  title: Text("Heart Rate"),
+                                  title: Text("Heart Rate".tr),
                                   content: Row(
                                     children: [
                                       fetalHeartMonitoring(),
 
                                                         SizedBox(width: 10,),
 
-                                                        Text("BPM",
+                                                        Text("BPM".tr,
                                                         style: TextStyle(fontSize: 14),)
                                     ],
                                   ),);
@@ -205,8 +205,8 @@ class Fetalmonitoring extends StatelessWidget {
 
                             ListTile(      
                             leading: Icon(Icons.airline_seat_legroom_normal_rounded,size: 40,),
-                            title: Text("Kick Count : ${controller.kickCount}"),
-                            subtitle: Text("Tap to Increase the Count."),
+                            title: Text("Kick Count : ${controller.kickCount}".tr),
+                            subtitle: Text("Tap to Increase the Count.".tr),
                             iconColor: PrimaryColor,
                             shape: OutlineInputBorder(borderSide: BorderSide(
                               color: Colors.grey
@@ -246,7 +246,7 @@ class Fetalmonitoring extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
                   onPressed: controller.submit,
-                  child: Text("ADD REPORT"))
+                  child: Text("ADD REPORT".tr))
 
 
 
