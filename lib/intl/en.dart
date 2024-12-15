@@ -60,7 +60,7 @@ final Map<String, String> en = {
   "Book an Appointment": "Book on Appointment",
   "Select Doctor": "Select Doctor",
   "Appointment Date": "Appointment Date",
-  "View Available Slots": "View AVailable Slots",
+  "View Available Slots": "View Available Slots",
   "No Slot Selected": "No Slot Selected",
   "Diagnosis Desc": "Diagnosis Desc",
   "Book": "Book",

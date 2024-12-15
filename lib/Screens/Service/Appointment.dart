@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:allobaby/API/Requests/HospitalAPI.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/AppointmentController.dart';
+import 'package:allobaby/Controller/MainController.dart';
+import 'package:allobaby/Screens/Main/BottomSheet/widgets/symptoms.dart';
 import 'package:allobaby/Screens/Service/MyAppointment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -17,6 +19,7 @@ class Appointment extends StatelessWidget {
    Appointment({super.key});
 
 AppointmentController cont = Get.put(AppointmentController());
+Maincontroller mainc = Get.put(Maincontroller());
 
 final formKey = GlobalKey<FormState>();
 
@@ -103,7 +106,9 @@ final formKey = GlobalKey<FormState>();
 
     GetBuilder(
   init: AppointmentController(),
-  builder: (controller) => DropdownSearch<Hospital>(
+  builder: (controller) => 
+  
+  DropdownSearch<Hospital>(
     selectedItem: controller.hospital,
     popupProps: PopupProps.modalBottomSheet(
       modalBottomSheetProps: ModalBottomSheetProps(
@@ -225,6 +230,7 @@ final formKey = GlobalKey<FormState>();
       }
     },
   ),
+
 )
     
     ),
@@ -529,54 +535,111 @@ GetBuilder<AppointmentController>(
                           );
                         
                         },
-                         child: GetBuilder<AppointmentController>(
-                           builder: (controller) =>  Text(
-                            controller.timeslots.isEmpty? "No Slots Available".tr:"View Available Slots".tr,
-                            style: TextStyle(fontSize: 18),
-                                                   ),
-                         )),
-                  ),
+                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                           children: [
+                             GetBuilder<AppointmentController>(
+                               builder: (controller) =>  Text(
+                                controller.timeslots.isEmpty? "No Slots Available".tr:"View Available Slots".tr,
+                                style: TextStyle(fontSize: 18),
+                                                       ),
+                             ),
+
+
 
                   GetBuilder<AppointmentController>(
                     builder:(c) => 
                   c.timeslotInd !=null?
-                  Wrap(
-                    
+                  Column(
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Start time Slot:".tr,
-                            style:const TextStyle(fontSize: 18),
-                          ),
+                     const SizedBox(height: 18,),
 
-                        Container(
-                          padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 6),
-                          decoration: BoxDecoration(
-                            border: Border.all(),
+                      Wrap(
+                        
+                        children: [
+                      
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                      
+                            children: [
+                              Text(
+                                "Time Slot:    ".tr,
+                                style:const TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color: Colors.black),
+                              ),
+                      
+                            Container(
+                              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+
+                              decoration: BoxDecoration(
                             
+                                border: Border.all(),
+                              
+                                borderRadius: BorderRadius.all( Radius.circular(20)),
+                                
+                              ),
+                              child: Text(
+                              "${c.timeslots[c.timeslotInd as int].start}-${c.timeslots[c.timeslotInd as int].end}",
+                              style:const TextStyle(fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              ),
+                             ),
+                            ),
+                            ],
                           ),
-                          child: Text(
-                          "${c.timeslots[c.timeslotInd as int].start}-${c.timeslots[c.timeslotInd as int].end}",
-                          style:const TextStyle(fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          ),
-                         ),
-                        ),
+                      
                         ],
                       ),
-
                     ],
                   ):Container()
                   
-                  )
-                   ,
-
-                  SizedBox(
-                    height: 20,
                   ),
-                  TextFormField(
+
+                           ],
+                         )),
+                  ),
+
+
+                  SizedBox(height: 18,),
+
+
+
+                  
+                  GestureDetector(
+                    onTap: () {
+                      
+                    },
+                    child: TextFormField(
+                    
+                      decoration: InputDecoration(
+                          labelText: "Add Your Symptoms".tr,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            
+                          )),
+                      keyboardType: TextInputType.none,
+                      controller: cont.symptoms,
+                      
+                      
+                      
+                      onTap: () async {
+                    
+
+                      },
+                         
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please Select any Symptoms'.tr;
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 18,
+                  ),
+
+                  
+                                    TextFormField(
 
                     decoration: InputDecoration(
                         labelText: "Diagnosis Description".tr,
@@ -593,9 +656,12 @@ GetBuilder<AppointmentController>(
                       return null;
                     },
                   ),
-                  SizedBox(
+
+                                    SizedBox(
                     height: 18,
                   ),
+
+
                         Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

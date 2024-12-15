@@ -43,11 +43,8 @@ class Hospitalapi {
   static Future<dynamic> getScheduledAppointments() async {
 
     final id = Storage.getUserID();
-      final req = await postRequest("/appointment/patient/status",
-      {
-  "patient_id": id,
-  "status": "Scheduled"
-});
+      final req = await getRequest("/appointment/getpendingappointments");
+      print(req);
       return req;
 }
 
@@ -59,11 +56,6 @@ class Hospitalapi {
       print(req);
       return req;
 }
-
-
-
-
-
 
   static Future<bool> cancelAppointment(int id) async {
       final req = await deleteRequest("/appointment/cancelbyid?id=${id.toString()}");

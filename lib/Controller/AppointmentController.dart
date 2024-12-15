@@ -3,6 +3,7 @@
 
 import 'package:allobaby/API/Requests/HospitalAPI.dart';
 import 'package:allobaby/API/local/Storage.dart';
+import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Screens/Service/MyAppointment.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,8 +12,14 @@ import 'package:intl/intl.dart';
 
 class AppointmentController extends GetxController {
 
+  TextEditingController symptoms = TextEditingController();
+  // 
+
       Hospital? hospital;
   Hospital? doctor;
+
+
+  
 
 
   List<Hospital> hospitals = [];
@@ -123,13 +130,21 @@ List<dynamic> data = await Hospitalapi.getDoctors(hospital!.id);
 
     final id = Storage.getUserID();
 
+    final mainc = Get.put(Maincontroller());
+
+    final symptoms = mainc.bottomSheetData["symptoms"];
+
+    print(symptoms);
+  
+
     var data = {
     "doctor_id": doctor!.id ,
     "patient_id":  id,
     "appointment_date": selDate!.toIso8601String(),
     "start_time": timeslots[timeslotInd as int ].start,
     "end_time": timeslots[timeslotInd as int ].end,
-    "reason" : descController.text
+    "reason" : descController.text,
+    "symptoms":symptoms
     };
 
 

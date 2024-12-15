@@ -246,7 +246,7 @@ Future<void> checkUser() async{
   if(res==false){
     print("User Not Found");
     Get.snackbar("Welcome New User", "Thanks for choosing us",snackPosition: SnackPosition.BOTTOM);
-    await signInWithGoogle();
+    // await signInWithGoogle();
     Get.to(MomOrDad());
     return;
   }
