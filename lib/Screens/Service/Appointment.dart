@@ -432,7 +432,7 @@ GetBuilder<AppointmentController>(
                           context: context,
                           initialDate: DateTime.now(),
                           firstDate: DateTime.now(),
-                          lastDate: DateTime(2025),
+                          lastDate: DateTime.now().add(Duration(days:60)),
                                                ).then((selectedDate) {
                          
                           if(selectedDate!=null){
@@ -604,35 +604,40 @@ GetBuilder<AppointmentController>(
 
 
                   
-                  GestureDetector(
-                    onTap: () {
-                      
-                    },
-                    child: TextFormField(
-                    
-                      decoration: InputDecoration(
-                          labelText: "Add Your Symptoms".tr,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            
-                          )),
-                      keyboardType: TextInputType.none,
-                      controller: cont.symptoms,
-                      
-                      
-                      
-                      onTap: () async {
-                    
+                  TextFormField(
+                  
+                    decoration: InputDecoration(
+                        labelText: "Add Your Symptoms".tr,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          
+                        )),
+                    keyboardType: TextInputType.none,
+                    controller: cont.symptoms,
+                    onTap: () async {
 
-                      },
-                         
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please Select any Symptoms'.tr;
-                        }
-                        return null;
-                      },
-                    ),
+                     await showModalBottomSheet(context: context, builder: (context) {
+                        return Container(
+                          
+                          height: Get.height*0.35,
+                          
+                          child: symptoms(context));
+                        
+                      },);
+
+                      cont.symptoms.text = mainc.bottomSheetData["symptoms"].join(" , ");
+                      cont.update();
+                  
+                      
+                  
+                    },
+                       
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please Select any Symptoms'.tr;
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(
                     height: 18,
