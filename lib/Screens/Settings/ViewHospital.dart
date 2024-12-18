@@ -22,7 +22,6 @@ class ViewHospital extends StatelessWidget {
     try {
      bool status =  await Userapi.updateDefaultHospital(hospital);
 
-
      if(status){
 
             Get.snackbar(

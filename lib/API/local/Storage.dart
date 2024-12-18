@@ -32,6 +32,11 @@ class Storage {
     return id;
   }
 
+      static getUserUID() {
+      final id = localStorage.getItem("uid");
+      return id;
+  }
+
   static checkHospAndSend(Widget to){
     final hosp = getDefaultHospital();
     if(hosp==null){

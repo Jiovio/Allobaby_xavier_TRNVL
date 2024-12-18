@@ -4,6 +4,7 @@ import 'package:allobaby/Components/Loadingbar.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Screens/Home/Checkup/CheckUpReport.dart';
 import 'package:allobaby/Screens/Service/Appointment.dart';
+import 'package:allobaby/Screens/Service/Consultation/Consultation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -81,6 +82,8 @@ class _CurrentappointmentState extends State<Currentappointment> {
                           highlightColor: accentColor.withOpacity(0.3),
                           splashColor: accentColor.withOpacity(0.5),
                           onTap: () async {
+                                                                    Get.to(()=>Consultation(data:appointment),
+                                        transition: Transition.rightToLeft);
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -265,6 +268,11 @@ class _CurrentappointmentState extends State<Currentappointment> {
                                         elevation: 0,
                                       ),
                                       onPressed: () async {
+
+                                        Get.to(()=>Consultation(data:appointment),
+                                        transition: Transition.rightToLeft);
+
+                                        return;
 
                                         try {
 

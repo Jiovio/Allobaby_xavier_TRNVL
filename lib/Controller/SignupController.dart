@@ -252,6 +252,7 @@ Future<void> checkUser() async{
   }
 
     localStorage.setItem("user", json.encode(res));
+    localStorage.setItem("uid", res["uid"].toString());
     Get.snackbar("Login Successfull", "Redirecting to Home Page");
     Get.offAll(MainScreen());
 
@@ -277,6 +278,7 @@ Future<void> submitUser()async{
 
   }
     localStorage.setItem('user', json.encode(req));
+    localStorage.setItem("uid", req["uid"].toString());
     Get.offAll(()=>const MainScreen(),transition: Transition.rightToLeft);
 
 

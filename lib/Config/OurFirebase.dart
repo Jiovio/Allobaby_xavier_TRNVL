@@ -344,9 +344,10 @@ final imagePart = DataPart('audio/aac', audio);
 
 
     static setStatus(bool status) async {
-  final id = Storage.getUserID();
+  final id = Storage.getUserUID();
+  print(id.toString());
 
-     DatabaseReference ref = FirebaseDatabase.instance.ref("online/P${id.toString()}");
+     DatabaseReference ref = FirebaseDatabase.instance.ref("online/${id.toString()}");
      await  ref.set(status);
     }
     

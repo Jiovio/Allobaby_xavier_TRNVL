@@ -43,7 +43,7 @@ class Hospitalapi {
   static Future<dynamic> getScheduledAppointments() async {
 
     final id = Storage.getUserID();
-      final req = await getRequest("/appointment/getpendingappointments");
+      final req = await getRequest("/appointment/getpendingappointmentsbyid");
       print(req);
       return req;
 }

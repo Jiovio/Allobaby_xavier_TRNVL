@@ -46,6 +46,8 @@ class Userapi {
       localStorage.setItem("defaultHospital", json.encode(hospital));
       localStorage.setItem("defaultChat", json.encode(d));
 
+      print(d);
+
       return true;
     }else {
       Get.snackbar("Error", "Please Try Again Later", snackPosition: SnackPosition.BOTTOM);

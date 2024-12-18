@@ -44,8 +44,11 @@ class Maincontroller extends GetxController {
     try {
 
       var d = await Userapi.getUser();
+    localStorage.setItem("uid", d["uid"].toString());
 
       fromJson(d);
+
+      print(d);
   
 
     if(localStorage.getItem("phone")==null){
@@ -184,6 +187,7 @@ class Maincontroller extends GetxController {
     bloodGroup = data['blood_group'] ?? 'A+';
     created = data["created_at"]??"";
     profile_pic = data["profile_pic"];
+
 
   }
 

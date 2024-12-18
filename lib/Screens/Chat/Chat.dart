@@ -1,16 +1,18 @@
 
 import 'dart:async';
 
-
+import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Models/ChatMessage.dart';
+import 'package:allobaby/Screens/Chat/chatfunc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher ; 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -25,14 +27,15 @@ import 'dart:convert' as convert;
 
 class Chat extends StatefulWidget {
   String title;
-  String chatId;
+ final String chatId;
   String p2;
   String p1;
   String p1Name;
   String p2Name;
+  String? type = "doctor";
 
   Chat({super.key, required this.title, required this.chatId, required this.p2, required this.p1, 
-  required this.p1Name , required this.p2Name});
+  required this.p1Name , required this.p2Name , this.type});
 
   @override
   State<Chat> createState() => _ChatState();
@@ -40,21 +43,21 @@ class Chat extends StatefulWidget {
 
 class _ChatState extends State<Chat> {
 
-  List<Messages> messages = [];
+
   final ScrollController _scrollController = ScrollController();
 
-
-  late StreamSubscription _statusSubscription;
+    late StreamSubscription _statusSubscription;
 
   bool isOnline = false;
+
+  bool init = true;
 
 
   @override
   void initState() {
     super.initState();
 
-    print(widget.p2);
-
+    String check = Storage.getUserUID() == widget.p2 ? widget.p1 : widget.p2;
 
     DatabaseReference ref = FirebaseDatabase.instance.ref("online/${widget.p2}");
     _statusSubscription = ref.onValue.listen((event) {
@@ -77,14 +80,14 @@ class _ChatState extends State<Chat> {
 
 
 
-  
-
   TextEditingController textInput = TextEditingController();
 
-  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  static final CollectionReference _chatsCollection = _firestore.collection('chats');
+
 
   void submit() async {
+    print("---------------------------------");
+    print(init);
+    print("---------------------------------");
 
     String type = "text";
 
@@ -111,10 +114,30 @@ class _ChatState extends State<Chat> {
       "p2Name":widget.p2Name
     };
 
-    await OurFirebase.addMessages(msg,widget.p2,chatDetails);
-    
+    // await OurFirebase.addMessages(msg,widget.p2,chatDetails);
 
-    messages.add(msg);
+      final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+        if(init){
+        String uid = getChatID(widget.p1,widget.p2);
+
+     await _firestore.collection("chatlist")
+      .doc(uid).set({
+        "id": uid,
+        "p1": widget.p1,
+        "p2": widget.p2,
+        "p1name": widget.p1Name,
+        "p2name":widget.p2Name,
+        "searchs": ["${widget.p1}-${widget.type}",
+                    "${widget.p2}-patient" ],
+        'lastmessage': "",
+        'updated': FieldValue.serverTimestamp(),
+      });
+
+    }
+
+
+
+
 
     await insertMessage(id: widget.chatId,
     senderId: widget.p1,
@@ -122,7 +145,8 @@ class _ChatState extends State<Chat> {
     message: textInput.text,
     timestamp: DateTime.now(),
     type: type,
-    imageUrl : imgUrl
+    imageUrl : imgUrl,
+    init:init
     );
 
     textInput.text = "";
@@ -133,7 +157,7 @@ class _ChatState extends State<Chat> {
   
   }
 
-  static Future<void> insertMessage({
+   Future<void> insertMessage({
     required String id,
     required String senderId,
     required String receiverId,
@@ -141,9 +165,13 @@ class _ChatState extends State<Chat> {
     required DateTime timestamp,
     String imageUrl="",
     String type = 'text',
+    required bool init,
   }) async {
+
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+   final CollectionReference _chatsCollection = _firestore.collection('chatlist').doc(widget.chatId).collection("messages");
     await _chatsCollection.add({
-      'id': id,
       'senderId': senderId,
       'receiverId': receiverId,
       'message': message,
@@ -151,9 +179,16 @@ class _ChatState extends State<Chat> {
       'type': type,
       'photoUrl':imageUrl
     });
+
+      await _firestore.collection('chatlist').doc(widget.chatId).update({
+        'lastmessage': message,
+        'updated': FieldValue.serverTimestamp(),
+      });
   }
 
-  static Future<List<Messages>> getMessages(int limit, int offset) async {
+   Future<List<Messages>> getMessages(int limit, int offset) async {
+        final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+   final CollectionReference _chatsCollection = _firestore.collection('chatlist').doc(widget.chatId).collection("messages");
     QuerySnapshot querySnapshot = await _chatsCollection
         .orderBy('timestamp', descending: true)
         .limit(limit)
@@ -172,9 +207,11 @@ class _ChatState extends State<Chat> {
     }).toList();
   }
 
-  static Stream<List<Messages>> getMessagesStream(String chatId) {
+  Stream<List<Messages>> getMessagesStream(String chatId) {
+        final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+   final CollectionReference _chatsCollection = _firestore.collection('chatlist').doc(widget.chatId).collection("messages");
     return _chatsCollection
-        .where('id', isEqualTo: chatId)
+        // .where('id', isEqualTo: chatId)
         .orderBy('timestamp', descending: true)
         .snapshots()
         .map((snapshot) {
@@ -193,11 +230,17 @@ class _ChatState extends State<Chat> {
     });
   }
 
-  static Future<void> updateMessage(String messageId, Map<String, dynamic> data) async {
+
+
+   Future<void> updateMessage(String messageId, Map<String, dynamic> data) async {
+        final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+   final CollectionReference _chatsCollection = _firestore.collection('chatlist').doc(widget.chatId).collection("messages");
     await _chatsCollection.doc(messageId).update(data);
   }
 
-  static Future<void> deleteMessage(String messageId) async {
+  Future<void> deleteMessage(String messageId) async {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final CollectionReference _chatsCollection = _firestore.collection('chatlist').doc(widget.chatId).collection("messages");
     await _chatsCollection.doc(messageId).delete();
   }
 
@@ -285,7 +328,7 @@ class _ChatState extends State<Chat> {
                           ),
 
                                  Text(
-                                  isOnline?"Online".tr:"Offline".tr,
+                                  isOnline?"Online":"Offline",
                                   style: TextStyle(
                                       color: Colors.grey.shade600,
                                       fontSize: 13),
@@ -353,7 +396,8 @@ class _ChatState extends State<Chat> {
                     ),
                     IconButton(
                       onPressed: () async {
-                       widget.title == 'Doctor' ? await urlLauncher.launch('tel:04523500629') : await urlLauncher.launch('tel:04523500630');
+                      //  widget.title == 'Doctor' ? await urlLauncher.launch('tel:04523500629') : await urlLauncher.launch('tel:04523500630');
+                      print(widget.p2);
                       
                       },
                       icon: Icon(
@@ -396,8 +440,12 @@ class _ChatState extends State<Chat> {
         }
 
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: Text('No messages yet'.tr));
+          init=true;
+          return Center(child: Text('No messages yet'));
         }
+
+          init = false;
+
 
         List<Messages> messages = snapshot.data!;
 
@@ -450,7 +498,7 @@ class _ChatState extends State<Chat> {
                                                               crossAxisAlignment: CrossAxisAlignment.start,
                                                               children: [
                                                 Text(
-                                                  "Image Uploaded".tr,
+                                                  "Image Uploaded",
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 16,
@@ -508,19 +556,7 @@ class _ChatState extends State<Chat> {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                InkWell(
-                                    onTap: () {
-                                      // print("Clicked Emoji Picker");
-                                      emojiContainer();
-                                      // chatController.emojiShowing.value =
-                                      //     !chatController.emojiShowing.value
-                                      //         .obs();
-                                      // chatController.update();
-                                    },
-                                    child: Icon(
-                                      Icons.emoji_emotions_rounded,
-                                      color: Black700,
-                                    )),
+                           
                                 SizedBox(
                                   width: 4,
                                 ),
@@ -541,7 +577,7 @@ class _ChatState extends State<Chat> {
                                       textAlign: TextAlign.left,
                                       onChanged: (val) {},
                                       decoration: InputDecoration(
-                                        hintText: "Type a message".tr,
+                                        hintText: "Type a message",
                                         hintStyle: TextStyle(fontSize: 18),
                                         border: OutlineInputBorder(
                                             borderSide: BorderSide.none),
@@ -556,57 +592,7 @@ class _ChatState extends State<Chat> {
                                 Wrap(
                                   crossAxisAlignment: WrapCrossAlignment.center,
                                   children: [
-                                    // Transform.rotate(
-                                    //   angle: 100,
-                                    //   child: InkWell(
-                                    //     onTap: () => Get.bottomSheet(
-                                    //       Container(
-                                    //         padding: EdgeInsets.only(
-                                    //             top: 18.0, bottom: 18.0),
-                                    //         color: Get.isDarkMode
-                                    //             ? darkGrey2
-                                    //             : White,
-                                    //         child: Row(
-                                    //           mainAxisAlignment:
-                                    //               MainAxisAlignment.spaceEvenly,
-                                    //           crossAxisAlignment:
-                                    //               CrossAxisAlignment.center,
-                                    //           children: [
-                                    //             FloatingActionButton(
-                                    //                 backgroundColor:
-                                    //                     PrimaryColor,
-                                    //                 elevation: 0,
-                                    //                 tooltip: "Gallery",
-                                    //                 onPressed: () async {
-
-                                    //                 },
-                                    //                 child: Icon(Icons.photo,
-                                    //                     color: White)),
-                                    //             FloatingActionButton(
-                                    //                 backgroundColor:
-                                    //                     PrimaryColor,
-                                    //                 elevation: 0,
-                                    //                 tooltip: "File",
-                                    //                 onPressed: () async {
-                                                     
-                                    //                 },
-                                    //                 child: Icon(
-                                    //                   Icons.file_copy,
-                                    //                   color: White,
-                                    //                 )),
-                                    //           ],
-                                    //         ),
-                                    //       ),
-                                    //     ),
-                                    //     child: Icon(
-                                    //       Icons.attach_file_rounded,
-                                    //       color: Black700,
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    // SizedBox(
-                                    //   width: 8,
-                                    // ),
+                           
                                     InkWell(
                                       onTap: () async {
 
@@ -622,7 +608,7 @@ class _ChatState extends State<Chat> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "Choose photo from :".tr,
+                                              "Choose photo from :",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 18),
@@ -635,7 +621,7 @@ class _ChatState extends State<Chat> {
                                                 backgroundColor:
                                                     Colors.amberAccent,
                                                 child: Image.asset(
-                                                  'assets/General/camera.png',
+                                                  'assets/camera.png',
                                                   scale: 16,
                                                 )),
                                             FloatingActionButton(
@@ -648,7 +634,7 @@ class _ChatState extends State<Chat> {
                                                 backgroundColor:
                                                     Colors.indigoAccent,
                                                 child: Image.asset(
-                                                  'assets/General/gallery.png',
+                                                  'assets/gallery.png',
                                                   scale: 16,
                                                 )),
                                           ],
@@ -678,6 +664,7 @@ class _ChatState extends State<Chat> {
                             width: 50,
                             child: FloatingActionButton(
                               onPressed: () {
+                                
                                 submit();
                               },
                               child: Icon(
@@ -791,21 +778,6 @@ class _ChatState extends State<Chat> {
                     placeholder: (context, url) => const CircularProgressIndicator(),
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(top: 5),
-                  decoration: 
-                  BoxDecoration(color: fullMessage[index].senderId ==
-                      p1
-                  ? PrimaryColor
-                  : Black200,
-                  borderRadius: BorderRadius.circular(5)
-                  ),
-                  child: Center(child: Text(fullMessage[index].message as String,
-                  style: TextStyle(color: fullMessage[index].senderId ==
-                      p1
-                  ? White
-                  : Black),))),
                 SizedBox(
                   height: 4,
                 ),

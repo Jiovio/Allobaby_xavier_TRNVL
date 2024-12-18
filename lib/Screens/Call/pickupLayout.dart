@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
+import 'package:localstorage/localstorage.dart';
 
 class PickUpLayout extends StatelessWidget {
   final Widget scaffold;
@@ -13,8 +14,7 @@ class PickUpLayout extends StatelessWidget {
 
 
   Stream<DatabaseEvent> listenForCall() {
-    final String userid = Storage.getUserID().toString();
-    final String uid = "P$userid";
+    final String uid = localStorage.getItem("uid").toString();
 
     DatabaseReference ref = FirebaseDatabase.instance.ref("calls/$uid");
 
