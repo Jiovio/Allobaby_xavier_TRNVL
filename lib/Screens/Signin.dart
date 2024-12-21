@@ -234,39 +234,52 @@ bool verified = false;
                           height: 18,
                         ),
                         Center(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                minimumSize:const Size(100, 45),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.circular(40))),
-                            onPressed: ()  async{
+                          child: Obx(
+                            ()=> ElevatedButton(
+                                
+                              style: ElevatedButton.styleFrom(
+                                  minimumSize:const Size(100, 45),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(40))),
+                              onPressed:
+                              controller.loading.value?
+                              (){}
+                              :
+                               ()  async{
+                            
+                                if(int.tryParse(controller.phone.value.text)==null || int.parse(controller.phone.value.text) <1000000000 ){
+                            
+                                  Get.snackbar("Invalid Mobile Number", "Please Enter Valid Mobile Number",snackPosition: SnackPosition.BOTTOM);
+                            
+                                }else{
+                                  controller.startLoading();
+                                  await controller.sendOtp(); 
+                                  controller.stopLoading();
 
-                              if(int.tryParse(controller.phone.value.text)==null || int.parse(controller.phone.value.text) <1000000000 ){
-
-                                Get.snackbar("Invalid Mobile Number", "Please Enter Valid Mobile Number",snackPosition: SnackPosition.BOTTOM);
-
-                              }else{
-                                controller.sendOtp(); 
-                                // Get.to(MomOrDad());
-                              }
-                            },
-                            child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    ("SEND OTP".tr),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  // SizedBox(
-                                  //   width: 18.0,
-                                  // ),
-                                  // Icon(Icons.arrow_forward_ios_rounded)
-                                ]),
+                                  // Get.to(MomOrDad());
+                                }
+                              },
+                              child:
+                              controller.loading.value?
+                              const CircularProgressIndicator(color: White,):
+                               Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      ("SEND OTP".tr),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                            
+                                  ]),
+                                  
+                            ),
                           ),
                         ),
+                        
+                        
                         SizedBox(
                           height: 18,
                         ),

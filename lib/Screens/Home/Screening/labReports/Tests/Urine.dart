@@ -125,7 +125,7 @@ class Urine extends StatelessWidget {
                                         elevation: 0,
                                         tooltip: "Camera",
                                         onPressed: () => 
-                                            controller.getImageFromCamera(),
+                                            controller.getImageFromCamera(context),
                                         backgroundColor: Colors.amberAccent,
                                         child: Image.asset(
                                           'assets/General/camera.png',
@@ -136,7 +136,7 @@ class Urine extends StatelessWidget {
                                         focusColor: Colors.greenAccent,
                                         tooltip: "Gallery",
                                         onPressed: () => 
-                                            controller.getImageFromGallery(),
+                                            controller.getImageFromGallery(context),
                                         backgroundColor: Colors.indigoAccent,
                                         child: Image.asset('assets/General/gallery.png',
                                           scale: 16,
@@ -221,13 +221,17 @@ class Urine extends StatelessWidget {
               ),
 
 
-              ElevatedButton(
+                        ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      minimumSize: Size(300, 50),
+                      fixedSize:const Size(300, 50),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
                   onPressed: controller.submit,
-                  child: Text("ADD REPORT".tr))
+                  child: Obx(()=>
+                    controller.loading.value?
+                    const Center(child: CircularProgressIndicator(color: White,)):
+                    
+                    Text("ADD REPORT".tr)))
 
 
 

@@ -84,6 +84,60 @@ class Consultation extends StatelessWidget {
                   )),
             ),
             
+
+           const SizedBox(height: 16),
+
+
+          //               Card(
+          //     shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(12)),
+          //     margin: EdgeInsets.only(bottom: 8),
+          //     child: InkWell(
+          //       borderRadius: BorderRadius.circular(12),
+          //       splashColor: PrimaryColor,
+          //       onTap: () async {
+          //         // Get.to(SelfScreening(id: data["id"]),
+          //         // transition: Transition.rightToLeft);
+          //       },
+          //       child: Padding(
+          //           padding: const EdgeInsets.all(20.0),
+          //           child: Row(
+          //             children: [
+          //               Image.asset(
+                          
+          //                 "assets/labReports/symptoms.png",
+          //                width: 50,
+          //               ),
+          //               SizedBox(
+          //                 width: 18,
+          //               ),
+          //               Column(
+          //                 crossAxisAlignment: CrossAxisAlignment.start,
+          //                 children: [
+          //                   Text(
+          //                     "Checkup".tr,
+          //                     style: TextStyle(
+          //                         fontWeight: FontWeight.w500, fontSize: 18),
+          //                   ),
+          //                   SizedBox(
+          //                     height: 4,
+          //                   ),
+          //                   Container(
+          //                     width: MediaQuery.of(context).size.width * .6,
+          //                     child: Text(
+          //                       "Add Symptoms and Vitals".tr,
+          //                       style: TextStyle(fontSize: 16),
+          //                     ),
+          //                   )
+          //                 ],
+          //               )
+          //             ],
+          //           )),
+          //     ),
+          //   ),
+            
+
+          //  const SizedBox(height: 8,),
             
 
                 Card(
@@ -113,7 +167,8 @@ class Consultation extends StatelessWidget {
                             children: [
                               Image.asset(
                                 "assets/General/avatar.png",
-                                scale: 4,
+                                // scale: 4,
+                                width: 50,
                               ),
                               SizedBox(
                                 width: 18,
@@ -146,3 +201,5 @@ class Consultation extends StatelessWidget {
     );
   }
 }
+
+

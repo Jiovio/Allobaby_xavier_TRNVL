@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:allobaby/Components/Loadingbar.dart';
 import 'package:allobaby/Components/textfield.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/Reports/hemoglobinController.dart';
@@ -15,8 +16,9 @@ import 'package:get/route_manager.dart';
 
 
 class Hemoglobin extends StatelessWidget {
-  const Hemoglobin({super.key});
+  Hemoglobin({super.key});
 
+  Hemoglobincontroller controller = Get.put(Hemoglobincontroller());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,8 +144,8 @@ class Hemoglobin extends StatelessWidget {
                                     FloatingActionButton(
                                         elevation: 0,
                                         tooltip: "Camera",
-                                        onPressed: () =>
-                                            controller.getImageFromCamera(),
+                                        onPressed: () => controller.getImageFromCamera(context) ,
+                                            
                                         backgroundColor: Colors.amberAccent,
                                         child: Image.asset(
                                           'assets/General/camera.png',
@@ -153,8 +155,7 @@ class Hemoglobin extends StatelessWidget {
                                         elevation: 0,
                                         focusColor: Colors.greenAccent,
                                         tooltip: "Gallery",
-                                        onPressed: () => 
-                                            controller.getImageFromGallery(),
+                                        onPressed:()=>controller.getImageFromGallery(context),
                                         backgroundColor: Colors.indigoAccent,
                                         child: Image.asset(
                                           'assets/General/gallery.png',
@@ -240,11 +241,15 @@ class Hemoglobin extends StatelessWidget {
 
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      minimumSize: Size(300, 50),
+                      fixedSize:const Size(300, 50),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
                   onPressed: controller.submit,
-                  child: Text("ADD REPORT".tr))
+                  child: Obx(()=>
+                    controller.loading.value?
+                    const Center(child: CircularProgressIndicator(color: White,)):
+                    
+                    Text("ADD REPORT".tr)))
 
 
 

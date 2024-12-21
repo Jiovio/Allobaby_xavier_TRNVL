@@ -1,50 +1,68 @@
+
+
+
+import 'package:allobaby/API/Requests/Userapi.dart';
+import 'package:allobaby/API/authAPI.dart';
+import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/Config/Color.dart';
-import 'package:allobaby/Config/OurFirebase.dart';
-import 'package:allobaby/Screens/Home/Report/AddReport.dart';
 import 'package:allobaby/Screens/Home/Report/ViewReport.dart';
-import 'package:allobaby/Screens/Home/Screening/labReports/ScreeningwithReports.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:localstorage/localstorage.dart';
 
 class Report extends StatelessWidget {
-  const Report({super.key});
+   Report({super.key});
+
+
+     Future<List<dynamic>> getReports()  async {
+
+      final id = await Storage.getUserID();
+
+      List<dynamic> d = await getRequest("/report?user_id=${id.toString()}") ;
+
+      print(d);
+
+
+      return d;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Report".tr)),
+      appBar: AppBar(title: Text("Report")),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-              ),
-              onPressed: () => Get.to(() => ScreeningWithReports(), transition: Transition.rightToLeft),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.camera),
-                  SizedBox(width: 10),
-                  Text("Scan and Add new Report".tr.toUpperCase())
-                ],
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(20),
+          //   child: OutlinedButton(
+          //     style: OutlinedButton.styleFrom(
+          //       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+          //     ),
+          //     onPressed: () => 
+          //     Get.to(() => LabReports(), transition: Transition.rightToLeft),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         Icon(Icons.camera),
+          //         SizedBox(width: 10),
+          //         Text("Scan and Add new Report".toUpperCase())
+          //       ],
+          //     ),
+          //   ),
+          // ),
           Expanded(
-            child: FutureBuilder<List<Map<String, dynamic>>>(
-              future: OurFirebase.getReports(),
+            child: FutureBuilder<List<dynamic>>(
+              future: getReports(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(child: Text('No reports found'.tr));
+                  return Center(child: Text('No reports found'));
                 } else {
-                  List<Map<String, dynamic>> reports = snapshot.data!;
+                  List<dynamic> reports = snapshot.data!;
 
                   return ListView.builder(
                     padding: EdgeInsets.symmetric(horizontal: 16),
@@ -57,15 +75,20 @@ class Report extends StatelessWidget {
                           elevation: 2,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
-                            side: BorderSide(color: PrimaryColor, width: 2),
+                            side: BorderSide(color: Black700, width: 1),
                           ),
                           child: InkWell(
                             borderRadius: BorderRadius.circular(12),
                             onTap: () { 
+                              print(report);
+                              
                               Get.to(
-                              () => ViewReport(reportDetails: report),
+                              () => 
+                              ViewReport(reportDetails: report),
                               transition: Transition.rightToLeft,
-                            );},
+                            );
+                            
+                            },
                             child: Padding(
                               padding: const EdgeInsets.all(12),
                               child: Row(
@@ -73,12 +96,12 @@ class Report extends StatelessWidget {
                                 children: [
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
-                                    child: Image.network(
-                                      report['imageurl'],
+                                    child: CachedNetworkImage(
+                                      imageUrl:  report['imageurl'],
                                       height: 80,
                                       width: 80,
                                       fit: BoxFit.cover,
-                                      errorBuilder: (context, error, stackTrace) =>
+                                      errorWidget: (context, error, stackTrace) =>
                                           Container(
                                             height: 80,
                                             width: 80,
@@ -93,7 +116,7 @@ class Report extends StatelessWidget {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          report['reportType'],
+                                          report['report_type'],
                                           style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,

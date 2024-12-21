@@ -55,7 +55,7 @@ final Map<String, String> en = {
   "State": "State",
   "Enter Correct Pincode": "Enter Correct Pincode",
   "Patient Name": "Patient Name",
-  "Checkup Details": "Checkup Deatils",
+  "Checkup Details": "Checkup Details",
   "Appointment": "Appointment",
   "Book an Appointment": "Book on Appointment",
   "Select Doctor": "Select Doctor",

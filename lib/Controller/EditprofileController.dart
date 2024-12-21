@@ -53,7 +53,7 @@ class Editprofilecontroller extends GetxController {
     String? profile_pic;
 
 
-  Future getImageFromCamera() async {
+  Future getImageFromCamera(context) async {
     final pickedFile =
         await picker.pickImage(source: ImageSource.camera, imageQuality: 20);
     if (pickedFile != null) {
@@ -69,10 +69,14 @@ class Editprofilecontroller extends GetxController {
     } else {
       print('No image selected.');
     }
+
+    Navigator.of(context).pop();
+
+
     update();
   }
 
-    Future<void> getImageFromGallery() async {
+    Future<void> getImageFromGallery(context) async {
     final pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
       imageQuality: 20,
@@ -92,6 +96,9 @@ class Editprofilecontroller extends GetxController {
     } else {
       print('No image selected.');
     }
+
+    Navigator.of(context).pop();
+
     update();
   }
 

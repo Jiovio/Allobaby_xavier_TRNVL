@@ -19,6 +19,17 @@ class AppointmentController extends GetxController {
   Hospital? doctor;
 
 
+  RxBool loading = false.obs;
+
+      startLoading(){
+      loading = true.obs;
+      update();
+    }
+
+     stopLoading(){
+      loading = false.obs;
+      update();
+    }
   
 
 
@@ -126,7 +137,7 @@ List<dynamic> data = await Hospitalapi.getDoctors(hospital!.id);
   }
 
 
-  void addAppointment() async {
+  Future<void> addAppointment() async {
 
     final id = Storage.getUserID();
 
@@ -152,9 +163,8 @@ List<dynamic> data = await Hospitalapi.getDoctors(hospital!.id);
     
     try {
 
-          final dreq = await Hospitalapi.createAppointment(data);
-
-        Get.to(MyAppointment());
+        final dreq = await Hospitalapi.createAppointment(data);
+        Get.back();
       
     } catch (e) {
 

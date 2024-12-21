@@ -1,6 +1,9 @@
 import 'dart:math';
 
+import 'package:allobaby/API/Requests/ReportAPI.dart';
 import 'package:allobaby/API/Requests/Userapi.dart';
+import 'package:allobaby/Components/Loadingbar.dart';
+import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Screens/Home/Report/Report.dart';
@@ -16,6 +19,18 @@ import 'dart:convert';
 
 class Ultrasoundcontroller extends GetxController {
 
+        RxBool loading = false.obs;
+
+    startLoading(){
+      loading = true.obs;
+      update();
+    }
+
+     stopLoading(){
+      loading = false.obs;
+      update();
+    }
+
 int hemoGlobinValue = 12;
 
 
@@ -29,20 +44,23 @@ String sugarPresent = "";
 
 
    int heartRate = 60;
-  late File image;
+  File? image;
 
   final picker = ImagePicker();
 
   var fileImage64;
 
-  Future getImageFromCamera() async {
+  Future getImageFromCamera(context) async {
     final pickedFile =
         await picker.pickImage(source: ImageSource.camera, imageQuality: 20);
     if (pickedFile != null) {
       final bytes = await Io.File(pickedFile.path).readAsBytes();
       fileImage64 = convert.base64Encode(bytes);
       image = File(pickedFile.path);
-      askAI(image);
+      Navigator.of(context).pop();
+            Loadingbar.use("Analyzing Report", () async {
+        await askAI(image!);
+      });
       Fluttertoast.showToast(
           msg: "Report Updated Successfully", backgroundColor: PrimaryColor);
     } else {
@@ -51,7 +69,7 @@ String sugarPresent = "";
     update();
   }
 
-    Future<void> getImageFromGallery() async {
+    Future<void> getImageFromGallery(context) async {
     final pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
       imageQuality: 20,
@@ -60,7 +78,10 @@ String sugarPresent = "";
       final bytes = await Io.File(pickedFile.path).readAsBytes();
       fileImage64 = convert.base64Encode(bytes);
       image = File(pickedFile.path);
-      askAI(image);
+      Navigator.of(context).pop();
+            Loadingbar.use("Analyzing Report", () async {
+        await askAI(image!);
+      });
       Fluttertoast.showToast(
           msg: "Report Updated Successfully", backgroundColor: PrimaryColor);
     } else {
@@ -70,6 +91,17 @@ String sugarPresent = "";
   }
 
       Future<void> submit () async {
+                         if(image==null){
+          showToast("Please Upload Image", false);
+          return;
+        }
+
+        if(desc.text==""){
+          showToast("Please Update Description", false);
+          return;
+        }
+
+
     Map<String,dynamic> reportData = {
       "fetalPresentation":fetalPresentation,
       "fetalMovement":fetalMovement,
@@ -83,30 +115,20 @@ var d = await Userapi.getUser();
         var random = Random();
   int randomInt = random.nextInt(1000000);
 
-String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image,phone);
+String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
     Map<String,dynamic> data = {
       "reportType":"Ultra Sound",
-      "details":json.encode(reportData),
-      "reportFile":fileImage64,
+      "details":reportData,
       "imageurl":url,
       "description":desc.text,
-      "phone":phone
     };
 
 
-  
-  // Generates a random integer between 0 and 99
-    addReports(data);
+      await Reportapi().addReports(data);
 
-  data["created"] = DateTime.now().toString();
+    showToast("Report Added Successfully",true);
 
-    OurFirebase.createDataWithName("reports","$phone $randomInt",data);
-
-
-    print(data);
-
-    Get.to(Report());
-
+    stopLoading();
     // showToast("Please Enter All Details",'Fields are empty. please enter all fields.');
   }
 
@@ -119,7 +141,7 @@ String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomI
       placenta : string,
       heartRate:int,
       summary:string}""";
-      dynamic res = json.decode(await OurFirebase.askVertexAi(image, prompt));
+      dynamic res = json.decode(await OurFirebase.askVertexAi(image!, prompt));
 
       print(res);
       desc.text = res["summary"]??"";

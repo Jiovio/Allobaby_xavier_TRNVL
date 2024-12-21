@@ -1,7 +1,10 @@
 
 import 'dart:math';
 
+import 'package:allobaby/API/Requests/ReportAPI.dart';
 import 'package:allobaby/API/Requests/Userapi.dart';
+import 'package:allobaby/Components/Loadingbar.dart';
+import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Screens/Home/Report/Report.dart';
@@ -16,13 +19,25 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
 class Fetalmonitoringcontroller extends GetxController {
 
+        RxBool loading = false.obs;
+
+    startLoading(){
+      loading = true.obs;
+      update();
+    }
+
+     stopLoading(){
+      loading = false.obs;
+      update();
+    }
+
 
 int heartRate = 60;
 int kickCount = 0;
 
 TextEditingController desc = TextEditingController();
 
-  late File image;
+   File? image;
 
   final picker = ImagePicker();
 
@@ -35,14 +50,17 @@ TextEditingController desc = TextEditingController();
           update();
   }
 
-  Future getImageFromCamera() async {
+  Future getImageFromCamera(context) async {
     final pickedFile =
         await picker.pickImage(source: ImageSource.camera, imageQuality: 20);
     if (pickedFile != null) {
       final bytes = await Io.File(pickedFile.path).readAsBytes();
       fileImage64 = convert.base64Encode(bytes);
       image = File(pickedFile.path);
-      askAI(image);
+      Navigator.of(context).pop();
+            Loadingbar.use("Analyzing Report", () async {
+        await askAI(image!);
+      });
       Fluttertoast.showToast(
           msg: "Report Updated Successfully", backgroundColor: PrimaryColor);
     } else {
@@ -51,7 +69,7 @@ TextEditingController desc = TextEditingController();
     update();
   }
 
-    Future<void> getImageFromGallery() async {
+    Future<void> getImageFromGallery(context) async {
     final pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
       imageQuality: 20,
@@ -60,7 +78,10 @@ TextEditingController desc = TextEditingController();
       final bytes = await Io.File(pickedFile.path).readAsBytes();
       fileImage64 = convert.base64Encode(bytes);
       image = File(pickedFile.path);
-      askAI(image);
+      Navigator.of(context).pop();
+            Loadingbar.use("Analyzing Report", () async {
+        await askAI(image!);
+      });
       Fluttertoast.showToast(
           msg: "Report Updated Successfully", backgroundColor: PrimaryColor);
     } else {
@@ -71,6 +92,20 @@ TextEditingController desc = TextEditingController();
 
 
       Future<void> submit () async {
+
+                 if(image==null){
+          showToast("Please Upload Image", false);
+          return;
+        }
+
+        if(desc.text==""){
+          showToast("Please Update Description", false);
+          return;
+        }
+
+
+
+        startLoading();
     Map<String,dynamic> reportData = {
       "kickCount":kickCount,
       "heartRate":heartRate
@@ -83,32 +118,17 @@ TextEditingController desc = TextEditingController();
         var random = Random();
   int randomInt = random.nextInt(1000000);
 
-        String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image,phone);
+        String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
 
     Map<String,dynamic> data = {
       "reportType":"Fetal Monitoring",
-      "details":json.encode(reportData),
-      "reportFile":fileImage64,
+      "details":reportData,
       "imageurl":url,
       "description":desc.text,
-      "phone":phone
     };
+      await Reportapi().addReports(data);
 
-
-  
-  // Generates a random integer between 0 and 99
-    addReports(data);
-
-  data["created"] = DateTime.now().toString();
-
-    OurFirebase.createDataWithName("reports","$phone $randomInt",data);
-
-
-    print(data);
-
-    Get.to(Report());
-
-    // showToast("Please Enter All Details",'Fields are empty. please enter all fields.');
+      stopLoading();
   }
 
   
@@ -119,7 +139,7 @@ TextEditingController desc = TextEditingController();
       give me HeartRate value and the general summary in the schema 
       {heartRateValue: int ,
       summary:string}""";
-      dynamic res = json.decode(await OurFirebase.askVertexAi(image, prompt));
+      dynamic res = json.decode(await OurFirebase.askVertexAi(image!, prompt));
 
       print(res);
       desc.text = res["summary"]??"";

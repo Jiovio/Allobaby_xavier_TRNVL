@@ -2,6 +2,7 @@ import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/SignupController.dart';
 import 'package:allobaby/Screens/Main/Home.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
+import 'package:allobaby/utils/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // ignore: depend_on_referenced_packages
@@ -9,22 +10,21 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 class Otpverification extends StatelessWidget {
 
-   Otpverification({super.key});
 
-   Signupcontroller controller = Get.put(Signupcontroller());
+  Signupcontroller controller = Get.find<Signupcontroller>();
+
+
+
+   Otpverification({super.key});
+   
 
   @override
   Widget build(BuildContext context) {
+
+
+
        return 
-      //  GetBuilder<GoogleSignInController>(
-        // builder: (controller) => controller.isloading == 
-        false
-            ? Center(
-                child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(White),
-                backgroundColor: PrimaryColor,
-              ))
-            : Scaffold(
+      Scaffold(
                 appBar: AppBar(
                   title: Text("OTP Verification".tr)
                 ),
@@ -105,22 +105,36 @@ class Otpverification extends StatelessWidget {
                         height: 32.0,
                       ),
                       Center(
-                        child: ElevatedButton(
-                          onPressed: controller.verifyOtp,
-                          style: ElevatedButton.styleFrom(
-                              minimumSize: Size(100, 50),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40))),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(("Verify and proceed".tr).toUpperCase()),
-                                SizedBox(
-                                  width: 18.0,
-                                ),
-                                Icon(Icons.arrow_forward)
-                              ]),
-                        ),
+                        child:
+                           ElevatedButton(
+                            onPressed: 
+                            ()async{
+                              controller.startLoading();
+                           await controller.verifyOtp();
+                            controller.stopLoading();
+
+                      
+                            },
+                            style: ElevatedButton.styleFrom(
+                                minimumSize: Size(100, 50),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(40))),
+                            child: 
+                            Obx(() => 
+                          controller.loading.value?
+                          CircularProgressIndicator(color: White,):
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(("Verify and proceed".tr).toUpperCase()),
+                                  SizedBox(
+                                    width: 18.0,
+                                  ),
+                                  Icon(Icons.arrow_forward)
+                                ]),
+                            )
+                          ),
+                        
                       )
                     ],
                   ),

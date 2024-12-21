@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 class Selfscreeningcontroller extends GetxController {
 
 
+
   @override
   void onInit () async {
     super.onInit();
@@ -109,21 +110,43 @@ class Selfscreeningcontroller extends GetxController {
 
   void submitSymptoms () async {
 
+    var details = [];
+
+    symptomsMap.forEach((k,v){
+      if(v){
+        details.add(k);
+      }
+    });
+
+        Map<String,dynamic> data = {
+      "reportType":"Symptoms",
+      "details":details,
+      "description":symptomDesc.text,
+    };
+
+    print(data);
+
+  }
+
+
+    void submitVitals () async {
+
 
     int phone = await Storage.getUserID();
 
 
 
         Map<String,dynamic> data = {
-      "reportType":"Symptoms",
-      "details":json.encode(symptomsMap),
-      "description":symptomDesc.text,
-      "phone":phone
+      "reportType":"Vitals",
+      "details":healthData,
+      "description":symptomDesc.text
     };
+
+    print(data);
 
   //  int ins = await insertOrUpdateSymptom(json.encode(symptomsMap));
 
-   Get.back();
+  //  Get.back();
 
 
   }

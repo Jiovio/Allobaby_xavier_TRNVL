@@ -1,6 +1,8 @@
 import 'package:allobaby/API/Requests/ReportAPI.dart';
 import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/API/authAPI.dart';
+import 'package:allobaby/Components/Loadingbar.dart';
+import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Screens/Home/Report/Report.dart';
@@ -16,6 +18,18 @@ import 'dart:convert';
 import 'dart:math';
 class Hemoglobincontroller extends GetxController {
 
+      RxBool loading = false.obs;
+
+    startLoading(){
+      loading = true.obs;
+      update();
+    }
+
+     stopLoading(){
+      loading = false.obs;
+      update();
+    }
+
 
 int hemoGlobinValue = 12;
 
@@ -23,22 +37,23 @@ TextEditingController desc = TextEditingController();
 
 String url = "";
 
-  late File image;
+   File? image;
 
   final picker = ImagePicker();
 
   var fileImage64;
 
-  Future getImageFromCamera() async {
+  Future getImageFromCamera(context) async {
     final pickedFile =
         await picker.pickImage(source: ImageSource.camera, imageQuality: 20);
     if (pickedFile != null) {
       final bytes = await Io.File(pickedFile.path).readAsBytes();
       fileImage64 = convert.base64Encode(bytes);
       image = File(pickedFile.path);
-
-      askAI(image);
-
+      Navigator.of(context).pop();
+      Loadingbar.use("Analyzing Report", () async {
+        await askAI(image!);
+      });
       
       Fluttertoast.showToast(
           msg: "Report Updated Successfully", backgroundColor: PrimaryColor);
@@ -48,7 +63,7 @@ String url = "";
     update();
   }
 
-    Future<void> getImageFromGallery() async {
+    Future<void> getImageFromGallery(context) async {
     final pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
       imageQuality: 20,
@@ -57,7 +72,14 @@ String url = "";
       final bytes = await Io.File(pickedFile.path).readAsBytes();
       fileImage64 = convert.base64Encode(bytes);
       image = File(pickedFile.path);
-      askAI(image);
+      Navigator.of(context).pop();
+      // askAI(image);
+
+      Loadingbar.use("Analyzing Report", () async {
+        await askAI(image!);
+      });
+
+     
 
       Fluttertoast.showToast(
           msg: "Report Updated Successfully", backgroundColor: PrimaryColor);
@@ -68,10 +90,17 @@ String url = "";
   }
 
   Future<void> submit () async {
+                 if(image==null){
+          showToast("Please Upload Image", false);
+          return;
+        }
 
+        if(desc.text==""){
+          showToast("Please Update Description", false);
+          return;
+        }
 
-
-    // return;
+    startLoading();
 
     Map<String,dynamic> reportData = {
       "hemoglobinValue":hemoGlobinValue,
@@ -83,33 +112,22 @@ String url = "";
         var random = Random();
   int randomInt = random.nextInt(1000000);
 
-String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image,phone);
+String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
     Map<String,dynamic> data = {
       "reportType":"Hemoglobin",
-      "details":json.encode(reportData),
-      "reportFile":fileImage64,
+      "details":reportData,
       "imageurl":url,
       "description":desc.text,
-      "phone":phone
     };
-
-    // print("________________________________________________________________________");
-
-    addReports(data);
-
-    data["created"] = DateTime.now().toString();
-
-    data.remove("reportFile");
-
-    OurFirebase.createDataWithName("reports","$phone $randomInt",data);
-
-    data.remove("created");
-
-    // print(data);
-    
     await Reportapi().addReports(data);
 
-    // showToast("Please Enter All Details",'Fields are empty. please enter all fields.');
+
+    stopLoading();
+
+    showToast("Report Saved Successfully .", true);
+
+
+    
   }
 
   
@@ -119,13 +137,14 @@ String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomI
       give me hemoglobin value and the general summary in the schema 
       {hemoglobinValue:int,
       summary:string}""";
-      dynamic res = json.decode(await OurFirebase.askVertexAi(image, prompt));
+      dynamic res = json.decode(await OurFirebase.askVertexAi(image!, prompt));
       desc.text = res["summary"]??"";
       // 
       hemoGlobinValue = res["hemoglobinValue"]??12;
 
-      // 
       update();
+
+
   }
 
 

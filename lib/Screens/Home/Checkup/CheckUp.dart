@@ -1,6 +1,7 @@
 import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Screens/Home/Checkup/CheckUpReport.dart';
+import 'package:allobaby/Screens/Service/Appointments/checkup_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -9,9 +10,9 @@ class CheckUp extends StatelessWidget {
   const CheckUp({super.key});
 
   String getCheckupStatus(Map<String, dynamic> checkup) {
-    if (checkup['doctorInputDate'] != null) {
+    if (checkup['checkup_date'] != null) {
       return "Checkup Completed".tr;
-    } else if (checkup['symptoms'] != null && checkup['vitals'] != null) {
+    } else if (checkup['status'] == "Approved") {
       return "Waiting for Doctor Feedback".tr;
     } else {
       return "Checkup need to be done".tr;
@@ -48,7 +49,7 @@ class CheckUp extends StatelessWidget {
             itemCount: checkups.length,
             itemBuilder: (BuildContext context, int index) {
               final checkup = checkups[index];
-              final createdDate = DateTime.parse(checkup['createdDate']);
+              final createdDate = DateTime.parse(checkup['appointment_date']);
               
 
               return Card(
@@ -58,7 +59,7 @@ class CheckUp extends StatelessWidget {
                   highlightColor: accentColor.withOpacity(0.1),
                   splashColor: accentColor.withOpacity(0.8),
                   onTap: () => Get.to(
-                    () => CheckUpReport(data: checkup,),
+                    () => Checkupreportloader(id:checkup["id"],status:checkup["status"]),
                     transition: Transition.rightToLeft,
                   ),
                   child: Padding(

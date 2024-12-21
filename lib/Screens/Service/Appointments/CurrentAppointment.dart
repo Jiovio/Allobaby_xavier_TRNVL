@@ -4,6 +4,7 @@ import 'package:allobaby/Components/Loadingbar.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Screens/Home/Checkup/CheckUpReport.dart';
 import 'package:allobaby/Screens/Service/Appointment.dart';
+import 'package:allobaby/Screens/Service/Appointments/checkup_loader.dart';
 import 'package:allobaby/Screens/Service/Consultation/Consultation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,9 +35,13 @@ class _CurrentappointmentState extends State<Currentappointment> {
     return Scaffold(
 
                   floatingActionButton: IconButton(icon:Icon(Icons.add_circle_rounded,size: 70,),
-            onPressed: () {
+            onPressed: () async {
               // OurFirebase.getAIAppointments();
-              Get.to(Appointment(),transition: Transition.rightToLeft);
+             await Get.to(Appointment(),transition: Transition.rightToLeft);
+
+             setState(() {
+               
+             });
             },),
       body: SingleChildScrollView(
       
@@ -365,12 +370,15 @@ class _CurrentappointmentState extends State<Currentappointment> {
                             onTap: () 
                              async { 
 
-                              Loadingbar.show("Loading Checkup Data");
+                              // Loadingbar.show("Loading Checkup Data");
 
-                              final req = await Userapi.getCheckupByID(appointment["id"]);
+                              // final req = await Userapi.getCheckupByID(appointment["id"]);
 
-                              Loadingbar.close();
-                              Get.to(CheckUpReport(data: req));
+                              // Loadingbar.close();
+                              // Get.to(CheckUpReport(data: req));
+
+                              Get.to(()=>Checkupreportloader(id: appointment["id"], status: appointment["status"]));
+                              // print(appointment);
                               
                               },
                             child: Padding(
@@ -449,7 +457,7 @@ class _CurrentappointmentState extends State<Currentappointment> {
                     return Text('No appointments found'.tr);
                   }
                 } else {
-                  return CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator());
                 }
               },
             ),

@@ -1,4 +1,5 @@
 import 'package:allobaby/API/Requests/Userapi.dart';
+import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
 import 'package:allobaby/Screens/Settings/hospital.dart';
@@ -23,14 +24,15 @@ class ViewHospital extends StatelessWidget {
      bool status =  await Userapi.updateDefaultHospital(hospital);
 
      if(status){
+      showToast('Hospital selected successfully', true);
 
-            Get.snackbar(
-        'Success',
-        'Hospital selected successfully',
-        backgroundColor: Colors.green[100],
-        colorText: Colors.green[800],
-        snackPosition: SnackPosition.TOP,
-      );
+      //       Get.snackbar(
+      //   'Success',
+      //   'Hospital selected successfully',
+      //   backgroundColor: Colors.green[100],
+      //   colorText: Colors.green[800],
+      //   snackPosition: SnackPosition.TOP,
+      // );
 
 
       Get.offAll(MainScreen());

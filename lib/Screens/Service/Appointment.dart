@@ -674,14 +674,14 @@ GetBuilder<AppointmentController>(
                       
                       GetBuilder<AppointmentController>(
                         builder: (controller) => 
-                        controller.timeslotInd ==null?Container():
+                        controller.loading.value?Center(child: CircularProgressIndicator(),):
                          ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               minimumSize:
                                   Size(MediaQuery.of(context).size.width / 2, 42),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(40))),
-                          onPressed: () {
+                          onPressed: () async {
                         
                             
                         
@@ -693,9 +693,13 @@ GetBuilder<AppointmentController>(
                             cont.timeslotInd !=null &&
                             cont.descController.text!=""
                             
-                            ) {
+                            )  {
+
+                              controller.startLoading();
+                             await cont.addAppointment();
+                              controller.stopLoading();
                         
-                            cont.addAppointment();
+
                         
                             
                             }else{

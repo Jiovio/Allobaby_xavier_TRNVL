@@ -83,7 +83,8 @@ class EditProfile extends StatelessWidget {
                                           builder: (controller) => 
                                           controller.profile_pic==null?
                                           Image.asset(
-                                              "assets/avatar.png"):
+                                            
+                                              "assets/General/avatar.png"):
 
                                               CachedNetworkImage(imageUrl: controller.profile_pic as String)
                                         )
@@ -124,11 +125,11 @@ class EditProfile extends StatelessWidget {
                                                 tooltip: "Camera",
                                                 onPressed: () =>
                                                     mainc
-                                                        .getImageFromCamera(),
+                                                        .getImageFromCamera(context),
                                                 backgroundColor:
                                                     Colors.amberAccent,
                                                 child: Image.asset(
-                                                  'assets/camera.png',
+                                                  'assets/General/camera.png',
                                                   scale: 16,
                                                 )),
                                             FloatingActionButton(
@@ -138,11 +139,11 @@ class EditProfile extends StatelessWidget {
                                                     "",
                                                 onPressed: () =>
                                                     mainc
-                                                        .getImageFromGallery(),
+                                                        .getImageFromGallery(context),
                                                 backgroundColor:
                                                     Colors.indigoAccent,
                                                 child: Image.asset(
-                                                  'assets/gallery.png',
+                                                  'assets/General/gallery.png',
                                                   scale: 16,
                                                 )),
                                           ],

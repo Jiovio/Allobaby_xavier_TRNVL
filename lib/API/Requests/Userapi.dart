@@ -103,5 +103,29 @@ class Userapi {
     }
   }
 
+    static Future<void> addCheckup(appointmentId,vitals ,symptoms, patientId) async {
+
+    
+
+    Map<String, dynamic> data = {
+      "userId":patientId
+    };
+    if(appointmentId!=null){
+      data["appointmentId"] = appointmentId;
+    }
+    if(vitals!=null){
+      data["vitals"] = vitals;
+    }
+    if(symptoms!=null){
+      data["symptoms"] = symptoms;
+    }
+
+    print(data);
+
+    var req = await postRequest("/user/addcheckup",data);
+    return req;
+
+  }
+
 
 }

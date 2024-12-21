@@ -48,6 +48,16 @@ class _SelfScreeningState extends State<SelfScreening> {
 
   Selfscreeningcontroller controller = Get.put(Selfscreeningcontroller());
 
+  void submit(int i){
+
+    print("i = $i");
+      if(i==0){
+        controller.submitSymptoms();
+      }else if(i==1){
+        controller.submitVitals();
+      }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +77,7 @@ class _SelfScreeningState extends State<SelfScreening> {
           setState(() {
             i=index;
           });
-          // serviceController.pagechanged(index);
+
         },
         children: [
           SymptomsScreen(),
@@ -78,8 +88,6 @@ class _SelfScreeningState extends State<SelfScreening> {
           Fetalmonitoring(),
           Ultrasound(),
           // summary(),
-
-
 
         ],
       ),
@@ -154,6 +162,7 @@ class _SelfScreeningState extends State<SelfScreening> {
                           onPressed: () {
                         
                             pg.nextPage(duration: Duration(milliseconds: 300),curve: Curves.linear);
+                            submit(i);
                             // print(pg.page);
                         
                         // _updateCurrentPageIndex(i<1?i++:1);

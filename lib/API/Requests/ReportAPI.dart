@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:allobaby/API/authAPI.dart';
+import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/Screens/Home/Report/Report.dart';
 import 'package:get/get.dart';
 import 'package:localstorage/localstorage.dart';
@@ -8,28 +9,29 @@ import 'package:localstorage/localstorage.dart';
 class Reportapi {
 
 
+  
+
+
   Future<void> addReports(data) async {
 
+        data["id"] = Storage.getUserID();
+
+
+    var d = await postRequest("/report/createbyuser", data);
+
+    
+    print(d);
+
+    return d;
+
     try {
-    var ld = localStorage.getItem("user");
-    var id;
 
-    if(ld!=null){
-    id = json.decode(ld)["id"];
-    print(id);
-    }else{
+    data["id"] = Storage.getUserID();
 
-    }
-
-    data["id"] = id;
-    // return;
-    data.remove("created");
-    print(data);
-    data["details"] = json.decode(data["details"]);
     var d = await postRequest("/report/create", data);
     print(d);
 
-    Get.to(Report());
+    Get.to(()=>Report());
       
 
     } catch (e) {
@@ -38,6 +40,17 @@ class Reportapi {
     }
 
 
+  }
+
+
+       static Future<dynamic> getAppointmentForReport(id) async {
+    try {
+    var d = await getRequest("/report/full/$id");
+    print(id);
+    return d;
+    } catch (e) {
+      return false;
+    }
   }
 
 }

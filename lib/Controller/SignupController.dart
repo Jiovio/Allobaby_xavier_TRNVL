@@ -39,6 +39,19 @@ class Signupcontroller extends GetxController{
     String? profile_pic;
 
 
+    RxBool loading = false.obs;
+
+    startLoading(){
+      loading = true.obs;
+      update();
+    }
+
+     stopLoading(){
+      loading = false.obs;
+      update();
+    }
+
+
   Future getImageFromCamera() async {
     final pickedFile =
         await picker.pickImage(source: ImageSource.camera, imageQuality: 20);
@@ -246,15 +259,15 @@ Future<void> checkUser() async{
   if(res==false){
     print("User Not Found");
     Get.snackbar("Welcome New User", "Thanks for choosing us",snackPosition: SnackPosition.BOTTOM);
-    // await signInWithGoogle();
-    Get.to(MomOrDad());
+    Get.to(()=>MomOrDad(),transition: Transition.leftToRight);
+    await signInWithGoogle();
     return;
   }
 
     localStorage.setItem("user", json.encode(res));
     localStorage.setItem("uid", res["uid"].toString());
     Get.snackbar("Login Successfull", "Redirecting to Home Page");
-    Get.offAll(MainScreen());
+    Get.offAll(()=>const MainScreen());
 
   
 }
@@ -293,7 +306,7 @@ Future<void> sendOtp() async {
 
   if(r["status"]){
   oid=r["id"];
-  Get.to(Otpverification());
+  Get.to(()=>Otpverification());
   }else {
 
   }
@@ -302,6 +315,9 @@ Future<void> sendOtp() async {
 TextEditingController otp = TextEditingController();
 
 Future<void> verifyOtp() async {
+
+  print(loading.value);
+
 var r = await Otpapi.verifyOTP(otp.text,oid);
 
 if(otp.text=="999777"){
