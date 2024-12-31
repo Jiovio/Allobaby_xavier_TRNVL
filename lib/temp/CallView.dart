@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Fill in the app ID obtained from the Agora Console
@@ -119,16 +120,16 @@ class _CallviewState extends State<Callview> {
             child: SizedBox(
               width: 100,
               height: 150,
-              child: Center(
-                child: _localUserJoined
-                    ? AgoraVideoView(
-                        controller: VideoViewController(
-                          rtcEngine: _engine,
-                          canvas: const VideoCanvas(uid: 0),
-                        ),
-                      )
-                    : const CircularProgressIndicator(),
-              ),
+              // child: Center(
+              //   child: _localUserJoined
+              //       ? AgoraVideoView(
+              //           controller: VideoViewController(
+              //             rtcEngine: _engine,
+              //             canvas: const VideoCanvas(uid: 0),
+              //           ),
+              //         )
+              //       : const CircularProgressIndicator(),
+              // ),
             ),
           ),
           _toolbar(),
@@ -140,7 +141,8 @@ class _CallviewState extends State<Callview> {
   Widget _remoteVideo() {
     if (_remoteUid != null) {
       return AgoraVideoView(
-        controller: VideoViewController.remote(
+        controller: VideoViewController.
+        remote(
           rtcEngine: _engine,
           canvas: VideoCanvas(uid: _remoteUid),
           connection:  RtcConnection(channelId: widget.channel),
@@ -218,7 +220,8 @@ class _CallviewState extends State<Callview> {
 
     await cutCall();
     _dispose();
-    Navigator.pop(context);
+    // Navigator.pop(context);
+    Get.back();
   }
 
   void _onToggleMute() {
@@ -232,10 +235,25 @@ class _CallviewState extends State<Callview> {
     _engine.switchCamera();
   }
 
-  void _onToggleVideoMute() {
+  void _onToggleVideoMute() async {
     setState(() {
       _cameraOff = !_cameraOff;
     });
-    _engine.muteLocalVideoStream(_cameraOff);
+    // _engine.muteLocalVideoStream(_cameraOff);
+    if(_cameraOff){
+      // _engine.stopPreview();
+      _engine.disableVideo;
+
+      // _engine.
+      setState(() {
+        
+      });
+    }else{
+      // _engine.startPreview();
+      _engine.enableVideo();
+         setState(() {
+        
+      });
+    }
   }
 }

@@ -32,11 +32,11 @@ Future<dynamic> getRequest(str) async {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      // print('Response data: $data');
+      print('Response data: $data');
       return data;
     } else {
       // print('Failed to load data. Status code: ${response.statusCode}');
-      // print(response.body);
+      print(response.body);
 
       return false;
     }

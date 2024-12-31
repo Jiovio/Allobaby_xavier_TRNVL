@@ -61,20 +61,10 @@ class EditProfile extends StatelessWidget {
                         Stack(
                           alignment: AlignmentDirectional.bottomEnd,
                           children: [
-                            // GetBuilder<SettingsController>(
-                                // builder: (controller) => 
+           
                                 GestureDetector(
                                     onTap: () {},
-                                    // onTap: () => showDialog(
-                                    //       builder: (BuildContext context) =>
-                                    //           Container(
-                                    //               height: Get.height / 2,
-                                    //               width: Get.width / 2,
-                                    //               child: Image.memory(
-                                    //                   base64Decode(controller
-                                    //                       .fileImage64))),
-                                    //       context: context,
-                                    //     ),
+                                   
                                     child: 
                                     CircleAvatar(
                                         backgroundColor: Colors.transparent,
@@ -222,9 +212,7 @@ class EditProfile extends StatelessWidget {
                                   border: OutlineInputBorder()
                                 )
                               ),
-                          // mode: Mode.MENU,
-                          // showSelectedItem: true,
-                          // selectedItem: settingsController.gender.value,
+               
                           items: ["Male", "Female"],
                           selectedItem: mainc.gender,
                           onChanged: (value) {
@@ -284,25 +272,25 @@ class EditProfile extends StatelessWidget {
                       },
                     ),
                   ),
-                  // SizedBox(
-                  //   height: 12.0,
-                  // ),
-                  // DropdownSearch<String>(
-                  //   validator: (v) =>
-                  //       v == null ? "Please Select Health Status" : null,
+                  SizedBox(
+                    height: 12.0,
+                  ),
+                  DropdownSearch<String>(
+                    selectedItem: mainc.healthStatus,
+                    items: ["Normal", "Low", "High"],
+                    dropdownDecoratorProps:const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  hintText:  "Health Status",
+                                  border: OutlineInputBorder()
+                                )
+                              ),
 
-                  //   items: ["Normal", "Low", "High"],
-                  //   dropdownDecoratorProps:const DropDownDecoratorProps(
-                  //               dropdownSearchDecoration: InputDecoration(
-                  //                 hintText:  "Health Status",
-                  //                 border: OutlineInputBorder()
-                  //               )
-                  //             ),
-
-                  //   onChanged: (value) {
-                  //     // settingsController.healthStatus.value = value!;
-                  //   },
-                  // ),
+                    onChanged: (value) {
+                      // settingsController.healthStatus.value = value!;
+                      mainc.healthStatus = value;
+                      mainc.setUpdateData("health_status", value);
+                    },
+                  ),
                   SizedBox(
                     height: 20.0,
                   ),

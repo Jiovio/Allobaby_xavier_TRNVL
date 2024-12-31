@@ -18,7 +18,7 @@ import 'package:get/route_manager.dart';
 class Hemoglobin extends StatelessWidget {
   Hemoglobin({super.key});
 
-  Hemoglobincontroller controller = Get.put(Hemoglobincontroller());
+  Hemoglobincontroller controller = Get.find<Hemoglobincontroller>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,9 +40,12 @@ class Hemoglobin extends StatelessWidget {
                                               "Add Hemoglobin Report".tr,
                                               style: TextStyle(
                                                 fontSize: 20,
+                                                
                                               ),
                                             ),
                             ),
+
+                            SizedBox(height: 10,),
 
               GestureDetector(
                 onTap: () => showDialog(
@@ -211,32 +214,24 @@ class Hemoglobin extends StatelessWidget {
 
 
 
-                        // TextFormField(
-                        //   decoration: InputDecoration(
-                        //     labelText: "Hemoglobin Value",
+              
+                        
+                       const SizedBox(height: 20,),
+
+
+
+
+                            TFField(label: "Description",mLines: 5,
+                            txtController: controller.desc,
                             
-                        //   ),
-                        // ),
-
-
-
-                           SizedBox(
-                height: 50.0,
-              ),
-
-                            Text(controller.desc.text),
-
-                            // TFField(label: "Description",mLines: 10,
-                            // txtController: controller.desc,
-                            
-                            // ),
+                            ),
 
 
 
 
 
               const SizedBox(
-                height: 50.0,
+                height: 20.0,
               ),
 
               ElevatedButton(

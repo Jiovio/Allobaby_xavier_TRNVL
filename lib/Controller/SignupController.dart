@@ -266,7 +266,7 @@ Future<void> checkUser() async{
 
     localStorage.setItem("user", json.encode(res));
     localStorage.setItem("uid", res["uid"].toString());
-    Get.snackbar("Login Successfull", "Redirecting to Home Page");
+    Get.snackbar("Login Successfull", "Redirecting to Home Page",snackPosition: SnackPosition.BOTTOM);
     Get.offAll(()=>const MainScreen());
 
   

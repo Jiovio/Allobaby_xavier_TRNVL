@@ -21,7 +21,7 @@ class Report extends StatelessWidget {
 
       List<dynamic> d = await getRequest("/report?user_id=${id.toString()}") ;
 
-      print(d);
+      print("Report $d");
 
 
       return d;
@@ -33,24 +33,7 @@ class Report extends StatelessWidget {
       appBar: AppBar(title: Text("Report")),
       body: Column(
         children: [
-          // Padding(
-          //   padding: const EdgeInsets.all(20),
-          //   child: OutlinedButton(
-          //     style: OutlinedButton.styleFrom(
-          //       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-          //     ),
-          //     onPressed: () => 
-          //     Get.to(() => LabReports(), transition: Transition.rightToLeft),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         Icon(Icons.camera),
-          //         SizedBox(width: 10),
-          //         Text("Scan and Add new Report".toUpperCase())
-          //       ],
-          //     ),
-          //   ),
-          // ),
+  
           Expanded(
             child: FutureBuilder<List<dynamic>>(
               future: getReports(),

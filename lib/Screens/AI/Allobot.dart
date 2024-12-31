@@ -4,7 +4,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:allobaby/Config/Color.dart';
-import 'package:lottie/lottie.dart';
+
 
 class Allobot extends StatefulWidget {
   @override

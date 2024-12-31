@@ -43,7 +43,7 @@
 
 
     <application
-        android:label="allobaby"
+        android:label="Allobaby"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

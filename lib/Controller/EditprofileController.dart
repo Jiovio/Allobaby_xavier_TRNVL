@@ -136,6 +136,7 @@ class Editprofilecontroller extends GetxController {
   TextEditingController partnerPhoneVerified = TextEditingController();
   TextEditingController deliveryDate = TextEditingController();
   String created = "";
+  String? healthStatus;
 
 
   String? pregnancyStatus ;
@@ -180,6 +181,8 @@ class Editprofilecontroller extends GetxController {
     area.text = data["area"]??"";
 
     profile_pic = data["profile_pic"];
+
+    healthStatus = data["health_status"];
 
   }
 

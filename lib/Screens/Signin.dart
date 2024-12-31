@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:otpless_flutter/otpless_flutter.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class Signin extends StatefulWidget {
@@ -25,7 +25,7 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
 
   final _formKey = GlobalKey<FormState>();
-Otpless otpLess = Otpless();
+
 
 Signupcontroller signupCont = Get.put(Signupcontroller());
 

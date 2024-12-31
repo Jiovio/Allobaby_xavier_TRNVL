@@ -35,7 +35,7 @@ class ViewHospital extends StatelessWidget {
       // );
 
 
-      Get.offAll(MainScreen());
+      Get.offAll(()=>MainScreen());
      }else{
 
       Get.snackbar(

@@ -15,6 +15,14 @@ class Userapi {
     return req;
   }
 
+  
+
+   static Future<dynamic> registerFirebaseToken(data) async {
+    var req = await postRequest("/register_token",data);
+
+    return req;
+  }
+
 
   static Future<dynamic> getCheckups () async {
     var req = await getRequest("/user/checkups");
@@ -43,6 +51,10 @@ class Userapi {
     print(req);
     if(req){
       final d = await Hospitalapi.getDefaultChatAgent(hospital["id"]);
+      print("------------------------------------------------");
+      print(d);
+      print("------------------------------------------------");
+
       localStorage.setItem("defaultHospital", json.encode(hospital));
       localStorage.setItem("defaultChat", json.encode(d));
 

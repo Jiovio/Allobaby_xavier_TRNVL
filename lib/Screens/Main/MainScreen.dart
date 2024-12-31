@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:allobaby/API/apiroutes.dart';
 import 'package:allobaby/Components/bottom_nav.dart';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/CallController.dart';
 import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Screens/Call/pickupLayout.dart';
 import 'package:allobaby/Screens/Main/BottomSheet/BottomQuestion.dart';
 import 'package:allobaby/Screens/Main/BottomSheet/widgets/Exercise.dart';
 import 'package:allobaby/Screens/Main/BottomSheet/widgets/emoji.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:localstorage/localstorage.dart';
@@ -26,11 +29,46 @@ class _MainScreenState extends State<MainScreen> {
   int i=0;
   late  PageController pageController ;
 
+  CallController callcont = Get.put(CallController());
+
+    Stream<DatabaseEvent> listenForCall() {
+    final String uid = localStorage.getItem("uid").toString();
+
+    DatabaseReference ref = FirebaseDatabase.instance.ref("calls/$uid");
+
+    // Listen to real-time changes in the calls/$uid node
+
+    ref.onValue.listen((val){
+      dynamic callData = (val.snapshot.value);
+
+      bool isCall = callData["call"];
+
+
+      if(isCall){
+
+        callcont.showCallScreen(
+          callerName: callData["callerName"],
+            type: callData["type"],
+            channel: callData["p1"],
+            token: callData["token"],
+            to : callData["p2"]
+        );
+      }else{
+        callcont.endCall();
+      }
+    });
+
+    return ref.onValue;
+
+
+  }
+
 
     @override
   void initState() {
     super.initState();
    pageController =  PageController(initialPage: 0);
+   listenForCall();
   }
 
 
@@ -41,8 +79,11 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return  SafeArea(
-      child: PickUpLayout(
-        scaffold: Scaffold(
+      child: 
+      // PickUpLayout(
+      //   scaffold: 
+        
+        Scaffold(
           bottomNavigationBar:bottomNavigationBar() ,
           // Obx(()=> mainC.loading.value?Container():bottomNavigationBar()),
           
@@ -97,7 +138,7 @@ class _MainScreenState extends State<MainScreen> {
           Obx(() => mainC.loading.value? Center(child: CircularProgressIndicator()):bodyRoutes.elementAt(navController.selectedIndex.value))
         
         ),
-      ),
+      // ),
     );
   }
 }

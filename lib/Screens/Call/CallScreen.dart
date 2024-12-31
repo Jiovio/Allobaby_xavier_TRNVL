@@ -31,6 +31,11 @@ class CallScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+      FlutterRingtonePlayer().playRingtone();
+
+
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -92,6 +97,7 @@ class CallScreen extends StatelessWidget {
                       color: Colors.red.shade400,
                       onPressed: () async {
                        await OurFirebase.cutCall(to);
+                       
                        FlutterRingtonePlayer().stop();
                       },
                     ),
@@ -102,8 +108,15 @@ class CallScreen extends StatelessWidget {
                         await Permission.camera.request();
                         await Permission.microphone.request();
 
+
                         // Handle call acceptance
-                        Get.to(Callview(channel: channel, token: token,path: to,));
+                        // Get.to(Callview(channel: channel, token: token,path: to,));
+                       FlutterRingtonePlayer().stop();
+
+                        Get.back();
+                        Get.dialog(
+                        Callview(channel: channel, token: token,path: to,)
+                        );
                       },
                     ),
                   ],

@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher ; 
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -678,13 +678,7 @@ class _ChatState extends State<Chat> {
                       ],
                     ),
                   )),
-              Offstage(
-                // offstage: !chatController.emojiShowing.value,
-                child: SizedBox(
-                  height: 250,
-                  child: emojiContainer(),
-                ),
-              ),
+    
               
             ],
           ),
@@ -1031,46 +1025,3 @@ class _ChatState extends State<Chat> {
         return Container();
     }
   }
-
-    emojiContainer() {
-    // print("working");
-    return EmojiPicker(
-
-      onEmojiSelected: (category, emoji) {
-        // chatController.onEmojiSelected(emoji);
-      },
-      // onBackspacePressed: chatController.onBackspacePressed(),
-      config:const  Config(
-emojiViewConfig: EmojiViewConfig(
-            columns: 7,
-          emojiSizeMax: 32.0,
-          verticalSpacing: 0,
-          horizontalSpacing: 0,
-          recentsLimit: 28,
-          buttonMode: ButtonMode.MATERIAL
-          ),
-
-          categoryViewConfig: CategoryViewConfig(
-          initCategory: Category.RECENT,
-          indicatorColor: Colors.blue,
-          iconColor: Colors.grey,
-          iconColorSelected: Colors.blue,
-          categoryIcons: const CategoryIcons(),
-          ),
-
-
-
-      // bottomActionBarConfig: BottomActionBarConfig(                      
-      //   bgColor: Color(0xFFF2F2F2),
-      //     progressIndicatorColor: Colors.blue,
-      //     showRecentsTab: true,
-      //     noRecentsText: "No Recents",
-      //     noRecentsStyle: const TextStyle(fontSize: 20, color: Colors.black26),)
-
-),
-
-
-
-    );
-  }
-

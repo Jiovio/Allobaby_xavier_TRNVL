@@ -1,4 +1,9 @@
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/Reports/fetalMonitoringController.dart';
+import 'package:allobaby/Controller/Reports/glucoseController.dart';
+import 'package:allobaby/Controller/Reports/hemoglobinController.dart';
+import 'package:allobaby/Controller/Reports/ultraSoundController.dart';
+import 'package:allobaby/Controller/Reports/urineTestController.dart';
 import 'package:allobaby/Screens/Home/Screening/Controllers/SelfScreeningController.dart';
 import 'package:allobaby/Screens/Home/Screening/SymptomsScreen.dart';
 import 'package:allobaby/Screens/Home/Screening/Vitals/Vitals.dart';
@@ -48,14 +53,33 @@ class _SelfScreeningState extends State<SelfScreening> {
 
   Selfscreeningcontroller controller = Get.put(Selfscreeningcontroller());
 
-  void submit(int i){
+  Hemoglobincontroller hemocont = Get.put(Hemoglobincontroller());
+  Urinetestcontroller urinecont = Get.put(Urinetestcontroller());
+  Glucosecontroller glucosecont = Get.put(Glucosecontroller());
+  Fetalmonitoringcontroller fetalcont = Get.put(Fetalmonitoringcontroller());
+  Ultrasoundcontroller ultrasoundcont = Get.put(Ultrasoundcontroller());
+
+
+    
+
+
+  void submit(int i) async {
+
+  List<Function> funclist = [
+        controller.submitSymptoms,
+        controller.submitVitals,
+        hemocont.submit,
+        urinecont.submit,
+        glucosecont.submit,
+        fetalcont.submit,
+        ultrasoundcont.submit
+    ];
+
 
     print("i = $i");
-      if(i==0){
-        controller.submitSymptoms();
-      }else if(i==1){
-        controller.submitVitals();
-      }
+
+    // await funclist[i]();
+
   }
 
 

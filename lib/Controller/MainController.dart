@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/Components/Loadingbar.dart';
+import 'package:allobaby/Components/notification_service.dart';
 import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Models/DailyScreening.dart';
@@ -14,8 +15,45 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:intl/intl.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 
 class Maincontroller extends GetxController {
+
+      RxBool notification = false.obs;
+
+
+    void checkNotificationPermission() async{
+      final status = await Permission.notification.isGranted;
+      notification = status.obs;
+     update();
+
+    }
+
+    Future<bool> toggleNotificationPermission(bool val) async {
+
+      print("incoming : $val");
+        if(val){
+        await OurFirebase.deleteMessagingToken();
+        notification = false.obs;
+        localStorage.setItem("notification","0");
+        update();
+        return false;
+        }else{
+        localStorage.setItem("notification","1");
+         final stat = await NotificationService.requestNotificationPermissions();
+         if(!stat){
+        localStorage.setItem("notification","0");
+
+         }
+         notification = stat.obs;
+         update();
+         return stat;
+
+        }
+    }
+
+// 
 
   RxBool loading = true.obs;
 
@@ -48,7 +86,7 @@ class Maincontroller extends GetxController {
 
       fromJson(d);
 
-      print(d);
+      // print(d);
   
 
     if(localStorage.getItem("phone")==null){
@@ -94,12 +132,20 @@ class Maincontroller extends GetxController {
     }
 
 
+          NotificationService.requestNotificationPermissions().then((v){
+    notification = v.obs;
+    update();
+  });
+
+
   }
 
 
   @override
   void onInit() {
     super.onInit();
+
+     OurFirebase.getToken();
 
       SystemChannels.lifecycle.setMessageHandler((message) async {
     print("Lifecycle state: $message"); // Debug all states
@@ -134,7 +180,7 @@ class Maincontroller extends GetxController {
 
 
   }
-
+    String healthStatus = "NORMAL";
 
     String locale = "English";
 
@@ -188,6 +234,8 @@ class Maincontroller extends GetxController {
     created = data["created_at"]??"";
     profile_pic = data["profile_pic"];
 
+    healthStatus = data["health_status"];
+
 
   }
 
@@ -215,7 +263,7 @@ double ccomp = 0;
 
   getCounterData(){
 
-    print(averageLengthOfCycles);
+    // print(averageLengthOfCycles);
 
     // var d = "2024-09-01";
 

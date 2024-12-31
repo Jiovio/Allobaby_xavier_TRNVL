@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -41,6 +42,8 @@ class _CallviewState extends State<Callview> {
   void initState() {
     super.initState();
     initAgora();
+    FlutterRingtonePlayer().stop();
+
   }
 
   Future<void> initAgora() async {
@@ -120,7 +123,45 @@ class _CallviewState extends State<Callview> {
             child: SizedBox(
               width: 100,
               height: 150,
-              child: Center(
+              child: 
+              _cameraOff ?
+
+              Container(
+      // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(12),
+  
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+
+        children: [
+          Icon(
+            Icons.videocam_off_rounded,
+            color: Colors.white,
+            size: 24,
+          ),
+          const SizedBox(width: 12),
+          FittedBox(
+            child: Text(
+              'Camera is OFF',
+              
+              style: TextStyle(
+                color: Colors.white,
+                // fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      ),
+    )
+
+              :
+               Center(
                 child: _localUserJoined
                     ? AgoraVideoView(
                         controller: VideoViewController(

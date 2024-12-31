@@ -140,13 +140,17 @@ class _HomeState extends State<Home> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                             Text(
-                                            "NORMAL",
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: PrimaryColor,
-                                                fontWeight: FontWeight.w700),
-                                          ),
+                                             GetBuilder<Maincontroller>(
+                                               builder: (cont) {
+                                                 return Text(
+                                                    cont.healthStatus.toUpperCase(),
+                                                    style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: PrimaryColor,
+                                                    fontWeight: FontWeight.w700),
+                                                                                           );
+                                               }
+                                             ),
                                            Text("Health Status".tr,
                                           style: TextStyle(
                                               color: Black.withOpacity(0.6),

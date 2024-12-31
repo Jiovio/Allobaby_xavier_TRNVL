@@ -22,10 +22,10 @@ class Allobotcontroller extends GetxController {
 
 
        if(init){
-        Get.bottomSheet(
-Allobot()
-        );
-  //  Get.to(()=>Allobot());
+//         Get.bottomSheet(
+// Allobot()
+//         );
+   Get.to(()=>Allobot());
 
        }
        aithinking=true;

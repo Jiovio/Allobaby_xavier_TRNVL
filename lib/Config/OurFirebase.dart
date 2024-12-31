@@ -31,10 +31,18 @@ class OurFirebase {
 
   static FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-    void getToken() async {
+    static Future<String?> getToken() async {
       String? token = await messaging.getToken();
       print("FCM Token: $token");
+      return token;
     }
+
+
+        static Future<void> deleteMessagingToken() async {
+      await messaging.deleteToken();
+    }
+
+    
 
   static final ai = FirebaseVertexAI.instance.generativeModel(model: 'gemini-1.5-flash',
   generationConfig: GenerationConfig(
@@ -294,7 +302,8 @@ final imagePart = DataPart('audio/aac', audio);
       "token":token,
       "type":type
       });
-      Get.to(Callview(channel: p1,token: token,path: p2,));
+      Get.dialog(Callview(channel: p1,token: token,path: p2,));
+      // Get.to(()=>Callview(channel: p1,token: token,path: p2,));
       } catch (e) {
         print(e);
       }

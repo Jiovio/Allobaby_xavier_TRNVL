@@ -25,6 +25,7 @@ class Chatcontroller extends GetxController {
 
 
     final hosp = Storage.getDefaultHospital();
+
     if(hosp==null){
       Get.snackbar("Please Choose your Desired Hospital !", 
       "You have'nt chosen your Hospital Yet");
@@ -32,6 +33,10 @@ class Chatcontroller extends GetxController {
       var defaulthosp ;
 
       final local = localStorage.getItem("defaultChat");
+
+      print(local);
+
+      // return;
 
       if(local!=null){
         defaulthosp = json.decode(local);

@@ -117,7 +117,7 @@ class SettingsScreen extends StatelessWidget {
                           color: Black,
                         ),
                         onTap: () {
-                          Get.to(EditProfile());
+                          Get.to(()=>EditProfile());
                         },
                         // settingsController.getPatientDetails(),
                       ),
@@ -165,52 +165,55 @@ class SettingsScreen extends StatelessWidget {
 
 
 
-                      // ListTile(
-                      //   title: Text(
-                      //     'Notification',
-                      //   ),
-                      //   leading: Icon(
-                      //     Icons.notifications_none_outlined,
-                      //     color: Black,
-                      //   ),
-                      //   subtitle: Text("YES"),
-                      //   // Obx(() => Text(
-                      //   //       settingsController.nIcon.value == false
-                      //   //           ? "ON"
-                      //   //           : "OFF",
-                      //   //     )),
-                      //   onTap: () {
-                      //     showDialog(
-                      //         context: context,
-                      //         builder: (context) => AlertDialog(
-                      //             title: Text("Notification"),
-                      //             content: ListTile(
-                      //                 title: Text(
-                      //                   'ON/OFF',
-                      //                   style: TextStyle(
-                      //                     fontSize: 18,
-                      //                   ),
-                      //                 ),
-                      //                 leading: ValueBuilder<bool?>(
-                      //                   initialValue: true,
-                      //                       // settingsController.nIcon.value
-                      //                       //     ? false
-                      //                       //     : true,
-                      //                   builder: (isChecked, updateFn) =>
-                      //                       Switch(
-                      //                     activeColor: PrimaryColor,
-                      //                     value: isChecked!,
-                      //                     onChanged: (newValue) {
-                      //                       // settingsController.nIcon.value =
-                      //                       //     !settingsController.nIcon.value
-                      //                       //         .obs();
-                      //                       // settingsController.update();
-                      //                       // updateFn(newValue);
-                      //                     },
-                      //                   ),
-                      //                 ))));
-                      //   },
-                      // ),
+                      ListTile(
+                        title: Text(
+                          'Notification',
+                        ),
+                        leading: Icon(
+                          Icons.notifications_none_outlined,
+                          color: Black,
+                        ),
+                 
+                        subtitle: 
+                        GetBuilder<Maincontroller>(builder: (c) => Text(
+                              c.notification.value
+                                  ? "ON"
+                                  : "OFF",
+                            )),
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                  title: Text("Notification"),
+                                  content: ListTile(
+                                      title: Text(
+                                        'ON/OFF',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                      leading: GetBuilder<Maincontroller>(
+                                        builder: (controller) {
+                                          return ValueBuilder<bool?>(
+                                            initialValue: controller.notification.value,
+                                            builder: (isChecked, updateFn) =>
+                                                Switch(
+                                              activeColor: PrimaryColor,
+                                              value: isChecked!,
+                                              onChanged: (newValue) async {
+                                                updateFn(newValue);
+                                                print(newValue);
+                                                final bool = await controller.toggleNotificationPermission(!newValue);
+                                                print(bool);
+                                                controller.update();
+                                                updateFn(bool);
+                                              },
+                                            ),
+                                          );
+                                        }
+                                      ))));
+                        },
+                      ),
                       
                       
                       GetBuilder<Usercontroller>(
@@ -335,7 +338,7 @@ class SettingsScreen extends StatelessWidget {
 
 
                                       localStorage.clear();
-                                      Get.to(Signin());
+                                      Get.offAll(()=>const Signin());
                                       Get.snackbar("Logout Successfull".tr, "",snackPosition: SnackPosition.BOTTOM);
                                       // _googleSignInController.googleSignOut();
                                     },
