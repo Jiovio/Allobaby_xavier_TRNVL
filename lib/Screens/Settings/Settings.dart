@@ -73,16 +73,20 @@ class SettingsScreen extends StatelessWidget {
                       padding: EdgeInsets.only(
                           left: 16, top: 25, bottom: 16, right: 20),
                       child: Row(children: [
-                        //  Obx(() =>
-                        CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            radius: 36.0,
-                            backgroundImage: 
-                            mainC.profile_pic!=null ?
-                            CachedNetworkImageProvider(mainC.profile_pic as String):
-                           const AssetImage("assets/General/avatar.png") as ImageProvider
-
-                            ),
+                    
+                        GetBuilder<Maincontroller>(
+                          builder: (controller) {
+                            return CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                radius: 36.0,
+                                backgroundImage: 
+                                mainC.profile_pic!=null ?
+                                CachedNetworkImageProvider(controller.profile_pic as String):
+                               const AssetImage("assets/General/avatar.png") as ImageProvider
+                            
+                                );
+                          }
+                        ),
                        const SizedBox(
                           width: 24.0,
                         ),
