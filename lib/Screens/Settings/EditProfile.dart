@@ -607,6 +607,10 @@ class EditProfile extends StatelessWidget {
 
                                  TextFormField(
                     controller: mainc.streetName,
+                    onChanged: (value) {
+                    mainc.setUpdateData("street_name",value);
+                      
+                    },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter Street name';

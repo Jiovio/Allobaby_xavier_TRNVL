@@ -61,8 +61,8 @@ PreferredSize customAppBar(
                       child:
 
 
-                      controller.profile_pic==null?
-                                              CircleAvatar(
+                      controller.profile_pic==null || controller.profile_pic ==""?
+                            const   CircleAvatar(
                               backgroundColor: Colors.transparent,
                               radius: 13.0,
                               backgroundImage: AssetImage(

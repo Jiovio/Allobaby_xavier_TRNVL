@@ -65,7 +65,7 @@ class Chatcontroller extends GetxController {
         case "healthworker":
         String docid = (defaulthosp["healthworker"]["uid"]).toString();
         String id = getChatID(uid, docid);
-        String docName = defaulthosp["doctor"]["name"].toString();
+        String docName = defaulthosp["healthworker"]["name"].toString();
         Get.to(Chat(title: docName, chatId: id, p2: docid,p1:uid,
                     p1Name: controller.name.text,p2Name: docName, type: "healthworker"));
           break;

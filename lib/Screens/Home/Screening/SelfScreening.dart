@@ -78,7 +78,11 @@ class _SelfScreeningState extends State<SelfScreening> {
 
     print("i = $i");
 
-    // await funclist[i]();
+    if(i<2){
+    await funclist[i]();
+
+    }
+
 
   }
 

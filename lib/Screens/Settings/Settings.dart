@@ -80,7 +80,7 @@ class SettingsScreen extends StatelessWidget {
                                 backgroundColor: Colors.transparent,
                                 radius: 36.0,
                                 backgroundImage: 
-                                mainC.profile_pic!=null ?
+                                mainC.profile_pic!=null && mainC.profile_pic!="" ?
                                 CachedNetworkImageProvider(controller.profile_pic as String):
                                const AssetImage("assets/General/avatar.png") as ImageProvider
                             

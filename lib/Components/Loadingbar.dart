@@ -1,13 +1,9 @@
 
-
-
 import 'package:allobaby/Config/Color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Loadingbar {
-
-
 
   static void show(String? name){
 

@@ -85,12 +85,18 @@ class Userapi {
 
 
 
-    static Future<bool> addScreeningData(dynamic bottomsheetdata, dynamic vitals ) async {
+    static Future<bool> addScreeningData(dynamic bottomsheetdata, 
+    dynamic vitals, [dynamic symptoms] ) async {
     try {
       
       Map<String,dynamic> data = {
         "screening_date" : DateTime.now().toIso8601String(),
       };
+
+
+       if(symptoms!=null) {
+        data["symptoms"] = symptoms;
+        }
 
 
 

@@ -209,33 +209,34 @@ class Maincontroller extends GetxController {
   String bloodGroup = "A+";
 
   fromJson(Map<String, dynamic> data) {
+    print("DAatatatata");
+    // print(data);
     name.text = data['name'] ?? '';
-    age.text = data['age']?.toString() ?? '';
-    email.text = data['email'] ?? '';
-    pincode.text = data['pincode']?.toString() ?? '';
-    lmpDate.text = data['lmp_date'] ?? '';
-    edDate.text = data['ed_date'] ?? '';
-    alternatePhone.text = data['alternate_phone']?.toString() ?? '';
-    phoneNumber.text = data['phone_number']?.toString() ?? '';
-    partnerName.text = data['partner_name'] ?? '';
-    partnerPhone.text = data['partner_phone']?.toString() ?? '';
-    doorNo.text = data['door_no'] ?? '';
-    streetName.text = data['street_name'] ?? '';
-    pregnancyStatus.text = data['pregnancy_status'] ?? '';
-    otherInformation.text = data['other_information'] ?? '';
-    numberOfChildren.text = data['number_of_children']?.toString() ?? '';
-    averageLengthOfCycles.text = data['average_length_of_cycles']?.toString() ?? '';
-    partnerPhoneVerified.text = data['partner_phone_verified']?.toString() ?? '';
-    deliveryDate.text = data['delivery_date'] ?? '';
+    // age.text = data['age']?.toString() ?? '';
+    // email.text = data['email'] ?? '';
+    // pincode.text = data['pincode']?.toString() ?? '';
+    // lmpDate.text = data['lmp_date'] ?? '';
+    // edDate.text = data['ed_date'] ?? '';
+    // alternatePhone.text = data['alternate_phone']?.toString() ?? '';
+    // phoneNumber.text = data['phone_number']?.toString() ?? '';
+    // partnerName.text = data['partner_name'] ?? '';
+    // partnerPhone.text = data['partner_phone']?.toString() ?? '';
+    // doorNo.text = data['door_no'] ?? '';
+    // streetName.text = data['street_name'] ?? '';
+    // pregnancyStatus.text = data['pregnancy_status'] ?? '';
+    // otherInformation.text = data['other_information'] ?? '';
+    // numberOfChildren.text = data['number_of_children']?.toString() ?? '';
+    // averageLengthOfCycles.text = data['average_length_of_cycles']?.toString() ?? '';
+    // partnerPhoneVerified.text = data['partner_phone_verified']?.toString() ?? '';
+    // deliveryDate.text = data['delivery_date'] ?? '';
 
-    // Non-editable fields
-    gender = data['gender'] ?? 'Female';
-    bloodGroup = data['blood_group'] ?? 'A+';
-    created = data["created_at"]??"";
-    profile_pic = data["profile_pic"];
+    // // Non-editable fields
+    // gender = data['gender'] ?? 'Female';
+    // bloodGroup = data['blood_group'] ?? 'A+';
+    // created = data["created_at"]??"";
+    profile_pic = data["profile_pic"] ?? "";
 
-    healthStatus = data["health_status"];
-
+    healthStatus = data["health_status"]??"Normal";
 
   }
 

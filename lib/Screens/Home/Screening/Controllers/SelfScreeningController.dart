@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/db/dbHelper.dart';
 import 'package:flutter/material.dart';
@@ -119,12 +120,11 @@ class Selfscreeningcontroller extends GetxController {
     });
 
         Map<String,dynamic> data = {
-      "reportType":"Symptoms",
       "details":details,
       "description":symptomDesc.text,
     };
 
-    print(data);
+    await Userapi.addScreeningData(null,null,data);
 
   }
 
@@ -137,12 +137,14 @@ class Selfscreeningcontroller extends GetxController {
 
 
         Map<String,dynamic> data = {
-      "reportType":"Vitals",
       "details":healthData,
       "description":symptomDesc.text
     };
 
     print(data);
+
+    await Userapi.addScreeningData(null,healthData,null);
+
 
   //  int ins = await insertOrUpdateSymptom(json.encode(symptomsMap));
 
