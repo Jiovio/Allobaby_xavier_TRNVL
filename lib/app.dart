@@ -32,8 +32,8 @@ class _MyAppState extends State<MyApp> {
       child: GetMaterialApp(
         title: "Allobaby",
         home: 
-        CryHistory(),
-        // Apiroutes.checkUser() ?const MainScreen():const Signin(),
+        // Crytellhome(),
+        Apiroutes.checkUser() ?MainScreen():Signin(),
         debugShowCheckedModeBanner: false,
         theme: Themes().lightTheme,
           locale: widget.initLang,

@@ -1,5 +1,6 @@
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/features/crytell/screens/crydetail.dart';
+import 'package:allobaby/features/crytell/screens/record.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -100,6 +101,8 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
         elevation: 0,
         iconTheme: IconThemeData(color: primaryColor),
       ),
+ 
+ 
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -152,104 +155,116 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
               ],
             ),
           ),
+
+
+        
+
           Positioned(
             bottom: 10,
             left: 0,
             right: 0,
-            child: Center(
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: primaryColor.withOpacity(0.3),
-                        width: 2,
+            child: GestureDetector(
+              onTap: () => Get.to(()=> const VoiceRecorderNew(),
+              transition: Transition.downToUp, curve: Curves.easeInOut),
+              child: Center(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: primaryColor.withOpacity(0.3),
+                          width: 2,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    width: 90,
-                    height: 90,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: primaryColor.withOpacity(0.1),
+                    Container(
+                      width: 90,
+                      height: 90,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: primaryColor.withOpacity(0.1),
+                      ),
                     ),
-                  ),
-                        
-                  TweenAnimationBuilder(
-                    duration: Duration(milliseconds: 300),
-                    tween: Tween<double>(begin: 1, end: 1),
-                    builder: (context, double scale, child) {
-                      return Transform.scale(
-                        scale: scale,
-                        child: Container(
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                primaryColor,
-                                secondaryColor,
+                          
+                    TweenAnimationBuilder(
+                      duration: Duration(milliseconds: 300),
+                      tween: Tween<double>(begin: 1, end: 1),
+                      builder: (context, double scale, child) {
+                        return Transform.scale(
+                          scale: scale,
+                          child: Container(
+                            height: 80,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  primaryColor,
+                                  secondaryColor,
+                                ],
+                              ),
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: primaryColor.withOpacity(0.3),
+                                  blurRadius: 15,
+                                  spreadRadius: 2,
+                                ),
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 10,
+                                  offset: Offset(0, 3),
+                                ),
                               ],
                             ),
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: primaryColor.withOpacity(0.3),
-                                blurRadius: 15,
-                                spreadRadius: 2,
-                              ),
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 10,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ShaderMask(
-                                shaderCallback: (bounds) => LinearGradient(
-                                  colors: [Colors.white, Colors.white70],
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                ).createShader(bounds),
-                                child: Icon(
-                                  Icons.mic,
-                                  color: Colors.white,
-                                  size: 34,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                
+                                ShaderMask(
+                                  shaderCallback: (bounds) => LinearGradient(
+                                    colors: [Colors.white, Colors.white70],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                  ).createShader(bounds),
+                                  child: Icon(
+                                    Icons.mic,
+                                    color: Colors.white,
+                                    size: 34,
+                                    
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 4),
-                              Text(
-                                'Record',
-                                style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  shadows: [
-                                    Shadow(
-                                      color: Colors.black26,
-                                      offset: Offset(0, 1),
-                                      blurRadius: 2,
-                                    ),
-                                  ],
+                                SizedBox(height: 4),
+                                Text(
+                                  'Record',
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    shadows: [
+                                      Shadow(
+                                        color: Colors.black26,
+                                        offset: Offset(0, 1),
+                                        blurRadius: 2,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                        );
+                      },
+                    ),
+                  
+                  
+                  ],
+                ),
               ),
             ),
           ),
