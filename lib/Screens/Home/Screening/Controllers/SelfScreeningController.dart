@@ -25,7 +25,9 @@ class Selfscreeningcontroller extends GetxController {
     var vitals = await getTodayData("vitals");
 
     if(vitals!=null){
-      healthData = json.decode(vitals["data"]);
+      healthData = {...healthData,...json.decode(vitals["data"])};
+      vitalsData = json.decode(vitals["data"]);
+
     }
 
   }
@@ -35,7 +37,7 @@ class Selfscreeningcontroller extends GetxController {
       List symptomsSelectedItems = [];
     
         Map<String,dynamic> symptomsMap = {
-          'Normal' : false,
+          'Normal' : true,
           'Body pain' : false,
           'Burning Stomach' : false,
           'Cold cough' : false,
@@ -97,10 +99,16 @@ class Selfscreeningcontroller extends GetxController {
     'temperatureMetric':'C'
   }.obs;
 
+
+  Map<String, dynamic> vitalsData = {
+
+  };
+
   void updateVitals(String key, dynamic value){
 
+      vitalsData[key] = value;
 
-    insertOrUpdateDaily(json.encode(healthData), "vitals");
+    insertOrUpdateDaily(json.encode(vitalsData), "vitals");
 
     if(healthData.containsKey(key)){
       healthData[key] = value;
@@ -131,25 +139,14 @@ class Selfscreeningcontroller extends GetxController {
 
     void submitVitals () async {
 
-
-    int phone = await Storage.getUserID();
-
-
-
-        Map<String,dynamic> data = {
-      "details":healthData,
+      Map<String,dynamic> data = {
+      "details":vitalsData,
       "description":symptomDesc.text
     };
 
     print(data);
 
-    await Userapi.addScreeningData(null,healthData,null);
-
-
-  //  int ins = await insertOrUpdateSymptom(json.encode(symptomsMap));
-
-  //  Get.back();
-
+    await Userapi.addScreeningData(null,vitalsData,null);
 
   }
 

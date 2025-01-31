@@ -13,8 +13,8 @@ static final Sqlite _instance = Sqlite._internal();
   Sqlite._internal();
 
 
-    Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'allolab.db');
+   static Future<Database> _initDatabase() async {
+    String path = join(await getDatabasesPath(), 'allobaby.db');
 
     
     return await openDatabase(
@@ -24,70 +24,16 @@ static final Sqlite _instance = Sqlite._internal();
     );
   }
 
+
+  static Future<Database> db() async {
+    if (_database != null) return _database!;
+    _database = await _initDatabase();
+    return _database!;
+  }
+
  static  Future<void> _onCreate(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE my_table (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT
-      )
-    ''');
 
-    await db.execute(
-      '''
-CREATE TABLE sync (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    lastSynced DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-'''
-    );
-
-    await db.execute('''
-  insert into sync (name) values("reports");
-''');
-
-      await db.execute('''
-    CREATE TABLE reports (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      reportId TEXT,
-      reportType TEXT ,
-      details TEXT ,
-      reportFile BLOB,
-      created DATETIME DEFAULT CURRENT_TIMESTAMP,
-      synced BOOLEAN DEFAULT FALSE,
-      imageurl TEXT ,
-      phone TEXT ,
-      description TEXT 
-
-    );
-  ''');
-
-await db.execute('''
-CREATE TABLE chats (
-  id TEXT NOT NULL,
-  senderId TEXT NOT NULL,
-  receiverId TEXT NOT NULL,
-  type TEXT,
-  message TEXT,
-  timestamp TIMESTAMP NOT NULL,
-  photoUrl TEXT,
-  fileUrl TEXT,
-  fileSize TEXT,
-  fileName TEXT,
-  fid TEXT
-);
-''');
-
-  await db.execute('''
-    CREATE TABLE chatlist (
-      name TEXT,
-      fid TEXT,
-      id TEXT,
-      type TEXT,
-      lastMessage TEXT,
-      recent TIMESTAMP
-    );
-  ''');
+    
 
 
   await db.execute('''
@@ -133,25 +79,10 @@ CREATE TABLE daily (
     uid INTEGER
 );
 ''');
-
-
-
-    // await db.execute('''
-    //   insert into my_table (name) values("vijay");
-    // ''');
   }
 
 
-    static Future<Database> db() async {
-    return await openDatabase(
-      'allolab.db',
-      version: 1,
-      onCreate: (Database database, int version) async {
-        await _onCreate(database,version);
-        
-      },
-    );
-  }
+
 
 
 

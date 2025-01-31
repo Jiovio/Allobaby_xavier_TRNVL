@@ -32,7 +32,7 @@ class Fetalmonitoringcontroller extends GetxController {
     }
 
 
-int heartRate = 60;
+int? heartRate;
 int kickCount = 0;
 
 TextEditingController desc = TextEditingController();
@@ -93,15 +93,20 @@ TextEditingController desc = TextEditingController();
 
       Future<void> submit () async {
 
-                 if(image==null){
-          showToast("Please Upload Image", false);
+        //          if(image==null){
+        //   showToast("Please Upload Image", false);
+        //   return;
+        // }
+
+        if(heartRate==null){
+          showToast("Please Enter Heart Rate", false);
           return;
         }
 
-        if(desc.text==""){
-          showToast("Please Update Description", false);
-          return;
-        }
+        // if(desc.text==""){
+        //   showToast("Please Update Description", false);
+        //   return;
+        // }
 
 
 
@@ -118,8 +123,13 @@ TextEditingController desc = TextEditingController();
         var random = Random();
   int randomInt = random.nextInt(1000000);
 
-        String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
+String  url = "";
 
+    if(image!=null){
+   url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
+    }
+
+    
     Map<String,dynamic> data = {
       "reportType":"Fetal Monitoring",
       "details":reportData,

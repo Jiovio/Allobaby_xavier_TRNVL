@@ -190,7 +190,7 @@ class Hemoglobin extends StatelessWidget {
                           ListTile(
                             leading: Image.asset("assets/labReports/hemoglobin.png"),
                             title: 
-                            Text("Hemoglobin Value : ${controller.hemoGlobinValue}".tr,
+                            Text("Hemoglobin Value : ${controller.hemoGlobinValue ?? "_"}".tr,
                             ),
                             
                             

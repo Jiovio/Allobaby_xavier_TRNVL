@@ -24,7 +24,7 @@ class AppInfo extends StatelessWidget {
           Container(
             height: MediaQuery.of(context).size.height / 2,
             width: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
             ),
             child: Column(
@@ -34,6 +34,19 @@ class AppInfo extends StatelessWidget {
                   'assets/General/laucher_icon.png',
                   scale: 4,
                 ),
+
+                 SizedBox(
+                  height: 8,
+                ),
+                
+
+                Text(
+                  "ALLOBABY",
+                  style: TextStyle(color: PrimaryColor, fontSize: 24),
+                )
+                ,
+
+
                 SizedBox(
                   height: 8,
                 ),
@@ -48,16 +61,16 @@ class AppInfo extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 40),
             child: Column(
               children: [
-                Text("Last Updated on 06-jan-2021"),
-                SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(minimumSize: Size(50, 40)),
-                  onPressed: () {},
-                  icon: Icon(Icons.arrow_forward),
-                  label: Text("CHECK FOR UPDATES".tr),
-                ),
+                // Text("Last Updated on 06-jan-2021"),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // ElevatedButton.icon(
+                //   style: ElevatedButton.styleFrom(minimumSize: Size(50, 40)),
+                //   onPressed: () {},
+                //   icon: Icon(Icons.arrow_forward),
+                //   label: Text("CHECK FOR UPDATES".tr),
+                // ),
                 SizedBox(
                   height: 16,
                 ),

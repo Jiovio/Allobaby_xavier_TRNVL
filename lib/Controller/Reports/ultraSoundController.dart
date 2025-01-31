@@ -43,7 +43,7 @@ String alphaminePresent = "";
 String sugarPresent = "";
 
 
-   int heartRate = 60;
+   int? heartRate;
   File? image;
 
   final picker = ImagePicker();
@@ -91,15 +91,40 @@ String sugarPresent = "";
   }
 
       Future<void> submit () async {
-                         if(image==null){
-          showToast("Please Upload Image", false);
+        //                  if(image==null){
+        //   showToast("Please Upload Image", false);
+        //   return;
+        // }
+
+
+        if(fetalPresentation==null){
+          showToast("Please Select Fetal Presentation", false);
           return;
         }
 
-        if(desc.text==""){
-          showToast("Please Update Description", false);
+                if(fetalMovement==null){
+          showToast("Please Select Fetal Movement", false);
           return;
         }
+
+
+                        if(Placenta==null){
+          showToast("Please Select Placenta", false);
+          return;
+        }
+
+
+        if(heartRate==null){
+          showToast("Please Enter Heart Rate", false);
+          return;
+        }
+
+
+
+        // if(desc.text==""){
+        //   showToast("Please Update Description", false);
+        //   return;
+        // }
 
 
     Map<String,dynamic> reportData = {
@@ -115,8 +140,14 @@ var d = await Userapi.getUser();
         var random = Random();
   int randomInt = random.nextInt(1000000);
 
-String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
-    Map<String,dynamic> data = {
+String  url = "";
+
+    if(image!=null){
+   url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
+    }
+    
+    
+     Map<String,dynamic> data = {
       "reportType":"Ultra Sound",
       "details":reportData,
       "imageurl":url,

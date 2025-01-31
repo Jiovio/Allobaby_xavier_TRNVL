@@ -5,6 +5,8 @@ import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/API/authAPI.dart';
 import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Screens/Home/Prescription/addprescription.dart';
+import 'package:allobaby/Screens/Home/Report/AddReport.dart';
 import 'package:allobaby/Screens/Home/Report/ViewReport.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +35,23 @@ class Report extends StatelessWidget {
       appBar: AppBar(title: Text("Report")),
       body: Column(
         children: [
+
+           Padding(
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 20, bottom: 20),
+              child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                      padding: EdgeInsets.only(
+                          left: 20, right: 40, top: 14, bottom: 14)),
+                  onPressed: () => Get.to(() => AddReport(),
+                      transition: Transition.rightToLeft),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Icon(Icons.camera),
+                      Text("Scan and Add Report".tr.toUpperCase())
+                    ],
+                  ))),
   
           Expanded(
             child: FutureBuilder<List<dynamic>>(

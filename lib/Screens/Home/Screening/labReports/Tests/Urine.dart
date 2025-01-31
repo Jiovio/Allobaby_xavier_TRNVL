@@ -31,7 +31,7 @@ class Urine extends StatelessWidget {
                               width: double.infinity,
                               child: Text(
                                               "Add Urine Test Report".tr,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 20,
                                               ),
                                             ),

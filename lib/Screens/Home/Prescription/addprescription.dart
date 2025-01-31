@@ -185,11 +185,11 @@ class _AddPrescriptionState extends State<AddPrescription> {
                   onTap: _showImagePicker,
                 ),
                 const SizedBox(height: 20),
-                searchBox(
-                  "Select Type of Prescription",
-                  prescriptionTypes,
-                  (value) => setState(() => prescriptionType = value),
-                ),
+                // searchBox(
+                //   "Select Type of Prescription",
+                //   prescriptionTypes,
+                //   (value) => setState(() => prescriptionType = value),
+                // ),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: descriptionController,

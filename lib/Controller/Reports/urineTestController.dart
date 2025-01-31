@@ -87,15 +87,30 @@ Navigator.of(context).pop();
   }
 
     Future<void> submit () async {
-                       if(image==null){
+        // if(image==null){
+        //   showToast("Please Upload Image", false);
+        //   return;
+        // }
+
+        if(alphaminePresent==null){
+          showToast("Please Select Alphamine Present", false);
+          return;
+        }
+
+                        if(sugarPresent==null){
+          showToast("Please Select Sugar Present", false);
+          return;
+        }
+
+                if(image==null){
           showToast("Please Upload Image", false);
           return;
         }
 
-        if(desc.text==""){
-          showToast("Please Update Description", false);
-          return;
-        }
+        // if(desc.text==""){
+        //   showToast("Please Update Description", false);
+        //   return;
+        // }
 
       startLoading();
     Map<String,dynamic> reportData = {
@@ -109,8 +124,14 @@ var d = await Userapi.getUser();
         var random = Random();
   int randomInt = random.nextInt(1000000);
 
-String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
-    Map<String,dynamic> data = {
+    String  url = "";
+
+    if(image!=null){
+   url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
+    }
+    
+    
+        Map<String,dynamic> data = {
       "reportType":"Urine",
       "details":reportData,
       "imageurl":url,

@@ -33,7 +33,7 @@ class Glucosecontroller extends GetxController {
     }
 
 
-double glucoseValue = 70;
+double? glucoseValue ;
 
 TextEditingController desc = TextEditingController();
 
@@ -86,15 +86,20 @@ TextEditingController desc = TextEditingController();
       Future<void> submit () async {
 
 
-                 if(image==null){
-          showToast("Please Upload Image", false);
+        //          if(image==null){
+        //   showToast("Please Upload Image", false);
+        //   return;
+        // }
+
+        if(glucoseValue==null){
+          showToast("Please Select Glucose Value", false);
           return;
         }
 
-        if(desc.text==""){
-          showToast("Please Update Description", false);
-          return;
-        }
+        // if(desc.text==""){
+        //   showToast("Please Update Description", false);
+        //   return;
+        // }
 
 
 
@@ -110,8 +115,13 @@ TextEditingController desc = TextEditingController();
    var random = Random();
   int randomInt = random.nextInt(1000000);
 
-String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone,);
+String  url = "";
 
+    if(image!=null){
+   url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
+    }
+
+    
     Map<String,dynamic> data = {
       "reportType":"Glucose",
       "details":reportData,

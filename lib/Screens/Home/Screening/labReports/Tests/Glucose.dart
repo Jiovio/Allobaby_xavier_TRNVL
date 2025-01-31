@@ -187,7 +187,7 @@ class Glucose extends StatelessWidget {
 
                           ListTile(
                             leading: Image.asset("assets/labReports/hemoglobin.png"),
-                            title: Text("Blood Glucose Value : ${controller.glucoseValue.toString()}".tr),
+                            title: Text("Blood Glucose Value : ${controller.glucoseValue ?? "_"}".tr),
                             subtitle: Text("Tap to Change".tr),
                             shape: OutlineInputBorder(borderSide: BorderSide(
                               color: Colors.grey

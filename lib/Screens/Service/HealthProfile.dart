@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Config/weeklysummary.dart';
 import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Screens/Home/Screening/Controllers/SelfScreeningController.dart';
 import 'package:allobaby/Screens/Home/Screening/Vitals/BMI.dart';
@@ -52,7 +53,15 @@ class _HealthprofileState extends State<Healthprofile> {
 
   Selfscreeningcontroller cont = Get.put(Selfscreeningcontroller());
 
+int calculateWeekDifference() {
+  DateTime today = DateTime.now();
+  DateTime oldDate = DateTime.parse(mc.lmpDate.text);
 
+  int differenceInDays = today.difference(oldDate).inDays;
+  int differenceInWeeks = (differenceInDays / 7).floor();
+
+  return differenceInWeeks % 40;
+}
 
 
 
@@ -185,26 +194,6 @@ class _HealthprofileState extends State<Healthprofile> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        // Column(
-                        //   children: [
-                        //   const  Icon(Icons.double_arrow),
-                        //   const SizedBox(
-                        //       height: 12,
-                        //     ),
-                        //           Text(
-                        //               "280",
-                        //               style: TextStyle(
-                        //                   fontSize: 18,
-                        //                   fontWeight: FontWeight.w600),
-                        //     ),    SizedBox(
-                        //       height: 8,
-                        //     ),
-                        //     Text("PDay",
-                        //         style: TextStyle(
-                        //             color: Black.withOpacity(0.6),
-                        //             fontSize: 14)),
-                        //   ],
-                        // ),
                         Column(
                           children: [
                             Icon(Icons.double_arrow),
@@ -212,7 +201,7 @@ class _HealthprofileState extends State<Healthprofile> {
                               height: 12,
                             ),
                             Text(
-                              "Good",
+                              mc.healthStatus,
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.w600),
                             ),
@@ -227,13 +216,10 @@ class _HealthprofileState extends State<Healthprofile> {
                         ),
                         Column(
                           children: [
-                           // TextButton(
-                             Icon(Icons.double_arrow),
-                            // onPressed: (){
-                            //   Get.to(SelfScreening()) ;
-                            // },
-                           // ),
-                            SizedBox(
+                 
+                            const Icon(Icons.double_arrow),
+                     
+                           const SizedBox(
                               height: 12,
                             ),
                             Text(mc.lastScreened==null?
@@ -260,7 +246,7 @@ class _HealthprofileState extends State<Healthprofile> {
                   height: 8,
                 ),
                  
-                 
+                 if(mc.pregnancyStatus.text == "Iam pregnant" )
                  Card(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12)),
@@ -271,13 +257,19 @@ class _HealthprofileState extends State<Healthprofile> {
                           Column(
                             children: [
                               Text(
-                                date!.day.toString(),
+                                // date!.day.toString(),
+                                calculateWeekDifference().toString(),
                                 style: TextStyle(fontSize: 26),
                               ),
                               SizedBox(
                                 height: 8,
                               ),
-                              Text(monthNames[date!.month-1])
+                              Text(
+                                
+                                // monthNames[date!.month-1]
+                                "Week",
+                                
+                                )
                             ],
                           ),
                           SizedBox(
@@ -287,17 +279,17 @@ class _HealthprofileState extends State<Healthprofile> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "What's up today?",
+                               const Text(
+                                  "What's up this week ?",
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500),
                                 ),
-                                SizedBox(
+                              const SizedBox(
                                   height: 8,
                                 ),
                                 Text(
-                                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.")
+                                    weeklysummary[calculateWeekDifference()])
                               ],
                             ),
                           )

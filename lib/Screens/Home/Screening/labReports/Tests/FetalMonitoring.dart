@@ -176,7 +176,7 @@ class Fetalmonitoring extends StatelessWidget {
 
                           ListTile(
                             leading: Image.asset("assets/labReports/heart.png"),
-                            title: Text("Heart Rate : ${controller.heartRate} BPM"),
+                            title: Text("Heart Rate : ${controller.heartRate ?? "_"} BPM"),
                             subtitle: Text("Tap to Change ".tr),
                             shape: OutlineInputBorder(borderSide: BorderSide(
                               color: Colors.grey

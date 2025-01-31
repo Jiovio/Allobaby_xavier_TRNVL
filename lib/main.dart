@@ -40,6 +40,13 @@ Future<void> initializeAppCheck() async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  try {
+      await Sqlite.db();
+  } catch (e) {
+    print("Error Initializing DB");
+  }
+  
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await NotificationService.initLocalNotificationsPlugin();
@@ -52,7 +59,6 @@ void main() async {
   await initializeAppCheck();
 
   
-  await Sqlite.db();
   await initLocalStorage();
 
   final lang = localStorage.getItem("lang");

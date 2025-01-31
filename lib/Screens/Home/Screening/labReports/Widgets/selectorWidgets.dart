@@ -13,7 +13,7 @@ Row HemoglobinSelector() {
     children: [
       GetBuilder<Hemoglobincontroller>(builder:(controller) => 
             NumberPicker(
-                value: controller.hemoGlobinValue,
+                value: controller.hemoGlobinValue ?? 18,
                                 // value: 15,
                 minValue: 0,
                 maxValue: 20,
@@ -37,7 +37,7 @@ Row fetalHeartMonitoring() {
     children: [
       GetBuilder<Fetalmonitoringcontroller>(builder:(controller) => 
                     NumberPicker(
-                  value: controller.heartRate,
+                  value: controller.heartRate ??60,
                   minValue: 30,
                   itemHeight: 32,
                   maxValue: 150,
@@ -63,13 +63,12 @@ Row ultraSoundHeartMonitoring() {
         init: Ultrasoundcontroller(),
         builder:(controller) => 
                     NumberPicker(
-                  value: controller.heartRate,
+                  value: controller.heartRate ?? 60,
                   minValue: 30,
                   itemHeight: 32,
                   maxValue: 150,
                   onChanged: (value) {
                     controller.heartRate = value;
-                    // controller.heartRate = value;
                     controller.update();
                   },
                               )
@@ -115,7 +114,7 @@ Wrap glucoseSelector() {
                   children: [
                     DecimalNumberPicker(
                       // value: 50,
-                      value: controller.glucoseValue,
+                      value: controller.glucoseValue ?? 70,
 
                       minValue: 20,
                       maxValue: 700,

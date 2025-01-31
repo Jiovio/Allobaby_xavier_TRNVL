@@ -16,7 +16,6 @@ class Apiroutes {
   String otpSessionCreation = "/auth/otp";
 
   String getUrl(String route){
-
     return baseUrl+route;
   }
 

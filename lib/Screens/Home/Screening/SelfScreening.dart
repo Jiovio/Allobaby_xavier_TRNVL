@@ -76,12 +76,12 @@ class _SelfScreeningState extends State<SelfScreening> {
     ];
 
 
-    print("i = $i");
+    // print("i = $i");
 
-    if(i<2){
+    // if(i<2){
     await funclist[i]();
 
-    }
+    // }
 
 
   }
@@ -98,7 +98,7 @@ class _SelfScreeningState extends State<SelfScreening> {
 
 
       body: PageView(
-        physics: NeverScrollableScrollPhysics(),
+        physics:const NeverScrollableScrollPhysics(),
         controller: pg,
         onPageChanged: (index) {
           print(index);
@@ -111,10 +111,10 @@ class _SelfScreeningState extends State<SelfScreening> {
           SymptomsScreen(),
           VitalsScreen(),
           Hemoglobin(),
-          Urine(),
-          Glucose(),
+          const Urine(),
+          const Glucose(),
           Fetalmonitoring(),
-          Ultrasound(),
+          const Ultrasound(),
           // summary(),
 
         ],
@@ -122,7 +122,7 @@ class _SelfScreeningState extends State<SelfScreening> {
 
 
       bottomNavigationBar: Container(
-                padding: EdgeInsets.only(top: 6.0, left: 20, right: 20, bottom: 10),
+                padding: const EdgeInsets.only(top: 6.0, left: 20, right: 20, bottom: 10),
         color: Get.isDarkMode ? darkGrey2 : White,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -134,7 +134,7 @@ class _SelfScreeningState extends State<SelfScreening> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: PrimaryColor,
-                            padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+                            padding: const EdgeInsets.fromLTRB(24, 8, 24, 8),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
                             // primary: PrimaryColor,
@@ -188,13 +188,35 @@ class _SelfScreeningState extends State<SelfScreening> {
                             foregroundColor: Colors.white
                           ),
                           onPressed: () {
-                        
-                            pg.nextPage(duration: Duration(milliseconds: 300),curve: Curves.linear);
-                            submit(i);
-                            // print(pg.page);
-                        
-                        // _updateCurrentPageIndex(i<1?i++:1);
-                        
+
+                            showDialog(context: context, 
+                            
+                            builder:(context) => 
+                            
+                            AlertDialog(
+                              title:const Text("Confirm"),
+                              content: const Text("Choose Yes to Save the Data"),
+
+                              actions: [
+                                TextButton(
+    child:const Text("Cancel"),
+    onPressed:  () {
+      Navigator.pop(context);
+    },
+  ),
+
+
+  TextButton(
+    child:const Text("Save"),
+    onPressed:  () { 
+      Navigator.pop(context);
+
+    pg.nextPage(duration: const Duration(milliseconds: 300),curve: Curves.linear);
+    submit(i); 
+    },
+  )
+                              ],
+                            ),);
 
                           },
                           child: Text("NEXT".tr

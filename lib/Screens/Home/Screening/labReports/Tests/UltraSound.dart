@@ -203,7 +203,7 @@ class Ultrasound extends StatelessWidget {
 
                                         ListTile(
                             leading: Image.asset("assets/labReports/heart.png"),
-                            title: Text("Heart Rate : ${controller.heartRate} BPM".tr),
+                            title: Text("Heart Rate : ${controller.heartRate ?? "_"} BPM".tr),
                             subtitle: Text("Tap to Change ".tr),
                             shape: OutlineInputBorder(borderSide: BorderSide(
                               color: Colors.grey

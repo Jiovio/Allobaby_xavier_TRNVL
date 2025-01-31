@@ -35,18 +35,9 @@ class AddReport extends StatelessWidget {
                                     InteractiveViewer(
                                       child: Center(
                                         child: 
-                                        // controller.fileImage64 == null
-                                        //     ? Text(
-                                        //         "NO IMAGE",
-                                        //         style: TextStyle(
-                                        //             fontSize: 18, color: White),
-                                        //       )
-                                        //     : Image.memory(base64Decode(
-                                        //         controller.fileImage64)),
-
                                               Text(
                                                 "NO IMAGE".tr,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 18, color: White),
                                               )
                                                 

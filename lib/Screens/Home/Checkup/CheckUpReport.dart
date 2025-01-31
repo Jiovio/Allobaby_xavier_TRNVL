@@ -89,7 +89,7 @@ class CheckUpReport extends StatelessWidget {
         value: "${data["vitals"]["respiratoryRate"]}",
       ),
       vitals(
-        title: 'HRV',
+        title: 'HB',
         image: 'assets/computer.png',
         value: "${data["vitals"]["hrv"]}",
       )

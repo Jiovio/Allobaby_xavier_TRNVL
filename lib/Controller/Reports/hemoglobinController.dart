@@ -31,7 +31,7 @@ class Hemoglobincontroller extends GetxController {
     }
 
 
-int hemoGlobinValue = 12;
+int? hemoGlobinValue ;
 
 TextEditingController desc = TextEditingController();
 
@@ -90,15 +90,20 @@ String url = "";
   }
 
   Future<void> submit () async {
-                 if(image==null){
-          showToast("Please Upload Image", false);
+        //          if(image==null){
+        //   showToast("Please Upload Image", false);
+        //   return;
+        // }
+
+        if(hemoGlobinValue==null){
+          showToast("Please Select Hemoglobin Value", false);
           return;
         }
 
-        if(desc.text==""){
-          showToast("Please Update Description", false);
-          return;
-        }
+        // if(desc.text==""){
+        //   showToast("Please Update Description", false);
+        //   return;
+        // }
 
     startLoading();
 
@@ -112,7 +117,14 @@ String url = "";
         var random = Random();
   int randomInt = random.nextInt(1000000);
 
-String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
+String  url = "";
+
+    if(image!=null){
+   url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
+    }
+
+    
+    
     Map<String,dynamic> data = {
       "reportType":"Hemoglobin",
       "details":reportData,
@@ -140,7 +152,7 @@ String  url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomI
       dynamic res = json.decode(await OurFirebase.askVertexAi(image!, prompt));
       desc.text = res["summary"]??"";
       // 
-      hemoGlobinValue = res["hemoglobinValue"]??12;
+      hemoGlobinValue = res["hemoglobinValue"] ?? "_";
 
       update();
 
