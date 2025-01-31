@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:allobaby/Config/Color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-
-// Optional: Additional UI utilities if needed
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
@@ -20,12 +17,11 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
   Timer? timer;
   List<String> loadingTexts = [
-    "Analyzing Emotions", 
-    "Correcting Audio", 
-    "Predicting Recommendations",
-    // You can add more descriptive loading texts here
-    "Processing Baby's Feedback",
-    "Fine-tuning Recommendations"
+    "Analyzing Baby's Emotions", 
+    "Tuning Audio Magic", 
+    "Creating Cute Recommendations",
+    "Preparing Adorable Insights",
+    "Crafting Personalized Moments"
   ];
   int currentIndex = 0;
   late AnimationController _animationController;
@@ -34,7 +30,7 @@ class _LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     
-    // Prevent screen rotation if desired
+    // Prevent screen rotation
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -71,6 +67,9 @@ class _LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    // Primary color with hex 0xffFF626F
+    final Color primaryColor = Color(0xffFF626F);
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -78,8 +77,8 @@ class _LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Colors.blue.shade50,
-              Colors.blue.shade100,
+              primaryColor.withOpacity(0.1),
+              primaryColor.withOpacity(0.2),
             ],
           ),
         ),
@@ -87,57 +86,95 @@ class _LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Lottie animation for a more dynamic loading indicator
+            // Cute Lottie animation with pulsing effect
             Center(
               child: AnimatedBuilder(
                 animation: _animationController,
                 builder: (context, child) {
                   return Transform.scale(
                     scale: 1.0 + _animationController.value * 0.1,
-                    child: Lottie.asset(
-                      'assets/loading_animation.json', // Add a cute loading animation
-                      width: 250,
-                      height: 250,
-                      // Optional: fit options
-                      fit: BoxFit.contain,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: primaryColor.withOpacity(0.3),
+                            blurRadius: 20,
+                            spreadRadius: 5,
+                          )
+                        ]
+                      ),
+                      child: Lottie.asset(
+                        'assets/animations/Ani8.json',
+                        width: 250,
+                        height: 250,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   );
                 },
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
 
-            // Animated text with subtle shadow and gentle bounce
-            AnimatedDefaultTextStyle(
+            // Animated and adorable loading text
+            AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
-                color: Colors.blue.shade800,
-                shadows: [
-                  Shadow(
-                    blurRadius: 10.0,
-                    color: Colors.blue.shade200,
-                    offset: const Offset(3, 3),
-                  ),
-                ],
-              ),
               child: Text(
                 loadingTexts[currentIndex],
+                key: ValueKey<int>(currentIndex),
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                  color: primaryColor,
+                  letterSpacing: 0.5,
+                  shadows: [
+                    Shadow(
+                      blurRadius: 10.0,
+                      color: primaryColor.withOpacity(0.3),
+                      offset: const Offset(2, 2),
+                    ),
+                  ],
+                ),
                 textAlign: TextAlign.center,
+              ),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0, 0.5),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
+                  ),
+                );
+              },
+            ),
+
+            const SizedBox(height: 25),
+
+            // Cute progress indicator
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50),
+              child: LinearProgressIndicator(
+                backgroundColor: primaryColor.withOpacity(0.2),
+                valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+                minHeight: 6,
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
 
             const SizedBox(height: 20),
 
-            // Subtle progress indicator
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: LinearProgressIndicator(
-                backgroundColor: Colors.blue.shade100,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue.shade400),
-                minHeight: 6,
+            // Cute additional text
+            Text(
+              "Almost there...",
+              style: TextStyle(
+                color: primaryColor.withOpacity(0.7),
+                fontSize: 16,
+                fontStyle: FontStyle.italic,
               ),
             ),
           ],
