@@ -12,11 +12,11 @@ import 'package:get/get.dart';
 
 class Babycrycontroller extends GetxController {
 
-   late dynamic data;
+   dynamic data;
 
- late String reason ;
+  String reason = "" ;
 
- late String recommendations;
+  String recommendations = "";
 
  List<Widget> t = [];
 
@@ -30,7 +30,8 @@ Future<void> babydetect(audioFile) async {
   String prompt = """
 The input is an audio .. tell me do you hear a baby cry.
 if you hear a baby cry , predict why the baby is crying and how to comfort the baby
-arrange the reasons based on the most likely reason for baby cry
+arrange the reasons based on the most likely reason for baby cry.
+if it is a empty audio return babyCryDetected as false
 respond in schema of 
 {
 babyCryDetected:bool,
@@ -39,9 +40,15 @@ stepsToComfortTheBaby : [string]
 }
 """;
 
-Get.to(Loading());
+
+  // Get.to(()=>Baby());
+
+  // audio = audioFile;
+
+  // return;
 
 
+Get.to(()=>Loading());
 
 
 var res = await OurFirebase.audioAI(audioFile, prompt);
@@ -72,15 +79,15 @@ if(data["babyCryDetected"]==true){
 
   print(stepsToComfortTheBaby);
 
-  Get.to(Baby());
+  Get.to(()=>Baby());
 
   OurFirebase.uploadAudioToStorage("audio",audioFile);
 
   audio = audioFile;
 
 }else {
-
-  Get.to(Babycryfailed());
+  Get.back();
+  Get.to(()=> const Babycryfailed());
 
 }
 }

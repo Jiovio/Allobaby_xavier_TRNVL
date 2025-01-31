@@ -68,11 +68,14 @@ Directory appDirectory = await getApplicationDocumentsDirectory();
 
       var file =  await record.stop();
 
+      await record.dispose();
+
       if(rec){
-      print("Hi");
 
            if(file!=null){
 File audioFile = File(file);
+
+print(await audioFile.length());
   controller.babydetect(audioFile);
      }
 
@@ -165,6 +168,8 @@ File audioFile = File(file);
                           setState(() {
                             
                           });
+
+                          
 
 
 
