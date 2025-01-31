@@ -17,6 +17,7 @@ import 'package:allobaby/Screens/Main/Card/BannerCard.dart';
 import 'package:allobaby/Screens/Service/Appointment.dart';
 import 'package:allobaby/Screens/Service/MyAppointment.dart';
 import 'package:allobaby/Screens/Signin.dart';
+import 'package:allobaby/features/crytell/crytellhome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -268,9 +269,17 @@ class _HomeState extends State<Home> {
                   physics: BouncingScrollPhysics(),
                   children: [
                         categories("Allobot".tr, 'assets/Chat/chatbot.png',
-                        // CheckUp()
-                        Container(),() {allobotModal(context);}
+                        Container(),
+                        () {allobotModal(context);}
                         ),
+
+                                            categories("Allocry".tr,
+                        'assets/Homescreen/myawernessnew.png', 
+                        Crytellhome()
+                        // Signin()
+                        ),
+
+
                     categories("Awareness".tr,
                         'assets/Homescreen/myawernessnew.png', 
                         Awareness()
