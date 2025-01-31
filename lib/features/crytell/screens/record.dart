@@ -26,11 +26,44 @@ class VoiceRecorderNew extends StatefulWidget {
 class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerProviderStateMixin {
   final AudioRecorder _recorder = AudioRecorder();
   Timer? _timer;
+  Timer? _tipsTimer;
   int _countdown = 10;
   bool _isRecording = false;
   bool _isChecking = false;
+  int _currentTipIndex = 0;
   late AnimationController _pulseController;
   late Animation<double> _pulseAnimation;
+
+  final List<Map<String, dynamic>> _babyTips = [
+    {
+      'icon': Icons.volume_up,
+      'text': 'High-pitched, intense crying often indicates pain or immediate needs.',
+    },
+    {
+      'icon': Icons.night_shelter,
+      'text': 'Rhythmic crying that gets louder and softer might mean your baby is tired.',
+    },
+    {
+      'icon': Icons.restaurant,
+      'text': 'Short, low-pitched cries repeated every few seconds usually signal hunger.',
+    },
+    {
+      'icon': Icons.mood_bad,
+      'text': 'Whimpering or whining sounds might indicate mild discomfort or wanting attention.',
+    },
+    {
+      'icon': Icons.healing,
+      'text': 'Long, high-pitched screams could be signs of colic or stomach pain.',
+    },
+    {
+      'icon': Icons.thermostat,
+      'text': 'Sudden, sharp cries might mean your baby is too hot or cold.',
+    },
+    {
+      'icon': Icons.wash,
+      'text': 'Persistent crying with leg movement often indicates diaper change needs.',
+    },
+  ];
 
   @override
   void initState() {
@@ -43,6 +76,19 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
     _pulseAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
+
+    _startTipsRotation();
+  }
+
+  void _startTipsRotation() {
+    _tipsTimer?.cancel();
+    _tipsTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      if (mounted) {
+        setState(() {
+          _currentTipIndex = (_currentTipIndex + 1) % _babyTips.length;
+        });
+      }
+    });
   }
 
   Future<void> _startRecording() async {
@@ -85,12 +131,182 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
     }
   }
 
+  Future<void> _cancelRecording() async {
+    _timer?.cancel();
+    if (_isRecording) {
+      await _recorder.stop();
+      setState(() => _isRecording = false);
+    }
+    Navigator.pop(context);
+  }
+
   @override
   void dispose() {
     _timer?.cancel();
+    _tipsTimer?.cancel();
     _recorder.dispose();
     _pulseController.dispose();
     super.dispose();
+  }
+
+  Widget _buildControlButtons() {
+    if (_isRecording) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Stop Button
+          AnimatedContainer(
+            duration: Duration(milliseconds: 300),
+            child: ElevatedButton.icon(
+              onPressed: _stopRecording,
+              icon: Icon(Icons.stop, color: Colors.white),
+              label: Text(
+                'Stop',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: widget.primaryColor,
+                padding: EdgeInsets.symmetric(horizontal: 28, vertical: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                elevation: 8,
+                shadowColor: widget.primaryColor.withOpacity(0.5),
+              ),
+            ),
+          ),
+          SizedBox(width: 20),
+          // Cancel Button
+          AnimatedContainer(
+            duration: Duration(milliseconds: 300),
+            child: ElevatedButton.icon(
+              onPressed: _cancelRecording,
+              icon: Icon(Icons.close, color: Colors.white),
+              label: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: widget.primaryColor.withOpacity(0.7),
+                padding: EdgeInsets.symmetric(horizontal: 28, vertical: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                elevation: 8,
+                shadowColor: widget.primaryColor.withOpacity(0.3),
+              ),
+            ),
+          ),
+        ],
+      );
+    } else {
+      return AnimatedContainer(
+        duration: Duration(milliseconds: 300),
+        child: ElevatedButton.icon(
+          onPressed: _startRecording,
+          icon: Icon(
+            Icons.mic,
+            size: 28,
+            color: Colors.white,
+          ),
+          label: Text(
+            'Start Recording',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: widget.primaryColor,
+            padding: EdgeInsets.symmetric(horizontal: 36, vertical: 18),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50),
+            ),
+            elevation: 8,
+            shadowColor: widget.primaryColor.withOpacity(0.5),
+          ),
+        ),
+      );
+    }
+  }
+
+  Widget _buildTipCard() {
+    return AnimatedSwitcher(
+      duration: Duration(milliseconds: 200),
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return FadeTransition(
+          opacity: animation,
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: Offset(0.0, 0.5),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          ),
+        );
+      },
+      child: Container(
+        key: ValueKey<int>(_currentTipIndex),
+        margin: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.15),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.white.withOpacity(0.2)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: widget.primaryColor.withOpacity(0.3),
+                    blurRadius: 12,
+                    spreadRadius: 2,
+                  ),
+                ],
+              ),
+              child: Icon(
+                _babyTips[_currentTipIndex]['icon'],
+                color: widget.primaryColor,
+                size: 28,
+              ),
+            ),
+            SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                _babyTips[_currentTipIndex]['text'],
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  height: 1.4,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -117,7 +333,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
               Align(
                 alignment: Alignment.topLeft,
                 child: Container(
-                  margin: EdgeInsets.all(8),
+                  margin: EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.2),
                     shape: BoxShape.circle,
@@ -135,13 +351,13 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                   children: [
                     if (_isChecking) ...[
                       Lottie.asset(
-                        'assets/animations/Ani5.json', // Loading animation
+                        'assets/animations/Ani5.json',
                         width: 120,
                         height: 120,
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        'Checking for\n\nPlease wait',
+                        'Checking microphone\nPlease wait',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
@@ -150,8 +366,9 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                         ),
                       ),
                     ] else if (_isRecording) ...[
+                      // Recording indicator
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                         decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(30),
@@ -161,46 +378,42 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
-                              width: 8,
-                              height: 8,
+                              width: 10,
+                              height: 10,
                               decoration: BoxDecoration(
                                 color: Colors.red,
                                 shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.red.withOpacity(0.5),
+                                    blurRadius: 8,
+                                    spreadRadius: 2,
+                                  ),
+                                ],
                               ),
                             ),
-                            SizedBox(width: 8),
+                            SizedBox(width: 12),
                             Text(
                               'Recording ${_countdown}s',
-                              style: TextStyle(color: Colors.white, fontSize: 18),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 40),
+                      // Animation
                       Stack(
                         alignment: Alignment.center,
                         children: [
                           Lottie.asset(
-                            'assets/animations/Ani7.json', // Sound wave animation
+                            'assets/animations/Ani7.json',
                             width: 250,
                             height: 250,
                           ),
-                          // Container(
-                          //   width: 40,
-                          //   height: 40,
-                          //   decoration: BoxDecoration(
-                          //     color: Colors.white,
-                          //     borderRadius: BorderRadius.circular(8),
-                          //     boxShadow: [
-                          //       BoxShadow(
-                          //         color: Colors.black.withOpacity(0.2),
-                          //         blurRadius: 10,
-                          //         spreadRadius: 2,
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
-                       
                         ],
                       ),
                       const SizedBox(height: 40),
@@ -208,7 +421,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                         'Listening...',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 24,
+                          fontSize: 28,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -219,111 +432,27 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                           fontSize: 16,
                         ),
                       ),
+                      const SizedBox(height: 40),
                     ] else ...[
                       Lottie.asset(
-                        'assets/animations/Ani6.json', // Microphone animation
+                        'assets/animations/Ani6.json',
                         width: 200,
                         height: 200,
                       ),
                       const SizedBox(height: 24),
-                      // ElevatedButton.icon(
-                      //   onPressed: _startRecording,
-                      //   icon: Icon(Icons.mic),
-                      //   label: Text(
-                      //     'Start Recording',
-                      //     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                      //   ),
-                      //   style: ElevatedButton.styleFrom(
-                      //     backgroundColor: Colors.white,
-                      //     foregroundColor: widget.primaryColor,
-                      //     padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(30),
-                      //     ),
-                      //     elevation: 8,
-                      //   ),
-                      // ),
-                      
-
-
-                      ElevatedButton.icon(
-  onPressed: _startRecording,
-  icon: Icon(
-    Icons.mic,
-    size: 24,
-    color: widget.primaryColor,
-  ),
-  label: Text(
-    'Start Recording',
-    style: TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-      color: widget.primaryColor,
-    ),
-  ),
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.white,
-    foregroundColor: widget.primaryColor,
-    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(50), // Made more circular
-    ),
-    elevation: 4, // Reduced elevation for softer look
-    shadowColor: widget.primaryColor.withOpacity(0.3), // Softer shadow
-    side: BorderSide( // Added cute border
-      color: widget.primaryColor.withOpacity(0.2),
-      width: 2,
-    ),
-  ),
-),
-                   
                     ],
+                    
+                    // Control Buttons
+                    _buildControlButtons(),
                   ],
                 ),
               ),
               
-              // Tips section
+              // Tips section with auto-rotation
               if (_isRecording)
-                Container(
-                  margin: EdgeInsets.all(16),
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.15),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.white.withOpacity(0.2)),
-                    // backdropFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 8,
-                              spreadRadius: 1,
-                            ),
-                          ],
-                        ),
-                        child: Icon(Icons.tips_and_updates,
-                            color: widget.primaryColor, size: 24),
-                      ),
-                      SizedBox(width: 16),
-                      Expanded(
-                        child: Text(
-                          'A cry with very short pauses for breath is likely caused by discomfort or pain',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            height: 1.4,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 24),
+                  child: _buildTipCard(),
                 ),
             ],
           ),
