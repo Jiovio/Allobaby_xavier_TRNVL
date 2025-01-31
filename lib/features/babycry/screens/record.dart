@@ -2,21 +2,23 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Controller/BabyCry/babyCryController.dart';
+import 'package:allobaby/features/babycry/controller/cry_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
+import 'package:http/http.dart';
 import 'package:record/record.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:lottie/lottie.dart';
 
 class VoiceRecorderNew extends StatefulWidget {
-  final Function(File)? onRecordingComplete;
-  final Color primaryColor;
-  final Color backgroundColor;
+  final Color primaryColor = PrimaryColor;
+  final Color backgroundColor = Colors.white;
 
   const VoiceRecorderNew({
     Key? key,
-    this.onRecordingComplete,
-    this.primaryColor = PrimaryColor,
-    this.backgroundColor = Colors.white,
+
   }) : super(key: key);
 
   @override
@@ -27,7 +29,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
   final AudioRecorder _recorder = AudioRecorder();
   Timer? _timer;
   Timer? _tipsTimer;
-  int _countdown = 10;
+  int _countdown = 0;
   bool _isRecording = false;
   bool _isChecking = false;
   int _currentTipIndex = 0;
@@ -77,6 +79,8 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
 
+    _startRecording();
+
     _startTipsRotation();
   }
 
@@ -96,37 +100,45 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
     
     if (await _recorder.hasPermission()) {
       Directory appDir = await getApplicationDocumentsDirectory();
-      final config = RecordConfig(
-        encoder: AudioEncoder.aacLc,
-        numChannels: 1,
-        sampleRate: 16000,
-      );
+    const encoder = AudioEncoder.aacLc;
+    final config = RecordConfig(encoder: encoder, numChannels: 1);
 
       await _recorder.start(config, path: '${appDir.path}/recording.aac');
       setState(() {
         _isChecking = false;
         _isRecording = true;
-        _countdown = 10;
+        _countdown = 0;
       });
 
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        if (_countdown > 0) {
-          setState(() => _countdown--);
-        } else {
+
+        if(_countdown >20){
           _stopRecording();
+        }else{
+
+          setState(() {
+            _countdown++;
+          });
         }
       });
     }
   }
 
+  Babycrycontroller controller = Get.put(Babycrycontroller());
+
   Future<void> _stopRecording() async {
     _timer?.cancel();
+
     if (_isRecording) {
       final path = await _recorder.stop();
+
+      await _recorder.dispose();
       setState(() => _isRecording = false);
       
-      if (path != null && widget.onRecordingComplete != null) {
-        widget.onRecordingComplete!(File(path));
+      if (path != null ) {
+        File audioFile = File(path);
+        controller.babydetect(audioFile);
+
       }
     }
   }
@@ -135,9 +147,10 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
     _timer?.cancel();
     if (_isRecording) {
       await _recorder.stop();
+      await _recorder.dispose();
       setState(() => _isRecording = false);
     }
-    Navigator.pop(context);
+    Get.back();
   }
 
   @override
@@ -154,13 +167,13 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Stop Button
+     
           AnimatedContainer(
-            duration: Duration(milliseconds: 300),
+            duration:const Duration(milliseconds: 300),
             child: ElevatedButton.icon(
               onPressed: _stopRecording,
-              icon: Icon(Icons.stop, color: Colors.white),
-              label: Text(
+              icon: const Icon(Icons.stop, color: Colors.white),
+              label:const Text(
                 'Stop',
                 style: TextStyle(
                   color: Colors.white,

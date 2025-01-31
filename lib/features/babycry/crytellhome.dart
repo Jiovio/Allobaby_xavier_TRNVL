@@ -1,6 +1,7 @@
 import 'package:allobaby/Config/Color.dart';
-import 'package:allobaby/features/crytell/screens/crydetail.dart';
-import 'package:allobaby/features/crytell/screens/record.dart';
+import 'package:allobaby/features/babycry/cryhistory/cryhistoryhome.dart';
+import 'package:allobaby/features/babycry/screens/crydetail.dart';
+import 'package:allobaby/features/babycry/screens/record.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,31 +26,42 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
       'title': 'Hungry Cry',
       'description': 'A rhythmic, repetitive cry that escalates if not attended to. Babies may also show signs like rooting or sucking on their hands.',
       'icon': '🍼',
+      'link' : "assets/babyicons/hc.png"
     },
     {
       'title': 'Sleepy Cry',
       'description': 'A whiny, nasal cry that may come with yawning, rubbing eyes, or fussiness. It often sounds weaker than a hunger cry.',
       'icon': '😴',
+      'link' : "assets/babyicons/sc.png"
+
     },
     {
       'title': 'Pain Cry',
       'description': 'A sudden, high-pitched, intense cry with pauses for catching breath. It may be accompanied by clenched fists or a stiff body.',
       'icon': '🤕',
+      'link' : "assets/babyicons/pc.png"
+
     },
     {
       'title': 'Discomfort Cry',
       'description': 'A fussy, irritated cry indicating a wet diaper, feeling too hot or cold, or tight clothing. The cry may stop once the issue is resolved.',
       'icon': '😣',
+      'link' : "assets/babyicons/dc.png"
+
     },
     {
       'title': 'Colic Cry',
       'description': 'A prolonged, intense, high-pitched cry that occurs mostly in the evening. The baby may clench fists, arch the back, or have a tense abdomen.',
       'icon': '😢',
+      'link' : "assets/babyicons/cc.png"
+
     },
     {
       'title': 'Attention Cry',
       'description': 'A mild, whimpering cry that starts softly and grows louder if ignored. Babies may also make eye contact or reach out for comfort.',
       'icon': '🤗',
+      'link' : "assets/babyicons/ac.png"
+
     },
   ];
 
@@ -82,20 +94,19 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
           ),
         ),
         actions: [
-          Row(
-            children: [
-              Icon(Icons.history, color: primaryColor),
-              const SizedBox(width: 8),
-              Text(
+
+          TextButton.icon(
+            label: Text(
                 'Cry History',
                 style: GoogleFonts.poppins(
                   color: primaryColor,
                   fontWeight: FontWeight.w500
                 ),
               ),
-              SizedBox(width: 16),
-            ],
-          ),
+
+            icon: Icon(Icons.history, color: primaryColor),
+            onPressed:() => Get.to(()=>CryHistory())),
+
         ],
         backgroundColor: Colors.white,
         elevation: 0,
@@ -142,7 +153,7 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
                       child: AnimatedCryCard(
                         title: cryTypes[index]['title']!,
                         description: cryTypes[index]['description']!,
-                        icon: cryTypes[index]['icon']!,
+                        icon: cryTypes[index]['link']!,
                         index: index,
                         primaryColor: primaryColor,
                       ),
@@ -327,11 +338,15 @@ class AnimatedCryCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                icon,
-                style: TextStyle(fontSize: 32),
-              ),
-              SizedBox(height: 8),
+              // Text(
+              //   icon,
+              //   style: TextStyle(fontSize: 32),
+              // ),
+
+              // SizedBox(
+              //   height: 32,
+              //   child: Image.asset(icon)),
+              // SizedBox(height: 8),
               Text(
                 title,
                 textAlign: TextAlign.center,

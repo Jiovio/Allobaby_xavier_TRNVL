@@ -17,7 +17,7 @@ import 'package:allobaby/Screens/Main/Card/BannerCard.dart';
 import 'package:allobaby/Screens/Service/Appointment.dart';
 import 'package:allobaby/Screens/Service/MyAppointment.dart';
 import 'package:allobaby/Screens/Signin.dart';
-import 'package:allobaby/features/crytell/crytellhome.dart';
+import 'package:allobaby/features/babycry/crytellhome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
