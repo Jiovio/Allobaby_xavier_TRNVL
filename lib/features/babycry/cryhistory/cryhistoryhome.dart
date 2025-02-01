@@ -1,3 +1,4 @@
+import 'package:allobaby/API/Requests/BabyCryAPI.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -10,53 +11,36 @@ class CryHistory extends StatefulWidget {
 
 class _CryHistoryState extends State<CryHistory> {
   final AudioPlayer _audioPlayer = AudioPlayer();
-  String? _currentlyPlayingId;
-  String? _expandedTileId;
+  int? _currentlyPlayingId;
+  int? _expandedTileId;
   bool _isPlaying = false;
   Duration? _duration;
   Duration _position = Duration.zero;
 
-  final List<Map<String, dynamic>> cryHistory = [
-    {
-      'id': '1',
-      'audio_link': 'https://firebasestorage.googleapis.com/v0/b/savemom-healthcare.appspot.com/o/Allobaby%2F7639744744%2Faudio%2F2025-01-31%2012%3A37%3A27.308747.aac%20?alt=media&token=766961fb-b7b1-4bd0-a411-4fa8c81e9d32',
-      'reason': 'Hungry Cry',
-      'created_at': '2025-01-30T10:30:00Z'
-    },
-    {
-      'id': '2',
-      'audio_link': 'https://example.com/recording_2.mp3',
-      'reason': 'Sleepy Cry', 
-      'created_at': '2025-01-30T15:45:00Z'
-    },
-    {
-      'id': '3',
-      'audio_link': 'https://example.com/recording_3.mp3',
-      'reason': 'Pain Cry',
-      'created_at': '2025-01-29T08:20:00Z'
-    },
-    {
-      'id': '4',
-      'audio_link': 'https://example.com/recording_4.mp3',
-      'reason': 'Discomfort Cry',
-      'created_at': '2025-01-29T22:15:00Z'
-    },
-    {
-      'id': '5',
-      'audio_link': 'https://example.com/recording_5.mp3',
-      'reason': 'Colic Cry',
-      'created_at': '2025-01-28T19:10:00Z'
-    },
-  ];
+  dynamic cryHistory ;
 
   bool _sortAscending = false;
   final primaryColor = Color(0xffFF626F);
   final backgroundColor = Color.fromARGB(255, 255, 255, 255);
 
+
+  void fetchCrys () async {
+
+    final data = await Babycryapi.getcrys();
+
+    cryHistory = data;
+
+    setState(() {
+      
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     _setupAudioPlayer();
+
+    fetchCrys();
   }
 
   void _setupAudioPlayer() {
@@ -84,7 +68,7 @@ class _CryHistoryState extends State<CryHistory> {
     });
   }
 
-  Future<void> _playAudio(String id, String audioUrl) async {
+  Future<void> _playAudio(int id, String audioUrl) async {
     try {
       if (_currentlyPlayingId == id && _isPlaying) {
         await _audioPlayer.pause();
@@ -116,7 +100,7 @@ class _CryHistoryState extends State<CryHistory> {
     }
   }
 
-  void _toggleTile(String id) {
+  void _toggleTile(int id) {
     setState(() {
       if (_expandedTileId == id) {
         _expandedTileId = null;
@@ -166,7 +150,7 @@ class _CryHistoryState extends State<CryHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      // backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text(
           "Cry History",
@@ -189,8 +173,18 @@ class _CryHistoryState extends State<CryHistory> {
         elevation: 0,
         iconTheme: IconThemeData(color: primaryColor),
       ),
-      body: ListView.builder(
-        padding: EdgeInsets.all(16),
+      body:
+
+      SingleChildScrollView(
+        child: 
+        Column(
+          children: [
+      cryHistory == null ?
+      const Center(child: CircularProgressIndicator()) : 
+       ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(16),
         itemCount: cryHistory.length,
         itemBuilder: (context, index) {
           final cry = cryHistory[index];
@@ -199,9 +193,9 @@ class _CryHistoryState extends State<CryHistory> {
           final String formattedTime = DateFormat('hh:mm a').format(createdAt);
           final bool isCurrentlyPlaying = _currentlyPlayingId == cry['id'];
           final bool isExpanded = _expandedTileId == cry['id'];
-
+      
           return TweenAnimationBuilder(
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
             tween: Tween(begin: 0.0, end: 1.0),
             builder: (context, double value, child) {
               return Transform.translate(
@@ -246,13 +240,13 @@ class _CryHistoryState extends State<CryHistory> {
                           ),
                           child: Center(
                             child: Text(
-                              _getReasonEmoji(cry['reason']),
+                              _getReasonEmoji(cry['text']),
                               style: TextStyle(fontSize: 24),
                             ),
                           ),
                         ),
                         title: Text(
-                          cry['reason'],
+                          cry['text'],
                           style: GoogleFonts.poppins(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -368,6 +362,10 @@ class _CryHistoryState extends State<CryHistory> {
           );
         },
       ),
+    
+              ],
+        )
+    )
     );
   }
 
