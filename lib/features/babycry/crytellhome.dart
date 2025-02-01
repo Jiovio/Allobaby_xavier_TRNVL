@@ -83,7 +83,7 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      // backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text(
           "AlloCry",

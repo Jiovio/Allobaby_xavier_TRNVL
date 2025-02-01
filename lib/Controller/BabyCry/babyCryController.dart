@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:allobaby/API/Requests/BabyCryAPI.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Screens/Main/BottomSheet/Baby.dart';
@@ -24,6 +25,9 @@ class Babycrycontroller extends GetxController {
 
  File? audio;
 
+ final validBabyStrings = ["Hungry Cry","Sleepy Cry","Pain Cry","Discomfort Cry",
+"Colic Cry","Attention Cry"];
+
 
 Future<void> babydetect(audioFile) async {
 
@@ -35,7 +39,7 @@ if it is a empty audio return babyCryDetected as false
 respond in schema of 
 {
 babyCryDetected:bool,
-reasons:[string],
+reason:any one of ${validBabyStrings.toString()},
 stepsToComfortTheBaby : [string]
 }
 """;
@@ -55,20 +59,17 @@ var res = await OurFirebase.audioAI(audioFile, prompt);
 
 print(res);
 
+
+
 data = json.decode(res);
 
 if(data["babyCryDetected"]==true){
 
-  final _random = new Random();
-  int next(int min, int max) => min + _random.nextInt(max - min);
-
-  int random = next(0, data["reasons"].length-1);
-
-  print(random);
-
   print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-  reason = data["reasons"][random];
+  // reason = data["reasons"][random];
+  reason = data["reason"];
+
 
   print(reason);
   recommendations = json.encode(data["stepsToComfortTheBaby"]);
@@ -81,9 +82,12 @@ if(data["babyCryDetected"]==true){
 
   Get.to(()=>Baby());
 
-  OurFirebase.uploadAudioToStorage("audio",audioFile);
-
   audio = audioFile;
+
+ String url = await OurFirebase.uploadAudioToStorage("audio",audioFile);
+
+ final req = await Babycryapi.addBabyCry(reason, url);
+
 
 }else {
   Get.back();

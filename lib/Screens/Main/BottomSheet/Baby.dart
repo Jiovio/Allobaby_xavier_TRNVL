@@ -27,6 +27,15 @@ class _BabyState extends State<Baby> {
     _initAudioPlayer();
   }
 
+
+   final cryimgs = {
+    "Hungry Cry":"hc.png",
+    "Sleepy Cry":"sc.png",
+    "Pain Cry":"pc.png",
+    "Discomfort Cry":"dc.png",
+"Colic Cry":"cc.png",
+"Attention Cry":"ac.png"};
+
   Future<void> _initAudioPlayer() async {
     if (controller.audio == null) {
       print("No audio file available");
@@ -269,7 +278,10 @@ bottomNavigationBar: Container(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
-                      "assets/BottomSheet/crybaby.png",
+                      "assets/babyicons/${cryimgs[controller.reason]}",
+
+                      
+                      // "assets/BottomSheet/crybaby.png",
                       fit: BoxFit.cover,
                     ),
                   ),

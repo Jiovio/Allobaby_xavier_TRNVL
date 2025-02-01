@@ -138,6 +138,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
       if (path != null ) {
         File audioFile = File(path);
         controller.babydetect(audioFile);
+        print(path);
 
       }
     }
