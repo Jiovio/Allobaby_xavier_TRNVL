@@ -363,23 +363,24 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (_isChecking) ...[
-                      Lottie.asset(
-                        'assets/animations/Ani5.json',
-                        width: 120,
-                        height: 120,
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        'Checking microphone\nPlease wait',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ] else if (_isRecording) ...[
+                    // if (_isChecking) ...[
+                    //   Lottie.asset(
+                    //     'assets/animations/Ani5.json',
+                    //     width: 120,
+                    //     height: 120,
+                    //   ),
+                    //   const SizedBox(height: 20),
+                    //   Text(
+                    //     'Checking microphone\nPlease wait',
+                    //     textAlign: TextAlign.center,
+                    //     style: TextStyle(
+                    //       color: Colors.white,
+                    //       fontSize: 24,
+                    //       fontWeight: FontWeight.w600,
+                    //     ),
+                    //   ),
+                    // ] else
+                     if (_isRecording) ...[
                       // Recording indicator
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
@@ -435,7 +436,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                         'Getting Your Baby Sound...',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 28,
+                          fontSize: 24,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
