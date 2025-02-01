@@ -398,7 +398,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.red.withOpacity(0.5),
+                                    color: PrimaryColor,
                                     blurRadius: 8,
                                     spreadRadius: 2,
                                   ),
@@ -431,7 +431,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                       ),
                       const SizedBox(height: 40),
                       Text(
-                        'Listening...',
+                        'Getting Your Baby Sound...',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 28,

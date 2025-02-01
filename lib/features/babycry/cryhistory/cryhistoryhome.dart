@@ -51,7 +51,7 @@ class _CryHistoryState extends State<CryHistory> {
 
   bool _sortAscending = false;
   final primaryColor = Color(0xffFF626F);
-  final backgroundColor = Color(0xffFFF0F1);
+  final backgroundColor = Color.fromARGB(255, 255, 255, 255);
 
   @override
   void initState() {

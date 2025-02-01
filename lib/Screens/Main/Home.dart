@@ -268,13 +268,13 @@ class _HomeState extends State<Home> {
                   scrollDirection: Axis.horizontal,
                   physics: BouncingScrollPhysics(),
                   children: [
-                        categories("Allobot".tr, 'assets/Chat/chatbot.png',
-                        Container(),
-                        () {allobotModal(context);}
-                        ),
+                        // categories("Allobot".tr, 'assets/Chat/chatbot.png',
+                        // Container(),
+                        // () {allobotModal(context);}
+                        // ),
 
-                                            categories("Allocry".tr,
-                        'assets/Homescreen/myawernessnew.png', 
+                        categories("Allocry".tr,
+                        'assets/Homescreen/Babycry.png', 
                         Crytellhome()
                         // Signin()
                         ),

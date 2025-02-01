@@ -18,7 +18,7 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
 
   // Define color scheme based on primary color
   final primaryColor = Color(0xffFF626F);
-  final backgroundColor = Color(0xffFFF0F1); // Light pink shade
+  final backgroundColor = Colors.white; // Light pink shade
   final secondaryColor = Color(0xffFF8A94); // Lighter shade of primary
 
   final List<Map<String, dynamic>> cryTypes = [
@@ -88,9 +88,10 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
         title: Text(
           "AlloCry",
           style: GoogleFonts.poppins(
-            color: primaryColor,
+          
+            color: Colors.black,
             fontSize: 24,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
           ),
         ),
         actions: [

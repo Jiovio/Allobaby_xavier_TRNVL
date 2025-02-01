@@ -8,7 +8,7 @@ class Crydetail extends StatelessWidget {
   Crydetail({super.key});
 
   final Color primaryColor = const Color(0xFFFF626F);
-  final Color bgColor = const Color(0xFFFFF0F1);
+  final Color bgColor = Color.fromARGB(255, 255, 255, 255);
   final Color accentColor = const Color(0xFFFFB6C1);
   
   // Data map remains the same as your original code
@@ -69,11 +69,12 @@ class Crydetail extends StatelessWidget {
           appBar: AppBar(
             title: Text(
               'AlloCry',
-              style: GoogleFonts.poppins(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: primaryColor,
-              ),
+          style: GoogleFonts.poppins(
+          
+            color: Colors.black,
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
+          ),
             ),
             backgroundColor: Colors.white,
             elevation: 0,
