@@ -146,4 +146,14 @@ class Userapi {
   }
 
 
+    static Future<dynamic> getAllNotifications() async {
+    try {
+    final req = await getRequest("/user/getmynotificatons");
+    return req; 
+    } catch (e) {
+        return false;
+    }
+  }
+
+
 }

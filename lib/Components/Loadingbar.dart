@@ -88,9 +88,9 @@ class Loadingbar {
 
 
 
-  static void use(String? name, Function fn){
+  static Future<void> use(String? name, Function fn) async{
 
-        Get.showOverlay(
+       await Get.showOverlay(
           asyncFunction: ()async{
             await fn();
           },

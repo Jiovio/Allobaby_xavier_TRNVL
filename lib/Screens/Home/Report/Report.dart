@@ -49,7 +49,7 @@ class Report extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Icon(Icons.camera),
-                      Text("Scan and Add Report".tr.toUpperCase())
+                      Text("SCAN AND ADD REPORT".tr)
                     ],
                   ))),
   
@@ -119,14 +119,14 @@ class Report extends StatelessWidget {
                                       children: [
                                         Text(
                                           report['report_type'],
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         SizedBox(height: 8),
                                         Text(
-                                          report['description'],
+                                          report['description']=="" ? "No Description Available" : report["description"],
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(

@@ -1,49 +1,20 @@
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/features/babycry/components/audio_play_btn.dart';
+import 'package:allobaby/features/babycry/cryhistory/cryhistoryhome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
 class Crydetail extends StatelessWidget {
-  Crydetail({super.key});
+  final Map data ;
+  Crydetail({super.key , required this.data});
 
   final Color primaryColor = const Color(0xFFFF626F);
   final Color bgColor = Color.fromARGB(255, 255, 255, 255);
   final Color accentColor = const Color(0xFFFFB6C1);
   
-  final Map data = {
-    "heading": "Hungry Cry",
-    "description": [
-      {
-        "bold": true,
-        "text":
-            'Hunger cries are rhythmic, repetitive, and gradually intensify if the baby isnt fed. The cry may start softly but become louder and more desperate over time.'
-      },
-      {
-        "bold": true,
-        "text": 'Babies may also show signs like:'
-      },
-      {
-        "bold": false,
-        "text": '• Sucking on hands or fingers'
-      },
-      {
-        "bold": false,
-        "text": '• Smacking lips or rooting (turning head to search for a nipple)'
-      },
-      {
-        "bold": false,
-        "text": '• Fussiness even after being comforted'
-      }
-    ],
-    "recommendations": [
-      'Feed Promptly – Responding early prevents excessive crying and makes feeding easier.',
-      'Watch for Hunger Cues – Crying is a late sign; look for early signs like lip-smacking, rooting, sticking out tongue, or sucking on hands.',
-      'Ensure Proper Latch – If breastfeeding, ensure a deep latch to avoid discomfort.',
-      'Check Feeding Schedule – Newborns need feeding every 2-3 hours.',
-      'Burp Baby After Feeding – Helps prevent gas and fussiness.',
-    ]
-  };
+  
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +41,7 @@ class Crydetail extends StatelessWidget {
               'AlloCry',
           style: GoogleFonts.poppins(
           
-            color: Colors.black,
+            color: PrimaryColor,
             fontSize: 24,
             fontWeight: FontWeight.w500,
           ),
@@ -81,13 +52,13 @@ class Crydetail extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(right: 16),
                 child: TextButton.icon(
-                  onPressed: () {},
+                  onPressed: ()=> Get.to(()=>CryHistory()),
                   icon: Icon(Icons.history, color: primaryColor),
                   label: Text(
-                    'Cry History',
+                    'Cry History'.tr,
                     style: GoogleFonts.poppins(
                       color: primaryColor,
-                      fontWeight: FontWeight.w500,
+                      // fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
@@ -107,17 +78,18 @@ class Crydetail extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.baby_changing_station,
-                                color: primaryColor, size: 30),
-                            const SizedBox(width: 10),
+                            // Icon(Icons.baby_changing_station,
+                            //     color: primaryColor, size: 30),
+                            // const SizedBox(width: 10),
                             Text(
                               data["heading"],
                               style: GoogleFonts.poppins(
                                 color: primaryColor,
-                                fontSize: 24,
+                                fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+                            
                           ],
                         ),
                       ],
@@ -125,7 +97,7 @@ class Crydetail extends StatelessWidget {
                   ),
 
                   Card(
-                    elevation: 8,
+                    // elevation: 3,
                     shadowColor: primaryColor.withOpacity(0.2),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
@@ -282,11 +254,7 @@ class Crydetail extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Icon(
-              Icons.mic,
-              color: Colors.white,
-              size: 32,
-            ),
+            child: AudioPlayerButton(assetPath: data["audio"]),
           ),
         ),
       ),

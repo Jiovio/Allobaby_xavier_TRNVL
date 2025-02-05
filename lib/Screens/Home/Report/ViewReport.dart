@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
+import 'package:get/get.dart';
+
 class ViewReport extends StatelessWidget {
   final Map<String, dynamic> reportDetails;
 
@@ -12,12 +14,12 @@ class ViewReport extends StatelessWidget {
     // Parse the JSON details
     Map<String, dynamic> details = 
     // jsonDecode(reportDetails['details'] 
-    reportDetails["details"];
+    reportDetails["details"] ?? {};
     // ?? '{}');
     
     return Scaffold(
       appBar: AppBar(
-        title: Text('Report Details'),
+        title: Text('Report Details'.tr),
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -78,7 +80,7 @@ class ViewReport extends StatelessWidget {
                       Expanded(
                         child: _buildInfoCard(
                           icon: Icons.calendar_today,
-                          title: 'Date',
+                          title: 'Date'.tr,
                           content: _formatDate(reportDetails['created']),
                         ),
                       ),
@@ -96,15 +98,17 @@ class ViewReport extends StatelessWidget {
 
                   // Description
                   _buildSection(
-                    title: 'Description',
-                    content: reportDetails['description'] ?? 'No description available',
+                    title: 'Description'.tr,
+                    content: reportDetails['description']==null || reportDetails['description']=="" ? 'No description available'
+                    : reportDetails['description']
+                    ,
                   ),
                   SizedBox(height: 16),
 
                   // Details
                   if (details.isNotEmpty) ...[
                     Text(
-                      'Test Results',
+                      'Test Results'.tr,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -221,7 +225,7 @@ Widget _buildDetailItem({required String key, required String value}) {
   // Convert the key to a more readable format
   String formattedKey = key
     .split(RegExp('(?=[A-Z])'))
-    .map((word) => word.capitalize())
+    .map((word) => word.toUpperCase())
     .join(' ');
 
   return Padding(

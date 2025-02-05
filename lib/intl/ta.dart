@@ -281,7 +281,125 @@ final Map<String, String> ta = {
     "Screening" : "திரையிடல்",
     "Glucose Test": "குளுக்கோஸ் பரிசோதனை",
     "Ultrasound Test": "அல்ட்ராசவுண்ட் பரிசோதனை",
-    "Urine Test": "சிறுநீர் பரிசோதனை"
+    "Urine Test": "சிறுநீர் பரிசோதனை",
+
+
+  ...babycrys,
+
+
+};
+
+
+final Map<String, String> babycrys = {
+"Hunger Crying" : 	"பசி அழுகை",
+"Sleepy Crying" : 	"தூக்கக் கலக்கம் அழுகை",
+"Pain Crying" : 	"வலி அழுகை",
+"Discomfort Crying" : 	"அதிர்ச்சியுடன் அழுகை",
+"Colic Crying" : 	"கோலிக் அழுகை",
+"Attention Crying" : 	"கவன அழுகை",
+
+"Hunger Cry" : 	"பசி அழுகை",
+"Sleepy Cry" : 	"தூக்கக் கலக்கம் அழுகை",
+"Pain Cry" : 	"வலி அழுகை",
+"Discomfort Cry" : 	"அதிர்ச்சியுடன் அழுகை",
+"Colic Cry" : 	"கோலிக் அழுகை",
+"Attention Cry" : 	"கவன அழுகை",
+	
+	
+"Rhythmic, repetitive cries that grow louder if the baby isn't fed. Often accompanied by hand-sucking and rooting behavior.":	"குழந்தைக்கு பாலூட்டாவிட்டால் சத்தமாக வளரும் தாள, மீண்டும் மீண்டும் அழுகை. பெரும்பாலும் கை உறிஞ்சுதல் மற்றும் வேர்விடும் நடத்தையுடன்.",
+"A whiny, nasal cry that sounds weaker than a hunger cry, often accompanied by yawning and eye-rubbing." :	"பசி அழுகையைக் காட்டிலும் பலவீனமாக ஒலிக்கும் ஒரு சிணுங்கல், நாசி அழுகை, பெரும்பாலும் கொட்டாவி மற்றும் கண் தேய்த்தல்.",
+"A sudden, high-pitched, intense cry that comes in bursts with breathing pauses. Often accompanied by physical tension." :	"திடீரென்று, உயர்ந்த, தீவிரமான அழுகை மூச்சு நிறுத்தங்களுடன் வெடிக்கிறது. பெரும்பாலும் உடல் பதற்றத்துடன் சேர்ந்து.",
+"A fussy, irritated cry that typically stops when the source of discomfort is addressed." :	"ஒரு வம்பு, எரிச்சலூட்டும் அழுகை, இது பொதுவாக அசௌகரியத்தின் மூலத்தை நிவர்த்தி செய்யும்போது நிறுத்தப்படும்.",
+"Prolonged, intense crying episodes, typically in the evening, with physical signs of distress." :	"நீடித்த, தீவிர அழுகை அத்தியாயங்கள், பொதுவாக மாலையில், துயரத்தின் உடல் அறிகுறிகளுடன்.",
+"A mild cry that starts softly and increases if ignored, often accompanied by eye contact and reaching out." :	"மென்மையாகத் தொடங்கி அலட்சியப்படுத்தினால் அதிகரிக்கும் ஒரு லேசான அழுகை, பெரும்பாலும் கண் தொடர்பு மற்றும் அடையும்.",
+	
+	
+"Hunger cries are rhythmic, repetitive, and grow louder if the baby isn't fed.":	"குழந்தைக்கு உணவளிக்காவிட்டால் பசி அழுகை தாளம், மீண்டும் மீண்டும் மற்றும் சத்தமாக வளரும்.",
+"Babies may also" :	"குழந்தைகளும் இருக்கலாம்:",
+"• Suck on hands or fingers" :	"• கைகள் அல்லது விரல்களில் உறிஞ்சுதல்",
+"• Smack lips, root (turn head searching for a nipple)" :	"• ஸ்மாக் உதடுகள், வேர் (ஒரு முலைக்காம்பைத் தேடும் தலையைத் திருப்பு)",
+"• Get fussy even after being comforted" :	"• ஆறுதல் சொன்ன பிறகும் வம்பு செய்யுங்கள்",
+	
+	
+"A whiny, nasal cry that may sound weaker than a hunger cry.":"	பசியின் அழுகையைக் காட்டிலும் பலவீனமாக ஒலிக்கக்கூடிய ஒரு சிணுங்கல், மூக்கு அழுகை.",
+"Babies may also:":"	குழந்தைகளும் இருக்கலாம்:",
+"• Yawn frequently":"	• அடிக்கடி கொட்டாவி விடுங்கள்",
+"• Rub their eyes or pull their ears":"	•கண்களைத் தேய்த்தல் அல்லது காதுகளைப் பிடித்து இழுத்தல்",
+"• Become fussy and harder to soothe":"• வம்பு மற்றும் ஆற்றுவதற்கு கடினமாக மாறும்",
+	
+	
+"A sudden, high-pitched, intense cry that may come in bursts with pauses for breath.":	"திடீரென்று, அதிக சுருதியில், தீவிரமான அழுகை மூச்சு நிறுத்தங்களுடன் வெடிக்கக்கூடும்.",
+"Babies may also:":	"குழந்தைகளும் இருக்கலாம்:",
+"• Clench fists or arch their back":	"• முஷ்டியை மடக்கவும் அல்லது முதுகை வளைக்கவும்",
+"• Become stiff or tense":	"• விறைப்பாக அல்லது பதட்டமாக மாறுதல்",
+"• Show signs of discomfort (scrunched face, difficulty calming down)":	"• அசௌகரியத்தின் அறிகுறிகளைக் காட்டுங்கள் (சுருங்கிய முகம், அமைதியடைவதில் சிரமம்)",
+	
+	
+"A fussy, irritated cry that may stop when the issue is resolved." :	"பிரச்சினை தீர்க்கப்பட்டவுடன் நிறுத்தக்கூடிய ஒரு வம்பு, எரிச்சலூட்டும் அழுகை.",
+"Babies may also:" :	"குழந்தைகளும் இருக்கலாம்:",
+"• Wiggle or squirm a lot" :	"• நிறைய அசை அல்லது நெளிவு",
+"• Tug at their clothing or ears" :	"• அவர்களின் ஆடை அல்லது காதுகளை இழுக்கவும்",
+"• Appear restless or uneasy" :	"• அமைதியற்ற அல்லது சங்கடமான தோற்றம்",
+	
+	
+"A prolonged, intense, high-pitched cry that often occurs in the evening." :	"மாலையில் அடிக்கடி நிகழும் ஒரு நீண்ட, தீவிரமான, உயர்ந்த அழுகை.",
+"Babies may also:" :	"குழந்தைகளும் இருக்கலாம்:",
+"• Clench fists, arch their back, or pull up legs" :	"• முஷ்டியை மடக்குதல், முதுகை வளைத்தல் அல்லது கால்களை மேலே இழுத்தல்",
+"• Have a tense, bloated belly" :	"• பதட்டமான, வீங்கிய வயிறு",
+"• Be difficult to soothe, even after feeding" :	"• உணவளித்த பிறகும் ஆறுதல் அளிப்பது கடினம்",
+	
+	
+"A mild, whimpering cry that starts softly and gets louder if ignored." :	"மெல்லிய குரலில் தொடங்கி அலட்சியப்படுத்தினால் இன்னும் சத்தமாக ஒலிக்கும் அழுகை.",
+"Babies may also:" :	"குழந்தைகளும் இருக்கலாம்:",
+"• Make eye contact while crying" :	"• அழும்போது கண் தொடர்பு கொள்ளுங்கள்",
+"• Reach out for comfort" :	"• ஆறுதலுக்காக அடையுங்கள்",
+"• Stop crying quickly when picked up" :	"• எடுத்தவுடன் உடனடியாக அழுகையை நிறுத்துங்கள்",
+	
+	
+"Feed Promptly – Responding early prevents excessive crying and makes feeding easier." :	"உடனடியாக உணவளிக்கவும் - ஆரம்பத்தில் பதிலளிப்பது அதிகப்படியான அழுகையைத் தடுக்கிறது மற்றும் உணவளிப்பதை எளிதாக்குகிறது.",
+"Watch for Hunger Cues – Crying is a late sign; look for early signs like lip-smacking, rooting, sticking out tongue, or sucking on hands." :	"பசி குறிப்புகளைக் கவனியுங்கள் - அழுவது தாமதமான அறிகுறி; உதடு-ஸ்மாக்கிங், வேர்விடும், நாக்கை வெளியே ஒட்டிக்கொள்வது அல்லது கைகளில் உறிஞ்சுவது போன்ற ஆரம்ப அறிகுறிகளைத் தேடுங்கள்.",
+"Ensure Proper Latch – If breastfeeding, ensure a deep latch to avoid discomfort." :	"சரியான தாழ்ப்பாள் இருப்பதை உறுதி செய்யவும் - தாய்ப்பால் கொடுத்தால், அசௌகரியத்தைத் தவிர்க்க ஆழமான தாழ்ப்பாளை உறுதிப்படுத்தவும்.",
+"Check Feeding Schedule – Newborns need feeding every 2-3 hours." :	"உணவு அட்டவணையை சரிபார்க்கவும் - புதிதாகப் பிறந்த குழந்தைகளுக்கு ஒவ்வொரு 2-3 மணி நேரத்திற்கும் உணவளிக்க வேண்டும்.",
+"Burp Baby After Feeding – Helps prevent gas and fussiness." :	"பாலூட்டிய பிறகு குழந்தை ஏப்பம் - வாயு மற்றும் வம்புகளைத் தடுக்க உதவுகிறது.",
+	
+	
+"Look for Sleep Cues Early – Yawning, zoning out, or rubbing eyes signal it's time to sleep." :	"ஆரம்பத்தில் தூக்கக் குறிப்புகளைத் தேடுங்கள் - கொட்டாவி விடுதல், மண்டலப்படுத்துதல் அல்லது கண்களைத் தேய்த்தல் இது தூங்குவதற்கான நேரம் என்பதற்கான சமிக்ஞை.",
+"Create a Calm Sleep Environment – Dim lights, reduce noise, and use white noise if needed." :	"அமைதியான தூக்க சூழலை உருவாக்கவும் - மங்கலான விளக்குகள், சத்தத்தைக் குறைத்து, தேவைப்பட்டால் வெள்ளை சத்தத்தைப் பயன்படுத்தவும்.",
+"Use Gentle Motions – Rocking, swaying, or holding baby in a 'colic carry' (on their tummy along your forearm) can help." :	"ஜென்டில் ராக்கிங்கைப் பயன்படுத்தவும் - இயக்கம், ஸ்வாட்லிங் அல்லது ஒரு அமைதிப்படுத்தி உதவும்.",
+"Follow a Sleep Routine – A consistent bedtime routine helps babies recognize sleep time." :	"ஒரு தூக்க வழக்கத்தைப் பின்பற்றுங்கள் - ஒரு நிலையான படுக்கை நேர வழக்கம் குழந்தைகளுக்கு தூக்க நேரத்தை அடையாளம் காண உதவுகிறது.",
+"Avoid Overstimulation – Too much activity before bed can make sleep harder." :	"அதிகப்படியான தூண்டுதலைத் தவிர்க்கவும் - படுக்கைக்கு முன் அதிக செயல்பாடு தூக்கத்தை கடினமாக்கும்.",
+	
+	
+"Check for Obvious Issues – Look for diaper rash, teething pain, or tight clothing." :	"வெளிப்படையான சிக்கல்களைச் சரிபார்க்கவும் - டயபர் சொறி, பல் வலி அல்லது இறுக்கமான ஆடைகளைத் தேடுங்கள்.",
+"Soothe with Gentle Touch – Skin-to-skin contact or holding them close can help." :	"மென்மையான தொடுதலுடன் ஆற்றவும் - தோல்-க்கு-தோல் தொடர்பு அல்லது அவற்றை நெருக்கமாக வைத்திருப்பது உதவும்.",
+"Try Pain Relief Techniques – For teething, offer a chilled teether; for gas, try tummy massage." :	"வலி நிவாரண நுட்பங்களை முயற்சிக்கவும் - பல் துலக்குவதற்கு, குளிர்ந்த டீத்தரை வழங்குங்கள்; வாயுவுக்கு, வயிற்று மசாஜ் முயற்சிக்கவும்.",
+"Monitor for Fever or Illness – If crying persists with fever, vomiting, or lethargy, consult a doctor." :	"காய்ச்சல் அல்லது நோய்க்கான கண்காணிப்பு - காய்ச்சல், வாந்தி அல்லது சோம்பலுடன் அழுகை தொடர்ந்தால், மருத்துவரை அணுகவும்.",
+"Trust Your Instincts – If the baby seems in severe pain, seek medical advice immediately." :	"உங்கள் உள்ளுணர்வை நம்புங்கள் - குழந்தை கடுமையான வலியில் இருந்தால், உடனடியாக மருத்துவ ஆலோசனையைப் பெறவும்.",
+	
+	
+"Check the Diaper – A wet or soiled diaper is a common cause of discomfort." :	"டயப்பரை சரிபார்க்கவும் - ஈரமான அல்லது அழுக்கு டயப்பர் அசௌகரியத்திற்கு ஒரு பொதுவான காரணமாகும்.",
+"Ensure Comfortable Clothing – Dress baby in breathable, soft fabrics and check for tight clothing." :	"வசதியான ஆடைகளை உறுதிப்படுத்தவும் - குழந்தையை சுவாசிக்கக்கூடிய, மென்மையான துணிகளில் ஆடை அணிவித்து, இறுக்கமான ஆடைகளை சரிபார்க்கவும்.",
+"Adjust Temperature – Feel baby's neck/back to see if they are too hot or cold." :	"வெப்பநிலையை சரிசெய்யவும் - குழந்தையின் கழுத்து / முதுகை உணருங்கள், அவை மிகவும் சூடாக அல்லது குளிராக இருக்கிறதா என்பதைப் பார்க்கவும்.",
+"Check for External Irritants – Tags, rough fabric, or hair wrapped around fingers/toes can cause irritation." :	"வெளிப்புற எரிச்சலூட்டிகளைச் சரிபார்க்கவும் - குறிச்சொற்கள், கடினமான துணி அல்லது விரல்கள் / கால்விரல்களைச் சுற்றி மூடப்பட்டிருக்கும் முடி எரிச்சலை ஏற்படுத்தும்.",
+"Reposition Baby – Changing positions or holding them differently can sometimes help." :	"இடமாற்றம் குழந்தை - நிலைகளை மாற்றுவது அல்லது அவற்றை வித்தியாசமாக வைத்திருப்பது சில நேரங்களில் உதவும்.",
+	
+	
+"Use Gentle Motions – Rocking, swaying, or holding baby in a colic carry (on their tummy along your forearm) can help." :	"மென்மையான இயக்கங்களைப் பயன்படுத்துங்கள் - குழந்தையை 'கோலிக் கேரியில்' (உங்கள் முன்கையில் அவர்களின் வயிற்றில்) ராக்கிங், அசைத்தல் அல்லது வைத்திருப்பது உதவும்.",
+"Try White Noise – Rhythmic sounds, like a fan or heartbeat sound, can be soothing." :	"வெள்ளை சத்தத்தை முயற்சிக்கவும் - விசிறி அல்லது இதய துடிப்பு ஒலி போன்ற தாள ஒலிகள் இனிமையாக இருக்கும்.",
+"Burp Baby Well – Gas buildup can make colic worse. Burp frequently during feeds." :	"ஏப்பம் குழந்தை கிணறு - வாயு உருவாக்கம் கோலிக்கை மோசமாக்கும். தாய்ப்பால் கொடுக்கும் போது அடிக்கடி ஏப்பம் விடவும்.",
+"Massage the Tummy – A gentle circular tummy massage can relieve gas." :	"வயிற்றை மசாஜ் செய்யுங்கள் - ஒரு மென்மையான வட்ட வயிற்று மசாஜ் வாயுவைக் குறைக்கும்.",
+"Consult a Pediatrician – If colic persists, discuss options like probiotic drops or diet changes (for breastfeeding moms)." :	"ஒரு குழந்தை மருத்துவரை அணுகவும் - கோலிக் தொடர்ந்தால், புரோபயாடிக் சொட்டுகள் அல்லது உணவு மாற்றங்கள் (தாய்ப்பால் கொடுக்கும் அம்மாக்களுக்கு) போன்ற விருப்பங்களைப் பற்றி விவாதிக்கவும்.",
+	
+	
+"Respond with Reassurance – Holding, talking, or making eye contact helps babies feel secure." :	"உறுதியுடன் பதிலளிக்கவும் - வைத்திருப்பது, பேசுவது அல்லது கண் தொடர்பு கொள்வது குழந்தைகள் பாதுகாப்பாக உணர உதவுகிறது.",
+"Try Gentle Touch – A cuddle or soft pat on the back can be calming." :	"மென்மையான தொடுதலை முயற்சிக்கவும் - முதுகில் ஒரு அரவணைப்பு அல்லது மென்மையான தட்டு அமைதியாக இருக்கும்.",
+"Engage with Soothing Sounds – Humming or talking in a calm voice can reassure the baby." :	"இனிமையான ஒலிகளுடன் ஈடுபடுங்கள் - ஹம்மிங் அல்லது அமைதியான குரலில் பேசுவது குழந்தைக்கு உறுதியளிக்கும்.",
+"Encourage Independent Comforting – Allow baby to self-soothe briefly before immediately responding." :	"சுயாதீன ஆறுதலளிப்பதை ஊக்குவிக்கவும் - உடனடியாக பதிலளிப்பதற்கு முன்பு குழந்தையை சுருக்கமாக சுயமாக ஆற்ற அனுமதிக்கவும்.",
+"Maintain a Balance – Meeting attention needs is important, but consistency in response helps babies learn security." :	"ஒரு சமநிலையை பராமரிக்கவும் - கவனத் தேவைகளைப் பூர்த்தி செய்வது முக்கியம், ஆனால் பதிலில் நிலைத்தன்மை குழந்தைகளுக்கு பாதுகாப்பைக் கற்றுக்கொள்ள உதவுகிறது.",
+
+  "Cry History":"அழுகை வரலாறு",
+"Record" :"பதிவைத் தொடங்கவும்"
+
 
 };
 

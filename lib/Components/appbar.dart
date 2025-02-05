@@ -3,6 +3,7 @@ import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Screens/Service/HealthProfile.dart';
 import 'package:allobaby/Screens/Signin.dart';
+import 'package:allobaby/features/notification/notification_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,14 +44,14 @@ PreferredSize customAppBar(
                       ),
                       onPressed: () => languageSelectDialog(context),
                     ),
-                    // IconButton(
-                    //   icon: Icon(
-                    //     Icons.notifications_none_rounded,
-                    //     color: Black800,
-                    //   ),
-                    //   onPressed: () => Get.to(() => NotificationView(),
-                    //       transition: Transition.rightToLeft),
-                    // ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.notifications_none_rounded,
+                        color: Black800,
+                      ),
+                      onPressed: () => Get.to(() => NotificationView(),
+                          transition: Transition.rightToLeft),
+                    ),
                     SizedBox(
                       width: 6,
                     ),

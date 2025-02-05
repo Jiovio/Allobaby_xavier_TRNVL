@@ -91,7 +91,7 @@ if(data["babyCryDetected"]==true){
 
 }else {
   Get.back();
-  Get.to(()=> const Babycryfailed());
+  Get.off(()=> const Babycryfailed());
 
 }
 }

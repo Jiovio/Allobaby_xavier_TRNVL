@@ -1,5 +1,6 @@
 import 'package:allobaby/API/Requests/BabyCryAPI.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
@@ -153,11 +154,11 @@ class _CryHistoryState extends State<CryHistory> {
       // backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text(
-          "Cry History",
+          "Cry History".tr,
           style: GoogleFonts.poppins(
             color: primaryColor,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+            // fontSize: 24,
+            // fontWeight: FontWeight.bold,
           ),
         ),
         actions: [

@@ -39,7 +39,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
   final List<Map<String, dynamic>> _babyTips = [
     {
       'icon': Icons.volume_up,
-      'text': 'High-pitched, intense crying often indicates pain or immediate needs.',
+      'text': 'High-pitched, intense crying often indicates pain or immediate needs.'.tr,
     },
     {
       'icon': Icons.night_shelter,
@@ -201,7 +201,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
               onPressed: _cancelRecording,
               icon: Icon(Icons.close, color: Colors.white),
               label: Text(
-                'Cancel',
+                'Cancel'.tr,
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -232,7 +232,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
             color: Colors.white,
           ),
           label: Text(
-            'Start Recording',
+            'Start Recording'.tr,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -433,7 +433,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                       ),
                       const SizedBox(height: 40),
                       Text(
-                        'Getting Your Baby Sound...',
+                        'Getting Your Baby Sound...'.tr,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 24,
@@ -441,7 +441,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                         ),
                       ),
                       Text(
-                        'Try to avoid background noise',
+                        'Try to avoid background noise'.tr,
                         style: TextStyle(
                           color: Colors.white.withOpacity(0.8),
                           fontSize: 16,

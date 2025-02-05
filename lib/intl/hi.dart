@@ -282,9 +282,126 @@ final Map<String, String> hi = {
   "Ultrasound Test": "अल्ट्रासाउंड परीक्षण",
   "Urine Test" : "मूत्र परीक्षण",
   "Awareness" : "जागरूकता",
-  "Screening" : "स्क्रीनिंग"
+  "Screening" : "स्क्रीनिंग",
+  ...babycrys
 
 };
+
+final Map<String, String> babycrys = {
+"Hunger Crying" :"भुखमरी की पुकार",
+"Sleepy Crying" :	"नींद में रोना",
+"Pain Crying" :	"दर्द की चीख",
+"Discomfort Crying" :	"असुविधा रोना",
+"Colic Crying" :	"कोलिक रोना",
+"Attention Crying" :	"ध्यान रोना",
+
+"Hunger Cry" :"भुखमरी की पुकार",
+"Sleepy Cry" :	"नींद में रोना",
+"Pain Cry" :	"दर्द की चीख",
+"Discomfort Cry" :	"असुविधा रोना",
+"Colic Cry" :	"कोलिक रोना",
+"Attention Cry" :	"ध्यान रोना",
+	
+	
+"Rhythmic, repetitive cries that grow louder if the baby isn't fed. Often accompanied by hand-sucking and rooting behavior." :	"लयबद्ध, दोहराए जाने वाले रोने की आवाजें जो तेज होती हैं यदि बच्चे को खाना नहीं दिया जाता। अक्सर हाथ चूसने और जड़ने के व्यवहार के साथ होती हैं।",
+"A whiny, nasal cry that sounds weaker than a hunger cry, often accompanied by yawning and eye-rubbing." :	"एक चिढ़चिढ़ी, नासिका वाली चीख जो भूख की चीख से कमजोर लगती है, अक्सर जम्हाई लेने और आंखें रगड़ने के साथ होती है।",
+"A sudden, high-pitched, intense cry that comes in bursts with breathing pauses. Often accompanied by physical tension." :	"एक अचानक, उच्च-पिच, तीव्र चीख जो सांस लेने के विराम के साथ फटने में आती है। अक्सर शारीरिक तनाव के साथ होती है।",
+"A fussy, irritated cry that typically stops when the source of discomfort is addressed." :	"एक चिड़चिड़ी, परेशान करने वाली चीख जो आमतौर पर तब रुक जाती है जब असुविधा के स्रोत को संबोधित किया जाता है।",
+"Prolonged, intense crying episodes, typically in the evening, with physical signs of distress." :	"लंबे, तीव्र रोने के एपिसोड, आमतौर पर शाम को, शारीरिक संकट के संकेतों के साथ।",
+"A mild cry that starts softly and increases if ignored, often accompanied by eye contact and reaching out." :	"एक हल्की पुकार जो धीरे-धीरे शुरू होती है और अगर अनदेखा किया जाए तो बढ़ जाती है, अक्सर आंखों के संपर्क और हाथ बढ़ाने के साथ होती है।",
+	
+	
+"Hunger cries are rhythmic, repetitive, and grow louder if the baby isn't fed." :	"भूख की चीखें लयबद्ध, दोहराई जाने वाली होती हैं, और यदि बच्चे को खाना नहीं दिया जाता है तो ये तेज होती जाती हैं।",
+"Babies may also:" :	"बच्चे भी कर सकते हैं:",
+"• Suck on hands or fingers" :	"• हाथों या उंगलियों को चूसना",
+"• Smack lips, root (turn head searching for a nipple)" :	"• होंठों को चिपकाना, जड़ (निप्पल की तलाश में सिर घुमाना)",
+"• Get fussy even after being comforted" :	"• सांत्वना मिलने के बाद भी चिड़चिड़ा होना",
+	
+	
+"A whiny, nasal cry that may sound weaker than a hunger cry." :	"एक चिढ़चिढ़ी, नासिका वाली चीख जो भूख की चीख से कमजोर लग सकती है।",
+"Babies may also:" :	"बच्चे भी कर सकते हैं:",
+"• Yawn frequently" :	"• बार-बार जम्हाई लेना",
+"• Rub their eyes or pull their ears" :	"• अपनी आँखें रगड़ें या अपने कान खींचें",
+"• Become fussy and harder to soothe" :	"• नखरे करने वाले और शांत करने में कठिन हो जाएं",
+	
+	
+"A sudden, high-pitched, intense cry that may come in bursts with pauses for breath." :	"एक अचानक, उच्च-पिच, तीव्र चीख जो सांस लेने के लिए रुकावटों के साथ फटने में आ सकती है।",
+"Babies may also:" :	"बच्चे भी कर सकते हैं:",
+"• Clench fists or arch their back" :	"• मुट्ठियाँ भींचना या अपनी पीठ को मोड़ना",
+"• Become stiff or tense" :	"• कठोर या तनावग्रस्त हो जाना",
+"• Show signs of discomfort (scrunched face, difficulty calming down)" :	"• असुविधा के संकेत दिखाएं (संकुचित चेहरा, शांत होने में कठिनाई)",
+	
+	
+"A fussy, irritated cry that may stop when the issue is resolved." :	"एक चिड़चिड़ी, परेशान करने वाली चीख जो तब रुक सकती है जब समस्या का समाधान हो जाए।",
+"Babies may also:" :	"बच्चे भी कर सकते हैं:",
+"• Wiggle or squirm a lot" :	"• बहुत हिलना-डुलना या मचलना",
+"• Tug at their clothing or ears" :	"• उनके कपड़ों या कानों को खींचें",
+"• Appear restless or uneasy" :	"• बेचैन या असहज दिखाई देना",
+	
+	
+"A prolonged, intense, high-pitched cry that often occurs in the evening." :	"एक लंबी, तीव्र, उच्च स्वर की चीख जो अक्सर शाम को होती है।",
+"Babies may also:" :	"बच्चे भी कर सकते हैं:",
+"• Clench fists, arch their back, or pull up legs" :	"• मुट्ठियाँ भींचें, अपनी पीठ को आर्च करें, या पैरों को ऊपर खींचें",
+"• Have a tense, bloated belly" :	"• एक तनावपूर्ण, फूली हुई पेट हो",
+"• Be difficult to soothe, even after feeding" :	"• खिलाने के बाद भी शांत करना मुश्किल हो।",
+	
+	
+"A mild, whimpering cry that starts softly and gets louder if ignored." :	"एक हल्की, कराहती आवाज जो धीरे-धीरे शुरू होती है और अगर अनदेखा किया जाए तो louder हो जाती है।",
+"Babies may also:" :	"बच्चे भी कर सकते हैं:",
+"• Make eye contact while crying" :	"• रोते समय आंखों का संपर्क बनाएं",
+"• Reach out for comfort" :	"• आराम के लिए संपर्क करें",
+"• Stop crying quickly when picked up" :	"• उठाए जाने पर जल्दी रोना बंद करें",
+	
+	
+"Feed Promptly – Responding early prevents excessive crying and makes feeding easier." :	"समय पर खिलाना - जल्दी प्रतिक्रिया देने से अत्यधिक रोने से बचा जा सकता है और खिलाना आसान हो जाता है।",
+"Watch for Hunger Cues – Crying is a late sign; look for early signs like lip-smacking, rooting, sticking out tongue, or sucking on hands." :	"भूख के संकेतों पर ध्यान दें - रोना एक देर से संकेत है; होंठ चाटने, मुंह में उंगली डालने, जीभ बाहर निकालने या हाथ चूसने जैसे शुरुआती संकेतों की तलाश करें।",
+"Ensure Proper Latch – If breastfeeding, ensure a deep latch to avoid discomfort." :	"सही लॅच सुनिश्चित करें - यदि आप स्तनपान करा रहे हैं, तो असुविधा से बचने के लिए गहरा लॅच सुनिश्चित करें।",
+"Check Feeding Schedule – Newborns need feeding every 2-3 hours." :	"खुराक की जांच करें - नवजात शिशुओं को हर 2-3 घंटे में भोजन की आवश्यकता होती है।",
+"Burp Baby After Feeding – Helps prevent gas and fussiness." :	"खाना खिलाने के बाद बच्चे को डकार दिलाना - गैस और चिड़चिड़ापन रोकने में मदद करता है।",
+	
+	
+"Look for Sleep Cues Early – Yawning, zoning out, or rubbing eyes signal it's time to sleep." :	"नींद के संकेतों की जल्दी तलाश करें - जम्हाई लेना, ध्यान भटकाना, या आंखें रगड़ना यह संकेत देते हैं कि सोने का समय है।",
+"Create a Calm Sleep Environment – Dim lights, reduce noise, and use white noise if needed." :	"एक शांत नींद का वातावरण बनाएं - रोशनी को मंद करें, शोर को कम करें, और यदि आवश्यक हो तो सफेद शोर का उपयोग करें।",
+"Use Gentle Rocking – Motion, swaddling, or a pacifier can help." :	"नरम झूलने का उपयोग करें - गति, लपेटना, या एक चूसनी मदद कर सकते हैं।",
+"Follow a Sleep Routine – A consistent bedtime routine helps babies recognize sleep time." :	"नींद की दिनचर्या का पालन करें - एक सुसंगत सोने की दिनचर्या शिशुओं को नींद के समय को पहचानने में मदद करती है।",
+"Avoid Overstimulation – Too much activity before bed can make sleep harder." :	"अधिक उत्तेजना से बचें - बिस्तर से पहले बहुत अधिक गतिविधि नींद को कठिन बना सकती है।",
+	
+	
+"Check for Obvious Issues – Look for diaper rash, teething pain, or tight clothing." :	"स्पष्ट समस्याओं की जांच करें - डायपर रैश, दांत निकलने का दर्द, या तंग कपड़ों की तलाश करें।",
+"Soothe with Gentle Touch – Skin-to-skin contact or holding them close can help." :	"मुलायम स्पर्श से शांति दें - त्वचा से त्वचा का संपर्क या उन्हें करीब रखना मदद कर सकता है।",
+"Try Pain Relief Techniques – For teething, offer a chilled teether; for gas, try tummy massage." :	"दर्द निवारण तकनीकों का प्रयास करें - दांत निकलने के लिए, एक ठंडी चबाने वाली चीज़ दें; गैस के लिए, पेट की मालिश करने का प्रयास करें।",
+"Monitor for Fever or Illness – If crying persists with fever, vomiting, or lethargy, consult a doctor." :	"बुखार या बीमारी की निगरानी करें - यदि रोना बुखार, उल्टी या सुस्ती के साथ जारी रहता है, तो डॉक्टर से परामर्श करें।",
+"Trust Your Instincts – If the baby seems in severe pain, seek medical advice immediately." :	"अपने अंतर्ज्ञान पर भरोसा करें - यदि बच्चे को गंभीर दर्द हो रहा है, तो तुरंत चिकित्सा सलाह लें।",
+	
+	
+"Check the Diaper – A wet or soiled diaper is a common cause of discomfort." :	"डायपर की जांच करें - गीला या गंदा डायपर असुविधा का एक सामान्य कारण है।",
+"Ensure Comfortable Clothing – Dress baby in breathable, soft fabrics and check for tight clothing." :	"आरामदायक कपड़े सुनिश्चित करें - बच्चे को सांस लेने योग्य, मुलायम कपड़ों में पहनाएं और तंग कपड़ों की जांच करें।",
+"Adjust Temperature – Feel baby's neck/back to see if they are too hot or cold." :	"तापमान समायोजित करें - देखें कि क्या बच्चे का गला/पीठ बहुत गर्म या ठंडा है।",
+"Check for External Irritants – Tags, rough fabric, or hair wrapped around fingers/toes can cause irritation." :	"बाहरी उत्तेजक तत्वों की जांच करें - टैग, खुरदरी कपड़ा, या उंगलियों/पैरों के चारों ओर लिपटी हुई बाल जलन पैदा कर सकते हैं।",
+"Reposition Baby – Changing positions or holding them differently can sometimes help." :	"बेबी को फिर से स्थिति में लाना - स्थिति बदलना या उन्हें अलग तरीके से पकड़ना कभी-कभी मदद कर सकता है।",
+	
+	
+"Use Gentle Motions – Rocking, swaying, or holding baby in a 'colic carry' (on their tummy along your forearm) can help." :	"नरम गति का उपयोग करें - झूलना, लहराना, या बच्चे को 'कोलिक कैरी' (उनकी पेट के बल आपके अग्रभुज पर) में पकड़ना मदद कर सकता है।",
+"Try White Noise – Rhythmic sounds, like a fan or heartbeat sound, can be soothing." :	"व्हाइट नॉइज़ आज़माएँ - तालबद्ध ध्वनियाँ, जैसे पंखा या दिल की धड़कन की आवाज़, सुखदायक हो सकती हैं।",
+"Burp Baby Well – Gas buildup can make colic worse. Burp frequently during feeds." :	"बर्प बेबी वेल - गैस का संचय कोलिक को और खराब कर सकता है। फीडिंग के दौरान बार-बार बर्प करें।",
+"Massage the Tummy – A gentle circular tummy massage can relieve gas." :	"पेट की मालिश करें - एक हल्की गोलाकार पेट की मालिश गैस को कम कर सकती है।",
+"Consult a Pediatrician – If colic persists, discuss options like probiotic drops or diet changes (for breastfeeding moms)." :	"बाल रोग विशेषज्ञ से परामर्श करें - यदि पेट दर्द जारी रहता है, तो प्रोबायोटिक ड्रॉप्स या आहार में बदलाव (स्तनपान कराने वाली माताओं के लिए) जैसे विकल्पों पर चर्चा करें।",
+	
+	
+"Respond with Reassurance – Holding, talking, or making eye contact helps babies feel secure." :	"आत्मविश्वास के साथ प्रतिक्रिया दें - पकड़ना, बात करना या आंखों में संपर्क बनाना बच्चों को सुरक्षित महसूस करने में मदद करता है।",
+"Try Gentle Touch – A cuddle or soft pat on the back can be calming." :	"कोमल स्पर्श का प्रयास करें - एक आलिंगन या पीठ पर हल्का थपकी देना शांत करने वाला हो सकता है।",
+"Engage with Soothing Sounds – Humming or talking in a calm voice can reassure the baby." :	"सुखद ध्वनियों के साथ जुड़ें - मधुर गुनगुनाना या शांत आवाज में बात करना बच्चे को आश्वस्त कर सकता है।",
+"Encourage Independent Comforting – Allow baby to self-soothe briefly before immediately responding." :	"स्वतंत्र सांत्वना को प्रोत्साहित करें - बच्चे को तुरंत प्रतिक्रिया देने से पहले थोड़ी देर के लिए आत्म-सांत्वना करने दें।",
+"Maintain a Balance – Meeting attention needs is important, but consistency in response helps babies learn security." :	"संतुलन बनाए रखें - ध्यान की आवश्यकताओं को पूरा करना महत्वपूर्ण है, लेकिन प्रतिक्रिया में निरंतरता बच्चों को सुरक्षा सीखने में मदद करती है।",
+
+"Cry History":"रोने का इतिहास",
+"Record" :"अभिलेख"
+
+
+};
+
+
+
 
 // final Map<String, String> hi = {
 //   //registersation screen

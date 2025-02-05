@@ -45,15 +45,15 @@ class _AIAppointmentPageState extends State<AIAppointmentPage> {
         future: OurFirebase.getAIAppointments(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
+            return  Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircularProgressIndicator(color: PrimaryColor),
                   const SizedBox(height: 16),
                   Text(
-                    'Analyzing your health data...',
-                    style: TextStyle(
+                    'Analyzing your health data...'.tr,
+                    style: const TextStyle(
                       color: PrimaryColor,
                       fontSize: 16,
                     ),
@@ -119,7 +119,7 @@ class _AIAppointmentPageState extends State<AIAppointmentPage> {
                   children: [
                     _buildStatusCard(appointments['is_pregnant'] ?? false),
                     const SizedBox(height: 20),
-                    _buildSummaryCard(appointments['summary']?.toString() ?? 'No summary available'),
+                    _buildSummaryCard(appointments['summary']?.toString() ?? 'No summary available'.tr),
                     const SizedBox(height: 20),
                     _buildAppointmentsDates(parsedDates),
                   ],
@@ -251,7 +251,7 @@ class _AIAppointmentPageState extends State<AIAppointmentPage> {
                 Icon(Icons.calendar_month, color: PrimaryColor),
                 const SizedBox(width: 8),
                 Text(
-                  'Upcoming Appointments',
+                  'Upcoming Appointments'.tr,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -287,6 +287,7 @@ class _AIAppointmentPageState extends State<AIAppointmentPage> {
                         DateTime? date;
                         try {
                           date = DateTime.parse(dateStr);
+                          print(date.compareTo(DateTime.now()));
                         } catch (e) {
                           print('Error parsing date: $dateStr');
                           return const SizedBox.shrink();
@@ -365,7 +366,7 @@ class _AIAppointmentPageState extends State<AIAppointmentPage> {
                                     // ),
                                 const SizedBox(width: 24),           
                     
-                    
+                                if(date.compareTo(DateTime.now())<1) Container(child: Text("Date Passed"),) else
                                 Expanded(
                                 child: Center(
                                   child: ElevatedButton(
@@ -381,8 +382,8 @@ class _AIAppointmentPageState extends State<AIAppointmentPage> {
                     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                                     ),
                                     child: Text(
-                    "Book Appointment",
-                    style: TextStyle(
+                    "Book Appointment".tr,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),

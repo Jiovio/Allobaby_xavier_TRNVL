@@ -325,7 +325,7 @@ class _CurrentappointmentState extends State<Currentappointment> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                " My Appointments ".tr,
+                "My Appointments".tr,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
               ),
             ),

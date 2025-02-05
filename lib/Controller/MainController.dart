@@ -6,13 +6,10 @@ import 'package:allobaby/Components/Loadingbar.dart';
 import 'package:allobaby/Components/notification_service.dart';
 import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
-import 'package:allobaby/Models/DailyScreening.dart';
 import 'package:allobaby/db/dbHelper.dart';
-import 'package:allobaby/utils/backgroundservice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:intl/intl.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -93,7 +90,7 @@ class Maincontroller extends GetxController {
     localStorage.setItem("phone",d["phone_number"]);}
 
 
-      Backgroundservice.listenForData();
+      // Backgroundservice.listenForData();
 
   loading.value = false;
   update();

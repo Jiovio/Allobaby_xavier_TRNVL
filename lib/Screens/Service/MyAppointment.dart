@@ -25,10 +25,10 @@ class MyAppointment extends StatelessWidget {
             ),
 
 
-            bottom: const TabBar(
+            bottom:  TabBar(
           tabs: [
-            Tab(icon: Icon(Icons.date_range),text: "My Appointments",),
-            Tab(icon: Icon(Icons.data_exploration_rounded),text: "AI Recommendation"),
+            Tab(icon: const Icon(Icons.date_range),text: "My Appointments".tr,),
+            Tab(icon: const Icon(Icons.data_exploration_rounded),text: "AI Recommendation".tr),
           ],
         ),
             

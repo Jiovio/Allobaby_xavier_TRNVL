@@ -1,11 +1,74 @@
+import 'dart:io';
+import 'dart:math';
+
+import 'package:allobaby/API/Requests/ReportAPI.dart';
+import 'package:allobaby/Components/Loadingbar.dart';
 import 'package:allobaby/Components/forms.dart';
+import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/utils/camera.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:get/get.dart';
 
-class AddReport extends StatelessWidget {
+class AddReport extends StatefulWidget {
   const AddReport({super.key});
+
+  @override
+  State<AddReport> createState() => _AddReportState();
+}
+
+class _AddReportState extends State<AddReport> {
+
+
+    String? image;
+
+    String? reportType;
+
+
+    TextEditingController description = TextEditingController();
+
+      Future<void> submit () async {
+
+        //          if(image==null){
+        //   showToast("Please Upload Image", false);
+        //   return;
+        // }
+
+        if(reportType==null){
+          showToast("Please select Report Type", false);
+          return;
+        }
+
+        // if(desc.text==""){
+        //   showToast("Please Update Description", false);
+        //   return;
+        // }
+
+
+  // return ;
+    Map<String,dynamic> reportData = {
+     
+
+    };
+
+
+    
+    Map<String,dynamic> data = {
+      "reportType":reportType,
+      // "details":reportData,
+      "imageurl":image,
+      "description":description.text,
+    };
+      await Reportapi().addReports(data);
+
+  }
+
+  
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +98,12 @@ class AddReport extends StatelessWidget {
                                     InteractiveViewer(
                                       child: Center(
                                         child: 
-                                              Text(
+                                            image==null?  Text(
                                                 "NO IMAGE".tr,
                                                 style: const TextStyle(
                                                     fontSize: 18, color: White),
-                                              )
+                                              ):
+                                              CachedNetworkImage(imageUrl: image!)
                                                 
                                       ),
                                     ),
@@ -67,19 +131,13 @@ class AddReport extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: 
-                        // controller.fileImage64 == null
-                        //     ? Center(
-                        //         child: Text(
-                        //         "Click Add Image Button",
-                        //         style: TextStyle(fontSize: 18),
-                        //       ))
-                        //     : Image.memory(
-                        //         base64Decode(controller.fileImage64)),
-                               Center(
+                        
+                             image==null ?  Center(
                                 child: Text(
                                 "Click Add Image Button".tr,
                                 style: TextStyle(fontSize: 18),
-                              ))
+                              )) :
+                              CachedNetworkImage(imageUrl: image!)
 
                       ),
               ),
@@ -109,8 +167,13 @@ class AddReport extends StatelessWidget {
                                 FloatingActionButton(
                                     elevation: 0,
                                     tooltip: "Camera",
-                                    onPressed: () => {},
-                                        // reportController.getImageFromCamera(),
+                                    onPressed: () async {
+                                    final url = await  Imageutils().getImageFromCamera("reports");
+                                    setState(() {
+                                      image = url;
+                                    });
+
+                                    },
                                     backgroundColor: Colors.amberAccent,
                                     child: Image.asset(
                                       'assets/General/camera.png',
@@ -120,7 +183,12 @@ class AddReport extends StatelessWidget {
                                     elevation: 0,
                                     focusColor: Colors.greenAccent,
                                     tooltip: "Gallery",
-                                    onPressed: () => {},
+                                    onPressed: () async {
+                                         final url = await  Imageutils().getImageFromGallery("reports");
+                                    setState(() {
+                                      image = url;
+                                    });
+                                    },
                                         // reportController.getImageFromGallery(),
                                     backgroundColor: Colors.indigoAccent,
                                     child: Image.asset(
@@ -130,16 +198,16 @@ class AddReport extends StatelessWidget {
                               ],
                             ),
                           )),
-                  icon: Icon(Icons.add_a_photo),
+                  icon:const Icon(Icons.add_a_photo),
                   label: Text("ADD IMAGE".tr)),
 
                                 SizedBox(
                 height: 10.0,
               ),
 
-                          searchBox("Report of ?",["Mother", "Child"],(v){
-
-                          }),
+                          // searchBox("Report of ?",["Mother", "Child"],(v){
+                              
+                          // }),
 
                            SizedBox(
                 height: 10.0,
@@ -157,6 +225,12 @@ class AddReport extends StatelessWidget {
                   "MRI",
                   "Others"
                 ],(v){
+
+                  reportType = v;
+
+                  setState(() {
+                    
+                  });
 
                 }),
 
@@ -188,7 +262,13 @@ class AddReport extends StatelessWidget {
                       minimumSize: Size(300, 50),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
-                  onPressed: () => {},
+                  onPressed: () async {
+                    await Loadingbar.use("Uploading Report ...", submit);
+                    Get.back();
+                    showToast("Added Report Successfully", true);
+                  }
+                     ,
+                  
                   child: Text("ADD REPORT".tr))
 
 
@@ -203,7 +283,4 @@ class AddReport extends StatelessWidget {
 
     );
   }
-
-
-
 }

@@ -1,5 +1,6 @@
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/features/babycry/cryhistory/cryhistoryhome.dart';
+import 'package:allobaby/features/babycry/data/crydata.dart';
 import 'package:allobaby/features/babycry/screens/crydetail.dart';
 import 'package:allobaby/features/babycry/screens/record.dart';
 import 'package:flutter/material.dart';
@@ -23,42 +24,53 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
 
   final List<Map<String, dynamic>> cryTypes = [
     {
-      'title': 'Hungry Cry',
-      'description': 'A rhythmic, repetitive cry that escalates if not attended to. Babies may also show signs like rooting or sucking on their hands.',
+      'title': 'Hunger Cry'.tr,
+      "org": 'Hunger Cry',
+      'description': "Rhythmic, repetitive cries that grow louder if the baby isn't fed. Often accompanied by hand-sucking and rooting behavior.".tr,
       'icon': '🍼',
       'link' : "assets/babyicons/hc.png"
     },
     {
-      'title': 'Sleepy Cry',
-      'description': 'A whiny, nasal cry that may come with yawning, rubbing eyes, or fussiness. It often sounds weaker than a hunger cry.',
+      'title': 'Sleepy Cry'.tr,
+      'org': 'Sleepy Cry',
+
+      'description': "A whiny, nasal cry that sounds weaker than a hunger cry, often accompanied by yawning and eye-rubbing.".tr,
       'icon': '😴',
       'link' : "assets/babyicons/sc.png"
 
     },
     {
-      'title': 'Pain Cry',
-      'description': 'A sudden, high-pitched, intense cry with pauses for catching breath. It may be accompanied by clenched fists or a stiff body.',
+      'title': 'Pain Cry'.tr,
+      'org': 'Pain Cry',
+
+      'description': "A sudden, high-pitched, intense cry that comes in bursts with breathing pauses. Often accompanied by physical tension.".tr,
       'icon': '🤕',
       'link' : "assets/babyicons/pc.png"
 
     },
     {
-      'title': 'Discomfort Cry',
-      'description': 'A fussy, irritated cry indicating a wet diaper, feeling too hot or cold, or tight clothing. The cry may stop once the issue is resolved.',
+      'title': 'Discomfort Cry'.tr,
+      'org': 'Discomfort Cry',
+
+      'description': "A fussy, irritated cry that typically stops when the source of discomfort is addressed.".tr,
       'icon': '😣',
       'link' : "assets/babyicons/dc.png"
 
     },
     {
-      'title': 'Colic Cry',
-      'description': 'A prolonged, intense, high-pitched cry that occurs mostly in the evening. The baby may clench fists, arch the back, or have a tense abdomen.',
+      'title': 'Colic Cry'.tr,
+      'org': 'Colic Cry',
+
+      'description': "Prolonged, intense crying episodes, typically in the evening, with physical signs of distress.".tr,
       'icon': '😢',
       'link' : "assets/babyicons/cc.png"
 
     },
     {
-      'title': 'Attention Cry',
-      'description': 'A mild, whimpering cry that starts softly and grows louder if ignored. Babies may also make eye contact or reach out for comfort.',
+      'title': 'Attention Cry'.tr,
+      'org': 'Attention Cry',
+
+      'description': "A mild cry that starts softly and increases if ignored, often accompanied by eye contact and reaching out.".tr,
       'icon': '🤗',
       'link' : "assets/babyicons/ac.png"
 
@@ -89,7 +101,7 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
           "AlloCry",
           style: GoogleFonts.poppins(
           
-            color: Colors.black,
+            color: PrimaryColor,
             fontSize: 24,
             fontWeight: FontWeight.w500,
           ),
@@ -98,7 +110,7 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
 
           TextButton.icon(
             label: Text(
-                'Cry History',
+                'Cry History'.tr,
                 style: GoogleFonts.poppins(
                   color: primaryColor,
                   fontWeight: FontWeight.w500
@@ -150,7 +162,7 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
                   itemCount: cryTypes.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => Get.to(()=> Crydetail()),
+                      onTap: () => Get.to(()=> Crydetail(data: crydata[cryTypes[index]['org']],)),
                       child: AnimatedCryCard(
                         title: cryTypes[index]['title']!,
                         description: cryTypes[index]['description']!,
@@ -253,7 +265,7 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
                                 ),
                                 SizedBox(height: 4),
                                 Text(
-                                  'Record',
+                                  'Record'.tr,
                                   style: GoogleFonts.poppins(
                                     color: Colors.white,
                                     fontSize: 12,
