@@ -22,16 +22,17 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
   final backgroundColor = Colors.white; // Light pink shade
   final secondaryColor = Color(0xffFF8A94); // Lighter shade of primary
 
+
   final List<Map<String, dynamic>> cryTypes = [
     {
-      'title': 'Hunger Cry'.tr,
+      'title': 'Hunger Crying'.tr,
       "org": 'Hunger Cry',
       'description': "Rhythmic, repetitive cries that grow louder if the baby isn't fed. Often accompanied by hand-sucking and rooting behavior.".tr,
       'icon': '🍼',
       'link' : "assets/babyicons/hc.png"
     },
     {
-      'title': 'Sleepy Cry'.tr,
+      'title': 'Sleepy Crying'.tr,
       'org': 'Sleepy Cry',
 
       'description': "A whiny, nasal cry that sounds weaker than a hunger cry, often accompanied by yawning and eye-rubbing.".tr,
@@ -40,7 +41,7 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
 
     },
     {
-      'title': 'Pain Cry'.tr,
+      'title': 'Pain Crying'.tr,
       'org': 'Pain Cry',
 
       'description': "A sudden, high-pitched, intense cry that comes in bursts with breathing pauses. Often accompanied by physical tension.".tr,
@@ -49,7 +50,7 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
 
     },
     {
-      'title': 'Discomfort Cry'.tr,
+      'title': 'Discomfort Crying'.tr,
       'org': 'Discomfort Cry',
 
       'description': "A fussy, irritated cry that typically stops when the source of discomfort is addressed.".tr,
@@ -58,7 +59,7 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
 
     },
     {
-      'title': 'Colic Cry'.tr,
+      'title': 'Colic Crying'.tr,
       'org': 'Colic Cry',
 
       'description': "Prolonged, intense crying episodes, typically in the evening, with physical signs of distress.".tr,
@@ -67,7 +68,7 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
 
     },
     {
-      'title': 'Attention Cry'.tr,
+      'title': 'Attention Crying'.tr,
       'org': 'Attention Cry',
 
       'description': "A mild cry that starts softly and increases if ignored, often accompanied by eye contact and reaching out.".tr,
@@ -98,7 +99,7 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
       // backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text(
-          "AlloCry",
+          "Allocry".tr,
           style: GoogleFonts.poppins(
           
             color: PrimaryColor,
@@ -140,7 +141,7 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
                   ),
 
                   Text(
-                                'Baby can cry due to',
+                                'Baby can cry due to'.tr,
                                 style: GoogleFonts.poppins(
                                   color: PrimaryColor,
                                   fontSize: 16,
@@ -162,7 +163,7 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
                   itemCount: cryTypes.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => Get.to(()=> Crydetail(data: crydata[cryTypes[index]['org']],)),
+                      onTap: () => Get.to(()=> Crydetail(data: Data().crydata[cryTypes[index]['org']],)),
                       child: AnimatedCryCard(
                         title: cryTypes[index]['title']!,
                         description: cryTypes[index]['description']!,
@@ -307,7 +308,7 @@ class AnimatedCryCard extends StatelessWidget {
   final int index;
   final Color primaryColor;
 
-  const AnimatedCryCard({
+   AnimatedCryCard({
     required this.title,
     required this.description,
     required this.icon,
@@ -392,4 +393,6 @@ class AnimatedCryCard extends StatelessWidget {
       ),
     );
   }
+
+  
 }

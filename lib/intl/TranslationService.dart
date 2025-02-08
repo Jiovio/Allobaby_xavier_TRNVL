@@ -8,6 +8,10 @@ import 'ta.dart';
 import 'ch.dart';
 import 'ka.dart';
 import 'ma.dart';
+import 'ml.dart';
+import 'tl.dart';
+
+
 
 
 
@@ -25,18 +29,23 @@ class TranslationService extends Translations {
     'Tamil(தமிழ்)',
     'Kannada(ಕನ್ನಡ)',
     'Marathi (मराठी)',
-    "Chinese"
+    "Chinese",
+    "Malayalam",
+    "Telugu"
   ];
 
   // Supported locales
   // Needs to be same order with langs
   static final locales = [
-    Locale('en'),
-    Locale('hi'),
-    Locale('ta'),
-    Locale('ka'),
-    Locale('ma'),
-    Locale('ch')
+    const Locale('en'),
+    const Locale('hi'),
+    const Locale('ta'),
+    const Locale('ka'),
+    const Locale('ma'),
+    const Locale('ch'),
+    const Locale('ml'),
+    const Locale('tl'),
+
   ];
 
   // Keys and their translations
@@ -48,7 +57,9 @@ class TranslationService extends Translations {
         'ta': ta,
         'ch': ch,
         'ka':ka,
-        'ma':ma
+        'ma':ma,
+        'ml': ml,
+        'tl': tl
       };
 
   // Gets locale from language, and updates the locale

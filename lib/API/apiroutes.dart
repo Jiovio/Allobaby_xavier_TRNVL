@@ -23,7 +23,7 @@ class Apiroutes {
       try {
       var d = await postRequest("/user/login/$phone",{});
       if(d!=null){
-        print(d);
+        // print(d);
         return d;
       }else{
         return false;
@@ -56,7 +56,7 @@ class Apiroutes {
 
       var d = await getRequest("/auth/protected");
 
-      print(d);
+      // print(d);
 
 
   }

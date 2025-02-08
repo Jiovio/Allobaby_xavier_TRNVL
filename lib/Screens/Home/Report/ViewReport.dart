@@ -99,7 +99,7 @@ class ViewReport extends StatelessWidget {
                   // Description
                   _buildSection(
                     title: 'Description'.tr,
-                    content: reportDetails['description']==null || reportDetails['description']=="" ? 'No description available'
+                    content: reportDetails['description']==null || reportDetails['description']=="" ? 'No description available'.tr
                     : reportDetails['description']
                     ,
                   ),

@@ -16,7 +16,7 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(title: "Chat", context: context),
+      appBar: customAppBar(title: "Chat".tr, context: context),
 
             body: Container(
         padding: EdgeInsets.only(top: 40, left: 20, right: 20),

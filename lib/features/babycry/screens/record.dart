@@ -174,8 +174,8 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
             child: ElevatedButton.icon(
               onPressed: _stopRecording,
               icon: const Icon(Icons.stop, color: Colors.white),
-              label:const Text(
-                'Stop',
+              label: Text(
+                'STOP'.tr,
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -409,7 +409,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                             ),
                             SizedBox(width: 12),
                             Text(
-                              'Recording ${_countdown}s',
+                              'Recording'.tr + ' ${_countdown}s',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
@@ -433,7 +433,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                       ),
                       const SizedBox(height: 40),
                       Text(
-                        'Getting Your Baby Sound...'.tr,
+                        'Getting Your Baby Sound…'.tr,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 24,

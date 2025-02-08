@@ -23,7 +23,7 @@ class EditProfile extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title:const Text("Edit Profile"),
+        title: Text("Edit Profile".tr),
         actions: [
           IconButton(
               icon: Icon(Icons.check),
@@ -168,7 +168,7 @@ class EditProfile extends StatelessWidget {
                     height: 18.0,
                   ),
                   Text(
-                    'General Details',
+                    'General Details'.tr,
                     style: TextStyle(
                       fontSize: 18,
                       color: PrimaryColor,
@@ -189,7 +189,7 @@ class EditProfile extends StatelessWidget {
                       return null;
                     },
                     decoration: InputDecoration(
-                        labelText: "Name", border: OutlineInputBorder()),
+                        labelText: "Name".tr, border: OutlineInputBorder()),
                   ),
                   SizedBox(
                     height: 16.0,
@@ -199,7 +199,7 @@ class EditProfile extends StatelessWidget {
                       Flexible(
                         child: DropdownSearch<String>(
                           validator: (v) =>
-                              v == null ? "Please Select Gender" : null,
+                              v == null ? "Please Select Gender".tr : null,
                               popupProps:const PopupProps.menu(
                       constraints: BoxConstraints(maxHeight: 120),
                       showSelectedItems: true
@@ -207,7 +207,7 @@ class EditProfile extends StatelessWidget {
         
                               dropdownDecoratorProps: DropDownDecoratorProps(
                                 dropdownSearchDecoration: InputDecoration(
-                                  hintText: "Gender",
+                                  hintText: "Gender".tr,
                                   border: OutlineInputBorder()
                                 )
                               ),
@@ -234,7 +234,7 @@ class EditProfile extends StatelessWidget {
                           controller: mainc.age,
                           decoration: InputDecoration(
                             counterText: "",
-                              labelText: "age", border: OutlineInputBorder()),
+                              labelText: "Age".tr, border: OutlineInputBorder()),
                           keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -254,13 +254,13 @@ class EditProfile extends StatelessWidget {
                   Container(
                     height: 60.0,
                     child: DropdownSearch<String>(
-                      validator: (v) => v == null ? "Select Blood Group" : null,
+                      validator: (v) => v == null ? "Select Blood Group".tr : null,
                       selectedItem: mainc.bloodGroup,
                       items: BG,
-                      dropdownDecoratorProps:const DropDownDecoratorProps(
+                      dropdownDecoratorProps: DropDownDecoratorProps(
                                 dropdownSearchDecoration: InputDecoration(
-                                  hintText:  "Blood Group",
-                                  border: OutlineInputBorder()
+                                  hintText:  "Blood Group".tr,
+                                  border:const OutlineInputBorder()
                                 )
                               ),
                       onChanged: (value) {
@@ -276,11 +276,11 @@ class EditProfile extends StatelessWidget {
                   ),
                   DropdownSearch<String>(
                     selectedItem: mainc.healthStatus,
-                    items: ["Normal", "Low", "High"],
-                    dropdownDecoratorProps:const DropDownDecoratorProps(
+                    items: const ["Normal", "Low", "High"],
+                    dropdownDecoratorProps: DropDownDecoratorProps(
                                 dropdownSearchDecoration: InputDecoration(
-                                  hintText:  "Health Status",
-                                  border: OutlineInputBorder()
+                                  hintText:  "Health Status".tr,
+                                  border:const OutlineInputBorder()
                                 )
                               ),
 
@@ -294,8 +294,8 @@ class EditProfile extends StatelessWidget {
                     height: 20.0,
                   ),
                   Text(
-                    'Partner Details',
-                    style: TextStyle(
+                    'Partner Details'.tr,
+                    style:const TextStyle(
                       fontSize: 18,
                       color: PrimaryColor,
                     ),
@@ -312,12 +312,12 @@ class EditProfile extends StatelessWidget {
                     
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter Partner Name';
+                        return 'Please enter Partner Name'.tr;
                       }
                       return null;
                     },
                     decoration: InputDecoration(
-                        labelText: "Partner Name", border: OutlineInputBorder()),
+                        labelText: "Partner Name".tr, border: OutlineInputBorder()),
                   ),
                   SizedBox(
                     height: 16.0,
@@ -329,29 +329,29 @@ class EditProfile extends StatelessWidget {
                     ,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter Partner Mobile Number';
+                        return 'Please enter Partner Mobile Number'.tr;
                       }
                       return null;
                     },
                     decoration: InputDecoration(
-                        labelText: "Partner Mobile Number",
+                        labelText: "Partner Mobile Number".tr,
                         border: OutlineInputBorder()),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16.0,
                   ),
                   DropdownSearch<String>(
                     enabled: false,
                     validator: (v) =>
-                        v == null ? "Please Select Parent Type" : null,
+                        v == null ? "Please Select Parent Type".tr : null,
                     // mode: Mode.MENU,
                     // showSelectedItem: true,
                     // selectedItem: settingsController.parentType,
                     selectedItem: mainc.gender=="Male"?"Mom":"Dad",
-                    items: ["Dad", "Mom"],
+                    items:const ["Dad", "Mom"],
                     dropdownDecoratorProps: DropDownDecoratorProps(
                                 dropdownSearchDecoration: InputDecoration(
-                                  hintText:  "Parent Type",
+                                  hintText:  "Parent Type".tr,
                                   border: OutlineInputBorder()
                                 )
                               ),
@@ -366,7 +366,7 @@ class EditProfile extends StatelessWidget {
                     height: 12.0,
                   ),
                   Text(
-                    'Pregnancy Details',
+                    'Pregnancy Details'.tr,
                     style: TextStyle(
                       fontSize: 18,
                       color: PrimaryColor,
@@ -394,14 +394,14 @@ class EditProfile extends StatelessWidget {
                   DropdownSearch<String>(
                     
                     validator: (v) =>
-                        v == null ? "Please Select Pregnant Status" : null,
+                        v == null ? "Please Select Pregnant Status".tr : null,
 
                     selectedItem: mainc.pregnancyStatus,
                     items: mainc.pregnancyList,
-                    dropdownDecoratorProps:const DropDownDecoratorProps(
+                    dropdownDecoratorProps: DropDownDecoratorProps(
                                 dropdownSearchDecoration: InputDecoration(
-                                  hintText:  "Status",
-                                  border: OutlineInputBorder(),
+                                  hintText:  "Status".tr,
+                                  border:const OutlineInputBorder(),
 
                                 )
                               ),
@@ -450,11 +450,11 @@ class EditProfile extends StatelessWidget {
                         });
                       },
                       decoration: InputDecoration(
-                          labelText: "LMP Date", border: OutlineInputBorder()),
+                          labelText: "LMP Date".tr, border: OutlineInputBorder()),
                       keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter LMP Date';
+                          return 'Please enter LMP Date'.tr;
                         }
                         return null;
                       },
@@ -471,12 +471,12 @@ class EditProfile extends StatelessWidget {
                     controller: controller.edDate,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter ED date';
+                        return 'Please enter ED date'.tr;
                       }
                       return null;
                     },
                     decoration: InputDecoration(
-                        labelText: "ED Date", border: OutlineInputBorder()),
+                        labelText: "ED Date".tr, border: OutlineInputBorder()),
                   ),
 
                   if(controller.pregnancyStatus == controller.pregnancyList[0])
@@ -494,12 +494,12 @@ class EditProfile extends StatelessWidget {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter between 28 to 41';
+                        return 'Please enter between 28 to 41'.tr;
                       }
                       return null;
                     },
                     decoration: InputDecoration(
-                        labelText: "Average Length of Cycles", border: OutlineInputBorder()),
+                        labelText: "Average Length of Cycles".tr, border: OutlineInputBorder()),
                   ),
 
                   if(controller.pregnancyStatus == controller.pregnancyList[2])
@@ -529,12 +529,12 @@ class EditProfile extends StatelessWidget {
                     controller: controller.deliveryDate,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter Delivery date';
+                        return 'Please enter Delivery date'.tr;
                       }
                       return null;
                     },
                     decoration: InputDecoration(
-                        labelText: "Delivery Date", border: OutlineInputBorder()),
+                        labelText: "Delivery Date".tr, border: OutlineInputBorder()),
                   ),
 
 
@@ -557,8 +557,8 @@ class EditProfile extends StatelessWidget {
                   SizedBox(
                     height: 20.0,
                   ),
-                 const Text(
-                    'Address Details',
+                  Text(
+                    'Address Details'.tr,
                     style: TextStyle(
                       fontSize: 18,
                       color: PrimaryColor,
@@ -567,19 +567,7 @@ class EditProfile extends StatelessWidget {
                 const  SizedBox(
                     height: 16.0,
                   ),
-                  // TextFormField(
-                  //   // controller: settingsController.address,
-                  //   validator: (value) {
-                  //     if (value == null || value.isEmpty) {
-                  //       return 'Please enter some text';
-                  //     }
-                  //     return null;
-                  //   },
-                  //   maxLines: 5,
-                  //   decoration: InputDecoration(
-                  //       labelText: "Address", border: OutlineInputBorder()),
-                  // ),
-
+            
                  const SizedBox(
                     height: 16.0,
                   ),
@@ -587,12 +575,12 @@ class EditProfile extends StatelessWidget {
                     controller: mainc.doorNo,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter Door No';
+                        return 'Please enter Door No'.tr;
                       }
                       return null;
                     },
                     decoration: InputDecoration(
-                        labelText: "Door No", border: OutlineInputBorder()),
+                        labelText: "Door No".tr, border: OutlineInputBorder()),
 
                     onChanged: (value) => 
                     mainc.setUpdateData("door_no",value),
@@ -612,12 +600,12 @@ class EditProfile extends StatelessWidget {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter Street name';
+                        return 'Please enter Street name'.tr;
                       }
                       return null;
                     },
                     decoration: InputDecoration(
-                        labelText: "Street Name", border: OutlineInputBorder()),
+                        labelText: "Street Name".tr, border: OutlineInputBorder()),
                   ),
 
 
@@ -632,12 +620,12 @@ class EditProfile extends StatelessWidget {
                     controller: mainc.area,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter Area';
+                        return 'Please enter Area'.tr;
                       }
                       return null;
                     },
                     decoration: InputDecoration(
-                        labelText: "Area", border: OutlineInputBorder()),
+                        labelText: "Area".tr, border: OutlineInputBorder()),
                   ),
 
 
@@ -653,12 +641,12 @@ class EditProfile extends StatelessWidget {
                     mainc.setUpdateData("pincode",value),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter pincode';
+                        return 'Please enter pincode'.tr;
                       }
                       return null;
                     },
                     decoration: InputDecoration(
-                        labelText: "Pincode", border: OutlineInputBorder()),
+                        labelText: "Pincode".tr, border: OutlineInputBorder()),
                   ),
                 ],
               ),

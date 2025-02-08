@@ -51,7 +51,7 @@ Obx bottomNavigationBar() {
                                 : Colors.grey,
                           ),
                           Text(
-                            "Home",
+                            "Home".tr,
                             style: TextStyle(
                               fontSize: 12,
                               color: navController.selectedIndex.value == 0
@@ -77,7 +77,7 @@ Obx bottomNavigationBar() {
                                 : Colors.grey,
                           ),
                           Text(
-                            "Service",
+                            "Service".tr,
                             style: TextStyle(
                               fontSize: 12,
                               color: navController.selectedIndex.value == 1
@@ -108,7 +108,7 @@ Obx bottomNavigationBar() {
                                 : Colors.grey,
                           ),
                           Text(
-                            "Chat",
+                            "Chat".tr,
                             style: TextStyle(
                               fontSize: 12,
                               color: navController.selectedIndex.value == 2
@@ -134,7 +134,7 @@ Obx bottomNavigationBar() {
                                 : Colors.grey,
                           ),
                           Text(
-                            "Settings",
+                            "Settings".tr,
                             style: TextStyle(
                               fontSize: 12,
                               color: navController.selectedIndex.value == 3

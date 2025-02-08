@@ -1,6 +1,10 @@
 import 'package:get/get.dart';
 
-final Map<String, dynamic> crydata = {
+
+class Data {
+
+
+  final Map<String, dynamic> crydata = {
   "Hunger Cry": {
     "heading": "Hunger Crying".tr,
     "shortdesc": "Rhythmic, repetitive cries that grow louder if the baby isn't fed. Often accompanied by hand-sucking and rooting behavior.".tr,
@@ -122,3 +126,7 @@ final Map<String, dynamic> crydata = {
     ]
   }
 };
+  
+}
+
+ 

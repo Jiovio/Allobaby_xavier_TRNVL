@@ -126,7 +126,7 @@ class Report extends StatelessWidget {
                                         ),
                                         SizedBox(height: 8),
                                         Text(
-                                          report['description']=="" ? "No Description Available" : report["description"],
+                                          report['description']=="" ? "No description available".tr : report["description"],
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(

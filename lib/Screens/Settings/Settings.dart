@@ -171,7 +171,7 @@ class SettingsScreen extends StatelessWidget {
 
                       ListTile(
                         title: Text(
-                          'Notification',
+                          'Notification'.tr,
                         ),
                         leading: Icon(
                           Icons.notifications_none_outlined,
@@ -181,8 +181,8 @@ class SettingsScreen extends StatelessWidget {
                         subtitle: 
                         GetBuilder<Maincontroller>(builder: (c) => Text(
                               c.notification.value
-                                  ? "ON"
-                                  : "OFF",
+                                  ? "ON".tr
+                                  : "OFF".tr,
                             )),
                         onTap: () {
                           showDialog(

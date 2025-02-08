@@ -38,7 +38,7 @@ class Crydetail extends StatelessWidget {
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: Text(
-              'AlloCry',
+              'Allocry'.tr,
           style: GoogleFonts.poppins(
           
             color: PrimaryColor,

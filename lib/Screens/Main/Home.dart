@@ -74,43 +74,44 @@ class _HomeState extends State<Home> {
                         
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          InkWell(
-                            // onTap: () => Get.to(() => HealthProfileDetails(),
-                            //     transition: Transition.rightToLeft),
-                            child: SizedBox(
-        
-        
+                          Expanded(
+                            child: InkWell(
+                                                
                               child: SizedBox(
-                                child: CircularPercentIndicator(
+                                    
+                                    
+                                child: SizedBox(
+                                  child: CircularPercentIndicator(
+                                    
+                                          circularStrokeCap: CircularStrokeCap.round,
+                                          linearGradient: LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: <Color>[
+                                              PrimaryColor.withOpacity(0.8),
+                                              PrimaryColor,
+                                            ],
+                                          ),
+                                          backgroundColor: accentColor.withOpacity(0.3),
+                                          radius: 80.0,
+                                          lineWidth: 15.0,
+                                          percent: mainC.ccomp<0 ? mainC.ccomp*-1 : mainC.ccomp,
                                   
-                                        circularStrokeCap: CircularStrokeCap.round,
-                                        linearGradient: LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: <Color>[
-                                            PrimaryColor.withOpacity(0.8),
-                                            PrimaryColor,
-                                          ],
-                                        ),
-                                        backgroundColor: accentColor.withOpacity(0.3),
-                                        radius: 80.0,
-                                        lineWidth: 15.0,
-                                        percent: mainC.ccomp<0 ? mainC.ccomp*-1 : mainC.ccomp,
-                                
-                                        center: true
-                                            ? Text(
-                                                "Day".tr +" " +"${mainC.ctotalDays - (mainC.ctotalDays - mainC.cdaysPassed)}",
-                                                style: TextStyle(
-                                                  fontSize: 24,
-                                                  fontWeight: FontWeight.w700,
+                                          center: true
+                                              ? Text(
+                                                  "Day".tr +" " +"${mainC.ctotalDays - (mainC.ctotalDays - mainC.cdaysPassed)}",
+                                                  style: TextStyle(
+                                                    fontSize: 24,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                )
+                                              : Text(
+                                                  "Not yet started".tr,
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w700),
+                                                )
                                                 ),
-                                              )
-                                            : Text(
-                                                "Not yet started".tr,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w700),
-                                              )
-                                              ),
+                                ),
                               ),
                             ),
                           ),
@@ -120,7 +121,7 @@ class _HomeState extends State<Home> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             InkWell(
-        
+                                
                               child: Row(children: [
                                                                   Container(
                                       padding: EdgeInsets.all(4),
@@ -133,7 +134,7 @@ class _HomeState extends State<Home> {
                                         color: Black,
                                       ),
                                     ),
-        
+                                
                                     SizedBox(width: 8,),
                                     Column(
                                       crossAxisAlignment:
@@ -150,17 +151,20 @@ class _HomeState extends State<Home> {
                                                                                              );
                                                  }
                                                ),
-                                             Text("Health Status".tr,
-                                            style: TextStyle(
-                                                color: Black.withOpacity(0.6),
-                                                fontSize: 14)),
+                                             FittedBox(
+                                              
+                                               child: Text("Health Status".tr,
+                                                                                             style: TextStyle(
+                                                  color: Black.withOpacity(0.6),
+                                                  )),
+                                             ),
                                     ],)
                               ],),
                             )
                           
                                   ,InkWell(
                                     
-        
+                                
                               child: Row(children: [
                                                                   Container(
                                       padding:const EdgeInsets.all(4),
@@ -173,7 +177,7 @@ class _HomeState extends State<Home> {
                                         color: Black,
                                       ),
                                     ),
-        
+                                
                                     const SizedBox(width: 8,),
                                     Column(
                                       crossAxisAlignment:
@@ -191,22 +195,24 @@ class _HomeState extends State<Home> {
                                                                                              ),
                                                  ),
                                                
-                                            Text("Last Screened".tr ,
-                                            maxLines: 2,
-                                            style: TextStyle(
-                                                color: Black.withOpacity(0.6),
-                                                fontSize:currentLocale.languageCode == 'ta' ||currentLocale.languageCode == 'ka'  
-                                                ? 10: 14
-                                                ),
-                                                  softWrap: true,
-                                                  overflow: TextOverflow.visible,
-                                                ),
+                                            FittedBox(
+                                              child: Text("Last Screened".tr ,
+                                              maxLines: 2,
+                                              style: TextStyle(
+                                                  color: Black.withOpacity(0.6),
+                                                  // fontSize:currentLocale.languageCode == 'ta' ||currentLocale.languageCode == 'ka'  
+                                                  // ? 10: 14
+                                                  ),
+                                                    softWrap: true,
+                                                    overflow: TextOverflow.visible,
+                                                  ),
+                                            ),
                                     ],)
                               ],),
                             ),
-        
+                                
                             InkWell(
-        
+                                
                               child: Row(children: [
                                                                   Container(
                                       padding: EdgeInsets.all(4),
@@ -219,7 +225,7 @@ class _HomeState extends State<Home> {
                                         color: Black,
                                       ),
                                     ),
-        
+                                
                                     SizedBox(width: 8,),
                                     Column(
                                       crossAxisAlignment:
@@ -232,10 +238,13 @@ class _HomeState extends State<Home> {
                                                   color: PrimaryColor,
                                                   fontWeight: FontWeight.w700),
                                             ),
-                                                                                  Text("Subscription Plan".tr,
-                                            style: TextStyle(
-                                                color: Black.withOpacity(0.6),
-                                                fontSize: 14)),
+                                                                                  FittedBox(
+                                                                                    child: Text("Subscription Plan".tr,
+                                                                                                                                style: TextStyle(
+                                                                                                                                    color: Black.withOpacity(0.6),
+                                                                                                                                    // fontSize: 14
+                                                                                                                                    )),
+                                                                                  ),
                                     ],)
                               ],),
                             )
