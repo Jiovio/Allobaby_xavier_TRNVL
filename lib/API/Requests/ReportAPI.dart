@@ -13,33 +13,23 @@ class Reportapi {
 
 
   Future<void> addReports(data) async {
-
-        data["id"] = Storage.getUserID();
-
-
     var d = await postRequest("/report/createbyuser", data);
-
-    
     print(d);
-
     return d;
+  }
 
-    try {
 
-    data["id"] = Storage.getUserID();
-
-    var d = await postRequest("/report/create", data);
+    Future<void> updateReport(data) async {
+    var d = await postRequest("/report/updatebyuser", data);
     print(d);
-
-    Get.to(()=>Report());
-      
-
-    } catch (e) {
-      print(e);
-      throw e;
-    }
+    return d;
+  }
 
 
+    static  Future<dynamic> deleteReport(dynamic id) async {
+    var d = await deleteRequest("/report/delete?report_id=${id.toString()}");
+    print(d);
+    return d;
   }
 
 

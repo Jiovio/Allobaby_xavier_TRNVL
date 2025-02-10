@@ -13,10 +13,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:localstorage/localstorage.dart';
 
-class Report extends StatelessWidget {
+class Report extends StatefulWidget {
    Report({super.key});
 
+  @override
+  State<Report> createState() => _ReportState();
+}
 
+class _ReportState extends State<Report> {
      Future<List<dynamic>> getReports()  async {
 
       final id = await Storage.getUserID();
@@ -81,14 +85,19 @@ class Report extends StatelessWidget {
                           ),
                           child: InkWell(
                             borderRadius: BorderRadius.circular(12),
-                            onTap: () { 
+                            onTap: () async { 
                               print(report);
                               
-                              Get.to(
+                            await Get.to(
                               () => 
                               ViewReport(reportDetails: report),
                               transition: Transition.rightToLeft,
                             );
+
+
+                            setState(() {
+                              
+                            });
                             
                             },
                             child: Padding(
@@ -99,7 +108,7 @@ class Report extends StatelessWidget {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
                                     child: CachedNetworkImage(
-                                      imageUrl:  report['imageurl'],
+                                      imageUrl:  report['imageurl'] ?? "",
                                       height: 80,
                                       width: 80,
                                       fit: BoxFit.cover,

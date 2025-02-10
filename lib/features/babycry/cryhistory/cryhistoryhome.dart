@@ -1,9 +1,14 @@
 import 'package:allobaby/API/Requests/BabyCryAPI.dart';
+import 'package:allobaby/API/Requests/Userapi.dart';
+import 'package:allobaby/Components/Loadingbar.dart';
+import 'package:allobaby/Components/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+
 
 class CryHistory extends StatefulWidget {
   @override
@@ -148,6 +153,23 @@ class _CryHistoryState extends State<CryHistory> {
     }
   }
 
+
+    Future<void> deleteCry(dynamic id) async{
+      final req = await Userapi.deleteCry(id);
+
+         if(req){
+          showToast("Deleted Successfully", true);
+
+          fetchCrys();
+         }else {
+
+          showToast("Please Try Again Later", true);
+
+         }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -211,6 +233,7 @@ class _CryHistoryState extends State<CryHistory> {
             
             
             Card(
+              
               margin: EdgeInsets.only(bottom: 16),
               elevation: 4,
               shape: RoundedRectangleBorder(
@@ -220,6 +243,7 @@ class _CryHistoryState extends State<CryHistory> {
                 onTap: () => _toggleTile(cry['id']),
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
+                  
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     gradient: LinearGradient(
@@ -233,70 +257,96 @@ class _CryHistoryState extends State<CryHistory> {
                   ),
                   child: Column(
                     children: [
-                      ListTile(
-                        contentPadding: EdgeInsets.all(16),
-                        leading: Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: primaryColor.withOpacity(0.1),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: Text(
-                              _getReasonEmoji(cry['text']),
-                              style: TextStyle(fontSize: 24),
+                      Slidable(
+
+                                     key: Key(cry['id'].toString()),
+
+
+               endActionPane: ActionPane(
+    motion: ScrollMotion(),
+    children: [
+
+      SlidableAction(
+        onPressed: (BuildContext context) async {
+          Loadingbar.use("Deleting Cry", () async {
+              await deleteCry(cry["id"]);
+          }
+          );
+        },
+        backgroundColor: Colors.red,
+        foregroundColor: Colors.white,
+        icon: Icons.delete,
+        label: 'Delete',
+      ),
+    ],
+  ),
+
+
+                        child: ListTile(
+                          contentPadding: EdgeInsets.all(16),
+                          leading: Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: primaryColor.withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                _getReasonEmoji(cry['text']),
+                                style: TextStyle(fontSize: 24),
+                              ),
                             ),
                           ),
-                        ),
-                        title: Text(
-                          cry['text'],
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: primaryColor,
-                          ),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 4),
-                            Row(
-                              children: [
-                                Icon(Icons.calendar_today,
-                                    size: 14, color: Colors.black54),
-                                SizedBox(width: 4),
-                                Text(
-                                  formattedDate,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: Colors.black54,
-                                  ),
-                                ),
-                                SizedBox(width: 16),
-                                Icon(Icons.access_time,
-                                    size: 14, color: Colors.black54),
-                                SizedBox(width: 4),
-                                Text(
-                                  formattedTime,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: Colors.black54,
-                                  ),
-                                ),
-                              ],
+                          title: Text(
+                            cry['text'],
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: primaryColor,
                             ),
-                          ],
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(
-                            isCurrentlyPlaying && _isPlaying
-                                ? Icons.pause_circle_filled
-                                : Icons.play_circle_filled,
-                            color: primaryColor,
-                            size: 32,
                           ),
-                          onPressed: () => _playAudio(cry['id'], cry['audio_link']),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  Icon(Icons.calendar_today,
+                                      size: 14, color: Colors.black54),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    formattedDate,
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 12,
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+                                  SizedBox(width: 16),
+                                  Icon(Icons.access_time,
+                                      size: 14, color: Colors.black54),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    formattedTime,
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 12,
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          trailing: IconButton(
+                            icon: Icon(
+                              isCurrentlyPlaying && _isPlaying
+                                  ? Icons.pause_circle_filled
+                                  : Icons.play_circle_filled,
+                              color: primaryColor,
+                              size: 32,
+                            ),
+                            onPressed: () => _playAudio(cry['id'], cry['audio_link']),
+                          ),
                         ),
                       ),
                       AnimatedCrossFade(

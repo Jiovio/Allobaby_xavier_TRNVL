@@ -156,4 +156,14 @@ class Userapi {
   }
 
 
+      static Future<dynamic> deleteCry(dynamic id) async {
+    try {
+    final req = await deleteRequest("/user/deletebabycry?cry_id=${id.toString()}");
+    return req; 
+    } catch (e) {
+        return false;
+    }
+  }
+
+
 }

@@ -1,25 +1,50 @@
 
+import 'package:allobaby/API/Requests/ReportAPI.dart';
+import 'package:allobaby/Components/Loadingbar.dart';
+import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Screens/Settings/EditProfile.dart';
+import 'package:allobaby/features/Report/EditReport.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 
 class ViewReport extends StatelessWidget {
   final Map<String, dynamic> reportDetails;
 
   const ViewReport({super.key, required this.reportDetails});
 
+
+
+  void deleteReport() async {
+
+   bool req =  await Reportapi.deleteReport(reportDetails["id"]);
+
+   if(req){
+    showToast("Deleted Successfully !", true);
+   }else {
+    showToast("Unable to Delete !", false);
+   }
+  }
+
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> details = 
-    reportDetails["details"] ?? {};
+    reportDetails["details"] 
+    ?? {};
     
     return Scaffold(
       appBar: AppBar(
         title: Text('Report Details'.tr),
         elevation: 0,
-        actions: [IconButton(onPressed: ()=> Get.to(()=> EditProfile()), icon: Icon(Icons.edit))],
+        actions: [
+          IconButton(onPressed:(){
+            Loadingbar.use("Deleting Report", deleteReport);
+          }, icon: const Icon(Icons.delete)),
+
+          IconButton(onPressed: ()=> Get.to(()=> EditReport(reportDetails: reportDetails,)), icon: const Icon(Icons.edit)),
+          ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -38,7 +63,7 @@ class ViewReport extends StatelessWidget {
                   children: [
                     Center(
                       child: Image.network(
-                        reportDetails['imageurl'],
+                        reportDetails['imageurl'] ?? "",
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
                             Icon(Icons.error, size: 40, color: Colors.grey),
@@ -77,7 +102,8 @@ class ViewReport extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: _buildInfoCard(
+                        child: 
+                        _buildInfoCard(
                           icon: Icons.calendar_today,
                           title: 'Date'.tr,
                           content: _formatDate(reportDetails['created']),

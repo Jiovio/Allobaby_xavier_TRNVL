@@ -40,17 +40,17 @@ class AppInfo extends StatelessWidget {
                 ),
                 
 
-                Text(
+                const Text(
                   "ALLOBABY",
                   style: TextStyle(color: PrimaryColor, fontSize: 24),
                 )
                 ,
 
 
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
-                Text(
+                const Text(
                   "Version : 1.0",
                   style: TextStyle(color: PrimaryColor, fontSize: 18),
                 )
@@ -61,29 +61,24 @@ class AppInfo extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 40),
             child: Column(
               children: [
-                // Text("Last Updated on 06-jan-2021"),
-                // SizedBox(
-                //   height: 20,
-                // ),
-                // ElevatedButton.icon(
-                //   style: ElevatedButton.styleFrom(minimumSize: Size(50, 40)),
-                //   onPressed: () {},
-                //   icon: Icon(Icons.arrow_forward),
-                //   label: Text("CHECK FOR UPDATES".tr),
-                // ),
-                SizedBox(
+               const Text("Last Updated on 10-Feb-2025"),
+               const SizedBox(
+                  height: 20,
+                ),
+               
+               const SizedBox(
                   height: 16,
                 ),
-                Text(
+               const Text(
                   'from',
                   style: TextStyle(color: Colors.grey),
                 ),
-                SizedBox(
+               const SizedBox(
                   height: 8,
                 ),
                 Text(
                   'JioVio Healthcare'.tr.toUpperCase(),
-                  style: TextStyle(
+                  style:const TextStyle(
                     fontWeight: FontWeight.w600,
                   ),
                 ),

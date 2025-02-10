@@ -41,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
     ref.onValue.listen((val){
       dynamic callData = (val.snapshot.value);
 
-      bool isCall = callData["call"];
+      bool isCall = callData?["call"] ?? false;
 
 
       if(isCall){

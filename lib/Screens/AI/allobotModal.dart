@@ -3,6 +3,7 @@ import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Screens/AI/Allobot.dart';
 import 'package:allobaby/Screens/Main/BottomSheet/BottomQuestion.dart';
 import 'package:allobaby/Screens/Main/BottomSheet/widgets/emoji.dart';
+import 'package:allobaby/features/babycry/crytellhome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -292,20 +293,23 @@ Widget _buildInputSectionMic(context) {
             icon: Icon(Icons.mic, color: Colors.white),
             onPressed:(){
               Navigator.pop(context);
-                                                                        showModalBottomSheet(
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(12.0)),
-                        ),
-                        context: context,
-                        builder: (BuildContext context) => Container(
-                              height: Get.height / 2,
-                              child:  
-                              bottomQuestionSheet(context, 6),
-                              // Text("Hi")
+                  // showModalBottomSheet(
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius:
+                  //             BorderRadius.vertical(top: Radius.circular(12.0)),
+                  //       ),
+                  //       context: context,
+                  //       builder: (BuildContext context) => Container(
+                  //             height: Get.height / 2,
+                  //             child:  
+                  //             bottomQuestionSheet(context, 6),
+                  //             // Text("Hi")
         
         
-                            ));
+                  //           ));
+
+
+                  Get.to(()=> Crytellhome());
             },
           ),
         ),
