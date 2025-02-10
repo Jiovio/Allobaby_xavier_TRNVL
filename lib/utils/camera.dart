@@ -12,7 +12,7 @@ class Imageutils {
   final picker = ImagePicker();
 
 
-  Future<String?> getImageFromCamera(String path) async {
+  Future<List<Object>?> getImageFromCamera(String path) async {
     final pickedFile =
         await picker.pickImage(source: ImageSource.camera, imageQuality: 20);
     if (pickedFile != null) {
@@ -23,7 +23,7 @@ class Imageutils {
       Fluttertoast.showToast(
           msg: "Image Uploaded Successfully", backgroundColor: PrimaryColor);
 
-          return url;
+          return [url,image];
     } else {
       print('No image selected.');
             Fluttertoast.showToast(
@@ -33,7 +33,7 @@ class Imageutils {
 
   }
 
-    Future<String?> getImageFromGallery(String path) async {
+    Future<List<Object>?> getImageFromGallery(String path) async {
     final pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
       imageQuality: 20,
@@ -47,7 +47,7 @@ class Imageutils {
       Fluttertoast.showToast(
           msg: "Image Uploaded Successfully", backgroundColor: PrimaryColor);
 
-          return url;
+          return [url,image];
     } else {
       print('No image selected.');
             Fluttertoast.showToast(

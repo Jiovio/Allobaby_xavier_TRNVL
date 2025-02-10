@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/Components/forms.dart';
 import 'package:allobaby/Config/Color.dart';
@@ -65,15 +68,15 @@ class _AddPrescriptionState extends State<AddPrescription> {
       return;
     }
 
-    if (prescriptionType == null) {
-      Get.snackbar(
-        "Error", 
-        "Please select prescription type",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red.withOpacity(0.1),
-      );
-      return;
-    }
+    // if (prescriptionType == null) {
+    //   Get.snackbar(
+    //     "Error", 
+    //     "Please select prescription type",
+    //     snackPosition: SnackPosition.BOTTOM,
+    //     backgroundColor: Colors.red.withOpacity(0.1),
+    //   );
+    //   return;
+    // }
 
     setState(() => isLoading = true);
 
@@ -81,7 +84,7 @@ class _AddPrescriptionState extends State<AddPrescription> {
       await OurFirebase.addPrescription(
         userId: userId!,
         imageUrl: imageUrl!,
-        prescriptionType: prescriptionType!,
+        prescriptionType: prescriptionType ?? "",
         description: descriptionController.text,
       );
 
@@ -150,21 +153,42 @@ class _AddPrescriptionState extends State<AddPrescription> {
       "prescription",
     );
     if (imgUrl != null) {
-      setState(() => imageUrl = imgUrl);
+      setState(() => imageUrl = imgUrl[0] as String);
+
+      askAI(imgUrl[1] as File);
     }
     }else{
 
-               final imgUrl = await Imageutils().getImageFromGallery(
+               final imgs = await Imageutils().getImageFromGallery(
       "prescription"
     );
-    if (imgUrl != null) {
-      setState(() => imageUrl = imgUrl);
+
+    if(imgs==null) return;
+
+    if (imgs[0] != null) {
+      setState(() => imageUrl = imgs[0] as String);
     }
+
+    askAI(imgs[1] as File);
 
       
     }
 
 
+  }
+
+
+
+        Future<void> askAI(File imgs) async {
+
+      String prompt = """This is a prescription . 
+      give me the general summary of the prescription mainly medicine name , timing and doctor name in the schema 
+      {summary:string}""";
+      dynamic res = json.decode(await OurFirebase.askVertexAi(imgs!, prompt));
+      
+      descriptionController.text=res["summary"];
+      print(res);
+      
   }
 
   @override
@@ -185,11 +209,11 @@ class _AddPrescriptionState extends State<AddPrescription> {
                   onTap: _showImagePicker,
                 ),
                 const SizedBox(height: 20),
-                searchBox(
-                  "Select Type of Prescription",
-                  prescriptionTypes,
-                  (value) => setState(() => prescriptionType = value),
-                ),
+                // searchBox(
+                //   "Select Type of Prescription",
+                //   prescriptionTypes,
+                //   (value) => setState(() => prescriptionType = value),
+                // ),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: descriptionController,

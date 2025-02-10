@@ -170,7 +170,7 @@ class _AddReportState extends State<AddReport> {
                                     onPressed: () async {
                                     final url = await  Imageutils().getImageFromCamera("reports");
                                     setState(() {
-                                      image = url;
+                                      image = url![0] as String;
                                     });
 
                                     },
@@ -186,7 +186,7 @@ class _AddReportState extends State<AddReport> {
                                     onPressed: () async {
                                          final url = await  Imageutils().getImageFromGallery("reports");
                                     setState(() {
-                                      image = url;
+                                      image = url![0] as String;
                                     });
                                     },
                                         // reportController.getImageFromGallery(),

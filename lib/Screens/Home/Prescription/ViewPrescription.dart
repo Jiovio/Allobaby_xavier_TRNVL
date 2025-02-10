@@ -40,33 +40,33 @@ class ViewPrescription extends StatelessWidget {
               const SizedBox(height: 20),
               
               // Prescription Type Box
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                     Text(
-                      "Prescription Type".tr,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 12,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      prescription['prescriptionType'],
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // Container(
+              //   width: double.infinity,
+              //   padding: const EdgeInsets.all(15),
+              //   decoration: BoxDecoration(
+              //     border: Border.all(color: Colors.grey),
+              //     borderRadius: BorderRadius.circular(4),
+              //   ),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //        Text(
+              //         "Prescription Type".tr,
+              //         style: TextStyle(
+              //           color: Colors.grey,
+              //           fontSize: 12,
+              //         ),
+              //       ),
+              //       const SizedBox(height: 5),
+              //       Text(
+              //         prescription['prescriptionType'],
+              //         style: const TextStyle(
+              //           fontSize: 16,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               
               const SizedBox(height: 20),
               

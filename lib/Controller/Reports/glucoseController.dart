@@ -18,6 +18,8 @@ import 'dart:convert' as convert;
 import 'dart:io';
 import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
+
+
 class Glucosecontroller extends GetxController {
 
         RxBool loading = false.obs;

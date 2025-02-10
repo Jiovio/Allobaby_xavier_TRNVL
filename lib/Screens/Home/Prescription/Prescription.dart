@@ -86,14 +86,15 @@ onTap: () => Get.to(
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  // Text(
+                                  //   prescription['prescriptionType'],
+                                  //   style: TextStyle(
+                                  //       fontSize: 20, fontWeight: FontWeight.w500),
+                                  // ),
+                                  // SizedBox(height: 8),
                                   Text(
-                                    prescription['prescriptionType'],
-                                    style: TextStyle(
-                                        fontSize: 20, fontWeight: FontWeight.w500),
-                                  ),
-                                  SizedBox(height: 8),
-                                  Text(
-                                    prescription['description'] ?? 'No description',
+                                    
+                                    "${prescription['description'].substring(0, 30)} ..." ?? 'No description',
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                   SizedBox(height: 8),
