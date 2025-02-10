@@ -19,23 +19,6 @@ class Crydetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white,
-      body: Container(
-        decoration: BoxDecoration(
-          // gradient: LinearGradient(
-          //   begin: Alignment.topCenter,
-          //   end: Alignment.bottomCenter,
-          //   colors: [
-          //     bgColor,
-          //     Colors.white,
-          //     Colors.white,
-          //     bgColor.withOpacity(0.3),
-          //   ],
-          //   stops: const [0.0, 0.3, 0.7, 1.0],
-          // ),
-        ),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: Text(
               'Allocry'.tr,
@@ -65,199 +48,249 @@ class Crydetail extends StatelessWidget {
               ),
             ],
           ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(20),
+          body: Column(
+            children: [
+              Expanded(
+                flex: 9,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // Icon(Icons.baby_changing_station,
-                            //     color: primaryColor, size: 30),
-                            // const SizedBox(width: 10),
-                            Text(
-                              data["heading"],
-                              style: GoogleFonts.poppins(
-                                color: primaryColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  Card(
-                    // elevation: 3,
-                    shadowColor: primaryColor.withOpacity(0.2),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: Colors.white,
-                        border: Border.all(
-                          color: accentColor.withOpacity(0.3),
-                          width: 1,
-                        ),
-                      ),
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ...data["description"].map((v) => Container(
-                            margin: const EdgeInsets.only(bottom: 16),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (!v["bold"]) 
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 4),
-                                    child: Icon(
-                                      Icons.favorite,
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  // Icon(Icons.baby_changing_station,
+                                  //     color: primaryColor, size: 30),
+                                  // const SizedBox(width: 10),
+                                  Text(
+                                    data["heading"],
+                                    style: GoogleFonts.poppins(
                                       color: primaryColor,
-                                      size: 16,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Text(
-                                    v["text"],
+                                  
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                
+                        Card(
+                          // elevation: 3,
+                          shadowColor: primaryColor.withOpacity(0.2),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: Colors.white,
+                              border: Border.all(
+                                color: accentColor.withOpacity(0.3),
+                                width: 1,
+                              ),
+                            ),
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ...data["description"].map((v) => Container(
+                                  margin: const EdgeInsets.only(bottom: 16),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      if (!v["bold"]) 
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 4),
+                                          child: Icon(
+                                            Icons.favorite,
+                                            color: primaryColor,
+                                            size: 16,
+                                          ),
+                                        ),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          v["text"],
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 14,
+                                            fontWeight: v["bold"]
+                                                ? FontWeight.bold
+                                                : FontWeight.normal,
+                                            color: v["bold"]
+                                                ? primaryColor
+                                                : Colors.black87,
+                                            height: 1.5,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                              ],
+                            ),
+                          ),
+                        ),
+                  
+                        const SizedBox(height: 24),
+                  
+                        // Recommendations Section
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: Text(
+                            'Recommendations',
+                            style: GoogleFonts.poppins(
+                              color: primaryColor,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                  
+                        const SizedBox(height: 16),
+                  
+                        ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: data["recommendations"].length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              elevation: 4,
+                              margin: const EdgeInsets.only(bottom: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white,
+                                  border: Border.all(
+                                    color: accentColor.withOpacity(0.3),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.all(16),
+                                  leading: Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: bgColor,
+                                      borderRadius: BorderRadius.circular(12),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: primaryColor.withOpacity(0.2),
+                                          blurRadius: 4,
+                                          offset: const Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        '${index + 1}',
+                                        style: GoogleFonts.poppins(
+                                          color: primaryColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  title: Text(
+                                    data["recommendations"][index],
                                     style: GoogleFonts.poppins(
                                       fontSize: 14,
-                                      fontWeight: v["bold"]
-                                          ? FontWeight.bold
-                                          : FontWeight.normal,
-                                      color: v["bold"]
-                                          ? primaryColor
-                                          : Colors.black87,
+                                      color: Colors.black87,
                                       height: 1.5,
                                     ),
                                   ),
                                 ),
+                              ),
+                            );
+                          },
+                        ),
+                        
+                        const SizedBox(height: 100),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            
+            
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          padding:const EdgeInsets.symmetric(horizontal: 10),
+                       
+                          decoration: BoxDecoration(
+                            
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Colors.white,
+                                Color(0xffFFF0F1),
                               ],
                             ),
-                          )),
-                        ],
-                      ),
-                    ),
-                  ),
-            
-                  const SizedBox(height: 24),
-            
-                  // Recommendations Section
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Text(
-                      'Recommendations',
-                      style: GoogleFonts.poppins(
-                        color: primaryColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-            
-                  const SizedBox(height: 16),
-            
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: data["recommendations"].length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        elevation: 4,
-                        margin: const EdgeInsets.only(bottom: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.white,
-                            border: Border.all(
-                              color: accentColor.withOpacity(0.3),
-                              width: 1,
-                            ),
                           ),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.all(16),
-                            leading: Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: bgColor,
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: primaryColor.withOpacity(0.2),
-                                    blurRadius: 4,
-                                    offset: const Offset(0, 2),
-                                  ),
+                          child: Row(
+                            
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                              Text("Sample Cry",
+                              style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: primaryColor,
+                          ),
+                              ),
+                              Text("Tap to play audio",
+                              style: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    color: Colors.black54,
+                                  ),)
+
+
                                 ],
                               ),
-                              child: Center(
-                                child: Text(
-                                  '${index + 1}',
-                                  style: GoogleFonts.poppins(
-                                    color: primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            title: Text(
-                              data["recommendations"][index],
-                              style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                color: Colors.black87,
-                                height: 1.5,
-                              ),
-                            ),
+
+                             const SizedBox(width: 20,),
+
+
+
+                              AudioPlayerButton(assetPath: data["audio"]),
+
+                              
+                
+                           
+                           
+                            ],
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  
-                  const SizedBox(height: 100),
-                ],
-              ),
-            ),
+                        )
+          
+                      ),
+        
+            ],
           ),
-          floatingActionButton: Container(
-            width: 70,
-            height: 70,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                colors: [primaryColor, primaryColor.withOpacity(0.8)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: primaryColor.withOpacity(0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: AudioPlayerButton(assetPath: data["audio"]),
-          ),
-        ),
-      ),
-    );
+
+          
+
+        
+        );
   }
 }
+

@@ -1,3 +1,4 @@
+import 'package:allobaby/Config/Color.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
@@ -33,9 +34,16 @@ class _AudioPlayerWidgetState extends State<AudioPlayerButton> {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow, size: 30,color: Colors.white,),
-      onPressed: _togglePlayPause,
+    return Container(
+      decoration: BoxDecoration(
+        color: PrimaryColor,
+        borderRadius: BorderRadius.circular(50)
+      ),
+      child: IconButton(
+        
+        icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow, size: 30,color: Colors.white,),
+        onPressed: _togglePlayPause,
+      ),
     );
   }
 }

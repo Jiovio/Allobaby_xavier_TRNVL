@@ -7,7 +7,7 @@ import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Screens/Home/Prescription/addprescription.dart';
 import 'package:allobaby/Screens/Home/Report/AddReport.dart';
-import 'package:allobaby/Screens/Home/Report/ViewReport.dart';
+import 'package:allobaby/features/Report/ViewReport.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

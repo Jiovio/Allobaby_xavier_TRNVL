@@ -207,7 +207,10 @@ class _CryHistoryState extends State<CryHistory> {
                 ),
               );
             },
-            child: Card(
+            child: 
+            
+            
+            Card(
               margin: EdgeInsets.only(bottom: 16),
               elevation: 4,
               shape: RoundedRectangleBorder(
@@ -360,6 +363,7 @@ class _CryHistoryState extends State<CryHistory> {
                 ),
               ),
             ),
+          
           );
         },
       ),

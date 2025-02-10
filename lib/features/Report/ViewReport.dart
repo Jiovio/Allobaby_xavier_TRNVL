@@ -1,4 +1,5 @@
 
+import 'package:allobaby/Screens/Settings/EditProfile.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
@@ -11,16 +12,14 @@ class ViewReport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Parse the JSON details
     Map<String, dynamic> details = 
-    // jsonDecode(reportDetails['details'] 
     reportDetails["details"] ?? {};
-    // ?? '{}');
     
     return Scaffold(
       appBar: AppBar(
         title: Text('Report Details'.tr),
         elevation: 0,
+        actions: [IconButton(onPressed: ()=> Get.to(()=> EditProfile()), icon: Icon(Icons.edit))],
       ),
       body: SingleChildScrollView(
         child: Column(
