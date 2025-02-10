@@ -98,13 +98,22 @@ class _HomeState extends State<Home> {
                                           percent: mainC.ccomp<0 ? mainC.ccomp*-1 : mainC.ccomp,
                                   
                                           center: true
-                                              ? Text(
-                                                  "Day".tr +" " +"${mainC.ctotalDays - (mainC.ctotalDays - mainC.cdaysPassed)}",
-                                                  style: TextStyle(
-                                                    fontSize: 24,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                                )
+                                              ? Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                       "${mainC.ctotalDays - (mainC.ctotalDays - mainC.cdaysPassed)}",
+                                                      style: TextStyle(
+                                                        fontSize: 24,
+                                                        fontWeight: FontWeight.w700,
+                                                      ),
+                                                    ),
+
+
+                                                    Text("Day".tr)
+                                                ],
+                                              )
                                               : Text(
                                                   "Not yet started".tr,
                                                   style: TextStyle(
