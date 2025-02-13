@@ -198,7 +198,7 @@ iam ${d["pregnancy_status"]}.
 Note : if iam trying to conceive , iam not pregnant.
  if am pregnant,
 calculate the EDD date and monthly once ANC appointment date every month 
-for 10 months starting from one month after lmp date , give short summary based on data and current date
+for 9 months starting from one month after lmp date , give short summary based on data and current date
  and dont give dates in summary
 
       in the schema {

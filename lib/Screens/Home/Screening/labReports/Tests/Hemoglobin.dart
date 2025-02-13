@@ -203,7 +203,7 @@ class Hemoglobin extends StatelessWidget {
                             onTap: () {
                               showDialog(context: context, builder:(context) {
                                 return AlertDialog(
-                                  title: Text("Hemogolin Value".tr),
+                                  title: Text("Hemoglobin Value".tr),
 
                                   content: HemoglobinSelector());
                               },);
