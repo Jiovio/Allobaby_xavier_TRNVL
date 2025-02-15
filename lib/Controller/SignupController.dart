@@ -277,8 +277,6 @@ Future<void> submitUser()async{
 
   dynamic data = getJsonData();
 
-  // print(data);
-
   var req = await Apiroutes().createUser(data);
 
   OurFirebase.createUser(phone.text, data);
@@ -302,7 +300,7 @@ int? oid = null;
 
 Future<void> sendOtp() async {
 
-  var r = await Otpapi.sendOtp(phone.text);
+  var r = await Otpapi.sendOtp(phone.text, countryCode);
 
   if(r["status"]){
   oid=r["id"];
@@ -314,9 +312,26 @@ Future<void> sendOtp() async {
 
 TextEditingController otp = TextEditingController();
 
+// Future<void> verifyOtp() async {
+
+
+// var r = await Otpapi.verifyOTP(otp.text,oid);
+
+// if(otp.text=="999777"){
+//   await checkUser();
+//   return;
+// }
+
+// if(r){
+//   await checkUser();
+// }else{
+//   Get.snackbar("Invalid OTP", "Please Enter Correct OTP",snackPosition: SnackPosition.BOTTOM);
+// }
+// }
+
+
 Future<void> verifyOtp() async {
 
-  print(loading.value);
 
 var r = await Otpapi.verifyOTP(otp.text,oid);
 

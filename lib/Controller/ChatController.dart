@@ -28,7 +28,7 @@ class Chatcontroller extends GetxController {
 
     if(hosp==null){
       Get.snackbar("Please Choose your Desired Hospital !", 
-      "You have'nt chosen your Hospital Yet");
+      "You have'nt chosen your Hospital Yet",snackPosition: SnackPosition.BOTTOM);
     }else{
       var defaulthosp ;
 

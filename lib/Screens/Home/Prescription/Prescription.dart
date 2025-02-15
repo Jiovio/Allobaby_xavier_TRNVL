@@ -94,7 +94,7 @@ onTap: () => Get.to(
                                   // SizedBox(height: 8),
                                   Text(
                                     
-                                    "${prescription['description'].substring(0, 30)} ..." ?? 'No description',
+                                    "${prescription['description'].length>30?prescription['description'].substring(0, 30):prescription['description']} ..." ?? 'No description',
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                   SizedBox(height: 8),

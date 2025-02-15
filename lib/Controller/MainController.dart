@@ -65,6 +65,8 @@ class Maincontroller extends GetxController {
     var d = await Userapi.getUser();
   fromJson(d);
 
+  getCounterData();
+
   update();
   }
 

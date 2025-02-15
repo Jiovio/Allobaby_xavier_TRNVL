@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
           mainC.initScreen();
         },
         child: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
+        physics:const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
               Container(
@@ -81,45 +81,52 @@ class _HomeState extends State<Home> {
                                     
                                     
                                 child: SizedBox(
-                                  child: CircularPercentIndicator(
-                                    
-                                          circularStrokeCap: CircularStrokeCap.round,
-                                          linearGradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: <Color>[
-                                              PrimaryColor.withOpacity(0.8),
-                                              PrimaryColor,
-                                            ],
-                                          ),
-                                          backgroundColor: accentColor.withOpacity(0.3),
-                                          radius: 80.0,
-                                          lineWidth: 15.0,
-                                          percent: mainC.ccomp<0 ? mainC.ccomp*-1 : mainC.ccomp,
+                                  child: 
                                   
-                                          center: true
-                                              ? Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                       "${mainC.ctotalDays - (mainC.ctotalDays - mainC.cdaysPassed)}",
-                                                      style: TextStyle(
-                                                        fontSize: 24,
-                                                        fontWeight: FontWeight.w700,
-                                                      ),
-                                                    ),
-
-
-                                                    Text("Day".tr)
+                                  
+                                  GetBuilder<Maincontroller>(
+                                    builder: (controller) {
+                                      return CircularPercentIndicator(
+                                        
+                                              circularStrokeCap: CircularStrokeCap.round,
+                                              linearGradient: LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: <Color>[
+                                                  PrimaryColor.withOpacity(0.8),
+                                                  PrimaryColor,
                                                 ],
-                                              )
-                                              : Text(
-                                                  "Not yet started".tr,
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.w700),
-                                                )
-                                                ),
+                                              ),
+                                              backgroundColor: accentColor.withOpacity(0.3),
+                                              radius: 80.0,
+                                              lineWidth: 15.0,
+                                              percent: mainC.ccomp<0 ? mainC.ccomp*-1 : mainC.ccomp,
+                                      
+                                              center: controller.pregnancyStatus.text != "skip"
+                                                  ? Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: [
+                                                      Text(
+                                                           "${mainC.ctotalDays - (mainC.ctotalDays - mainC.cdaysPassed)}",
+                                                          style:const TextStyle(
+                                                            fontSize: 24,
+                                                            fontWeight: FontWeight.w700,
+                                                          ),
+                                                        ),
+                                      
+                                      
+                                                        Text("Day".tr)
+                                                    ],
+                                                  )
+                                                  : Text(
+                                                      "Not yet started".tr,
+                                                      style: TextStyle(
+                                                          fontWeight: FontWeight.w700),
+                                                    )
+                                                    );
+                                    }
+                                  ),
                                 ),
                               ),
                             ),

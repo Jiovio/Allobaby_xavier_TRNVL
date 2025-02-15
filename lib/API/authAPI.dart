@@ -135,3 +135,44 @@ Future<dynamic> postRequest(str,data) async {
     throw "network Request Failed";
   }
 }
+
+
+Future<dynamic> refreshToken() async {
+  final url = Uri.parse(( Apiroutes().baseUrl+"/auth/ca")); 
+
+  try {
+
+    dynamic h = getHeaders();
+
+    String? cookie = localStorage.getItem("refresh");
+
+    final response = await http.post(url,
+    headers: {
+      "Content-Type": "application/json",
+      "Cookie": "refresh=${cookie ?? "none"}",
+      ...h
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // final data = jsonDecode(response.body);
+      
+      // return data;
+    } 
+    else if (response.statusCode == 403) {
+      print("Logout");
+      // final data = jsonDecode(response.body);
+      
+      // return data;
+    }
+    else {
+      print("------------------------------------------------------------");
+      print('Failed to load data. Status code: ${response.statusCode}');
+      print(response.body);
+      print("------------------------------------------------------------");
+
+    }
+  } catch (e) {
+    throw "network Request Failed";
+  }
+}

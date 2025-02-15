@@ -214,7 +214,9 @@ class Editprofilecontroller extends GetxController {
 
    if(req){
    await cont.updateUser();
-    Get.offAll(MainScreen());
+    Get.offAll(()=> const MainScreen());
+
+    // await cont.initScreen();
 
     Get.snackbar("Updated Successfully !", "User Details are updated successfully"
       ,snackPosition: SnackPosition.BOTTOM);

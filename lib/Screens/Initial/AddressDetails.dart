@@ -16,7 +16,7 @@ class AddressDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      // appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -147,44 +147,82 @@ class AddressDetails extends StatelessWidget {
                   SizedBox(
                     height: 22.0,
                   ),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          //   final OTPCode = otpCode.text;
-                          //   final registerId = mobileVerificationController
-                          //       .mobileVerificationModel.value.registerid;
-                          //   final mobileNo = mobileVerificationController
-                          //       .mobileNoController.text
-                          //       .trim();
-                          //   final type = mobileVerificationController
-                          //       .mobileVerificationModel.value.type;
-                          //
-                          //   otpVerificationController.otpVerification(
-                          //       mobileNo, registerId, OTPCode, type);
 
-                          // Get.to(() => InitialDetails(),
-                          //     transition: Transition.rightToLeft);
-                        }
- Get.to(() => InitialDetails(),
+
+
+
+                                          Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: OutlinedButton(
+                          onPressed: () => Get.to(() => InitialDetails(),
+                              transition: Transition.rightToLeft),
+                          style: ElevatedButton.styleFrom(
+                              side: BorderSide(color: PrimaryColor),
+                              minimumSize: Size(100, 40),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40),
+                              )),
+                          child: Text(("Skip").toUpperCase()),
+                        ),
+                      ),
+                      Spacer(),
+                      Flexible(
+                        child: 
+                        GetBuilder(
+                          init: Signupcontroller(),
+                          builder:(controller) => 
+                        ElevatedButton(
+                          onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+
+
+                          Get.to(() => InitialDetails(),
                               transition: Transition.rightToLeft);
+
+
+
+                        }
+                            
                         
                       },
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: Size(100, 50),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40))),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(("Continue".tr).toUpperCase()),
-                            SizedBox(
-                              width: 18.0,
-                            ),
-                            Icon(Icons.arrow_forward)
-                          ]),
-                    ),
-                  )
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size(100, 40),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40))),
+                          child: Text(("Continue".tr).toUpperCase()),
+                        )),
+                      ),
+                    ]),
+                        
+//                   Center(
+//                     child: ElevatedButton(
+//                       onPressed: () {
+//                         if (_formKey.currentState!.validate()) {
+//                         }
+//  Get.to(() => InitialDetails(),
+//                               transition: Transition.rightToLeft);
+                        
+//                       },
+//                       style: ElevatedButton.styleFrom(
+//                           minimumSize: Size(100, 50),
+//                           shape: RoundedRectangleBorder(
+//                               borderRadius: BorderRadius.circular(40))),
+//                       child: Row(
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           children: [
+//                             Text(("Continue".tr).toUpperCase()),
+//                             SizedBox(
+//                               width: 18.0,
+//                             ),
+//                             Icon(Icons.arrow_forward)
+//                           ]),
+//                     ),
+//                   )
+                
+                
+                
                 ],
               ))),
         ),

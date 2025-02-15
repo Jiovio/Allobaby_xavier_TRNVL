@@ -2,6 +2,7 @@
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/SignupController.dart';
 import 'package:allobaby/Screens/Home/Screening/Controllers/SelfScreeningController.dart';
+import 'package:allobaby/Screens/Initial/AddressDetails.dart';
 import 'package:allobaby/Screens/Initial/ParentsDetails.dart';
 
 
@@ -121,19 +122,25 @@ class Pregnancystatus extends StatelessWidget {
                         Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Flexible(
-                      //   child: OutlinedButton(
-                      //     onPressed: () => Get.to(() => AddressDetails(),
-                      //         transition: Transition.rightToLeft),
-                      //     style: ElevatedButton.styleFrom(
-                      //         side: BorderSide(color: PrimaryColor),
-                      //         minimumSize: Size(100, 40),
-                      //         shape: RoundedRectangleBorder(
-                      //           borderRadius: BorderRadius.circular(40),
-                      //         )),
-                      //     child: Text(("Skip").toUpperCase()),
-                      //   ),
-                      // ),
+                      Flexible(
+                        child: OutlinedButton(
+                          onPressed: (){ 
+                            Get.to(() => AddressDetails(),
+                            transition: Transition.rightToLeft);
+
+                            sc.updateData("pregnancyStatus", "skip");
+                            sc.update();
+                            },
+                              
+                          style: ElevatedButton.styleFrom(
+                              side: BorderSide(color: PrimaryColor),
+                              minimumSize: Size(100, 40),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40),
+                              )),
+                          child: Text(("Skip").toUpperCase()),
+                        ),
+                      ),
                       Spacer(),
                       Flexible(
                         child: 

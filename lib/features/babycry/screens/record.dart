@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/BabyCry/babyCryController.dart';
 import 'package:allobaby/features/babycry/controller/cry_controller.dart';
+import 'package:allobaby/features/babycry/service/audio_classifier.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
@@ -26,7 +27,7 @@ class VoiceRecorderNew extends StatefulWidget {
 }
 
 class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerProviderStateMixin {
-  final AudioRecorder _recorder = AudioRecorder();
+  AudioRecorder? _recorder ;
   Timer? _timer;
   Timer? _tipsTimer;
   int _countdown = 0;
@@ -35,6 +36,8 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
   int _currentTipIndex = 0;
   late AnimationController _pulseController;
   late Animation<double> _pulseAnimation;
+
+  AudioClassifier audioClassifier = AudioClassifier();
 
   final List<Map<String, dynamic>> _babyTips = [
     {
@@ -70,6 +73,8 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
   @override
   void initState() {
     super.initState();
+    audioClassifier.initializeModel();
+
     _pulseController = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
@@ -96,14 +101,16 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
   }
 
   Future<void> _startRecording() async {
+
+    _recorder = AudioRecorder();
     setState(() => _isChecking = true);
     
-    if (await _recorder.hasPermission()) {
+    if (await _recorder!.hasPermission()) {
       Directory appDir = await getApplicationDocumentsDirectory();
-    const encoder = AudioEncoder.aacLc;
+    const encoder = AudioEncoder.wav;
     final config = RecordConfig(encoder: encoder, numChannels: 1);
 
-      await _recorder.start(config, path: '${appDir.path}/recording.aac');
+      await _recorder!.start(config, path: '${appDir.path}/recording.wav');
       setState(() {
         _isChecking = false;
         _isRecording = true;
@@ -130,15 +137,22 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
     _timer?.cancel();
 
     if (_isRecording) {
-      final path = await _recorder.stop();
+      final path = await _recorder!.stop();
 
-      await _recorder.dispose();
+      await _recorder!.dispose();
       setState(() => _isRecording = false);
       
       if (path != null ) {
-        File audioFile = File(path);
-        controller.babydetect(audioFile);
+
         print(path);
+
+        final pred = await audioClassifier.processAudio(path);
+
+        print(pred);
+
+        // File audioFile = File(path);
+        // controller.babydetect(audioFile);
+        // print(path);
 
       }
     }
@@ -147,8 +161,8 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
   Future<void> _cancelRecording() async {
     _timer?.cancel();
     if (_isRecording) {
-      await _recorder.stop();
-      await _recorder.dispose();
+      await _recorder!.stop();
+      await _recorder!.dispose();
       setState(() => _isRecording = false);
     }
     Get.back();
@@ -158,8 +172,9 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
   void dispose() {
     _timer?.cancel();
     _tipsTimer?.cancel();
-    _recorder.dispose();
+    _recorder?.dispose();
     _pulseController.dispose();
+    audioClassifier.dispose();
     super.dispose();
   }
 
