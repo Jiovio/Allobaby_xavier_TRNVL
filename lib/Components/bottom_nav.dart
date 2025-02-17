@@ -11,7 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-final NavController navController = Get.put(NavController());
+
 final List<Widget> bodyRoutes = <Widget>[
   Home(),
   ServiceScreen(),
@@ -19,7 +19,7 @@ final List<Widget> bodyRoutes = <Widget>[
   SettingsScreen(),
 ];
 
-Obx bottomNavigationBar() {
+Obx bottomNavigationBar(navController) {
   return Obx(
     () => Column(
       mainAxisAlignment: MainAxisAlignment.end,

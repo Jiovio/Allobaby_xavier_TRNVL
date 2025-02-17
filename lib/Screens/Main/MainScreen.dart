@@ -74,7 +74,7 @@ class _MainScreenState extends State<MainScreen> {
 
 
   Maincontroller mainC = Get.put(Maincontroller());
-    
+  NavController navController = Get.put(NavController());
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +84,7 @@ class _MainScreenState extends State<MainScreen> {
       //   scaffold: 
         
         Scaffold(
-          bottomNavigationBar:bottomNavigationBar() ,
+          bottomNavigationBar:bottomNavigationBar(navController),
           // Obx(()=> mainC.loading.value?Container():bottomNavigationBar()),
           
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

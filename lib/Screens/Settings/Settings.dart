@@ -341,18 +341,17 @@ class SettingsScreen extends StatelessWidget {
 
                                       OurFirebase.setStatus(false);
 
-                                      // await Get.delete<Maincontroller>();
-                                      // await Get.delete<Signupcontroller>();
+                                      await Get.delete<Maincontroller>();
+                                      await Get.delete<Signupcontroller>();
 
-                                      // await Get.delete<Usercontroller>();
-                                      // await Get.delete<NavController>(force: true);
+                                      await Get.delete<Usercontroller>();
+                                      await Get.delete<NavController>(force: true);
 
                                       localStorage.clear();
                                       
 
-                                      Get.offAll(()=>MyApp(initLang: initialLocale()));
+                                      Get.offAll(()=>const Signin());
                                       Get.snackbar("Logout Successfull".tr, "",snackPosition: SnackPosition.BOTTOM);
-                                      Get.reset(clearRouteBindings: false);
 
                                         
                                       } catch (e) {
