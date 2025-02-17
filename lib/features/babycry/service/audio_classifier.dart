@@ -41,8 +41,8 @@ class AudioClassifier {
     try {
       
       File audioFile = File(audioPath);
-      // final bytes = await audioFile.readAsBytes();
-      final bytes = await fetchAudio();
+      final bytes = await audioFile.readAsBytes();
+      // final bytes = await fetchAudio();
 
       final buffer = bytes.buffer;
       final byteData = ByteData.view(buffer);
@@ -64,7 +64,7 @@ class AudioClassifier {
 
       // 
 
-      runClassification();
+      // runClassification();
 
 
       // 
