@@ -7,6 +7,7 @@ import 'package:allobaby/Controller/EditprofileController.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -324,6 +325,7 @@ class EditProfile extends StatelessWidget {
                   ),
                   TextFormField(
                     controller: mainc.partnerPhone,
+                    keyboardType: TextInputType.number,
                     onChanged: (value) => 
                       mainc.setUpdateData("partner_phone", value)
                     ,
@@ -636,6 +638,7 @@ class EditProfile extends StatelessWidget {
 
                   TextFormField(
                     controller: mainc.pincode,
+                    keyboardType: TextInputType.number,
                     maxLength: 6,
                     onChanged: (value) => 
                     mainc.setUpdateData("pincode",value),
