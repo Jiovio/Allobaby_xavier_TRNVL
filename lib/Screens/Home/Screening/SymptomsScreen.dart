@@ -121,14 +121,14 @@ SingleChildScrollView SymptomsScreen() => SingleChildScrollView(
                                ),
 
 
-                               SizedBox(
-                                width: double.infinity,
-                                height: 50,
-                                 child: ElevatedButton(onPressed: (){
-                                  controller.submitSymptoms();
-                                 }, child: 
-                                 Text("Submit".tr)),
-                               )
+                              //  SizedBox(
+                              //   width: double.infinity,
+                              //   height: 50,
+                              //    child: ElevatedButton(onPressed: (){
+                              //     controller.submitSymptoms();
+                              //    }, child: 
+                              //    Text("Submit".tr)),
+                              //  )
                  ],
                ),
              )

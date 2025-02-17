@@ -185,22 +185,22 @@ class Maincontroller extends GetxController {
     print(e=="logout");
     
 
-    if(e=="failed"){
-      Get.dialog(Container(child: const Text("No Internet !"),));
-    }else if (e=="logout"){
+    // if(e=="failed"){
+    //   Get.dialog(Container(child: const Text("No Internet !"),));
+    // }else if (e=="logout"){
 
-      print("Loggggoouutttt");
-      OurFirebase.setStatus(false);
+    //   print("Loggggoouutttt");
+    //   OurFirebase.setStatus(false);
 
-      Get.delete<Maincontroller>();
-      Get.delete<Usercontroller>();
-      Get.delete<NavController>();
+    //   Get.delete<Maincontroller>();
+    //   Get.delete<Usercontroller>();
+    //   Get.delete<NavController>();
 
 
-      localStorage.clear();
-      Get.offAll(()=>const Signin());
+    //   localStorage.clear();
+    //   Get.offAll(()=>const Signin());
 
-    }
+    // }
 
 
 

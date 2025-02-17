@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:allobaby/API/apiroutes.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
-
+import 'package:get/get.dart';
+import 'package:allobaby/Screens/Signin.dart';
   dynamic getJwt() {
     final userJwt = localStorage.getItem("user");
 
@@ -183,19 +185,22 @@ Future<dynamic> refreshToken() async {
     } 
     else if (response.statusCode == 403) {
       print("Logout");
+      localStorage.clear();
+      Get.offAll(Signin());
       throw "logout";
-      // final data = jsonDecode(response.body);
-      
-      // return data;
     }
     else {
       print("------------------------------------------------------------");
       print('Failed to load data. Status code: ${response.statusCode}');
       print(response.body);
       print("------------------------------------------------------------");
+       Get.dialog(Container(child: const Text("No Internet !"),));
+      throw "failed";
 
     }
   } catch (e) {
+    print(e);
+     Get.dialog(Container(child: const Text("No Internet !"),));
     throw "failed";
   }
 }

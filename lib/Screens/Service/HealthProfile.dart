@@ -849,7 +849,7 @@ int calculateWeekDifference() {
                           Row(
                             children: [
                               Text(
-                                    "${data["bloodPressureL"]} / ${data["bloodPressureH"]}",
+                                    "${data["bloodPressureL"] ?? "___"} / ${data["bloodPressureH"] ?? "___"}",
 
                                     style: TextStyle(
                                         fontSize: 22,
@@ -913,7 +913,7 @@ int calculateWeekDifference() {
                             children: [
                              Text(
                                     // "${healthProfileController.bloodGlucoseBF.value} f /${healthProfileController.bloodGlucoseAF.value} pp",
-                                    "${data["bloodGlucoseBF"]} f / ${data["bloodGlucoseAF"]} pp",
+                                    "${data["bloodGlucoseBF"] ?? "___"} f / ${data["bloodGlucoseAF"] ?? "___"} pp",
                                     style: TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.w500),
@@ -979,7 +979,7 @@ int calculateWeekDifference() {
                           Row(
                             children: [
                               Text(
-                                    "${data["bloodSaturationBW"]}/ ${data["bloodSaturationAW"]}",
+                                    "${data["bloodSaturationBW"]  ?? "___" } / ${data["bloodSaturationAW"]  ?? "___"}",
                                     // "${healthProfileController.bloodSaturationBW.value}/${healthProfileController.bloodSaturationAW.value}",
 
                                     style: TextStyle(
@@ -1042,7 +1042,7 @@ int calculateWeekDifference() {
                           Row(
                             children: [
                               Text(
-                                    "${data["temperature"]}",
+                                    "${data["temperature"]  ?? "___" }",
                                     // "${healthProfileController.temperature.value}",
 
                                     style: TextStyle(
@@ -1050,7 +1050,7 @@ int calculateWeekDifference() {
                                         fontWeight: FontWeight.w500),
                                   ),
                               Text(
-                                " °${data["temperatureMetric"]}",
+                                " °${data["temperatureMetric"] ?? "___"}",
                                 style: TextStyle(
                                   fontSize: 16,
                                 ),
@@ -1107,7 +1107,7 @@ int calculateWeekDifference() {
                           Row(
                             children: [
                               Text(
-                                    "${data["bmiWeight"]}",
+                                    "${data["bmiWeight"] ?? "___"}",
                                     style: TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.w500),
@@ -1170,7 +1170,7 @@ int calculateWeekDifference() {
                           Row(
                             children: [
                               Text(
-                                    "${data["bmiHeight"]}",
+                                    "${data["bmiHeight"] ?? "___"}",
                                     // "${healthProfileController.bmi}",
 
                                     style: TextStyle(
@@ -1194,7 +1194,7 @@ int calculateWeekDifference() {
                   height: 8,
                 ),
 
-
+                          
                                 Card(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12)),
@@ -1235,7 +1235,7 @@ int calculateWeekDifference() {
                           Row(
                             children: [
                               Text(
-                                    "${data["heartRateBW"]} / ${data["heartRateAW"]}",
+                                    "${data["heartRateBW"] ?? "___"} / ${data["heartRateAW"] ?? "___"}",
                                     // "${healthProfileController.heartRateBW.value}/${healthProfileController.heartRateAW.value}",
 
                                     style: TextStyle(
@@ -1301,7 +1301,7 @@ int calculateWeekDifference() {
                           Row(
                             children: [
                              Text(
-                                    "${data["respiratoryRate"]}",
+                                    "${data["respiratoryRate"] ?? "___"}",
                                     // "${healthProfileController.respiratoryRate.value}",
 
                                     style:const TextStyle(
@@ -1368,7 +1368,7 @@ int calculateWeekDifference() {
                           Row(
                             children: [
                               Text(
-                                    "${data["hrv"]}",
+                                    "${data["hrv"] ?? "___"}",
                                     // "${healthProfileController.hrv.value}",
 
                                     style: TextStyle(
