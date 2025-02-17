@@ -387,13 +387,15 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-    _launchURL(String url) async {
+}
+
+
+  void  _launchURL(String url) async {
       print(Uri.https(Uri.encodeComponent(url)));
       // await launchUrl(Uri.https(Uri.encodeComponent(url)));
       await launchUrl(Uri.parse(url));
 
   }
-}
 
 
 void logoutUser() async {

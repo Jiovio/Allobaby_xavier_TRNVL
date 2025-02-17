@@ -1,17 +1,12 @@
-
-
-
-import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/API/authAPI.dart';
 import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/Config/Color.dart';
-import 'package:allobaby/Screens/Home/Prescription/addprescription.dart';
 import 'package:allobaby/Screens/Home/Report/AddReport.dart';
 import 'package:allobaby/features/Report/ViewReport.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:localstorage/localstorage.dart';
+
 
 class Report extends StatefulWidget {
    Report({super.key});
@@ -27,7 +22,7 @@ class _ReportState extends State<Report> {
 
       List<dynamic> d = await getRequest("/report?user_id=${id.toString()}") ;
 
-      print("Report $d");
+      // print("Report $d");
 
 
       return d;
@@ -47,8 +42,12 @@ class _ReportState extends State<Report> {
                   style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.only(
                           left: 20, right: 40, top: 14, bottom: 14)),
-                  onPressed: () => Get.to(() => AddReport(),
-                      transition: Transition.rightToLeft),
+                  onPressed: () async {await Get.to(() => AddReport(),
+                      transition: Transition.rightToLeft);
+                      
+                      setState(() {
+                        
+                      });},
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [

@@ -284,20 +284,27 @@ bool verified = false;
                         SizedBox(
                           height: 18,
                         ),
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                              text:
-                              'By continuing, You agree that you have read and accept our '.tr,
-                              style: TextStyle(color: Black700),
-                              children: [
-                                TextSpan(
-                                  text: 'T&C and Privacy Policy '.tr,
-                                  style: TextStyle(
-                                    color: PrimaryColor,
-                                  ),
-                                )
-                              ]),
+                        GestureDetector(
+                          onTap: () async {
+                              const url =
+                              'https://savemom.in/terms.html';
+                          _launchURL(url);
+                          },
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                                text:
+                                'By continuing, You agree that you have read and accept our '.tr,
+                                style: TextStyle(color: Black700),
+                                children: [
+                                  TextSpan(
+                                    text: 'T&C and Privacy Policy '.tr,
+                                    style: TextStyle(
+                                      color: PrimaryColor,
+                                    ),
+                                  )
+                                ]),
+                          ),
                         ),
 
                         // ElevatedButton(onPressed: (){
@@ -312,6 +319,16 @@ bool verified = false;
                   )))
             ],
           );
+  }
+
+
+
+
+  void  _launchURL(String url) async {
+      print(Uri.https(Uri.encodeComponent(url)));
+      // await launchUrl(Uri.https(Uri.encodeComponent(url)));
+      await launchUrl(Uri.parse(url));
+
   }
 
 

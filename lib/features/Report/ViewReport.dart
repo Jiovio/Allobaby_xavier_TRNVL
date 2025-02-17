@@ -1,6 +1,7 @@
 
 import 'package:allobaby/API/Requests/ReportAPI.dart';
 import 'package:allobaby/Components/Loadingbar.dart';
+import 'package:allobaby/Components/show_custom_dialog.dart';
 import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Screens/Settings/EditProfile.dart';
 import 'package:allobaby/features/Report/EditReport.dart';
@@ -22,6 +23,7 @@ class ViewReport extends StatelessWidget {
    bool req =  await Reportapi.deleteReport(reportDetails["id"]);
 
    if(req){
+    Get.back();
     showToast("Deleted Successfully !", true);
    }else {
     showToast("Unable to Delete !", false);
@@ -40,7 +42,13 @@ class ViewReport extends StatelessWidget {
         elevation: 0,
         actions: [
           IconButton(onPressed:(){
-            Loadingbar.use("Deleting Report", deleteReport);
+
+            showCustomDialog(context: context, title: "Delete Report", subtitle: "Are you sure to delete this report ?", onActionPressed: ()async{
+           await  Loadingbar.use("Deleting Report", deleteReport);
+            Navigator.of(context).pop();
+            });
+
+
           }, icon: const Icon(Icons.delete)),
 
           IconButton(onPressed: ()=> Get.to(()=> EditReport(reportDetails: reportDetails,)), icon: const Icon(Icons.edit)),

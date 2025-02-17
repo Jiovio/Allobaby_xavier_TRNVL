@@ -166,4 +166,14 @@ class Userapi {
   }
 
 
+      static Future<dynamic> detetePrescription(dynamic id) async {
+    try {
+    final req = await deleteRequest("/prescription/deletebyuser?pid=${id.toString()}");
+    return req; 
+    } catch (e) {
+        return false;
+    }
+  }
+
+
 }

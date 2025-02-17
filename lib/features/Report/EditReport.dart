@@ -77,7 +77,7 @@ class _AddReportState extends State<EditReport> {
 
     
     Map<String,dynamic> data = {
-      "report_type":reportType,
+      "reportType":reportType,
       "details":details,
       "imageurl":image,
       "description":description.text,

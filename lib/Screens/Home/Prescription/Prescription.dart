@@ -66,6 +66,7 @@ class Prescription extends StatelessWidget {
 onTap: () => Get.to(
   () => ViewPrescription(
     prescription: prescription.data() as Map<String, dynamic>,
+    id : prescription.id
   ),
   transition: Transition.rightToLeft,
 ),

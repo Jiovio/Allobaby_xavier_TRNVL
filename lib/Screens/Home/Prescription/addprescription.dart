@@ -3,9 +3,11 @@ import 'dart:io';
 
 import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/Components/forms.dart';
+import 'package:allobaby/Components/image_viewer.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/utils/camera.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -206,15 +208,26 @@ class _AddPrescriptionState extends State<AddPrescription> {
               children: [
                 _ImagePreview(
                   imageUrl: imageUrl,
-                  onTap: _showImagePicker,
+                  onTap: (){
+                    showImage(context, imageUrl!);
+                  },
                 ),
-                const SizedBox(height: 20),
+
+                const SizedBox(height: 10),
+
+                Row(children: [
+                  TextButton.icon(onPressed: _showImagePicker, 
+                   icon: Icon(Icons.add_a_photo),
+                                                label: Text("Upload Report".tr)
+                  )
+                ],),
+                
                 // searchBox(
                 //   "Select Type of Prescription",
                 //   prescriptionTypes,
                 //   (value) => setState(() => prescriptionType = value),
                 // ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 TextFormField(
                   controller: descriptionController,
                   decoration:  InputDecoration(
@@ -294,7 +307,10 @@ class _ImagePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: (){
+        if(imageUrl!=null){
+        showImage(context, imageUrl!);}
+      },
       child: Container(
         height: MediaQuery.of(context).size.height / 3,
         width: double.infinity,
@@ -309,10 +325,10 @@ class _ImagePreview extends StatelessWidget {
                   style: TextStyle(fontSize: 18),
                 ),
               )
-            : Image.network(
-                imageUrl!,
+            : CachedNetworkImage(
+                imageUrl : imageUrl!,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => const Center(
+                errorWidget: (context, error, stackTrace) => const Center(
                   child: Text("Error loading image"),
                 ),
               ),
