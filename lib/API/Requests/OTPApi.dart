@@ -30,7 +30,7 @@ class Otpapi {
   }
 
 
-    static Future<bool> verifyOTPS(otp,id) async {
+    static Future<dynamic> verifyOTPS(otp,id) async {
     var d = {
       "otp_code":otp,
       "opt_id":id,
@@ -39,7 +39,7 @@ class Otpapi {
 
     print(d);
 
-    var req = await postRequest("/otp/verify-otp", d);
+    var req = await postRequest("/otp/verify-otps", d);
 
     return req;
 

@@ -11,7 +11,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 class Otpverification extends StatelessWidget {
 
 
-  Signupcontroller controller = Get.find<Signupcontroller>();
+  Signupcontroller controller = Get.put(Signupcontroller());
 
 
 
@@ -71,14 +71,15 @@ class Otpverification extends StatelessWidget {
                         height: 32.0,
                       ),
                       PinCodeTextField(
-                        controller: controller.otp,
+                        // controller: controller.otp,
+                        
                         textStyle: TextStyle(
                           color: 
                           // Get.isDarkMode 
                           false? White : Black,
                         ),
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          if (controller.otp.text.isEmpty) {
                             return 'Please enter OTP';
                           }
                           return null;
@@ -99,7 +100,9 @@ class Otpverification extends StatelessWidget {
                         ),
                         showCursor: false,
                         keyboardType: TextInputType.number,
-                        onChanged: (String value) {},
+                        onChanged: (String value) {
+                          controller.otp.text = value;
+                        },
                       ),
                       SizedBox(
                         height: 32.0,

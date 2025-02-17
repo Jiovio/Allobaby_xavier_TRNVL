@@ -4,6 +4,7 @@ import 'package:allobaby/Components/bottom_nav.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Controller/MainController.dart';
+import 'package:allobaby/Controller/SignupController.dart';
 import 'package:allobaby/Controller/UserController.dart';
 import 'package:allobaby/Screens/Settings/AppInfo.dart';
 import 'package:allobaby/Screens/Settings/EditProfile.dart';
@@ -12,6 +13,8 @@ import 'package:allobaby/Screens/Settings/SubscriptionViewApp.dart';
 import 'package:allobaby/Screens/Settings/ViewHospital.dart';
 import 'package:allobaby/Screens/Settings/hospital.dart';
 import 'package:allobaby/Screens/Signin.dart';
+import 'package:allobaby/app.dart';
+import 'package:allobaby/main.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -333,17 +336,33 @@ class SettingsScreen extends StatelessWidget {
                                   TextButton(
                                     child: Text('Ok'.tr),
                                     onPressed: () async{
-                                      
+
+                                      try {
+
                                       OurFirebase.setStatus(false);
 
-                                      Get.delete<Maincontroller>();
-                                      Get.delete<Usercontroller>();
-                                      Get.delete<NavController>();
+                                      // await Get.delete<Maincontroller>();
+                                      // await Get.delete<Signupcontroller>();
 
+                                      // await Get.delete<Usercontroller>();
+                                      // await Get.delete<NavController>(force: true);
 
                                       localStorage.clear();
-                                      Get.offAll(()=>const Signin());
+                                      
+
+                                      Get.offAll(()=>MyApp(initLang: initialLocale()));
                                       Get.snackbar("Logout Successfull".tr, "",snackPosition: SnackPosition.BOTTOM);
+                                      Get.reset(clearRouteBindings: false);
+
+                                        
+                                      } catch (e) {
+
+                                        print(e);
+                                        
+                                      }
+                                      
+      
+                                      // logoutUser();
                                       // _googleSignInController.googleSignOut();
                                     },
                                   ),
@@ -375,4 +394,12 @@ class SettingsScreen extends StatelessWidget {
       await launchUrl(Uri.parse(url));
 
   }
+}
+
+
+void logoutUser() async {
+  OurFirebase.setStatus(false);
+  Get.reset();
+  localStorage.clear();
+  Get.put(Signupcontroller);
 }

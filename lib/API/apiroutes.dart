@@ -4,7 +4,8 @@ import 'package:localstorage/localstorage.dart';
 
 class Apiroutes {
   // String baseUrl = "https://dev.savemom.app";
-  String baseUrl = "http://10.0.2.2:8000";
+  // String baseUrl = "http://10.0.2.2:8000";
+  String baseUrl ="https://production-server-800848206554.asia-south1.run.app";
 
   static checkUser () {
     if(localStorage.getItem("user")==null){

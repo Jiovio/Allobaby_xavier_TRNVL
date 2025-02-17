@@ -32,7 +32,7 @@ Future<dynamic> getRequest(str) async {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print('Response data: $data');
+      // print('Response data: $data');
       return data;
     } else {
       // print('Failed to load data. Status code: ${response.statusCode}');
@@ -122,10 +122,10 @@ Future<dynamic> postRequest(str,data) async {
       // print('Response data: $data');
       return data;
     } else {
-      print("------------------------------------------------------------");
-      print('Failed to load data. Status code: ${response.statusCode}');
-      print(response.body);
-      print("------------------------------------------------------------");
+      // print("------------------------------------------------------------");
+      // print('Failed to load data. Status code: ${response.statusCode}');
+      // print(response.body);
+      // print("------------------------------------------------------------");
 
       throw "network Request Failed";
 
@@ -155,12 +155,35 @@ Future<dynamic> refreshToken() async {
     );
 
     if (response.statusCode == 200) {
-      // final data = jsonDecode(response.body);
-      
-      // return data;
+      final data = jsonDecode(response.body);
+
+      print(data);
+
+      final reset = data["reset"];
+
+
+      if(reset){
+        final user = localStorage.getItem("user");
+
+        if(user!=null){
+
+          final d = json.decode(user);
+          d["jwt"] = data["jwt"];
+
+          localStorage.setItem("user", json.encode(d));
+
+        }else{
+          throw "logout";
+          print("Logout");
+        }
+
+        
+
+      }
     } 
     else if (response.statusCode == 403) {
       print("Logout");
+      throw "logout";
       // final data = jsonDecode(response.body);
       
       // return data;
@@ -173,6 +196,6 @@ Future<dynamic> refreshToken() async {
 
     }
   } catch (e) {
-    throw "network Request Failed";
+    throw "failed";
   }
 }

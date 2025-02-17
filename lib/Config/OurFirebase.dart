@@ -33,7 +33,7 @@ class OurFirebase {
 
     static Future<String?> getToken() async {
       String? token = await messaging.getToken();
-      print("FCM Token: $token");
+      // print("FCM Token: $token");
       return token;
     }
 

@@ -52,19 +52,19 @@ class NotificationService {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission');
+      // print('User granted permission');
 
       localStorage.setItem("notification","1");
       
       setupForegroundNotificationListeners();
       return true;
     } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
-      print('User granted provisional permission');
+      // print('User granted provisional permission');
       localStorage.setItem("notification","1");
 
       return true;
     } else {
-      print('User declined or has not accepted permission');
+      // print('User declined or has not accepted permission');
       localStorage.setItem("notification","0");
 
       return false;

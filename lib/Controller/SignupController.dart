@@ -279,32 +279,38 @@ Future<void> submitUser()async{
 
   var req = await Apiroutes().createUser(data);
 
-  OurFirebase.createUser(phone.text, data);
 
-
-
-  if(req==false){
+    if(req==false){
     print("Failed to create User");
-  print(req);
+    print(req);
+
+    return;
+
 
   }
+
+  OurFirebase.createUser(phone.text, data);
+
     localStorage.setItem('user', json.encode(req));
-    localStorage.setItem("uid", req["uid"].toString());
+    // localStorage.setItem("uid", req["uid"].toString());
+    localStorage.setItem("refresh", req["refresh"].toString());
+
     Get.offAll(()=>const MainScreen(),transition: Transition.rightToLeft);
 
 
   
 }
 
-int? oid = null;
+int? oid;
 
 Future<void> sendOtp() async {
 
   var r = await Otpapi.sendOtp(phone.text, countryCode);
+  otp.text = "";
 
   if(r["status"]){
   oid=r["id"];
-  Get.to(()=>Otpverification());
+  Get.to(Otpverification());
   }else {
 
   }
@@ -333,14 +339,35 @@ TextEditingController otp = TextEditingController();
 Future<void> verifyOtp() async {
 
 
-var r = await Otpapi.verifyOTP(otp.text,oid);
+var res = await Otpapi.verifyOTPS(otp.text,oid);
 
-if(otp.text=="999777"){
-  await checkUser();
-  return;
-}
+final exists = res["exists"];
 
-if(r){
+print(res);
+
+
+  if(exists==false){
+    print("User Not Found");
+    Get.snackbar("Welcome New User", "Thanks for choosing us",snackPosition: SnackPosition.BOTTOM);
+    Get.to(()=>MomOrDad(),transition: Transition.leftToRight);
+    await signInWithGoogle();
+    return;
+  }
+
+    localStorage.setItem("user", json.encode(res));
+    // localStorage.setItem("uid", res["uid"].toString());
+    localStorage.setItem("refresh", res["refresh"].toString());
+
+    Get.snackbar("Login Successfull", "Redirecting to Home Page",snackPosition: SnackPosition.BOTTOM);
+    Get.offAll(()=>const MainScreen());
+
+return;
+// if(otp.text=="999777"){
+//   await checkUser();
+//   return;
+// }
+
+if(res){
   await checkUser();
 }else{
   Get.snackbar("Invalid OTP", "Please Enter Correct OTP",snackPosition: SnackPosition.BOTTOM);

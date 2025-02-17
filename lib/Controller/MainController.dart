@@ -2,10 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:allobaby/API/Requests/Userapi.dart';
+import 'package:allobaby/API/authAPI.dart';
 import 'package:allobaby/Components/Loadingbar.dart';
+import 'package:allobaby/Components/bottom_nav.dart';
 import 'package:allobaby/Components/notification_service.dart';
 import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
+import 'package:allobaby/Controller/UserController.dart';
+import 'package:allobaby/Screens/Signin.dart';
 import 'package:allobaby/db/dbHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -69,6 +73,8 @@ class Maincontroller extends GetxController {
 
   update();
   }
+
+
 
 
   Timer? timer;
@@ -173,7 +179,34 @@ class Maincontroller extends GetxController {
     return null;
   });
 
+  refreshToken().then((value) {
   initScreen();
+  },).catchError((e){
+    print(e=="logout");
+    
+
+    if(e=="failed"){
+      Get.dialog(Container(child: const Text("No Internet !"),));
+    }else if (e=="logout"){
+
+      print("Loggggoouutttt");
+      OurFirebase.setStatus(false);
+
+      Get.delete<Maincontroller>();
+      Get.delete<Usercontroller>();
+      Get.delete<NavController>();
+
+
+      localStorage.clear();
+      Get.offAll(()=>const Signin());
+
+    }
+
+
+
+
+  });
+
 
 
 

@@ -48,12 +48,27 @@ void main() async {
   
   await initLocalStorage();
 
-  final lang = localStorage.getItem("lang");
+  // final lang = localStorage.getItem("lang");
+  
+  // final Locale initialLocale = 
+  // lang != null ?
+  // TranslationService().getLocaleFromLanguage(lang) as Locale 
+  // : 
+  // TranslationService.fallbackLocale;
+
+  runApp( MyApp(initLang: initialLocale()));
+}
+
+
+Locale initialLocale() {
+
+    final lang = localStorage.getItem("lang");
   
   final Locale initialLocale = 
   lang != null ?
   TranslationService().getLocaleFromLanguage(lang) as Locale 
   : 
   TranslationService.fallbackLocale;
-  runApp( MyApp(initLang: initialLocale));
+
+  return initialLocale;
 }

@@ -32,12 +32,72 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
   Timer? _tipsTimer;
   int _countdown = 0;
   bool _isRecording = false;
-  bool _isChecking = false;
+
   int _currentTipIndex = 0;
   late AnimationController _pulseController;
   late Animation<double> _pulseAnimation;
 
+  bool modelLoaded = false;
+
   AudioClassifier audioClassifier = AudioClassifier();
+
+  List<String> crys = ["Crying, sobbing","Baby cry, infant cry","Crying","sobbing"];
+
+  List<String> listOfCry = [];
+
+
+    String displayText = "Getting your Baby Sound..";
+
+  bool cryDetected = false;
+
+  calculateDisplayText(List<String> vals){
+      bool d =false;
+    
+    vals.forEach((v){
+
+
+
+      if(v=="Silence"){
+        displayText = "Inaudible. \n Please move closer to baby.";
+        d=true;
+      }
+
+      if(v=="Speech"){
+        displayText = "Please dont talk while recording .";
+        d=true;
+      }
+
+      if(crys.contains(v)) {
+        cryDetected = true;
+        displayText = "Detected Baby Cry.";
+        d=true;
+ 
+        }
+    });
+
+
+            if(!d){
+          displayText = "Checking for Baby Cry.";
+        }
+                setState(() {
+        });
+  }
+
+  void detectCry() async {
+
+    if(_recorder != null){
+    final p = await _recorder!.stop();
+    final preds = await audioClassifier.processAudio(p!);
+
+    listOfCry = preds;
+
+    calculateDisplayText(preds);
+      Directory appDir = await getApplicationDocumentsDirectory();
+    const encoder = AudioEncoder.wav;
+    const config = RecordConfig(encoder: encoder, numChannels: 1,sampleRate: 16000);
+      await _recorder!.start(config, path: '${appDir.path}/recording.wav');
+    }
+  }
 
   final List<Map<String, dynamic>> _babyTips = [
     {
@@ -73,7 +133,13 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
   @override
   void initState() {
     super.initState();
-    audioClassifier.initializeModel();
+    audioClassifier.initializeModel().then((v){
+      modelLoaded = true;
+
+      setState(() {
+        
+      });
+    });
 
     _pulseController = AnimationController(
       duration: const Duration(seconds: 2),
@@ -103,23 +169,33 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
   Future<void> _startRecording() async {
 
     _recorder = AudioRecorder();
-    setState(() => _isChecking = true);
+
+
+    if(_recorder != null){
     
     if (await _recorder!.hasPermission()) {
       Directory appDir = await getApplicationDocumentsDirectory();
     const encoder = AudioEncoder.wav;
-    final config = RecordConfig(encoder: encoder, numChannels: 1);
+    final config = RecordConfig(encoder: encoder, numChannels: 1,sampleRate: 16000);
 
       await _recorder!.start(config, path: '${appDir.path}/recording.wav');
       setState(() {
-        _isChecking = false;
+
         _isRecording = true;
         _countdown = 0;
       });
 
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
 
-        if(_countdown >20){
+        if(_countdown > 0 && _countdown % 7 == 0){
+
+         detectCry();
+
+          
+
+        }
+
+        if(_countdown >100){
           _stopRecording();
         }else{
 
@@ -129,6 +205,9 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
         }
       });
     }
+    }
+
+
   }
 
   Babycrycontroller controller = Get.put(Babycrycontroller());
@@ -172,7 +251,10 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
   void dispose() {
     _timer?.cancel();
     _tipsTimer?.cancel();
+
+    if(_recorder!=null){
     _recorder?.dispose();
+    }
     _pulseController.dispose();
     audioClassifier.dispose();
     super.dispose();
@@ -183,7 +265,8 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-     
+          
+          if(cryDetected && _countdown >6)
           AnimatedContainer(
             duration:const Duration(milliseconds: 300),
             child: ElevatedButton.icon(
@@ -341,7 +424,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: !modelLoaded ? CircularProgressIndicator() : Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
@@ -410,7 +493,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                             Container(
                               width: 10,
                               height: 10,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Colors.red,
                                 shape: BoxShape.circle,
                                 boxShadow: [
@@ -422,10 +505,10 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                                 ],
                               ),
                             ),
-                            SizedBox(width: 12),
+                           const SizedBox(width: 12),
                             Text(
                               'Recording'.tr + ' ${_countdown}s',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
@@ -447,15 +530,20 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                         ],
                       ),
                       const SizedBox(height: 40),
+
+                      // Text(listOfCry.toString(),),
                       Text(
-                        'Getting Your Baby Sound…'.tr,
-                        style: TextStyle(
+                        displayText.tr,
+                        
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       Text(
+                        cryDetected ?
+                        "Baby Cry Detected" + "\n" + "Tap stop to detect." :
                         'Try to avoid background noise'.tr,
                         style: TextStyle(
                           color: Colors.white.withOpacity(0.8),
