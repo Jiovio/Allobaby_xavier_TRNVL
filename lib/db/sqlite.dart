@@ -21,6 +21,7 @@ static final Sqlite _instance = Sqlite._internal();
       path,
       version: 1,
       onCreate: _onCreate,
+      singleInstance: true
     );
   }
 
@@ -80,6 +81,8 @@ CREATE TABLE daily (
 ''');
     
   } catch (e) {
+
+    print(e);
 
     print("DB Initialization Error $e");
     

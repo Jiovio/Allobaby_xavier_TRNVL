@@ -17,6 +17,10 @@ class Allobotcontroller extends GetxController {
 
   Future<void> converseWithAI([bool init=false]) async {
 
+    if(input.text=="" || input.text.isEmpty){
+        return;
+    }
+
     String prompt = "you are a medical maternal AI named allobot , you can give advise .. respond in md . prompt = ${input.text}";
         convs.add({"user":true,"msg":input.text});
 

@@ -21,6 +21,7 @@ import 'package:allobaby/features/babycry/crytellhome.dart';
 import 'package:allobaby/features/home/summary_cards.dart';
 import 'package:allobaby/intl/ma.dart';
 import 'package:allobaby/main.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -121,12 +122,21 @@ class _HomeState extends State<Home> {
                                                         Text("Day".tr)
                                                     ],
                                                   )
-                                                  : Text(
-                                                      "Not yet started".tr,
-                                                      style: TextStyle(
-                                                          fontWeight: FontWeight.w700),
+                                                  : 
+                                                  Expanded(child: 
+                                                  mainC.profile_pic==null ?
+                                                  Image.asset("assets/General/avatar.png") :
+                                                  CircleAvatar(
+                                                    backgroundImage: 
+                                                    CachedNetworkImageProvider(mainC.profile_pic!)
                                                     )
-                                                    );
+                                                  )); 
+                                                  // Text(
+                                                  //     "Not yet started".tr,
+                                                  //     style: TextStyle(
+                                                  //         fontWeight: FontWeight.w700),
+                                                  //   )
+                                                  //   );
                                     }
                                   ),
                                 ),

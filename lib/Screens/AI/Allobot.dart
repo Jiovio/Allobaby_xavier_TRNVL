@@ -58,10 +58,10 @@ class _AllobotState extends State<Allobot> {
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.more_vert, color: PrimaryColor),
-            onPressed: () {},
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.more_vert, color: PrimaryColor),
+          //   onPressed: () {},
+          // ),
         ],
       ),
       body: Column(

@@ -1,4 +1,5 @@
 import 'package:allobaby/API/Requests/ReportAPI.dart';
+import 'package:allobaby/API/Requests/SelfScreeningAPI.dart';
 import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/API/authAPI.dart';
 import 'package:allobaby/Components/Loadingbar.dart';
@@ -139,13 +140,25 @@ String  url = "";
       "description":desc.text,
     };
    final req =  await Reportapi().newaddReports(data);
-   print(req);
+
 
    if(req.success){
     showToast(req.detail, true);
     print(req.id);
 
-   }else{
+
+    final selfscreeningreq = await SelfscreeningApi.create({
+      "hemoglobinId" : req.id,
+      "params" : reportData
+    });
+
+    if(selfscreeningreq.success){
+
+      if(selfscreeningreq.created){
+        controller.screeningId = selfscreeningreq.id;
+      }
+
+    }
 
 
    }

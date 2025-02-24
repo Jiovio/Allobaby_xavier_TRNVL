@@ -2,14 +2,7 @@
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Screens/Home/Screening/Controllers/SelfScreeningController.dart';
 import 'package:allobaby/Screens/Home/Screening/SelfScreening.dart';
-import 'package:allobaby/Screens/Home/Screening/SymptomsScreen.dart';
-import 'package:allobaby/Screens/Home/Screening/Vitals/Vitals.dart';
-import 'package:allobaby/Screens/Home/Screening/labReports/Tests/FetalMonitoring.dart';
-import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Glucose.dart';
-import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Hemoglobin.dart';
-import 'package:allobaby/Screens/Home/Screening/labReports/Tests/UltraSound.dart';
-import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Urine.dart';
-import 'package:allobaby/db/dbHelper.dart';
+
 import 'package:allobaby/features/selfscreening/self_screening_list.dart';
 
 import 'package:flutter/material.dart';
@@ -17,7 +10,7 @@ import 'package:get/get.dart';
 
 
 class ScreeningWithReports extends StatefulWidget {
-   ScreeningWithReports({super.key});
+  const ScreeningWithReports({super.key});
 
   @override
   State<ScreeningWithReports> createState() => _ScreeningWithReportsState();
@@ -48,10 +41,6 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
           Get.to(()=> const SelfScreeningList());
         }, icon: Icon(Icons.list))],
       ),
-      
-      // floatingActionButton: FloatingActionButton(onPressed: getReports,
-      
-      // ),
 
       body: SingleChildScrollView(
         child: Container(
@@ -76,55 +65,320 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
            const SizedBox(
               height: 40,
             ),
-        
-      
-        
-        
-            ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: ls.length,
-              shrinkWrap: true,
-              itemBuilder:(context, index) {
-                String title = ls[index].x;
-                Widget sc = ls[index].screen;
-                String img = ls[index].img;
 
-                return Column(
-                  children: [
-                    Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        side: BorderSide(color: Black)),
-                    child: InkWell(
-                        borderRadius: BorderRadius.circular(8.0),
-                        highlightColor: accentColor.withOpacity(0.1),
-                        splashColor: accentColor.withOpacity(0.8),
-                        onTap: () => 
-                        Get.to(sc ,
-                            transition: Transition.rightToLeft),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8, bottom: 8),
-                          child: ListTile(
-                            leading: Image.asset(
-                              "assets/labReports/$img",
-                              scale: 12,
-                            ),
-                            title: Text(
-                              title,
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            trailing:
-                                Icon(Icons.arrow_forward_ios_rounded, color: Black),
-                          ),
-                        ))),
+
+             Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                side: const BorderSide(color: Black)),
+            child: InkWell(
+                borderRadius: BorderRadius.circular(8.0),
+                highlightColor: accentColor.withOpacity(0.1),
+                splashColor: accentColor.withOpacity(0.8),
+                onTap: () => 
+                Get.to(()=>SelfScreening(initPage: 0,) ,
+                    transition: Transition.rightToLeft),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 8),
+                  child: ListTile(
+                    leading: Image.asset(
+                      "assets/labReports/symptoms.png",
+                      scale: 12,
+                    ),
+                    title: Text(
+                      "Symptoms".tr,
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    trailing:
+                        const Icon(Icons.arrow_forward_ios_rounded, color: Black),
+                  ),
+                ))),
+
+                const SizedBox(
+                      height: 20,
+                    ),
+
+
+                                 Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                side: const BorderSide(color: Black)),
+            child: InkWell(
+                borderRadius: BorderRadius.circular(8.0),
+                highlightColor: accentColor.withOpacity(0.1),
+                splashColor: accentColor.withOpacity(0.8),
+                onTap: () => 
+                Get.to(()=>SelfScreening(initPage: 1,) ,
+                    transition: Transition.rightToLeft),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 8),
+                  child: ListTile(
+                    leading: Image.asset(
+                      "assets/labReports/vitals.png",
+                      scale: 12,
+                    ),
+                    title: Text(
+                      "Vital Test".tr,
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    trailing:
+                        const Icon(Icons.arrow_forward_ios_rounded, color: Black),
+                  ),
+                ))),
+
+                const SizedBox(
+                      height: 20,
+                    ),
+
+                         GetBuilder<Selfscreeningcontroller>(
+                           builder: (controller) {
+                             return Card(
+                                         shape: RoundedRectangleBorder(
+                                             borderRadius: BorderRadius.circular(8.0),
+                                             side: const BorderSide(color: Black)),
+                                         child: InkWell(
+                                             borderRadius: BorderRadius.circular(8.0),
+                                             highlightColor: accentColor.withOpacity(0.1),
+                                             splashColor: accentColor.withOpacity(0.8),
+                                             onTap: () => 
+                                             Get.to(()=>SelfScreening(initPage: 2,) ,
+                                                 transition: Transition.rightToLeft),
+                                             child: Padding(
+                                               padding: const EdgeInsets.only(top: 8, bottom: 8),
+                                               child: ListTile(
+                                                 leading: Image.asset(
+                                                   "assets/labReports/hemoglobin.png",
+                                                   scale: 12,
+                                                 ),
+                                                 title: Text(
+                                                   "Hemoglobin Test".tr,
+                                                   style: const TextStyle(fontSize: 18),
+                                                 ),
+                                                 trailing:
+                                                     controller.hemoglobinId!=null ?
+                             const Icon(Icons.check, color: Colors.green):
+                             const Icon(Icons.arrow_forward_ios_rounded, color: Black)
+                             
+                             
+                             
+                                               ),
+                                             )));
+                           }
+                         ),
+
+                const SizedBox(
+                      height: 20,
+                    ),
+
+
+                         GetBuilder<Selfscreeningcontroller>(
+                           builder: (controller) {
+                             return Card(
+                                         shape: RoundedRectangleBorder(
+                                             borderRadius: BorderRadius.circular(8.0),
+                                             side: const BorderSide(color: Black)),
+                                         child: InkWell(
+                                             borderRadius: BorderRadius.circular(8.0),
+                                             highlightColor: accentColor.withOpacity(0.1),
+                                             splashColor: accentColor.withOpacity(0.8),
+                                             onTap: () => 
+                                             Get.to(()=>SelfScreening(initPage: 3,) ,
+                                                 transition: Transition.rightToLeft),
+                                             child: Padding(
+                                               padding: const EdgeInsets.only(top: 8, bottom: 8),
+                                               child: ListTile(
+                                                 leading: Image.asset(
+                                                   "assets/labReports/urinetest.png",
+                                                   scale: 12,
+                                                 ),
+                                                 title: Text(
+                                                   "Urine Test".tr,
+                                                   style: const TextStyle(fontSize: 18),
+                                                 ),
+                                                 trailing:
+                                                     controller.urineTestId!=null ?
+                             const Icon(Icons.check, color: Colors.green):
+                             const Icon(Icons.arrow_forward_ios_rounded, color: Black)                                               ),
+                                             )));
+                           }
+                         ),
+
+                const SizedBox(
+                      height: 20,
+                    ),
+
+
+
+                         GetBuilder<Selfscreeningcontroller>(
+                           builder: (controller) {
+                             return Card(
+                                         shape: RoundedRectangleBorder(
+                                             borderRadius: BorderRadius.circular(8.0),
+                                             side: const BorderSide(color: Black)),
+                                         child: InkWell(
+                                             borderRadius: BorderRadius.circular(8.0),
+                                             highlightColor: accentColor.withOpacity(0.1),
+                                             splashColor: accentColor.withOpacity(0.8),
+                                             onTap: () => 
+                                             Get.to(()=>SelfScreening(initPage: 4,) ,
+                                                 transition: Transition.rightToLeft),
+                                             child: Padding(
+                                               padding: const EdgeInsets.only(top: 8, bottom: 8),
+                                               child: ListTile(
+                                                 leading: Image.asset(
+                                                   "assets/labReports/glucose.png",
+                                                   scale: 12,
+                                                 ),
+                                                 title: Text(
+                                                   "Glucose Test".tr,
+                                                   style: const TextStyle(fontSize: 18),
+                                                 ),
+                                                 trailing:
+                                          controller.glucoseTestId!=null ?
+                                          const Icon(Icons.check, color: Colors.green):
+                                          const Icon(Icons.arrow_forward_ios_rounded, color: Black)
+                                               ),
+                                             )));
+                           }
+                         ),
+
+                const SizedBox(
+                      height: 20,
+                    ),
+
+
+                         GetBuilder<Selfscreeningcontroller>(
+                           builder: (controller) {
+                             return Card(
+                                         shape: RoundedRectangleBorder(
+                                             borderRadius: BorderRadius.circular(8.0),
+                                             side: const BorderSide(color: Black)),
+                                         child: InkWell(
+                                             borderRadius: BorderRadius.circular(8.0),
+                                             highlightColor: accentColor.withOpacity(0.1),
+                                             splashColor: accentColor.withOpacity(0.8),
+                                             onTap: () => 
+                                             Get.to(()=>SelfScreening(initPage: 5,) ,
+                                                 transition: Transition.rightToLeft),
+                                             child: Padding(
+                                               padding: const EdgeInsets.only(top: 8, bottom: 8),
+                                               child: ListTile(
+                                                 leading: Image.asset(
+                                                   "assets/labReports/fetalmon.png",
+                                                   scale: 12,
+                                                 ),
+                                                 title: Text(
+                                                   "Fetal Monitoring".tr,
+                                                   style: TextStyle(fontSize: 18),
+                                                 ),
+                                                 trailing:
+                             controller.fetalmonitoringId!=null ?
+                             const Icon(Icons.check, color: Colors.green):
+                             const Icon(Icons.arrow_forward_ios_rounded, color: Black)
+                                               ),
+                                             )));
+                           }
+                         ),
+
+                const SizedBox(
+                      height: 20,
+                    ),
+
+
+
+                         GetBuilder<Selfscreeningcontroller>(
+                           builder: (controller) {
+                             return Card(
+                                         shape: RoundedRectangleBorder(
+                                             borderRadius: BorderRadius.circular(8.0),
+                                             side: const BorderSide(color: Black)),
+                                         child: InkWell(
+                                             borderRadius: BorderRadius.circular(8.0),
+                                             highlightColor: accentColor.withOpacity(0.1),
+                                             splashColor: accentColor.withOpacity(0.8),
+                                             onTap: () => 
+                                             Get.to(()=>SelfScreening(initPage: 6,) ,
+                                                 transition: Transition.rightToLeft),
+                                             child: Padding(
+                                               padding: const EdgeInsets.only(top: 8, bottom: 8),
+                                               child: ListTile(
+                                                 leading: Image.asset(
+                                                   "assets/labReports/ultrasound.png",
+                                                   scale: 12,
+                                                 ),
+                                                 title: Text(
+                                                   "Ultrasound Test".tr,
+                                                   style: TextStyle(fontSize: 18),
+                                                 ),
+                                                 trailing:
+                             controller.ultrasoundId!=null ?
+                             const Icon(Icons.check, color: Colors.green):
+                             const Icon(Icons.arrow_forward_ios_rounded, color: Black)
+                                               ),
+                                             )));
+                           }
+                         ),
+
+                const SizedBox(
+                      height: 20,
+                    ),
+        
+
+
+
+
+
+
+
+
+
+
+
+            // ListView.builder(
+            //   physics: NeverScrollableScrollPhysics(),
+            //   itemCount: ls.length,
+            //   shrinkWrap: true,
+            //   itemBuilder:(context, index) {
+            //     String title = ls[index].x;
+            //     Widget sc = ls[index].screen;
+            //     String img = ls[index].img;
+
+            //     return Column(
+            //       children: [
+            //         Card(
+            //         shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.circular(8.0),
+            //             side: const BorderSide(color: Black)),
+            //         child: InkWell(
+            //             borderRadius: BorderRadius.circular(8.0),
+            //             highlightColor: accentColor.withOpacity(0.1),
+            //             splashColor: accentColor.withOpacity(0.8),
+            //             onTap: () => 
+            //             Get.to(sc ,
+            //                 transition: Transition.rightToLeft),
+            //             child: Padding(
+            //               padding: const EdgeInsets.only(top: 8, bottom: 8),
+            //               child: ListTile(
+            //                 leading: Image.asset(
+            //                   "assets/labReports/$img",
+            //                   scale: 12,
+            //                 ),
+            //                 title: Text(
+            //                   title,
+            //                   style: TextStyle(fontSize: 18),
+            //                 ),
+            //                 trailing:
+            //                     Icon(Icons.arrow_forward_ios_rounded, color: Black),
+            //               ),
+            //             ))),
                         
-                        SizedBox(
-              height: 20,
-            ),
-                  ],
-                );
+            //             SizedBox(
+            //   height: 20,
+            // ),
+            //       ],
+            //     );
            
-              }),    
+            //   }),    
           ]),
         ),
       ),
@@ -133,7 +387,7 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
 
   Widget ScreeningItem (String title, Widget sc,String img) {
     return Column(
-      children: [
+              children: [
                           Card(
                             
                   shape: RoundedRectangleBorder(

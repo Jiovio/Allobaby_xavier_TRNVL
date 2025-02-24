@@ -170,24 +170,24 @@ class Selfscreeningcontroller extends GetxController {
     }
 
 
-      final req = await SelfscreeningApi.create({
-        "id" : screeningId,
-      "params":{
-        "symptoms" : details
-      },
-      "symptomsId":symptomDesc.text,
-    });
+    //   final req = await SelfscreeningApi.create({
+    //     "id" : screeningId,
+    //   "params":{
+    //     "symptoms" : details
+    //   },
+    //   "symptomsId":symptomDesc.text,
+    // });
 
-    if(req==false){
-      showToast("Failed to Add Symptoms", false);
-      return;
-    }
+    // if(req==false){
+    //   showToast("Failed to Add Symptoms", false);
+    //   return;
+    // }
     
-    if(req["created"]){
-      screeningId = req["id"];
-    }
+    // if(req.success){
+    //   screeningId = req.id;
+    // }
 
-    symptomId = 0;
+    // symptomId = 0;
       showToast("Added Symptoms Successfully", true);
 
     

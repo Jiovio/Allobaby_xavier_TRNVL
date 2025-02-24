@@ -26,10 +26,11 @@ Future<void> initializeAppCheck() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await initLocalStorage();
   try {
       await Sqlite.db();
   } catch (e) {
+    print(e);
     print("Error Initializing DB");
   }
   
@@ -46,7 +47,6 @@ void main() async {
   await initializeAppCheck();
 
   
-  await initLocalStorage();
 
   // final lang = localStorage.getItem("lang");
   
