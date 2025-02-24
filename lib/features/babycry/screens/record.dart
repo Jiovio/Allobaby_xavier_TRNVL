@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Controller/BabyCry/babyCryController.dart';
 import 'package:allobaby/features/babycry/controller/cry_controller.dart';
 import 'package:allobaby/features/babycry/service/audio_classifier.dart';
@@ -39,6 +40,29 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
 
   bool modelLoaded = false;
 
+  CryController controller = Get.put(CryController());
+
+  void prediction(String val, String audioPath, List<String> preds) async {
+
+  bool cry = await calculateDisplayText(preds);
+
+  if(cry){
+    controller.detect(val, audioPath);
+    controller.uploadDatatoServer(File(audioPath),cry,val);
+    _cancelRecording();
+
+  }
+
+  controller.uploadDatatoServer(File(audioPath),cry,val);
+
+  
+
+
+
+  }
+
+  int classs = 5;
+
   AudioClassifier audioClassifier = AudioClassifier();
 
   List<String> crys = ["Crying, sobbing","Baby cry, infant cry","Crying","sobbing"];
@@ -50,12 +74,11 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
 
   bool cryDetected = false;
 
-  calculateDisplayText(List<String> vals){
+    Future<bool> calculateDisplayText(List<String> vals) async {
       bool d =false;
+      bool babycry = false;
     
     vals.forEach((v){
-
-
 
       if(v=="Silence"){
         displayText = "Inaudible. \n Please move closer to baby.";
@@ -70,6 +93,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
       if(crys.contains(v)) {
         cryDetected = true;
         displayText = "Detected Baby Cry.";
+        babycry = true;
         d=true;
  
         }
@@ -81,21 +105,26 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
         }
                 setState(() {
         });
+
+
+        return babycry;
   }
 
   void detectCry() async {
 
     if(_recorder != null){
     final p = await _recorder!.stop();
-    final preds = await audioClassifier.processAudio(p!);
 
-    listOfCry = preds;
+    // OurFirebase.uploadTestAudioToStorage(classs, p!);
 
-    calculateDisplayText(preds);
+
+    await audioClassifier.processAudio(p!,prediction );
+
+    
       Directory appDir = await getApplicationDocumentsDirectory();
     const encoder = AudioEncoder.wav;
     const config = RecordConfig(encoder: encoder, numChannels: 1,sampleRate: 16000);
-      await _recorder!.start(config, path: '${appDir.path}/recording.wav');
+      await _recorder!.start(config, path: '${appDir.path}/${_countdown.toString()}.wav');
     }
   }
 
@@ -178,7 +207,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
     const encoder = AudioEncoder.wav;
     final config = RecordConfig(encoder: encoder, numChannels: 1,sampleRate: 16000);
 
-      await _recorder!.start(config, path: '${appDir.path}/recording.wav');
+      await _recorder!.start(config, path: '${appDir.path}/${_countdown.toString()}.wav');
       setState(() {
 
         _isRecording = true;
@@ -195,14 +224,18 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
 
         }
 
-        if(_countdown >100){
-          _stopRecording();
-        }else{
-
-          setState(() {
+         setState(() {
             _countdown++;
           });
-        }
+
+        // if(_countdown >100){
+        //   _stopRecording();
+        // }else{
+
+        //   setState(() {
+        //     _countdown++;
+        //   });
+        // }
       });
     }
     }
@@ -210,7 +243,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
 
   }
 
-  Babycrycontroller controller = Get.put(Babycrycontroller());
+  // Babycrycontroller controller = Get.put(Babycrycontroller());
 
   Future<void> _stopRecording() async {
     _timer?.cancel();
@@ -225,7 +258,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
 
         print(path);
 
-        final pred = await audioClassifier.processAudio(path);
+        final pred = await audioClassifier.processAudio(path,prediction);
 
         print(pred);
 
@@ -456,6 +489,28 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                   ),
                 ),
               ),
+
+
+               Align(
+                alignment: Alignment.topRight,
+                child: GestureDetector(
+                  onTap: () {
+                    classs++;
+
+                    setState(() {
+                      
+                    });
+                  },
+                  child: Container(
+                    margin: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text(classs.toString())
+                  ),
+                ),
+              ),
               
               Expanded(
                 child: Column(
@@ -566,12 +621,12 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                 ),
               ),
               
-              // Tips section with auto-rotation
-              if (_isRecording)
-                Padding(
-                  padding: EdgeInsets.only(bottom: 24),
-                  child: _buildTipCard(),
-                ),
+              
+              // if (_isRecording)
+              //   Padding(
+              //     padding: EdgeInsets.only(bottom: 24),
+              //     child: _buildTipCard(),
+              //   ),
             ],
           ),
         ),

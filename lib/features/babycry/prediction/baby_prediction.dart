@@ -1,27 +1,34 @@
+import 'package:allobaby/API/Requests/BabyCryAPI.dart';
 import 'package:allobaby/Components/bottom_nav.dart';
+import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/BabyCry/babyCryController.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
+import 'package:allobaby/features/babycry/controller/cry_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 
-class Baby extends StatefulWidget {
-  Baby({super.key});
+class BabyPrediction extends StatefulWidget {
+  Map<String, dynamic> data;
+  String audioPath;
+  String pred;
+  BabyPrediction({super.key, required this.data, required this.audioPath, required this.pred});
 
   @override
-  State<Baby> createState() => _BabyState();
+  State<BabyPrediction> createState() => _BabyState();
 }
 
-class _BabyState extends State<Baby> {
-    final Babycrycontroller controller = Get.put(Babycrycontroller());
+class _BabyState extends State<BabyPrediction> {
+    // final Babycrycontroller controller = Get.put(Babycrycontroller());
   final AudioPlayer _audioPlayer = AudioPlayer();
   bool isPlaying = false;
   bool isPlayerInitialized = false;
   Duration duration = Duration(seconds: 10);
   Duration position = Duration.zero;
 
-  bool save = false;
+  
+  CryController controller = Get.put(CryController());
 
   @override
   void initState() {
@@ -31,22 +38,22 @@ class _BabyState extends State<Baby> {
 
 
    final cryimgs = {
-    "Hungry Cry":"hc.png",
+    "Hunger Cry":"hc.png",
     "Sleepy Cry":"sc.png",
     "Pain Cry":"pc.png",
     "Discomfort Cry":"dc.png",
-    "Colic Cry":"cc.png",
-    "Attention Cry":"ac.png"};
+"Burping Cry":"cc.png",
+"Attention Cry":"ac.png"};
 
   Future<void> _initAudioPlayer() async {
-    if (controller.audio == null) {
-      print("No audio file available");
-      return;
-    }
+    // if (controller.audio == null) {
+    //   print("No audio file available");
+    //   return;
+    // }
 
     try {
       // Set the audio source
-      await _audioPlayer.setFilePath(controller.audio!.path);
+      await _audioPlayer.setFilePath(widget.audioPath);
       await _audioPlayer.setLoopMode(LoopMode.one);
       
       // Mark player as initialized
@@ -155,6 +162,7 @@ class _BabyState extends State<Baby> {
     super.dispose();
   }
 
+  bool saved  = false;
 
   @override
   Widget build(BuildContext context) {
@@ -169,16 +177,67 @@ class _BabyState extends State<Baby> {
           icon: Icon(Icons.arrow_back_ios_new, color: Black),
         ),
 
-
         actions: [
 
-          IconButton(
+          saved ?
+
+          TextButton.icon(
           onPressed: () {
             // Get.offAll(() => MainScreen(), transition: Transition.fade);
+            print("Saved");
+          },
+          icon: Icon(Icons.check, color: PrimaryColor),
+
+          label: Text("Saved"),
+        )
+
+        :
+          TextButton.icon(
+          onPressed: () async {
+            // Get.offAll(() => MainScreen(), transition: Transition.fade);
+
+            if(controller.cryid == null){
+
+
+            }else {
+
+              setState(() {
+                saved = !saved;
+              });
+
+
+              final req = await Babycryapi.saveCry(controller.cryid, !saved);
+
+              if(req==false){
+
+                setState(() {
+                  saved = !saved;
+                });
+                showToast("Unable to Save", false);
+
+              }else{
+
+
+                
+                showToast("Saved Successfully", true);
+
+
+              }
+
+            }
+
+            
+
+            print("Save");
+
+            setState(() {
+              
+            });
           },
           icon: Icon(Icons.save, color: Black),
-        ),
 
+          label: Text("Save"),
+        ),
 
 
         ],
@@ -205,9 +264,9 @@ bottomNavigationBar: Container(
       // Play/Pause Button
       IconButton(
         onPressed: () {
-          if(controller.audio != null) {
+          // if(controller.audio != null) {
             playPause();
-          }
+          // }
         },
         icon: Icon(
           isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
@@ -294,7 +353,7 @@ bottomNavigationBar: Container(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
-                      "assets/babyicons/${cryimgs[controller.reason]}",
+                      "assets/babyicons/${cryimgs[widget.pred]}",
 
                       
                       // "assets/BottomSheet/crybaby.png",
@@ -351,7 +410,7 @@ bottomNavigationBar: Container(
                               ),
                               SizedBox(height: 4),
                               Text(
-                                controller.reason,
+                                widget.pred,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -382,7 +441,7 @@ bottomNavigationBar: Container(
               ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: controller.stepsToComfortTheBaby.length,
+                itemCount: widget.data["recommendations"].length,
                 itemBuilder: (context, index) {
                   return Container(
                     margin: EdgeInsets.only(bottom: 12),
@@ -414,7 +473,7 @@ bottomNavigationBar: Container(
                         SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            controller.stepsToComfortTheBaby[index],
+                            widget.data["recommendations"][index],
                             style: TextStyle(
                               fontSize: 16,
                               color: Black.withOpacity(0.8),

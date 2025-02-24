@@ -148,7 +148,7 @@ class LastCycleUI extends StatelessWidget {
                           showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
-                            firstDate: DateTime.now().subtract(const Duration(days: 305)),
+                            firstDate: DateTime(2000),
                             lastDate: DateTime.now(),
                           ).then((selectedDate) {
                       

@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:allobaby/API/Requests/OTPApi.dart';
 import 'package:allobaby/API/apiroutes.dart';
+import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Screens/Initial/MomOrDad.dart';
@@ -282,6 +283,7 @@ Future<void> submitUser()async{
 
     if(req==false){
     print("Failed to create User");
+    showToast("Failed to Signup", false);
     print(req);
 
     return;
@@ -310,7 +312,7 @@ Future<void> sendOtp() async {
 
   if(r["status"]){
   oid=r["id"];
-  Get.to(Otpverification());
+  Get.to(()=>Otpverification());
   }else {
 
   }
@@ -341,10 +343,15 @@ Future<void> verifyOtp() async {
 
 var res = await Otpapi.verifyOTPS(otp.text,oid);
 
+if(res==null){
+  showToast("No Internet", false);
+}
+
+final verified = res["verified"];
+
+
+if(verified){
 final exists = res["exists"];
-
-print(res);
-
 
   if(exists==false){
     print("User Not Found");
@@ -355,11 +362,20 @@ print(res);
   }
 
     localStorage.setItem("user", json.encode(res));
-    // localStorage.setItem("uid", res["uid"].toString());
     localStorage.setItem("refresh", res["refresh"].toString());
 
-    Get.snackbar("Login Successfull", "Redirecting to Home Page",snackPosition: SnackPosition.BOTTOM);
+
+    showToast("Login Successful", true);
+
     Get.offAll(()=>const MainScreen());
+
+
+}else{
+  showToast(res["message"], false);
+}
+
+
+
 
 return;
 // if(otp.text=="999777"){
@@ -367,11 +383,11 @@ return;
 //   return;
 // }
 
-if(res){
-  await checkUser();
-}else{
-  Get.snackbar("Invalid OTP", "Please Enter Correct OTP",snackPosition: SnackPosition.BOTTOM);
-}
+// if(res){
+//   await checkUser();
+// }else{
+//   Get.snackbar("Invalid OTP", "Please Enter Correct OTP",snackPosition: SnackPosition.BOTTOM);
+// }
 }
 
 

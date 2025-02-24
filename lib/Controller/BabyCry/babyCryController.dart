@@ -86,7 +86,7 @@ if(data["babyCryDetected"]==true){
 
  String url = await OurFirebase.uploadAudioToStorage("audio",audioFile);
 
- final req = await Babycryapi.addBabyCry(reason, url);
+//  final req = await Babycryapi.addBabyCry(reason, url);
 
 
 }else {

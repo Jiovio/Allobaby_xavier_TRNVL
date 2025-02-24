@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:allobaby/API/authAPI.dart';
 import 'package:allobaby/API/local/Storage.dart';
+import 'package:allobaby/API/response.dart';
 import 'package:allobaby/Screens/Home/Report/Report.dart';
 import 'package:get/get.dart';
 import 'package:localstorage/localstorage.dart';
@@ -12,12 +13,18 @@ class Reportapi {
   
 
 
-  Future<void> addReports(data) async {
+  Future<APIResponse> addReports(data) async {
     var d = await postRequest("/report/createbyuser", data);
     print(d);
     return d;
   }
 
+
+      Future<APIResponse> newaddReports(data) async {
+    var d = await newPostRequest("/report/createbyuser", data);
+    print(d);
+    return d;
+  }
 
     Future<void> updateReport(data) async {
     var d = await postRequest("/report/updatebyuser", data);

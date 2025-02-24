@@ -135,6 +135,8 @@ class Editprofilecontroller extends GetxController {
   TextEditingController averageLengthOfCycles = TextEditingController();
   TextEditingController partnerPhoneVerified = TextEditingController();
   TextEditingController deliveryDate = TextEditingController();
+  TextEditingController picme_rch_id = TextEditingController();
+
   String created = "";
   String? healthStatus;
 
@@ -172,6 +174,7 @@ class Editprofilecontroller extends GetxController {
     averageLengthOfCycles.text = data['average_length_of_cycles']?.toString() ?? '';
     partnerPhoneVerified.text = data['partner_phone_verified']?.toString() ?? '';
     deliveryDate.text = data['delivery_date'] ?? '';
+    picme_rch_id.text = data["picme_rch_id"] ?? "";
 
     // Non-editable fields
     gender = data['gender'] ?? 'Female';

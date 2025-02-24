@@ -33,10 +33,9 @@ static final Sqlite _instance = Sqlite._internal();
 
  static  Future<void> _onCreate(Database db, int version) async {
 
-    
+  try {
 
-
-  await db.execute('''
+      await db.execute('''
 CREATE TABLE dailyscreening (
     id INTEGER PRIMARY KEY,
     date DATE NOT NULL,
@@ -79,6 +78,17 @@ CREATE TABLE daily (
     uid INTEGER
 );
 ''');
+    
+  } catch (e) {
+
+    print("DB Initialization Error $e");
+    
+  }
+
+    
+
+
+
   }
 
 

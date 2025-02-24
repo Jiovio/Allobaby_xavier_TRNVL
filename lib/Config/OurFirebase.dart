@@ -98,6 +98,29 @@ class OurFirebase {
   }
 
 
+      static Future<String> uploadTestAudioToStorage(int classs,String audio) async {
+        String? d = localStorage.getItem("user");
+        final data = json.decode(d!);
+
+
+
+
+  File audioFile = File(audio);
+  final spaceRef = OurFirebase.storageRef.child("/testAudio/${classs.toString()}/${data["id"].toString()}${DateTime.now().toIso8601String()}.wav ");
+
+  print(spaceRef.bucket);
+
+  try {
+    await spaceRef.putFile(audioFile);
+    String path =  await spaceRef.getDownloadURL();
+     return path;
+    } catch (e) {
+      print(e);
+      return "Error";
+    }
+  }
+
+
    static Future<String> askVertexAi(File img , String promp) async{
 
       final prompt = TextPart(promp);

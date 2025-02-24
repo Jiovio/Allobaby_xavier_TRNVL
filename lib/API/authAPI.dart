@@ -1,5 +1,10 @@
 import 'dart:convert';
 import 'package:allobaby/API/apiroutes.dart';
+import 'package:allobaby/API/response.dart';
+import 'package:allobaby/Components/bottom_nav.dart';
+import 'package:allobaby/Controller/MainController.dart';
+import 'package:allobaby/Controller/SignupController.dart';
+import 'package:allobaby/Controller/UserController.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
@@ -140,7 +145,7 @@ Future<dynamic> postRequest(str,data) async {
 
 
 Future<dynamic> refreshToken() async {
-  final url = Uri.parse(( Apiroutes().baseUrl+"/auth/ca")); 
+  final url = Uri.parse( (Apiroutes().baseUrl+"/auth/ca") ); 
 
   try {
 
@@ -184,10 +189,37 @@ Future<dynamic> refreshToken() async {
       }
     } 
     else if (response.statusCode == 403) {
-      print("Logout");
-      localStorage.clear();
-      Get.offAll(Signin());
-      throw "logout";
+
+      print("User Not Found");
+
+
+    Get.dialog(AlertDialog(
+      title: Text("Invalid Session"),
+      content: Text("Your session is invalid. Please log in again"),
+
+      actions: [
+        TextButton.icon(onPressed: () async {
+
+        await Get.delete<Maincontroller>();
+        await Get.delete<Signupcontroller>();
+
+        await Get.delete<Usercontroller>();
+        await Get.delete<NavController>(force: true);
+
+        localStorage.clear();
+        
+
+        Get.offAll(()=>const Signin());
+        Get.snackbar("Logout Successfull".tr, "",snackPosition: SnackPosition.BOTTOM);
+
+        }, icon: Icon(Icons.check),
+        label: Text("Login"),
+        )
+      ],
+    ));
+
+
+
     }
     else {
       print("------------------------------------------------------------");
@@ -203,4 +235,91 @@ Future<dynamic> refreshToken() async {
      Get.dialog(Container(child: const Text("No Internet !"),));
     throw "failed";
   }
+}
+
+
+void showNoInternetDialog() {
+  Get.dialog(
+    barrierDismissible: false,
+    Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.signal_wifi_off,
+                  color: Colors.red,
+                  size: 28,
+                ),
+                SizedBox(width: 10),
+                Text(
+                  'No Internet!',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Please check your internet connection and try again.',
+              style: TextStyle(fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => Get.back(),
+              child: const Text(
+                'OK',
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+// New
+
+Future<APIResponse> newPostRequest(str,data) async {
+  final url = Uri.parse((Apiroutes().baseUrl+str)); 
+
+  try {
+
+    dynamic h = getHeaders();
+
+    final response = await http.post(url,
+    headers: {
+      "Content-Type": "application/json",
+      ...h
+      },
+    body: json.encode(data));
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      
+      return APIResponse(success: true, map: data);
+    } else {
+      // print("------------------------------------------------------------");
+      // print('Failed to load data. Status code: ${response.statusCode}');
+      print(response.body);
+      // print("------------------------------------------------------------");
+      return APIResponse(success: false, map: response.body);
+
+    }
+  } catch (e) {
+      APIResponse(success: false, map: {"detail":"Network Error"});
+  }
+
+  return APIResponse(success: true, map: data);
 }

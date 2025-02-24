@@ -85,8 +85,8 @@ class Data {
       "Reposition Baby – Changing positions or holding them differently can sometimes help.".tr
     ]
   },
-  "Colic Cry": {
-    "heading": "Colic Crying".tr,
+  "Burping Cry": {
+    "heading": "Burping Crying".tr,
     "shortdesc": "Prolonged, intense crying episodes, typically in the evening, with physical signs of distress.".tr,
     "img": "assets/babyicons/cc.png",
     "audio": "Baby/discomfort.wav",

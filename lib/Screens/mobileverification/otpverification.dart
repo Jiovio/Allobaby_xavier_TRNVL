@@ -30,20 +30,11 @@ class Otpverification extends StatelessWidget {
                 ),
                 body: Padding(
                   padding:
-                      const EdgeInsets.only(top: 24.0, left: 20.0, right: 20.0),
+                      const EdgeInsets.only( left: 20.0, right: 20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "OTP VERIFICATION".tr,
-                        style: TextStyle(
-                          color: 
-                          // Get.isDarkMode 
-                          true? White : Black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
+                 
                       SizedBox(
                         height: 32.0,
                       ),

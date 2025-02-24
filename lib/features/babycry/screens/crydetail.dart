@@ -245,13 +245,13 @@ class Crydetail extends StatelessWidget {
                           ),
                           child: Row(
                             
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
 
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                              Text("Sample Cry",
+                              Text( data["heading"] +  " Sample Audio",
                               style: GoogleFonts.poppins(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -268,11 +268,13 @@ class Crydetail extends StatelessWidget {
                                 ],
                               ),
 
-                             const SizedBox(width: 20,),
-
-
-
                               AudioPlayerButton(assetPath: data["audio"]),
+
+                            //  const SizedBox(width: 20,),
+
+
+
+                              
 
                               
                 

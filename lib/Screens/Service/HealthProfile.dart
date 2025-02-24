@@ -175,11 +175,19 @@ int calculateWeekDifference() {
                 CircleAvatar(
                     backgroundColor: Colors.transparent,
                     radius: 36.0,
-                    child: Image.asset("assets/General/avatar.png")):
+                    child: 
+                    Image.asset("assets/General/avatar.png")
+                    
+                    ):
 
                     Container(
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                      child: CachedNetworkImage(imageUrl: mc.profile_pic as String,height: 74,width: 74,
+                      child: CachedNetworkImage(
+                        imageUrl: mc.profile_pic as String,height: 74,width: 74,
+
+                        errorWidget: (context, url, error) {
+                          return Image.asset("assets/General/avatar.png");
+                        },
                       
                       ),
                     ),
@@ -196,7 +204,7 @@ int calculateWeekDifference() {
                       children: [
                         Column(
                           children: [
-                            Icon(Icons.double_arrow),
+                             Icon(Icons.double_arrow),
                             SizedBox(
                               height: 12,
                             ),

@@ -18,6 +18,8 @@ import 'package:allobaby/Screens/Service/Appointment.dart';
 import 'package:allobaby/Screens/Service/MyAppointment.dart';
 import 'package:allobaby/Screens/Signin.dart';
 import 'package:allobaby/features/babycry/crytellhome.dart';
+import 'package:allobaby/features/home/summary_cards.dart';
+import 'package:allobaby/intl/ma.dart';
 import 'package:allobaby/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -361,10 +363,29 @@ class _HomeState extends State<Home> {
                           SizedBox(
                 height: 20,
               ),
-        
+
+              
+          
+
+
+
               Padding(
                 padding: const EdgeInsets.only(left: 14.0, right: 14.0),
               child: Column(children: [
+
+                GetBuilder<Maincontroller>(
+                  builder:(controller) {
+
+                    return 
+                    controller.pregnancyStatus.text == "skip" ? 
+                    Container():
+                    summaryCards(mainC.pregnancyStatus.text);
+                  
+                },),
+
+                
+
+                SizedBox(height: 50,),
         
                 Obx(()=>
         

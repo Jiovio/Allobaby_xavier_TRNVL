@@ -2,6 +2,7 @@ import 'package:allobaby/API/Requests/BabyCryAPI.dart';
 import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/Components/Loadingbar.dart';
 import 'package:allobaby/Components/snackbar.dart';
+import 'package:allobaby/utils/datetimeutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -211,7 +212,7 @@ class _CryHistoryState extends State<CryHistory> {
         itemCount: cryHistory.length,
         itemBuilder: (context, index) {
           final cry = cryHistory[index];
-          final DateTime createdAt = DateTime.parse(cry['created_at']);
+          final DateTime createdAt = localDateTime(cry['created_at']);
           final String formattedDate = DateFormat('MMM dd, yyyy').format(createdAt);
           final String formattedTime = DateFormat('hh:mm a').format(createdAt);
           final bool isCurrentlyPlaying = _currentlyPlayingId == cry['id'];
@@ -234,7 +235,7 @@ class _CryHistoryState extends State<CryHistory> {
             
             Card(
               
-              margin: EdgeInsets.only(bottom: 16),
+              margin: const EdgeInsets.only(bottom: 16),
               elevation: 4,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -246,7 +247,7 @@ class _CryHistoryState extends State<CryHistory> {
                   
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [

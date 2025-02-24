@@ -77,7 +77,7 @@ class AppInfo extends StatelessWidget {
                   height: 8,
                 ),
                 Text(
-                  'JioVio Healthcare'.tr.toUpperCase(),
+                  'savemom private limited'.tr.toUpperCase(),
                   style:const TextStyle(
                     fontWeight: FontWeight.w600,
                   ),

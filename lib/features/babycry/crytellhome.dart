@@ -41,8 +41,8 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
 
     },
     {
-      'title': 'Pain Crying'.tr,
-      'org': 'Pain Cry',
+      'title': 'Burping Crying'.tr,
+      'org': 'Burping Cry',
 
       'description': "A sudden, high-pitched, intense cry that comes in bursts with breathing pauses. Often accompanied by physical tension.".tr,
       'icon': '🤕',
@@ -60,7 +60,7 @@ class _CrytellhomeState extends State<Crytellhome> with SingleTickerProviderStat
     },
     {
       'title': 'Colic Crying'.tr,
-      'org': 'Colic Cry',
+      'org': 'Pain Cry',
 
       'description': "Prolonged, intense crying episodes, typically in the evening, with physical signs of distress.".tr,
       'icon': '😢',

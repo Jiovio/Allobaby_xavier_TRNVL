@@ -48,7 +48,8 @@ class Userapi {
   static Future<bool> updateDefaultHospital(dynamic hospital) async {
     try {
     bool req = await postRequest("/user/setdefaulthospital", {"hospitalId" : hospital["id"]});
-    print(req);
+    print("status $req");
+
     if(req){
       final d = await Hospitalapi.getDefaultChatAgent(hospital["id"]);
       print("------------------------------------------------");
@@ -62,12 +63,13 @@ class Userapi {
 
       return true;
     }else {
-      Get.snackbar("Error", "Please Try Again Later", snackPosition: SnackPosition.BOTTOM);
+      // Get.snackbar("Error", "Please Try Again Later", snackPosition: SnackPosition.BOTTOM);
 
       return false;
     }
     } catch (e) {
-      Get.snackbar("Error", "Please Try Again Later", snackPosition: SnackPosition.BOTTOM);
+      print(e);
+      // Get.snackbar("Error", "Please Try Again Later", snackPosition: SnackPosition.BOTTOM);
 
       return false;
     }
@@ -113,6 +115,8 @@ class Userapi {
       
 
     final req = await postRequest("/screening/add",data);
+
+    print(req);
     return req["status"]; 
     } catch (e) {
 

@@ -6,10 +6,13 @@ import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Screens/Home/Report/Report.dart';
+import 'package:allobaby/Screens/Home/Screening/Controllers/SelfScreeningController.dart';
+import 'package:allobaby/Screens/Home/Screening/SelfScreening.dart';
 import 'package:allobaby/db/dbHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'dart:io' as Io;
 import 'dart:convert' as convert;
 import 'dart:io';
@@ -89,6 +92,10 @@ String url = "";
     update();
   }
 
+  
+
+  Selfscreeningcontroller controller = Get.put(Selfscreeningcontroller());
+
   Future<void> submit () async {
         //          if(image==null){
         //   showToast("Please Upload Image", false);
@@ -131,12 +138,22 @@ String  url = "";
       "imageurl":url,
       "description":desc.text,
     };
-    await Reportapi().addReports(data);
+   final req =  await Reportapi().newaddReports(data);
+   print(req);
+
+   if(req.success){
+    showToast(req.detail, true);
+    print(req.id);
+
+   }else{
+
+
+   }
 
 
     stopLoading();
 
-    showToast("Report Saved Successfully .", true);
+    
 
 
     

@@ -87,15 +87,16 @@ class Maincontroller extends GetxController {
     try {
 
       var d = await Userapi.getUser();
-    localStorage.setItem("uid", d["uid"].toString());
+      localStorage.setItem("uid", d["uid"].toString());
 
       fromJson(d);
 
       // print(d);
   
 
-    if(localStorage.getItem("phone")==null){
-    localStorage.setItem("phone",d["phone_number"]);}
+      if(localStorage.getItem("phone")==null){
+      localStorage.setItem("phone",d["phone_number"]);
+      }
 
 
       // Backgroundservice.listenForData();

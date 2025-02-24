@@ -37,7 +37,7 @@ class Otpapi {
       "type":"allobaby"
     };
 
-    print(d);
+    // print(d);
 
     var req = await postRequest("/otp/verify-otps", d);
 

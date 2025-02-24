@@ -10,6 +10,7 @@ import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Hemoglobin.dart
 import 'package:allobaby/Screens/Home/Screening/labReports/Tests/UltraSound.dart';
 import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Urine.dart';
 import 'package:allobaby/db/dbHelper.dart';
+import 'package:allobaby/features/selfscreening/self_screening_list.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,7 @@ class ScreeningWithReports extends StatefulWidget {
 }
 
 class _ScreeningWithReportsState extends State<ScreeningWithReports> {
+
 
   List<LabreportOptions> ls = [
   LabreportOptions("Symptoms".tr,SelfScreening(initPage: 0,),"symptoms.png"),
@@ -41,6 +43,10 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
     return  Scaffold(
       appBar: AppBar(
         title: Text("Self Screening".tr),
+
+        actions: [IconButton(onPressed: (){
+          Get.to(()=> const SelfScreeningList());
+        }, icon: Icon(Icons.list))],
       ),
       
       // floatingActionButton: FloatingActionButton(onPressed: getReports,
@@ -50,7 +56,7 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
       body: SingleChildScrollView(
         child: Container(
           
-          padding: EdgeInsets.only(top: 40, left: 20, right: 20),
+          padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
           width: double.infinity,
           child: Column(children: [
             Image.asset(
@@ -59,15 +65,15 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
               width: 100,
               height: 100,
             ),
-            SizedBox(
+           const SizedBox(
               height: 20,
             ),
             Text(
               "Let's begin the test".tr,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,
             ),
-            SizedBox(
+           const SizedBox(
               height: 40,
             ),
         

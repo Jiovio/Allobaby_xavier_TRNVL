@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:allobaby/API/Requests/SelfScreeningAPI.dart';
 import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/API/local/Storage.dart';
+import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/db/dbHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +11,33 @@ import 'package:get/get.dart';
 class Selfscreeningcontroller extends GetxController {
 
 
+
+  int? screeningId;
+
+  int? symptomId;
+  int? vitalsId;
+  int? hemoglobinId;
+
+  int? urineTestId;
+  int? glucoseTestId;
+  int? fetalmonitoringId;
+  int? ultrasoundId;
+
+
+  void reset() {
+
+  screeningId = null;
+
+  symptomId = null;
+  vitalsId = null;
+  hemoglobinId = null;
+
+  urineTestId = null;
+  glucoseTestId = null;
+  fetalmonitoringId = null;
+  ultrasoundId = null;
+
+  }
 
   @override
   void onInit () async {
@@ -132,7 +161,38 @@ class Selfscreeningcontroller extends GetxController {
       "description":symptomDesc.text,
     };
 
-    await Userapi.addScreeningData(null,null,data);
+     final addreq =  await Userapi.addScreeningData(null,null,data);
+
+
+    if(addreq ==false){
+      showToast("Failed to Add Symptoms", false);
+      return;
+    }
+
+
+      final req = await SelfscreeningApi.create({
+        "id" : screeningId,
+      "params":{
+        "symptoms" : details
+      },
+      "symptomsId":symptomDesc.text,
+    });
+
+    if(req==false){
+      showToast("Failed to Add Symptoms", false);
+      return;
+    }
+    
+    if(req["created"]){
+      screeningId = req["id"];
+    }
+
+    symptomId = 0;
+      showToast("Added Symptoms Successfully", true);
+
+    
+
+
 
   }
 

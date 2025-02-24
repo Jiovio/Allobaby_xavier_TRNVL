@@ -548,7 +548,25 @@ class EditProfile extends StatelessWidget {
 
 
 
+    SizedBox(
+                    height: 16.0,
+                  ),
+                  TextFormField(
+                    controller: mainc.picme_rch_id,
 
+                    onChanged: (value) => 
+                      mainc.setUpdateData("picme_rch_id", value)
+                    ,
+                    
+                    validator: (value) {
+                      if (value == null || value.isEmpty || value.length<12) {
+                        return 'Please enter RCH ID'.tr;
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                        labelText: "RCH ID".tr, border: OutlineInputBorder()),
+                  ),
 
 
 

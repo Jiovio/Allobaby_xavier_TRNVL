@@ -26,7 +26,7 @@ class AudioClassifier {
       print('Input Tensor Type: ${_interpreter.getInputTensor(0).type}');
       print('Output Tensor Type: ${_interpreter.getOutputTensor(0).type}');
 
-      classification_interpreter = await Interpreter.fromAsset("assets/ml/classification.tflite");
+      classification_interpreter = await Interpreter.fromAsset("assets/ml/ml1.tflite");
 
       print("Classification Model Loaded Successfully");
     } catch (e) {
@@ -35,7 +35,7 @@ class AudioClassifier {
     }
   }
 
-  Future<List<String>> processAudio(String audioPath) async {
+  Future<List<String>> processAudio(String audioPath, Function setPrediction) async {
 
 
     try {
@@ -62,12 +62,12 @@ class AudioClassifier {
 
       _interpreter.run(inputArray, outputBuffer);
 
-      // 
-
-      // runClassification();
+      
 
 
-      // 
+
+
+      
 
 
       List<String> outputs = [];
@@ -81,6 +81,13 @@ class AudioClassifier {
       // print(sortByFrequency(outputs));
 
 
+            print("------------------------------------------");
+     String pred =  runClassification(audioPath)!;
+     print(pred);
+     setPrediction(pred,audioPath, sortByFrequency(outputs));
+    print("------------------------------------------");
+
+
       
       return sortByFrequency(outputs);
     } catch (e) {
@@ -90,9 +97,19 @@ class AudioClassifier {
     }
   }
 
-  void runClassification(){
+  String? runClassification(String path){
 
-    const CATEGORIES = ["belly_pain", "burping", "discomfort", "hungry", "tired"];
+    // const CATEGORIES = ["belly_pain", "burping", "discomfort", "hungry", "tired"];
+    const CATEGORIES = ["1", "2", "3", "4", "5"];
+
+    Map<String, String> cats = {
+      "1" : "Pain Cry",
+      "2" : "Burping Cry",
+      "3" : "Discomfort Cry",
+      "4" : "Hunger Cry",
+      "5" : "Sleepy Cry"
+    };
+
 
 
       final out = _interpreter.getOutputTensor(1);
@@ -107,8 +124,11 @@ class AudioClassifier {
 
       classification_interpreter.run(data,outp);
       final t = outp.toList();
-      print(CATEGORIES[_softmax(t[0])!]);
-      // print(t);
+      
+      String key = (CATEGORIES[_softmax(t[0])!]);
+
+
+      return cats[key];
 
   }
 
