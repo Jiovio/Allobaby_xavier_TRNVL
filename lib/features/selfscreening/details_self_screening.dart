@@ -1,5 +1,3 @@
-
-
 import 'package:allobaby/Screens/Home/Screening/Controllers/SelfScreeningController.dart';
 import 'package:allobaby/Screens/Home/Screening/SymptomsScreen.dart';
 import 'package:allobaby/Screens/Home/Screening/Vitals/Vitals.dart';
@@ -21,105 +19,221 @@ class SelfScreeningDetails extends StatefulWidget {
 }
 
 class _SelfScreeningDetailsState extends State<SelfScreeningDetails> {
-
-
-Selfscreeningcontroller sc = Get.put(Selfscreeningcontroller());
-
-
-  
+  Selfscreeningcontroller sc = Get.put(Selfscreeningcontroller());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Self Screening Detail")),
-
-      body: SingleChildScrollView(
-        child: Column(children: [
-
-
-            ListTile(
-              onTap: () => Get.to(()=> Scaffold(
-                appBar: AppBar(),
-                body: SymptomsScreen(),)),
-            leading: Image.asset("assets/labReports/symptoms.png", width: 35,),
-            title: const Text("Symptoms"),
-            subtitle: const Text("20-02-2025"),
-            trailing: Icon(sc.symptomId == null ? Icons.cancel : Icons.check),
+      appBar: AppBar(
+        title: const Text(
+          "Self Screening Detail",
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
+        elevation: 0,
+        // backgroundColor: Theme.of(context).primaryColor,
+        foregroundColor: Colors.white,
+      ),
+      body: Container(
+        // decoration: BoxDecoration(
+        //   gradient: LinearGradient(
+        //     begin: Alignment.topCenter,
+        //     end: Alignment.bottomCenter,
+        //     colors: [
+        //       Theme.of(context).primaryColor.withOpacity(0.1),
+        //       Colors.white,
+        //     ],
+        //   ),
+        // ),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              const SizedBox(height: 16),
+              // Header Section with Summary
+              Container(
+                margin: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: Theme.of(context).primaryColor.withOpacity(0.2), 
+                  ),
+                  
+                ),
+                
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.medical_services_rounded,
+                      size: 40,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Medical Screenings',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Track your pregnancy health tests',
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              
+          
+              ...buildScreeningTiles(),
+            ],
           ),
+        ),
+      ),
+    );
+  }
 
+  List<Widget> buildScreeningTiles() {
+    return [
+      buildScreeningTile(
+        "Symptoms",
+        "assets/labReports/symptoms.png",
+        () => Get.to(() => Scaffold(
+          appBar: AppBar(),
+          body: SymptomsScreen(),
+        )),
+        sc.symptomsUploaded,
+      ),
+      buildScreeningTile(
+        "Vital Test",
+        "assets/labReports/vitals.png",
+        () => Get.to(() => 
+        Scaffold(appBar: AppBar(), body: VitalsScreen())),
+        sc.vitalsUploaded,
+      ),
+      buildScreeningTile(
+        "Hemoglobin Test",
+        "assets/labReports/hemoglobin.png",
+        () => Get.to(() => Scaffold(appBar: AppBar(), body: Hemoglobin())),
+        sc.hemoglobinId != null,
+      ),
+      buildScreeningTile(
+        "Urine Test",
+        "assets/labReports/urinetest.png",
+        () => Get.to(() => Scaffold(appBar: AppBar(), body: Urine())),
+        sc.urineTestId != null,
+      ),
+      buildScreeningTile(
+        "Glucose Test",
+        "assets/labReports/glucose.png",
+        () => Get.to(() =>Scaffold(appBar: AppBar(), body:  Glucose())),
+        sc.glucoseTestId != null,
+      ),
+      buildScreeningTile(
+        "Fetal Monitoring",
+        "assets/labReports/fetalmon.png",
+        () => Get.to(() => Scaffold(appBar: AppBar(), body: Fetalmonitoring())),
+        sc.fetalmonitoringId != null,
+      ),
+      buildScreeningTile(
+        "Ultrasound Test",
+        "assets/labReports/ultrasound.png",
+        () => Get.to(() => Scaffold(appBar: AppBar(), body: Ultrasound())),
+        sc.ultrasoundId != null,
+      ),
+    ];
+  }
 
-
-          ListTile(
-            leading: Image.asset("assets/labReports/vitals.png", width: 35,),
-            title: const Text("Vital Test"),
-            subtitle: const Text("20-02-2025"),
-            trailing: Icon(sc.vitalsId == null ? Icons.cancel : Icons.check),
-            onTap: () => Get.to(()=> VitalsScreen()),
-
+  Widget buildScreeningTile(String title, String imagePath, VoidCallback onTap, bool isCompleted) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            offset: const Offset(0, 2),
+            blurRadius: 6,
+            spreadRadius: 2,
           ),
-
-          ListTile(
-            leading: Image.asset("assets/labReports/hemoglobin.png", width: 35,),
-            title: const Text("Hemoglobin Test"),
-            subtitle: const Text("20-02-2025"),
-            trailing: Icon(sc.hemoglobinId == null ? Icons.cancel : Icons.check),
-            onTap: () => Get.to(()=>Hemoglobin()),
-
+        ],
+      ),
+      child: ListTile(
+        onTap: onTap,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        leading: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(12),
           ),
-
-          ListTile(
-            leading: Image.asset("assets/labReports/urinetest.png", width: 35,),
-            title: const Text("Urine Test"),
-            subtitle: const Text("20-02-2025"),
-            trailing: Icon(sc.urineTestId == null ? Icons.cancel : Icons.check),
-            
-            onTap: () => Get.to(()=>Urine()),
-
-
+          child: Image.asset(
+            imagePath,
+            width: 30,
+            height: 30,
           ),
-
-          ListTile(
-            leading: Image.asset("assets/labReports/glucose.png", width: 35,),
-            title: const Text("Glucose Test"),
-            subtitle: const Text("20-02-2025"),
-            trailing: Icon(sc.glucoseTestId == null ? Icons.cancel : Icons.check),
-
-onTap: () => Get.to(()=> Glucose()),
+        ),
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
           ),
-
-          ListTile(
-            leading: Image.asset("assets/labReports/fetalmon.png", width: 35,),
-            title: const Text("Fetal Monitoring"),
-            subtitle: const Text("20-02-2025"),
-            trailing: Icon(sc.fetalmonitoringId == null ? Icons.cancel : Icons.check),
-onTap: () => Get.to(()=> Fetalmonitoring()),
-
-
-          ),
-
-          ListTile(
-            leading: Image.asset("assets/labReports/ultrasound.png", width: 35,),
-            title: const Text("Ultrasound Test"),
-            subtitle: const Text("20-02-2025"),
-            trailing: Icon(sc.ultrasoundId == null ? Icons.cancel : Icons.check),
-            
-            onTap: () => Get.to(()=> Ultrasound()),
-
-          ),
-
-     
-
-        ],),
-      )
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+   
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(
+                color: isCompleted ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                isCompleted ? "Completed" : "Pending",
+                style: TextStyle(
+                  color: isCompleted ? Colors.green : Colors.red,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        ),
+        trailing: Icon(
+          isCompleted ? Icons.check_circle : Icons.arrow_forward_ios,
+          color: isCompleted ? Colors.green : Theme.of(context).primaryColor,
+        ),
+      ),
     );
   }
 }
 
-class LabreportOptions {
+wrapWithScaffold(widget){
+  return Scaffold(
+    appBar: AppBar(),
+    body: widget,
+  );
+}
 
-  LabreportOptions(this.x, this.screen,this.img);
-  String x; 
+class LabreportOptions {
+  LabreportOptions(this.x, this.screen, this.img);
+  String x;
   Widget screen;
   String img;
-
 }

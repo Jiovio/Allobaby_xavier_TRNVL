@@ -2,12 +2,14 @@
 import 'dart:math';
 
 import 'package:allobaby/API/Requests/ReportAPI.dart';
+import 'package:allobaby/API/Requests/SelfScreeningAPI.dart';
 import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/Components/Loadingbar.dart';
 import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Screens/Home/Report/Report.dart';
+import 'package:allobaby/Screens/Home/Screening/Controllers/SelfScreeningController.dart';
 import 'package:allobaby/Screens/Home/Screening/Vitals/BloodGlucose.dart';
 import 'package:allobaby/db/dbHelper.dart';
 import 'package:flutter/material.dart';
@@ -85,6 +87,10 @@ TextEditingController desc = TextEditingController();
     update();
   }
 
+
+
+  Selfscreeningcontroller controller = Get.put(Selfscreeningcontroller());
+
       Future<void> submit () async {
 
 
@@ -134,9 +140,34 @@ String  url = "";
     };
 
 
-    await Reportapi().addReports(data);
+   final req =  await Reportapi().newaddReports(data);
 
-    showToast("Report Added Successfully",true);
+
+   if(req.success){
+    showToast(req.detail, true);
+    print(req.id);
+    controller.glucoseTestId = req.id;
+
+
+    final selfscreeningreq = await SelfscreeningApi.create({
+      "glucodeId" : req.id,
+      "params" : reportData,
+      "id" : controller.screeningId
+      });
+
+    if(selfscreeningreq.success){
+
+      if(selfscreeningreq.created){
+        controller.screeningId = selfscreeningreq.id;
+      }
+
+    }
+
+
+   }
+    controller.update();
+
+    showToast("Report Saved Successfully .", true);
 
     stopLoading();
 

@@ -27,20 +27,18 @@ class Glucose extends StatelessWidget {
             init: Glucosecontroller(),
             builder: (controller) => 
           Column(
-            
-            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-                        SizedBox(
-                              width: double.infinity,
-                              child: Text(
-                                              "Add Glucose Report".tr,
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                            ),
               SizedBox(
+              width: double.infinity,
+              child: Text(
+                "Add Glucose Report".tr,
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
+                            ),
+            ),
+            const  SizedBox(
                 height: 15,
               ),
 

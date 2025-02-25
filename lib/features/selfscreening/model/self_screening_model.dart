@@ -2,40 +2,37 @@ import 'dart:convert';
 
 class SelfScreeningModel {
   int? id;
-  int? symptomsId;
-  int? vitalID;
+  Map<String, dynamic> params = {};
   int? hemoglobinId;
   int? urineTestId;
   int? glucoseId;
   int? fetalTestId;
   int? ultrasoundId;
-  DateTime created;
-  String userId;
-  DateTime updated;
+  DateTime? created;
+  int? userId;
+  DateTime? updated;
 
   SelfScreeningModel({
     this.id,
-    this.symptomsId,
-    this.vitalID,
+    required this.params,
     this.hemoglobinId,
     this.urineTestId,
     this.glucoseId,
     this.fetalTestId,
     this.ultrasoundId,
-    required this.created,
-    required this.userId,
-    required this.updated,
+    this.created,
+    this.userId,
+    this.updated,
   });
 
   // From JSON
   factory SelfScreeningModel.fromJson(Map<String, dynamic> json) {
     return SelfScreeningModel(
       id: json['id'],
-      symptomsId: json['symptomsId'],
-      vitalID: json['vitalID'],
+      params: json['params'],
       hemoglobinId: json['hemoglobinId'],
       urineTestId: json['urineTestId'],
-      glucoseId: json['glucoseId'],
+      glucoseId: json['glucodeId'],
       fetalTestId: json['fetalTestId'],
       ultrasoundId: json['ultrasoundId'],
       created: DateTime.parse(json['created']), // Parse created as DateTime
@@ -53,16 +50,15 @@ class SelfScreeningModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'symptomsId': symptomsId,
-      'vitalID': vitalID,
+
       'hemoglobinId': hemoglobinId,
       'urineTestId': urineTestId,
       'glucoseId': glucoseId,
       'fetalTestId': fetalTestId,
       'ultrasoundId': ultrasoundId,
-      'created': created.toIso8601String(), // Convert DateTime to ISO string
+      'created': created?.toIso8601String(), // Convert DateTime to ISO string
       'userId': userId,
-      'updated': updated.toIso8601String(), // Convert DateTime to ISO string
+      'updated': updated?.toIso8601String(), // Convert DateTime to ISO string
     };
   }
 }

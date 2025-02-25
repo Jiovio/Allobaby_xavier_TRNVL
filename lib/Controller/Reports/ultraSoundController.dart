@@ -1,12 +1,14 @@
 import 'dart:math';
 
 import 'package:allobaby/API/Requests/ReportAPI.dart';
+import 'package:allobaby/API/Requests/SelfScreeningAPI.dart';
 import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/Components/Loadingbar.dart';
 import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Screens/Home/Report/Report.dart';
+import 'package:allobaby/Screens/Home/Screening/Controllers/SelfScreeningController.dart';
 import 'package:allobaby/db/dbHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -90,6 +92,8 @@ String sugarPresent = "";
     update();
   }
 
+Selfscreeningcontroller controller = Get.put(Selfscreeningcontroller());
+
       Future<void> submit () async {
         //                  if(image==null){
         //   showToast("Please Upload Image", false);
@@ -154,10 +158,31 @@ String  url = "";
       "description":desc.text,
     };
 
+  final req =  await Reportapi().newaddReports(data);
 
-      await Reportapi().addReports(data);
+    if(req.success){
+    showToast(req.detail, true);
+    print(req.id);
+    controller.ultrasoundId = req.id;
 
-    showToast("Report Added Successfully",true);
+
+    final selfscreeningreq = await SelfscreeningApi.create({
+      "ultrasoundId" : req.id,
+      "params" : reportData,
+      "id" : controller.screeningId
+      });
+
+    if(selfscreeningreq.success){
+
+      if(selfscreeningreq.created){
+        controller.screeningId = selfscreeningreq.id;
+      }
+
+    }
+
+
+   }
+    controller.update();
 
     stopLoading();
     // showToast("Please Enter All Details",'Fields are empty. please enter all fields.');

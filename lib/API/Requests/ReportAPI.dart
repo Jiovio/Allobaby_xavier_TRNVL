@@ -13,7 +13,7 @@ class Reportapi {
   
 
 
-  Future<APIResponse> addReports(data) async {
+  Future<dynamic> addReports(data) async {
     var d = await postRequest("/report/createbyuser", data);
     print(d);
     return d;

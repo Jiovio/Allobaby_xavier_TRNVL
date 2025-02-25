@@ -12,4 +12,13 @@ class SelfscreeningApi {
 
 
 
+  static Future<APIResponse> getHistory(int page, int count) async {
+    var req = await newGetRequest("/selfscreening/getpage?page=${page.toString()}&count=${count.toString()}");
+
+    print(req.detail);
+    return req;
+  }
+
+
+
 }

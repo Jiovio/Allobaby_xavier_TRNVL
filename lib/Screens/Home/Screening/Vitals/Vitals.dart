@@ -4,6 +4,7 @@ import 'package:allobaby/Screens/Home/Screening/Vitals/BMI.dart';
 import 'package:allobaby/Screens/Home/Screening/Vitals/BloodGlucose.dart';
 import 'package:allobaby/Screens/Home/Screening/Vitals/BloodPressure.dart';
 import 'package:allobaby/Screens/Home/Screening/Vitals/BloodSaturation.dart';
+import 'package:allobaby/Screens/Home/Screening/Vitals/HBSelector.dart';
 import 'package:allobaby/Screens/Home/Screening/Vitals/HeartRate.dart';
 import 'package:allobaby/Screens/Home/Screening/Vitals/HeartRateVariability.dart';
 import 'package:allobaby/Screens/Home/Screening/Vitals/RespiratoryRate.dart';
@@ -76,8 +77,8 @@ class VitalsScreen extends StatelessWidget {
           title: 'HB'.tr,
           image: 'assets/Vitals/computer.png',
           value: GetBuilder<Selfscreeningcontroller>(
-              builder: (controller) => Text("${(controller.vitalsData["hrv"]??"_").toString()} ms")),
-          vitalsWidget: HeartRateVariability()),
+              builder: (controller) => Text("${(controller.vitalsData["hB"]??"_").toString()} ms")),
+          vitalsWidget: HBSelector()),
 
                 vitals(
           title: 'Blood Glucose'.tr,

@@ -8,6 +8,12 @@ class APIResponse {
 
   bool created = false;
 
+  dynamic items = [];
+
+  int itemCount = 0;
+
+  dynamic item = null;
+
 
   APIResponse({ required this.success ,required dynamic map}){
 
@@ -18,9 +24,12 @@ class APIResponse {
 
 
   fromJson(map){
-    detail = map["detail"]?? true;
+    detail = map["detail"]?? "No Response";
     id = map["id"] ;
     created = map["created"] ?? false;
+    items = map["items"] ?? [];
+    itemCount = map["count"] ?? 0;
+    item = map["item"] ?? null;
   }
 
 

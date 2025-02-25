@@ -11,16 +11,16 @@ SingleChildScrollView SymptomsScreen() => SingleChildScrollView(
           children: [
             Text(
               "Select Symptoms".tr,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             GridView.count(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               crossAxisCount: 2,
               crossAxisSpacing: 8.0,
               mainAxisSpacing: 10.0,
@@ -33,8 +33,8 @@ SingleChildScrollView SymptomsScreen() => SingleChildScrollView(
                           style: OutlinedButton.styleFrom(
                             side: controller.symptomsMap.containsKey(symptomsList[index].title) 
                                   && (controller.symptomsMap[symptomsList[index].title]!)
-                                ? BorderSide(color: PrimaryColor, width: 1.5)
-                                : BorderSide(color: Colors.grey),
+                                ? const BorderSide(color: PrimaryColor, width: 1.5)
+                                : const BorderSide(color: Colors.grey),
                             padding: EdgeInsets.zero,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
@@ -70,7 +70,7 @@ SingleChildScrollView SymptomsScreen() => SingleChildScrollView(
                                   && (controller.symptomsMap[symptomsList[index].title]!)?White:White,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 12,
                               ),
                               Text(
@@ -107,7 +107,7 @@ SingleChildScrollView SymptomsScreen() => SingleChildScrollView(
                       textAlignVertical: TextAlignVertical.center,
                       textAlign: TextAlign.left,
                       onChanged: (val) {},
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Add your symptom description",
                         hintStyle: TextStyle(fontSize: 18),
                         border:

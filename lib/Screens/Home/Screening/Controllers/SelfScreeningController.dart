@@ -5,6 +5,7 @@ import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/db/dbHelper.dart';
+import 'package:allobaby/features/selfscreening/model/self_screening_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,10 +13,13 @@ class Selfscreeningcontroller extends GetxController {
 
 
 
-  int? screeningId;
+  int? screeningId = 4;
 
-  int? symptomId;
-  int? vitalsId;
+  bool symptomsUploaded = false;
+  bool vitalsUploaded = false;
+
+
+
   int? hemoglobinId;
 
   int? urineTestId;
@@ -26,10 +30,13 @@ class Selfscreeningcontroller extends GetxController {
 
   void reset() {
 
+  bool symptomsUploaded = false;
+  bool vitalsUploaded = false;
+
   screeningId = null;
 
-  symptomId = null;
-  vitalsId = null;
+  symptomsUploaded = false;
+  vitalsUploaded = false;
   hemoglobinId = null;
 
   urineTestId = null;
@@ -59,6 +66,25 @@ class Selfscreeningcontroller extends GetxController {
 
     }
 
+  }
+
+
+  void setSelfScreeningData(SelfScreeningModel item){
+
+
+    print(item.params.containsKey("symptoms"));
+    symptomsUploaded = (item.params.containsKey("symptoms"));
+    vitalsUploaded = (item.params.containsKey("vitals"));
+
+      screeningId = item.id;
+      hemoglobinId = item.hemoglobinId;
+      urineTestId = item.urineTestId;
+      glucoseTestId = item.glucoseId;
+      fetalmonitoringId = item.fetalTestId;
+      ultrasoundId = item.ultrasoundId;
+
+      update();
+    
   }
 
 
@@ -124,7 +150,7 @@ class Selfscreeningcontroller extends GetxController {
     'bmiWeight': 50.0,
     'respiratoryRate': 18,
     'hrv': 98,
-    'hB': 10.0,
+    'hB': 10,
     'temperatureMetric':'C'
   }.obs;
 
@@ -170,13 +196,21 @@ class Selfscreeningcontroller extends GetxController {
     }
 
 
-    //   final req = await SelfscreeningApi.create({
-    //     "id" : screeningId,
-    //   "params":{
-    //     "symptoms" : details
-    //   },
-    //   "symptomsId":symptomDesc.text,
-    // });
+      final req = await SelfscreeningApi.create({
+        "id" : screeningId,
+      "params":{
+        "symptoms" : details
+      },
+    });
+
+
+    if(req.success){
+
+      symptomsUploaded = true;
+
+      update();
+
+    }
 
     // if(req==false){
     //   showToast("Failed to Add Symptoms", false);
@@ -207,6 +241,24 @@ class Selfscreeningcontroller extends GetxController {
     print(data);
 
     await Userapi.addScreeningData(null,vitalsData,null);
+
+
+
+          final req = await SelfscreeningApi.create({
+        "id" : screeningId,
+      "params":{
+        "vitals" : vitalsData
+      },
+    });
+
+
+    if(req.success){
+
+      symptomsUploaded = true;
+
+      update();
+
+    }
 
   }
 

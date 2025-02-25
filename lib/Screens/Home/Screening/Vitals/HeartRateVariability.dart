@@ -12,7 +12,7 @@ Widget HeartRateVariability() {
             value: c.healthData["hrv"],
 
             minValue: 5,
-            maxValue: 300,
+            maxValue: 20,
             onChanged: (value) {
               // c.hrvChange(value);
               c.updateVitals("hrv", value);

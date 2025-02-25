@@ -232,7 +232,7 @@ Future<dynamic> refreshToken() async {
     }
   } catch (e) {
     print(e);
-     Get.dialog(Container(child: const Text("No Internet !"),));
+     showNoInternetDialog();
     throw "failed";
   }
 }
@@ -318,8 +318,34 @@ Future<APIResponse> newPostRequest(str,data) async {
 
     }
   } catch (e) {
-      APIResponse(success: false, map: {"detail":"Network Error"});
+      return APIResponse(success: false, map: {"detail":"Network Error"});
   }
 
   return APIResponse(success: true, map: data);
+}
+
+Future<APIResponse> newGetRequest(str) async {
+  final url = Uri.parse(Apiroutes().baseUrl+str); 
+
+  try {
+
+    final response = await http.get(url,
+    headers: getHeaders()
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      // print('Response data: $data');
+      return APIResponse(success: true, map: data);
+    } else {
+      // print('Failed to load data. Status code: ${response.statusCode}');
+      print(response.body);
+
+      return APIResponse(success: false, map: response.body);
+    }
+  } catch (e) {
+    // print('An error occurred: $e');
+    print(e);
+    return APIResponse(success: false, map: {"detail":"Network Error"});
+  }
 }

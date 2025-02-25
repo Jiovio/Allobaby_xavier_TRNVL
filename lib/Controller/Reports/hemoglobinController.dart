@@ -145,12 +145,14 @@ String  url = "";
    if(req.success){
     showToast(req.detail, true);
     print(req.id);
+    controller.hemoglobinId = req.id;
 
 
     final selfscreeningreq = await SelfscreeningApi.create({
       "hemoglobinId" : req.id,
-      "params" : reportData
-    });
+      "params" : reportData,
+      "id" : controller.screeningId
+      });
 
     if(selfscreeningreq.success){
 
@@ -162,7 +164,9 @@ String  url = "";
 
 
    }
+    controller.update();
 
+    showToast("Report Saved Successfully .", true);
 
     stopLoading();
 
