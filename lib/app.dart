@@ -6,6 +6,7 @@ import 'package:allobaby/features/babycry/analyzing.dart';
 import 'package:allobaby/features/babycry/cryhistory/cryhistoryhome.dart';
 import 'package:allobaby/features/babycry/crytellhome.dart';
 import 'package:allobaby/intl/TranslationService.dart';
+import 'package:allobaby/temp/selfscreeningreport.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
@@ -33,8 +34,7 @@ class _MyAppState extends State<MyApp> {
       child: GetMaterialApp(
         title: "Allobaby",
         home: 
-        // Crytellhome(),
-        // AudioAnalysisPage(),
+        // ScreeningReportPage(),
         Apiroutes.checkUser() ?MainScreen():Signin(),
         debugShowCheckedModeBanner: false,
         theme: Themes().lightTheme,

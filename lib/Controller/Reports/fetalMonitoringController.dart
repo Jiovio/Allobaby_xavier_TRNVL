@@ -94,7 +94,13 @@ TextEditingController desc = TextEditingController();
 
   Selfscreeningcontroller controller = Get.put(Selfscreeningcontroller());
 
+  RxBool created = false.obs;
       Future<void> submit () async {
+
+
+                   if(created.value == true){
+      return;
+    }
 
         //          if(image==null){
         //   showToast("Please Upload Image", false);
@@ -145,6 +151,7 @@ String  url = "";
 
     if(req.success){
     showToast(req.detail, true);
+    created.value = true;
     print(req.id);
     controller.fetalmonitoringId = req.id;
 
@@ -166,6 +173,7 @@ String  url = "";
 
    }
     controller.update();
+    
 
       stopLoading();
   }

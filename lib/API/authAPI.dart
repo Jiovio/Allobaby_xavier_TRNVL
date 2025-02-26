@@ -6,6 +6,7 @@ import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Controller/SignupController.dart';
 import 'package:allobaby/Controller/UserController.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 import 'package:get/get.dart';
@@ -39,7 +40,7 @@ Future<dynamic> getRequest(str) async {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      // print('Response data: $data');
+      saveData(str, response.body);
       return data;
     } else {
       // print('Failed to load data. Status code: ${response.statusCode}');
@@ -48,7 +49,16 @@ Future<dynamic> getRequest(str) async {
       return false;
     }
   } catch (e) {
-    // print('An error occurred: $e');
+    
+    final d = getData(str);
+
+    if(d!=null){
+
+      Fluttertoast.showToast(msg: "No Internet");
+
+      return d;
+    }
+
     return false;
   }
 }
@@ -164,6 +174,8 @@ Future<dynamic> refreshToken() async {
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
 
+      saveData("refresponse", response.body);
+
       print(data);
 
       final reset = data["reset"];
@@ -178,6 +190,8 @@ Future<dynamic> refreshToken() async {
           d["jwt"] = data["jwt"];
 
           localStorage.setItem("user", json.encode(d));
+
+          
 
         }else{
           throw "logout";
@@ -231,6 +245,16 @@ Future<dynamic> refreshToken() async {
 
     }
   } catch (e) {
+
+    final d = getData("refresponse");
+
+    print("resp : $d");
+
+    if(d!=null){
+      // return d;
+      return;
+    }
+
     print(e);
      showNoInternetDialog();
     throw "failed";
@@ -245,7 +269,7 @@ void showNoInternetDialog() {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-      child: Padding(
+      child: const Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -275,13 +299,13 @@ void showNoInternetDialog() {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => Get.back(),
-              child: const Text(
-                'OK',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
+            // ElevatedButton(
+            //   onPressed: () => Get.back(),
+            //   child: const Text(
+            //     'OK',
+            //     style: TextStyle(fontSize: 16),
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -346,6 +370,62 @@ Future<APIResponse> newGetRequest(str) async {
   } catch (e) {
     // print('An error occurred: $e');
     print(e);
+    return APIResponse(success: false, map: {"detail":"Network Error"}, networkError: true);
+  }
+}
+
+
+Future<APIResponse> newDeleteRequest(str) async {
+  final url = Uri.parse(Apiroutes().baseUrl+str); 
+
+  try {
+
+    final response = await http.delete(url,
+    headers: getHeaders()
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      print('Response data: $data');
+      return  APIResponse(success: true, map: response.body);
+
+    } else {
+      print('Failed to load data. Status code: ${response.statusCode}');
+      print(response.body);
+
+      return APIResponse(success: false, map: response.body);
+    }
+  } catch (e) {
+    print('An error occurred: $e');
     return APIResponse(success: false, map: {"detail":"Network Error"});
   }
+}
+
+
+void saveData(String key, dynamic value){
+  print("saved :: $key :: $value");
+  localStorage.setItem(key, value);
+
+
+}
+
+dynamic getData(String key){
+
+  final val = localStorage.getItem(key);
+
+  print("got ** $val");
+
+  if(val!=null){
+  final data = jsonDecode(val);
+
+    return data;
+  }else{
+    return null;
+  }
+
+
+
+  
+
+
 }

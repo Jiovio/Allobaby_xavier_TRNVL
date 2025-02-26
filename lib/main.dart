@@ -35,7 +35,10 @@ void main() async {
   }
   
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  try {
+
+      FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await NotificationService.initLocalNotificationsPlugin();
 
@@ -45,6 +48,16 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
 );
   await initializeAppCheck();
+    
+  } catch (e) {
+
+    print(e);
+
+    print("Error on Firebase Initialization");
+    
+  }
+
+
 
   
 

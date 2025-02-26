@@ -13,7 +13,7 @@ class Selfscreeningcontroller extends GetxController {
 
 
 
-  int? screeningId = 4;
+  int? screeningId;
 
   bool symptomsUploaded = false;
   bool vitalsUploaded = false;
@@ -76,12 +76,41 @@ class Selfscreeningcontroller extends GetxController {
     symptomsUploaded = (item.params.containsKey("symptoms"));
     vitalsUploaded = (item.params.containsKey("vitals"));
 
-      screeningId = item.id;
-      hemoglobinId = item.hemoglobinId;
-      urineTestId = item.urineTestId;
-      glucoseTestId = item.glucoseId;
-      fetalmonitoringId = item.fetalTestId;
-      ultrasoundId = item.ultrasoundId;
+    screeningId = item.id;
+    hemoglobinId = item.hemoglobinId;
+    urineTestId = item.urineTestId;
+    glucoseTestId = item.glucoseId;
+    fetalmonitoringId = item.fetalTestId;
+    ultrasoundId = item.ultrasoundId;
+
+    if(item.params.containsKey("symptoms")){
+
+      item.params["symptoms"].forEach((v){
+        symptomsMap[v] = true;
+      });
+
+    }else{
+      symptomsMap= {
+          'Normal' : true,
+          'Body pain' : false,
+          'Burning Stomach' : false,
+          'Cold cough' : false,
+          'Dizziness' : false,
+          'Headache' : false,
+          'Vomiting' : false,
+          'Other' : false
+    };
+    }
+
+        if(item.params.containsKey("vitals")){
+
+          vitalsData = item.params["vitals"];
+
+          healthData = {...healthData, ...vitalsData};
+
+    }else{
+      vitalsData = {};
+    }
 
       update();
     
@@ -150,7 +179,7 @@ class Selfscreeningcontroller extends GetxController {
     'bmiWeight': 50.0,
     'respiratoryRate': 18,
     'hrv': 98,
-    'hB': 10,
+    'hB': 12.0,
     'temperatureMetric':'C'
   }.obs;
 
@@ -171,6 +200,19 @@ class Selfscreeningcontroller extends GetxController {
     }
   }
 
+
+  List<String> getSelectedSymptoms(){
+
+       List<String> details = [];
+
+    symptomsMap.forEach((k,v){
+      if(v){
+        details.add(k);
+      }
+    });
+
+    return details;
+  }
 
   void submitSymptoms () async {
 
@@ -254,7 +296,7 @@ class Selfscreeningcontroller extends GetxController {
 
     if(req.success){
 
-      symptomsUploaded = true;
+      vitalsUploaded = true;
 
       update();
 

@@ -24,6 +24,12 @@ class Hemoglobincontroller extends GetxController {
 
       RxBool loading = false.obs;
 
+
+
+
+
+      
+
     startLoading(){
       loading = true.obs;
       update();
@@ -80,7 +86,14 @@ String url = "";
       // askAI(image);
 
       Loadingbar.use("Analyzing Report", () async {
-        await askAI(image!);
+
+        try {
+          await askAI(image!);
+        } catch (e) {
+          print(e);
+          
+        }
+        
       });
 
      
@@ -97,7 +110,15 @@ String url = "";
 
   Selfscreeningcontroller controller = Get.put(Selfscreeningcontroller());
 
+
+        RxBool created = false.obs;
+
   Future<void> submit () async {
+
+
+    if(created.value == true){
+      return;
+    }
         //          if(image==null){
         //   showToast("Please Upload Image", false);
         //   return;
@@ -167,6 +188,8 @@ String  url = "";
     controller.update();
 
     showToast("Report Saved Successfully .", true);
+
+    created.value = true;
 
     stopLoading();
 

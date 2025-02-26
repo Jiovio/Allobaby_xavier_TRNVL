@@ -94,11 +94,19 @@ String sugarPresent = "";
 
 Selfscreeningcontroller controller = Get.put(Selfscreeningcontroller());
 
+
+      RxBool created = false.obs;
+
+
       Future<void> submit () async {
         //                  if(image==null){
         //   showToast("Please Upload Image", false);
         //   return;
         // }
+
+                   if(created.value == true){
+      return;
+    }
 
 
         if(fetalPresentation==null){
@@ -161,7 +169,7 @@ String  url = "";
   final req =  await Reportapi().newaddReports(data);
 
     if(req.success){
-    showToast(req.detail, true);
+    showToast("Report Saved Successfully .", true);
     print(req.id);
     controller.ultrasoundId = req.id;
 
@@ -178,10 +186,15 @@ String  url = "";
         controller.screeningId = selfscreeningreq.id;
       }
 
+
+      
+
     }
 
 
    }
+
+   created.value = true;
     controller.update();
 
     stopLoading();

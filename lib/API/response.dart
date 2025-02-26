@@ -14,8 +14,10 @@ class APIResponse {
 
   dynamic item = null;
 
+  bool networkError = false;
 
-  APIResponse({ required this.success ,required dynamic map}){
+
+  APIResponse({ required this.success ,required dynamic map , this.networkError = false}){
 
     fromJson(map);
 

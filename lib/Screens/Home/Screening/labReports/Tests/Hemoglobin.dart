@@ -18,7 +18,7 @@ import 'package:get/route_manager.dart';
 class Hemoglobin extends StatelessWidget {
   Hemoglobin({super.key});
 
-  Hemoglobincontroller controller = Get.find<Hemoglobincontroller>();
+  Hemoglobincontroller controller = Get.put(Hemoglobincontroller());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -230,6 +230,8 @@ class Hemoglobin extends StatelessWidget {
               ),
 
               ElevatedButton(
+                
+
                   style: ElevatedButton.styleFrom(
                       fixedSize:const Size(300, 50),
                       shape: RoundedRectangleBorder(
@@ -238,8 +240,12 @@ class Hemoglobin extends StatelessWidget {
                   child: Obx(()=>
                     controller.loading.value?
                     const Center(child: CircularProgressIndicator(color: White,)):
+                    controller.created.value?
+                    Text("REPORT ADDED".tr) :
+                    Text("ADD REPORT".tr)
                     
-                    Text("ADD REPORT".tr)))
+                    
+                    ))
 
 
 

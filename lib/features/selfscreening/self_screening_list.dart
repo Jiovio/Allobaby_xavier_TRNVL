@@ -78,41 +78,43 @@ Selfscreeningcontroller controller = Get.find<Selfscreeningcontroller>();
         ),
 
 
-        actions: [
+        // actions: [
 
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor.withOpacity(0.15),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: Theme.of(context).primaryColor.withOpacity(0.3),
-                      width: 1.5,
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.date_range_rounded,
-                        size: 16,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        "Sort by date",
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+        //         Container(
+        //           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        //           decoration: BoxDecoration(
+        //             color: Theme.of(context).primaryColor.withOpacity(0.15),
+        //             borderRadius: BorderRadius.circular(20),
+        //             border: Border.all(
+        //               color: Theme.of(context).primaryColor.withOpacity(0.3),
+        //               width: 1.5,
+        //             ),
+        //           ),
+        //           child: Row(
+        //             children: [
+        //               Icon(
+        //                 Icons.date_range_rounded,
+        //                 size: 16,
+        //                 color: Theme.of(context).primaryColor,
+        //               ),
+        //               const SizedBox(width: 6),
+        //               Text(
+        //                 "Sort by date",
+        //                 style: TextStyle(
+        //                   color: Theme.of(context).primaryColor,
+        //                   fontWeight: FontWeight.w600,
+        //                   fontSize: 12,
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //         ),
               
-          SizedBox(width: 20,)
+        //   SizedBox(width: 20,)
 
-        ],
+        // ],
+      
+      
       ),
       body: RefreshIndicator(
         onRefresh: refreshData,
@@ -199,10 +201,14 @@ Selfscreeningcontroller controller = Get.find<Selfscreeningcontroller>();
                       color: Colors.transparent,
                       child: InkWell(
                         borderRadius: BorderRadius.circular(18),
-                        onTap: () {
+                        onTap: () async {
                           controller.setSelfScreeningData(item);
                           
-                          Get.to(() => SelfScreeningDetails(data: item));
+                         await  Get.to(() => SelfScreeningDetails(data: item));
+
+                         setState(() {
+                           
+                         });
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(16),

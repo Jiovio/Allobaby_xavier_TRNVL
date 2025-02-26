@@ -1,3 +1,4 @@
+import 'package:allobaby/API/authAPI.dart';
 import 'package:allobaby/Screens/Home/Screening/Controllers/SelfScreeningController.dart';
 import 'package:allobaby/Screens/Home/Screening/SymptomsScreen.dart';
 import 'package:allobaby/Screens/Home/Screening/Vitals/Vitals.dart';
@@ -7,12 +8,13 @@ import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Hemoglobin.dart
 import 'package:allobaby/Screens/Home/Screening/labReports/Tests/UltraSound.dart';
 import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Urine.dart';
 import 'package:allobaby/features/selfscreening/model/self_screening_model.dart';
+import 'package:allobaby/features/selfscreening/screening_report_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SelfScreeningDetails extends StatefulWidget {
-  final SelfScreeningModel data;
-  const SelfScreeningDetails({super.key, required this.data});
+   SelfScreeningModel data;
+   SelfScreeningDetails({super.key, required this.data});
 
   @override
   State<SelfScreeningDetails> createState() => _SelfScreeningDetailsState();
@@ -30,20 +32,9 @@ class _SelfScreeningDetailsState extends State<SelfScreeningDetails> {
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
         elevation: 0,
-        // backgroundColor: Theme.of(context).primaryColor,
         foregroundColor: Colors.white,
       ),
       body: Container(
-        // decoration: BoxDecoration(
-        //   gradient: LinearGradient(
-        //     begin: Alignment.topCenter,
-        //     end: Alignment.bottomCenter,
-        //     colors: [
-        //       Theme.of(context).primaryColor.withOpacity(0.1),
-        //       Colors.white,
-        //     ],
-        //   ),
-        // ),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -106,54 +97,178 @@ class _SelfScreeningDetailsState extends State<SelfScreeningDetails> {
     );
   }
 
-  List<Widget> buildScreeningTiles() {
+  // List<Widget> buildScreeningTiles() {
+  //   return [
+  //     buildScreeningTile(
+  //       "Symptoms",
+  //       "assets/labReports/symptoms.png",
+  //       () => Get.to(() => Scaffold(
+  //         appBar: AppBar(),
+  //         body: SymptomsScreen(),
+  //       )),
+  //       sc.symptomsUploaded,
+  //     ),
+  //     buildScreeningTile(
+  //       "Vital Test",
+  //       "assets/labReports/vitals.png",
+  //       () => Get.to(() => 
+  //       Scaffold(appBar: AppBar(), body: VitalsScreen())),
+  //       sc.vitalsUploaded,
+  //     ),
+  //     buildScreeningTile(
+  //       "Hemoglobin Test",
+  //       "assets/labReports/hemoglobin.png",
+  //       () => Get.to(() => Scaffold(appBar: AppBar(), body: Hemoglobin())),
+  //       sc.hemoglobinId != null,
+  //     ),
+  //     buildScreeningTile(
+  //       "Urine Test",
+  //       "assets/labReports/urinetest.png",
+  //       () => Get.to(() => Scaffold(appBar: AppBar(), body: Urine())),
+  //       sc.urineTestId != null,
+  //     ),
+  //     buildScreeningTile(
+  //       "Glucose Test",
+  //       "assets/labReports/glucose.png",
+  //       () => Get.to(() =>Scaffold(appBar: AppBar(), body:  Glucose())),
+  //       sc.glucoseTestId != null,
+  //     ),
+  //     buildScreeningTile(
+  //       "Fetal Monitoring",
+  //       "assets/labReports/fetalmon.png",
+  //       () => Get.to(() => Scaffold(appBar: AppBar(), body: Fetalmonitoring())),
+  //       sc.fetalmonitoringId != null,
+  //     ),
+  //     buildScreeningTile(
+  //       "Ultrasound Test",
+  //       "assets/labReports/ultrasound.png",
+  //       () => Get.to(() => Scaffold(appBar: AppBar(), body: Ultrasound())),
+  //       sc.ultrasoundId != null,
+  //     ),
+  //   ];
+  // }
+
+
+  
+
+
+    List<Widget> buildScreeningTiles() {
     return [
-      buildScreeningTile(
+              GetBuilder<Selfscreeningcontroller>(
+        builder: (controller) {
+      return buildScreeningTile(
         "Symptoms",
         "assets/labReports/symptoms.png",
-        () => Get.to(() => Scaffold(
+        () async 
+        {
+        await Get.to(() => Scaffold(
           appBar: AppBar(),
           body: SymptomsScreen(),
-        )),
-        sc.symptomsUploaded,
-      ),
-      buildScreeningTile(
+        )
+        );
+
+              if(controller.symptomsUploaded){
+
+          widget.data.params = {...widget.data.params , "symptoms" : controller.getSelectedSymptoms()};
+
+          controller.update();
+        }
+        
+        
+        },
+        controller.symptomsUploaded,
+      );}),
+            GetBuilder<Selfscreeningcontroller>(
+        builder: (controller) {
+      return buildScreeningTile(
         "Vital Test",
         "assets/labReports/vitals.png",
-        () => Get.to(() => 
-        Scaffold(appBar: AppBar(), body: VitalsScreen())),
-        sc.vitalsUploaded,
+        () async 
+        {     
+       await  Get.to(() => 
+        Scaffold(appBar: AppBar(), body: VitalsScreen())
+        );
+
+        if(controller.vitalsUploaded){
+
+          widget.data.params = {...widget.data.params , "vitals" : controller.vitalsData};
+
+          controller.update();
+        }
+},
+
+
+        controller.vitalsUploaded,
+      );}),
+
+
+      GetBuilder<Selfscreeningcontroller>(
+        builder: (controller) {
+          return buildScreeningTile(
+            "Hemoglobin Test",
+            "assets/labReports/hemoglobin.png",
+            () {
+              controller.hemoglobinId !=null ?
+              Get.to(()=> ScreeningReportLoader(id: sc.hemoglobinId!)):
+              Get.to(() => Scaffold(appBar: AppBar(), body: Hemoglobin())) ;
+              
+          
+            },
+            sc.hemoglobinId != null,
+          );
+        }
       ),
-      buildScreeningTile(
-        "Hemoglobin Test",
-        "assets/labReports/hemoglobin.png",
-        () => Get.to(() => Scaffold(appBar: AppBar(), body: Hemoglobin())),
-        sc.hemoglobinId != null,
-      ),
-      buildScreeningTile(
+      GetBuilder<Selfscreeningcontroller>(
+        builder: (controller) {
+      return buildScreeningTile(
         "Urine Test",
         "assets/labReports/urinetest.png",
-        () => Get.to(() => Scaffold(appBar: AppBar(), body: Urine())),
-        sc.urineTestId != null,
-      ),
-      buildScreeningTile(
+        () {
+
+          controller.urineTestId !=null ?
+          Get.to(()=> ScreeningReportLoader(id: controller.urineTestId!)):          
+          Get.to(() => Scaffold(appBar: AppBar(), body: Urine()));
+          },
+        controller.urineTestId != null,
+      );}),
+
+      GetBuilder<Selfscreeningcontroller>(
+        builder: (controller) {
+        return buildScreeningTile(
         "Glucose Test",
         "assets/labReports/glucose.png",
-        () => Get.to(() =>Scaffold(appBar: AppBar(), body:  Glucose())),
-        sc.glucoseTestId != null,
-      ),
-      buildScreeningTile(
+        () { 
+                 controller.glucoseTestId !=null ?
+          Get.to(()=> ScreeningReportLoader(id: controller.glucoseTestId!)):    
+          
+          Get.to(() =>Scaffold(appBar: AppBar(), body:  Glucose()));},
+        controller.glucoseTestId != null,
+      );}),
+
+      GetBuilder<Selfscreeningcontroller>(
+        builder: (controller) {
+      return buildScreeningTile(
         "Fetal Monitoring",
         "assets/labReports/fetalmon.png",
-        () => Get.to(() => Scaffold(appBar: AppBar(), body: Fetalmonitoring())),
-        sc.fetalmonitoringId != null,
-      ),
-      buildScreeningTile(
+        () { 
+          controller.fetalmonitoringId !=null ?
+          Get.to(()=> ScreeningReportLoader(id: controller.fetalmonitoringId!)):   
+          
+          Get.to(() => Scaffold(appBar: AppBar(), body: Fetalmonitoring()));},
+        controller.fetalmonitoringId != null,
+      );}),
+
+      GetBuilder<Selfscreeningcontroller>(
+        builder: (controller) {
+      return buildScreeningTile(
         "Ultrasound Test",
         "assets/labReports/ultrasound.png",
-        () => Get.to(() => Scaffold(appBar: AppBar(), body: Ultrasound())),
-        sc.ultrasoundId != null,
-      ),
+        () { 
+                    controller.ultrasoundId !=null ?
+          Get.to(()=> ScreeningReportLoader(id: controller.ultrasoundId!)):   
+          Get.to(() => Scaffold(appBar: AppBar(), body: Ultrasound()));},
+        controller.ultrasoundId != null,
+      );})
     ];
   }
 

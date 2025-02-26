@@ -44,13 +44,13 @@ class OurFirebase {
 
     
 
-  static final ai = FirebaseVertexAI.instance.generativeModel(model: 'gemini-1.5-flash',
+  static final ai = FirebaseVertexAI.instance.generativeModel(model: 'gemini-2.0-flash',
   generationConfig: GenerationConfig(
     responseMimeType: "application/json"
   ),
   );
 
-    static final textai = FirebaseVertexAI.instance.generativeModel(model: 'gemini-1.5-flash',
+    static final textai = FirebaseVertexAI.instance.generativeModel(model: 'gemini-2.0-flash',
   );
 
 
@@ -175,6 +175,14 @@ static Future<List<Map<String, dynamic>>> getReports() async {
     List<Map<String, dynamic>> reports = querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
 
     return reports;
+  }
+
+  static Future<String?> getTextResonse(String prompt) async {
+
+      var res = await textai.generateContent([Content.text(prompt)]);
+
+      return res.text;
+
   }
 
 

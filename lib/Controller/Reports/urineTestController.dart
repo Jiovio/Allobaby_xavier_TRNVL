@@ -21,6 +21,21 @@ import 'dart:convert';
 
 class Urinetestcontroller extends GetxController {
 
+
+    @override
+    void onInit(){
+      super.onInit();
+
+      Selfscreeningcontroller cont = Get.find<Selfscreeningcontroller>();
+
+
+      if(cont.urineTestId!=null){
+
+        print(cont.urineTestId);
+
+      }
+    }
+
     RxBool loading = false.obs;
 
     startLoading(){
@@ -32,6 +47,8 @@ class Urinetestcontroller extends GetxController {
       loading = false.obs;
       update();
     }
+
+
 
 
 
@@ -90,11 +107,18 @@ Navigator.of(context).pop();
 
     Selfscreeningcontroller controller = Get.put(Selfscreeningcontroller());
 
+
+    RxBool created = false.obs;
+
     Future<void> submit () async {
         // if(image==null){
         //   showToast("Please Upload Image", false);
         //   return;
         // }
+
+           if(created.value == true){
+      return;
+    }
 
         if(alphaminePresent==null){
           showToast("Please Select Alphamine Present", false);
@@ -170,7 +194,8 @@ var d = await Userapi.getUser();
     stopLoading();
 
     showToast("Report Saved Successfully .", true);
-
+    
+    created.value = true;
     controller.update();
   }
 

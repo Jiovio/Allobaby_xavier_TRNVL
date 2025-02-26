@@ -156,15 +156,15 @@ class _CryHistoryState extends State<CryHistory> {
 
 
     Future<void> deleteCry(dynamic id) async{
-      final req = await Userapi.deleteCry(id);
+      final req = await Babycryapi.deleteCry(id);
 
-         if(req){
+         if(req.success){
           showToast("Deleted Successfully", true);
 
           fetchCrys();
          }else {
 
-          showToast("Please Try Again Later", true);
+          showToast("Please Try Again Later", false);
 
          }
   }

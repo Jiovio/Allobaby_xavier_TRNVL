@@ -267,7 +267,9 @@ class Ultrasound extends StatelessWidget {
                 height: 20.0,
               ),
 
-                           ElevatedButton(
+
+
+                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       fixedSize:const Size(300, 50),
                       shape: RoundedRectangleBorder(
@@ -276,7 +278,8 @@ class Ultrasound extends StatelessWidget {
                   child: Obx(()=>
                     controller.loading.value?
                     const Center(child: CircularProgressIndicator(color: White,)):
-                    
+                    controller.created.value ?
+                    Text("REPORT ADDED".tr):
                     Text("ADD REPORT".tr)))
 
 

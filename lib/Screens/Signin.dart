@@ -45,8 +45,9 @@ bool verified = false;
   @override
   Widget build(BuildContext context) {
     return  SafeArea(
-      child: Scaffold(
 
+
+      child: Scaffold(
 
         body: SingleChildScrollView(
           child: Container(
@@ -71,6 +72,8 @@ bool verified = false;
     Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
+
+               
               Flexible(
                 flex: 3,
                 child: PageView(children: [
@@ -85,10 +88,10 @@ bool verified = false;
                         
                         Image.asset(
                           "assets/General/mom_care_image_blue.png",
-
+                
                           fit: BoxFit.contain,
                           
-
+                
                           color: Colors.white,
                         ),
                       ),
@@ -231,7 +234,7 @@ bool verified = false;
                             },
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 18,
                         ),
                         Center(

@@ -27,15 +27,15 @@ class Urine extends StatelessWidget {
           Column(
             children: [
 
-                                      SizedBox(
-                              width: double.infinity,
-                              child: Text(
-                                              "Add Urine Test Report".tr,
-                                              style: const TextStyle(
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                            ),
+                      SizedBox(
+              width: double.infinity,
+              child: Text(
+                "Add Urine Test Report".tr,
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+              ),
 
               GestureDetector(
                 onTap: () => showDialog(
@@ -230,7 +230,8 @@ class Urine extends StatelessWidget {
                   child: Obx(()=>
                     controller.loading.value?
                     const Center(child: CircularProgressIndicator(color: White,)):
-                    
+                    controller.created.value ?
+                    Text("REPORT ADDED".tr):
                     Text("ADD REPORT".tr)))
 
 

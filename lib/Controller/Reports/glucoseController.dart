@@ -90,8 +90,12 @@ TextEditingController desc = TextEditingController();
 
 
   Selfscreeningcontroller controller = Get.put(Selfscreeningcontroller());
-
+RxBool created = false.obs;
       Future<void> submit () async {
+
+                   if(created.value == true){
+      return;
+    }
 
 
         //          if(image==null){
@@ -145,6 +149,8 @@ String  url = "";
 
    if(req.success){
     showToast(req.detail, true);
+
+    created.value = true;
     print(req.id);
     controller.glucoseTestId = req.id;
 

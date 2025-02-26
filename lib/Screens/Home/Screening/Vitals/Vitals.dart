@@ -15,6 +15,9 @@ import 'package:get/get.dart';
 class VitalsScreen extends StatelessWidget {
    VitalsScreen({super.key});
 
+
+   Selfscreeningcontroller controller = Get.put(Selfscreeningcontroller());
+
   @override
   Widget build(BuildContext context) {
 
@@ -155,6 +158,19 @@ class VitalsScreen extends StatelessWidget {
                               ],
                             )))),
               ),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(onPressed: (){
+                    controller.submitVitals();
+                  
+                  }, child: Text("Save")),
+                ),
+              )
             
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:allobaby/API/authAPI.dart';
+import 'package:allobaby/API/response.dart';
 
 class Babycryapi {
 
@@ -18,13 +19,20 @@ class Babycryapi {
       return req;
 }
 
-  static Future<dynamic> saveCry(id, save) async {
-      final req = await postRequest("/babycry/save",{
+  static Future<APIResponse> saveCry(id, save) async {
+      final req = await newPostRequest("/babycry/save",{
         "id" : id,
         "save" : save
       });
       return req;
 }
+
+      static Future<APIResponse> deleteCry(dynamic id) async {
+
+    final req = await newDeleteRequest("/babycry/deletebabycry?cry_id=${id.toString()}");
+    return req; 
+
+  }
 
 
 

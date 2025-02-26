@@ -389,7 +389,7 @@ class _HomeState extends State<Home> {
                     return 
                     controller.pregnancyStatus.text == "skip" ? 
                     Container():
-                    summaryCards(mainC.pregnancyStatus.text);
+                    HomePageSummary();
                   
                 },),
 

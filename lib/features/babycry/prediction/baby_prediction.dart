@@ -164,6 +164,32 @@ class _BabyState extends State<BabyPrediction> {
 
   bool saved  = false;
 
+
+  void triggerSave() async {
+                if(controller.cryid == null){
+
+
+            }else {
+
+              setState(() {
+                saved = !saved;
+              });
+
+
+              final req = await Babycryapi.saveCry(controller.cryid, saved);
+
+              if(!req.success){
+                setState(() {
+                  saved = !saved;
+                });
+              }
+            }
+
+            setState(() {
+              
+            });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -181,62 +207,21 @@ class _BabyState extends State<BabyPrediction> {
 
           saved ?
 
-          TextButton.icon(
-          onPressed: () {
-            // Get.offAll(() => MainScreen(), transition: Transition.fade);
-            print("Saved");
-          },
-          icon: Icon(Icons.check, color: PrimaryColor),
+          // const Text("Saved")
 
-          label: Text("Saved"),
+          TextButton.icon(
+          onPressed: triggerSave,
+          icon: const Icon(Icons.check, color: PrimaryColor),
+
+          label: const Text("Saved"),
         )
 
         :
           TextButton.icon(
-          onPressed: () async {
-            // Get.offAll(() => MainScreen(), transition: Transition.fade);
+          onPressed: triggerSave,
+          icon: const Icon(Icons.save, color: PrimaryColor),
 
-            if(controller.cryid == null){
-
-
-            }else {
-
-              setState(() {
-                saved = !saved;
-              });
-
-
-              final req = await Babycryapi.saveCry(controller.cryid, !saved);
-
-              if(req==false){
-
-                setState(() {
-                  saved = !saved;
-                });
-                showToast("Unable to Save", false);
-
-              }else{
-
-
-                
-                showToast("Saved Successfully", true);
-
-
-              }
-
-            }
-
-            
-
-            print("Save");
-
-            setState(() {
-              
-            });
-          },
-          icon: Icon(Icons.save, color: Black),
-
-          label: Text("Save"),
+          label:const Text("Save"),
         ),
 
 

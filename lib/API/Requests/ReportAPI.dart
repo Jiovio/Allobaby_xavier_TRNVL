@@ -40,7 +40,7 @@ class Reportapi {
   }
 
 
-       static Future<dynamic> getAppointmentForReport(id) async {
+    static Future<dynamic> getAppointmentForReport(id) async {
     try {
     var d = await getRequest("/report/full/$id");
     print(id);
@@ -48,6 +48,12 @@ class Reportapi {
     } catch (e) {
       return false;
     }
+  }
+
+
+      static Future<APIResponse> getReportData(id) async {
+    var d = await newGetRequest("/report/getmyreport?id=$id");
+    return d;
   }
 
 }

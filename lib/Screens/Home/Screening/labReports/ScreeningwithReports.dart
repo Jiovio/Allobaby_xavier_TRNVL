@@ -40,6 +40,10 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
 
         actions: [IconButton(onPressed: ()async {
 
+          bool sympsub = sc.symptomsUploaded;
+          bool vitsub = sc.vitalsUploaded;
+
+
          final item =  SelfScreeningModel(created: DateTime(2024),
           id: sc.screeningId,
           hemoglobinId: sc.hemoglobinId,
@@ -47,12 +51,22 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
           glucoseId: sc.glucoseTestId,
           fetalTestId: sc.fetalmonitoringId,
           ultrasoundId: sc.ultrasoundId,
-          params: {});
+          params: {"vitals" : sc.vitalsData, "symptoms" : sc.getSelectedSymptoms()});
+
 
 
         await  Get.to(()=> const SelfScreeningList());
 
         sc.setSelfScreeningData(item);
+
+
+
+          sc.symptomsUploaded = sympsub;
+          sc.vitalsUploaded = vitsub;
+
+          sc.update();
+
+
         }, icon: Icon(Icons.list))],
       ),
 
