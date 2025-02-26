@@ -667,6 +667,7 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
             pw.SizedBox(height: 20),
             
             // Symptoms
+            if(widget.reportData.containsKey("symptoms"))
             _buildPDFSection(
               title: 'Symptoms',
               child: pw.Wrap(
@@ -684,12 +685,12 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
             
             pw.SizedBox(height: 20),
             
-            // Vital Signs
+            if(widget.reportData.containsKey("vitals"))
             _buildPDFSection(
               title: 'Vital Signs',
               child: pw.Column(
                 children: [
-                  _buildPDFVitalRow('Blood Pressure', '${vitals['bloodPressureH']}/${vitals['bloodPressureL']} mmHg'),
+                  _buildPDFVitalRow('Blood Pressure', '${['bloodPressureH']}/${vitals['bloodPressureL']} mmHg'),
                   _buildPDFVitalRow('Temperature', '${vitals['temperature']} ${vitals['temperatureMetric']}'),
                   _buildPDFVitalRow('Blood Saturation (Before/After Walking)', '${vitals['bloodSaturationBW']}% / ${vitals['bloodSaturationAW']}%'),
                   _buildPDFVitalRow('Heart Rate (Before/After Walking)', '${vitals['heartRateBW']} / ${vitals['heartRateAW']} bpm'),
@@ -723,11 +724,11 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
               title: 'Fetal Assessment',
               child: pw.Column(
                 children: [
-                  _buildPDFVitalRow('Kick Count', '${widget.reportData['kickCount']}'),
-                  _buildPDFVitalRow('Heart Rate', '${widget.reportData['heartRate']} bpm'),
-                  _buildPDFVitalRow('Fetal Presentation', widget.reportData['fetalPresentation']),
-                  _buildPDFVitalRow('Fetal Movement', widget.reportData['fetalMovement']),
-                  _buildPDFVitalRow('Placenta', widget.reportData['placenta']),
+                  _buildPDFVitalRow('Kick Count', '${widget.reportData['kickCount']??"No Provided"}'),
+                  _buildPDFVitalRow('Heart Rate', '${widget.reportData['heartRate']??"No Provided"} bpm'),
+                  _buildPDFVitalRow('Fetal Presentation', widget.reportData['fetalPresentation']??"No Provided"),
+                  _buildPDFVitalRow('Fetal Movement', widget.reportData['fetalMovement']??"No Provided"),
+                  _buildPDFVitalRow('Placenta', widget.reportData['placenta']??"No Provided"),
                 ],
               ),
             ),
