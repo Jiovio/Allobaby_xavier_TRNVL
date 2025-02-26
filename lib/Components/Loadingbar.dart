@@ -92,7 +92,15 @@ class Loadingbar {
 
        await Get.showOverlay(
           asyncFunction: ()async{
-            await fn();
+
+            try {
+              await fn();
+            } catch (e) {
+
+              print(e);
+              
+            }
+            
           },
          loadingWidget:  Dialog(
 

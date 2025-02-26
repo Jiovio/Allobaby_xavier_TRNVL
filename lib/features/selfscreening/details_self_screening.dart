@@ -8,6 +8,7 @@ import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Hemoglobin.dart
 import 'package:allobaby/Screens/Home/Screening/labReports/Tests/UltraSound.dart';
 import 'package:allobaby/Screens/Home/Screening/labReports/Tests/Urine.dart';
 import 'package:allobaby/features/selfscreening/model/self_screening_model.dart';
+import 'package:allobaby/features/selfscreening/report/report_selfscreening.dart';
 import 'package:allobaby/features/selfscreening/screening_report_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,6 +34,67 @@ class _SelfScreeningDetailsState extends State<SelfScreeningDetails> {
         ),
         elevation: 0,
         foregroundColor: Colors.white,
+
+        actions: [
+          TextButton.icon(onPressed: (){
+                  final d = widget.data.params;
+
+                        Get.to(()=> MedicalReportPage(
+                      reportData: d,
+                      patientId: "Vijay",
+                      doctorDetails: {
+                        "name": "Dr. Jane Smith",
+                        "specialization": "General Medicine",
+                        "license": "MED12345"
+                      },
+
+                      date : widget.data.created!
+    )
+            );
+
+    //         Get.to(()=> const MedicalReportPage(
+    //                   reportData: {
+    //                     "symptoms": ["Body pain", "Burning Stomach", "Cold cough"],
+    //                     "vitals": {
+    //                       "bloodPressureH": 121,
+    //                       "bloodPressureL": 87,
+    //                       "temperature": 34.4,
+    //                       "temperatureMetric": "C",
+    //                       "bloodSaturationBW": 93.0,
+    //                       "bloodSaturationAW": 88.0,
+    //                       "heartRateBW": 68,
+    //                       "heartRateAW": 81,
+    //                       "bmiHeight": 144,
+    //                       "bmiWeight": 56.0,
+    //                       "respiratoryRate": 26,
+    //                       "hB": 11.4,
+    //                       "bloodGlucoseBF": 155.4,
+    //                       "bloodGlucoseAF": 155.4
+    //                     },
+    //                     "hemoglobinValue": 14,
+    //                     "alphaminePresent": "No",
+    //                     "sugarPresent": "Yes",
+    //                     "glucose": 72.4,
+    //                     "kickCount": 8,
+    //                     "heartRate": 67,
+    //                     "fetalPresentation": "Cephalic",
+    //                     "fetalMovement": "Present",
+    //                     "placenta": "Fundal"
+    //                   },
+    //                   patientId: "PT12345",
+    //                   doctorDetails: {
+    //                     "name": "Dr. Jane Smith",
+    //                     "specialization": "General Medicine",
+    //                     "license": "MED12345"
+    //                   },
+    // )
+    //         );
+
+          },
+          label: Text("Report"),
+          icon: Icon(Icons.share),
+          )
+        ],
       ),
       body: Container(
         child: SingleChildScrollView(
@@ -207,14 +269,20 @@ class _SelfScreeningDetailsState extends State<SelfScreeningDetails> {
           return buildScreeningTile(
             "Hemoglobin Test",
             "assets/labReports/hemoglobin.png",
-            () {
+            () async {
               controller.hemoglobinId !=null ?
-              Get.to(()=> ScreeningReportLoader(id: sc.hemoglobinId!)):
-              Get.to(() => Scaffold(appBar: AppBar(), body: Hemoglobin())) ;
+            await Get.to(()=> ScreeningReportLoader(id: sc.hemoglobinId!)):
+            await Get.to(() => Scaffold(appBar: AppBar(), body: Hemoglobin())) ;
               
+
+              widget.data.hemoglobinId = controller.hemoglobinId;
           
             },
             sc.hemoglobinId != null,
+
+            
+
+            
           );
         }
       ),
@@ -223,11 +291,14 @@ class _SelfScreeningDetailsState extends State<SelfScreeningDetails> {
       return buildScreeningTile(
         "Urine Test",
         "assets/labReports/urinetest.png",
-        () {
+        () async  {
 
           controller.urineTestId !=null ?
-          Get.to(()=> ScreeningReportLoader(id: controller.urineTestId!)):          
-          Get.to(() => Scaffold(appBar: AppBar(), body: Urine()));
+        await Get.to(()=> ScreeningReportLoader(id: controller.urineTestId!)):          
+        await  Get.to(() => Scaffold(appBar: AppBar(), body: Urine()));
+
+
+          widget.data.urineTestId = controller.urineTestId;
           },
         controller.urineTestId != null,
       );}),
@@ -237,11 +308,15 @@ class _SelfScreeningDetailsState extends State<SelfScreeningDetails> {
         return buildScreeningTile(
         "Glucose Test",
         "assets/labReports/glucose.png",
-        () { 
+        () async { 
                  controller.glucoseTestId !=null ?
-          Get.to(()=> ScreeningReportLoader(id: controller.glucoseTestId!)):    
+         await Get.to(()=> ScreeningReportLoader(id: controller.glucoseTestId!)):    
           
-          Get.to(() =>Scaffold(appBar: AppBar(), body:  Glucose()));},
+         await Get.to(() =>Scaffold(appBar: AppBar(), body:  Glucose()));
+         
+         widget.data.glucoseId = controller.glucoseTestId;
+         
+         },
         controller.glucoseTestId != null,
       );}),
 
@@ -250,11 +325,15 @@ class _SelfScreeningDetailsState extends State<SelfScreeningDetails> {
       return buildScreeningTile(
         "Fetal Monitoring",
         "assets/labReports/fetalmon.png",
-        () { 
+        () async { 
           controller.fetalmonitoringId !=null ?
-          Get.to(()=> ScreeningReportLoader(id: controller.fetalmonitoringId!)):   
+          await Get.to(()=> ScreeningReportLoader(id: controller.fetalmonitoringId!)):   
           
-          Get.to(() => Scaffold(appBar: AppBar(), body: Fetalmonitoring()));},
+          await Get.to(() => Scaffold(appBar: AppBar(), body: Fetalmonitoring()));
+          
+          widget.data.fetalTestId = controller.fetalmonitoringId;
+          
+          },
         controller.fetalmonitoringId != null,
       );}),
 
@@ -263,10 +342,14 @@ class _SelfScreeningDetailsState extends State<SelfScreeningDetails> {
       return buildScreeningTile(
         "Ultrasound Test",
         "assets/labReports/ultrasound.png",
-        () { 
+        () async { 
                     controller.ultrasoundId !=null ?
-          Get.to(()=> ScreeningReportLoader(id: controller.ultrasoundId!)):   
-          Get.to(() => Scaffold(appBar: AppBar(), body: Ultrasound()));},
+          await Get.to(()=> ScreeningReportLoader(id: controller.ultrasoundId!)):   
+          await Get.to(() => Scaffold(appBar: AppBar(), body: Ultrasound()));
+          
+          widget.data.ultrasoundId = controller.ultrasoundId;
+          
+          },
         controller.ultrasoundId != null,
       );})
     ];

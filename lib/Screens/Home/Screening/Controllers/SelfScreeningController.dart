@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 
 class Selfscreeningcontroller extends GetxController {
 
-
+  int? appointmentid;
 
   int? screeningId;
 
@@ -84,6 +84,17 @@ class Selfscreeningcontroller extends GetxController {
     ultrasoundId = item.ultrasoundId;
 
     if(item.params.containsKey("symptoms")){
+
+            symptomsMap= {
+          'Normal' : false,
+          'Body pain' : false,
+          'Burning Stomach' : false,
+          'Cold cough' : false,
+          'Dizziness' : false,
+          'Headache' : false,
+          'Vomiting' : false,
+          'Other' : false
+    };
 
       item.params["symptoms"].forEach((v){
         symptomsMap[v] = true;
@@ -240,6 +251,7 @@ class Selfscreeningcontroller extends GetxController {
 
       final req = await SelfscreeningApi.create({
         "id" : screeningId,
+        "appointmentID": appointmentid,
       "params":{
         "symptoms" : details
       },
@@ -247,6 +259,8 @@ class Selfscreeningcontroller extends GetxController {
 
 
     if(req.success){
+
+      screeningId = req.id;
 
       symptomsUploaded = true;
 
@@ -288,13 +302,16 @@ class Selfscreeningcontroller extends GetxController {
 
           final req = await SelfscreeningApi.create({
         "id" : screeningId,
-      "params":{
-        "vitals" : vitalsData
-      },
+        "appointmentID": appointmentid,
+        "params":{
+          "vitals" : vitalsData
+        },
     });
 
 
     if(req.success){
+
+      screeningId = req.id;
 
       vitalsUploaded = true;
 

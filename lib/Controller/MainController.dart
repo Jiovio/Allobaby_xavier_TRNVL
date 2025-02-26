@@ -87,6 +87,9 @@ class Maincontroller extends GetxController {
     try {
 
       var d = await Userapi.getUser();
+
+      print(d);
+
       localStorage.setItem("uid", d["uid"].toString());
 
       fromJson(d);
@@ -107,6 +110,7 @@ class Maincontroller extends GetxController {
     } catch (e) {
 
       timer = Timer.periodic(const Duration(seconds: 5), (t){
+
         initScreen();
 
       return;
@@ -136,12 +140,18 @@ class Maincontroller extends GetxController {
 
       
     }
+      try {
 
-
-          NotificationService.requestNotificationPermissions().then((v){
+                  NotificationService.requestNotificationPermissions().then((v){
     notification = v.obs;
     update();
   });
+        
+      } catch (e) {
+        
+      }
+
+
 
 
   }
@@ -181,6 +191,7 @@ class Maincontroller extends GetxController {
   });
 
   refreshToken().then((value) {
+    print("Refreshed");
   initScreen();
   },).catchError((e){
     print(e=="logout");

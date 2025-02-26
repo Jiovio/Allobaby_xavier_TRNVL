@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:allobaby/utils/datetimeutil.dart';
+
 class SelfScreeningModel {
   int? id;
   Map<String, dynamic> params = {};
@@ -35,9 +37,9 @@ class SelfScreeningModel {
       glucoseId: json['glucodeId'],
       fetalTestId: json['fetalTestId'],
       ultrasoundId: json['ultrasoundId'],
-      created: DateTime.parse(json['created']), // Parse created as DateTime
+      created: convertTimeString(json['created']), // Parse created as DateTime
       userId: json['userId'],
-      updated: DateTime.parse(json['updated']), // Parse updated as DateTime
+      updated: convertTimeString(json['updated']), // Parse updated as DateTime
     );
   }
 

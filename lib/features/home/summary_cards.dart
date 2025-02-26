@@ -83,7 +83,7 @@ class _HomePageSummaryState extends State<HomePageSummary> {
     Column(
     children: [
       const SizedBox(height: 14),
-       _buildStatusCard("I am pregnant",true),
+       _buildStatusCard(controller.pregnancyStatus.text,true),
       Skeletonizer(
         enabled: loading,
         child: _buildSummaryCard(summary)),

@@ -115,15 +115,14 @@ String url = "";
 
   Future<void> submit () async {
 
-
-    if(created.value == true){
-      return;
-    }
+        if(created.value == true){
+          return;
+        }
         //          if(image==null){
         //   showToast("Please Upload Image", false);
         //   return;
         // }
-
+      
         if(hemoGlobinValue==null){
           showToast("Please Select Hemoglobin Value", false);
           return;
@@ -133,6 +132,8 @@ String url = "";
         //   showToast("Please Update Description", false);
         //   return;
         // }
+
+        
 
     startLoading();
 
@@ -146,7 +147,7 @@ String url = "";
         var random = Random();
   int randomInt = random.nextInt(1000000);
 
-String  url = "";
+String?  url;
 
     if(image!=null){
    url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
@@ -172,7 +173,8 @@ String  url = "";
     final selfscreeningreq = await SelfscreeningApi.create({
       "hemoglobinId" : req.id,
       "params" : reportData,
-      "id" : controller.screeningId
+      "id" : controller.screeningId,
+      "appointmentID": controller.appointmentid,
       });
 
     if(selfscreeningreq.success){
@@ -187,7 +189,6 @@ String  url = "";
    }
     controller.update();
 
-    showToast("Report Saved Successfully .", true);
 
     created.value = true;
 

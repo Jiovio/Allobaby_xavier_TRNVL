@@ -132,7 +132,7 @@ TextEditingController desc = TextEditingController();
         var random = Random();
   int randomInt = random.nextInt(1000000);
 
-String  url = "";
+String?  url;
 
     if(image!=null){
    url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
@@ -159,7 +159,8 @@ String  url = "";
     final selfscreeningreq = await SelfscreeningApi.create({
       "fetalTestId" : req.id,
       "params" : reportData,
-      "id" : controller.screeningId
+      "id" : controller.screeningId,
+      "appointmentID": controller.appointmentid,
       });
 
     if(selfscreeningreq.success){

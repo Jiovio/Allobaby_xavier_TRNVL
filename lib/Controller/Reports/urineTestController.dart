@@ -130,10 +130,10 @@ Navigator.of(context).pop();
           return;
         }
 
-                if(image==null){
-          showToast("Please Upload Image", false);
-          return;
-        }
+        //         if(image==null){
+        //   showToast("Please Upload Image", false);
+        //   return;
+        // }
 
         // if(desc.text==""){
         //   showToast("Please Update Description", false);
@@ -152,7 +152,7 @@ var d = await Userapi.getUser();
         var random = Random();
   int randomInt = random.nextInt(1000000);
 
-    String  url = "";
+    String?  url ;
 
     if(image!=null){
    url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
@@ -177,6 +177,7 @@ var d = await Userapi.getUser();
     final selfscreeningreq = await SelfscreeningApi.create({
       "urineTestId" : req.id,
       "params" : reportData,
+      "appointmentID": controller.appointmentid,
       "id" : controller.screeningId
       });
 

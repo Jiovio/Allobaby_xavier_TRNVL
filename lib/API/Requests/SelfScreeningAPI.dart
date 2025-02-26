@@ -20,5 +20,13 @@ class SelfscreeningApi {
   }
 
 
+    static Future<APIResponse> getAppointmentSelfScreeningData(int appointmentID) async {
+    var req = await newGetRequest("/selfscreening/getappointment?id=${appointmentID.toString()}");
+
+    print(req.detail);
+    return req;
+  }
+
+
 
 }

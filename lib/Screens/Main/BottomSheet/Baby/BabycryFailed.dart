@@ -1,6 +1,7 @@
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Screens/Main/Home.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
+import 'package:allobaby/features/babycry/crytellhome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -135,7 +136,7 @@ class Babycryfailed extends StatelessWidget {
                         ),
                         child: ElevatedButton(
                           onPressed: () {
-                            Get.offAll(MainScreen());
+                            Get.off(()=>Crytellhome());
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: PrimaryColor,

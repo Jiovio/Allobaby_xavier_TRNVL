@@ -152,7 +152,7 @@ var d = await Userapi.getUser();
         var random = Random();
   int randomInt = random.nextInt(1000000);
 
-String  url = "";
+String?  url;
 
     if(image!=null){
    url = await OurFirebase.uploadImageToFirebase("reports","$phone $randomInt.jpg", image!,phone);
@@ -177,6 +177,7 @@ String  url = "";
     final selfscreeningreq = await SelfscreeningApi.create({
       "ultrasoundId" : req.id,
       "params" : reportData,
+      "appointmentID": controller.appointmentid,
       "id" : controller.screeningId
       });
 

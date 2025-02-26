@@ -78,206 +78,211 @@ class _HomeState extends State<Home> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Expanded(
+                            flex: 6,
                             child: InkWell(
                                                 
-                              child: SizedBox(
+                              child: GetBuilder<Maincontroller>(
+                                builder: (controller) {
+                                  return 
+                                  controller.pregnancyStatus.text != "skip" ?
+                                  CircularPercentIndicator(
                                     
-                                    
-                                child: SizedBox(
-                                  child: 
+                                          circularStrokeCap: CircularStrokeCap.round,
+                                          linearGradient: LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: <Color>[
+                                              PrimaryColor.withOpacity(0.8),
+                                              PrimaryColor,
+                                            ],
+                                          ),
+                                          backgroundColor: accentColor.withOpacity(0.3),
+                                          radius: 80.0,
+                                          lineWidth: 15.0,
+                                          percent: mainC.ccomp<0 ? mainC.ccomp*-1 : mainC.ccomp,
+                                  
+                                          center: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                       "${mainC.ctotalDays - (mainC.ctotalDays - mainC.cdaysPassed)}",
+                                                      style:const TextStyle(
+                                                        fontSize: 24,
+                                                        fontWeight: FontWeight.w700,
+                                                      ),
+                                                    ),
                                   
                                   
-                                  GetBuilder<Maincontroller>(
-                                    builder: (controller) {
-                                      return CircularPercentIndicator(
-                                        
-                                              circularStrokeCap: CircularStrokeCap.round,
-                                              linearGradient: LinearGradient(
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                                colors: <Color>[
-                                                  PrimaryColor.withOpacity(0.8),
-                                                  PrimaryColor,
+                                                    Text("Day".tr)
                                                 ],
-                                              ),
-                                              backgroundColor: accentColor.withOpacity(0.3),
-                                              radius: 80.0,
-                                              lineWidth: 15.0,
-                                              percent: mainC.ccomp<0 ? mainC.ccomp*-1 : mainC.ccomp,
-                                      
-                                              center: controller.pregnancyStatus.text != "skip"
-                                                  ? Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: [
-                                                      Text(
-                                                           "${mainC.ctotalDays - (mainC.ctotalDays - mainC.cdaysPassed)}",
-                                                          style:const TextStyle(
-                                                            fontSize: 24,
-                                                            fontWeight: FontWeight.w700,
-                                                          ),
-                                                        ),
-                                      
-                                      
-                                                        Text("Day".tr)
-                                                    ],
-                                                  )
-                                                  : 
-                                                  Expanded(child: 
-                                                  mainC.profile_pic==null ?
+                                              )
+                                              
+                                              
+                                              
+                                              ):
+                                                            
+                                              Container(
+                                                child: SizedBox(
+                                                  height: 130,
+                                                  child: mainC.profile_pic!=null ?
                                                   Image.asset("assets/General/avatar.png") :
                                                   CircleAvatar(
                                                     backgroundImage: 
-                                                    CachedNetworkImageProvider(mainC.profile_pic!)
+                                                    CachedNetworkImageProvider(controller.profile_pic!,
+                                                    
                                                     )
-                                                  )); 
-                                                  // Text(
-                                                  //     "Not yet started".tr,
-                                                  //     style: TextStyle(
-                                                  //         fontWeight: FontWeight.w700),
-                                                  //   )
-                                                  //   );
-                                    }
-                                  ),
-                                ),
+                                                    ),
+                                                ),
+                                              ); 
+                                              // Text(
+                                              //     "Not yet started".tr,
+                                              //     style: TextStyle(
+                                              //         fontWeight: FontWeight.w700),
+                                              //   )
+                                              //   );
+                                }
                               ),
                             ),
                           ),
         
         
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InkWell(
-                                
-                              child: Row(children: [
-                                                                  Container(
-                                      padding: EdgeInsets.all(4),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(40),
-                                          color: Colors.green),
-                                      child: Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        size: 16,
-                                        color: Black,
+                        Expanded(
+                          flex: 4,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              InkWell(
+                                  
+                                child: Row(children: [
+                                                                    Container(
+                                        padding: EdgeInsets.all(4),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(40),
+                                            color: Colors.green),
+                                        child: Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          size: 16,
+                                          color: Black,
+                                        ),
                                       ),
-                                    ),
-                                
-                                    SizedBox(width: 8,),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                               GetBuilder<Maincontroller>(
-                                                 builder: (cont) {
-                                                   return Text(
-                                                      cont.healthStatus.toUpperCase(),
-                                                      style: TextStyle(
-                                                      fontSize: 18,
-                                                      color: PrimaryColor,
-                                                      fontWeight: FontWeight.w700),
-                                                                                             );
-                                                 }
-                                               ),
-                                             FittedBox(
-                                              
-                                               child: Text("Health Status".tr,
-                                                                                             style: TextStyle(
-                                                  color: Black.withOpacity(0.6),
-                                                  )),
-                                             ),
-                                    ],)
-                              ],),
-                            )
-                          
-                                  ,InkWell(
-                                    
-                                
-                              child: Row(children: [
-                                                                  Container(
-                                      padding:const EdgeInsets.all(4),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(40),
-                                          color: Colors.green),
-                                      child:const Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        size: 16,
-                                        color: Black,
-                                      ),
-                                    ),
-                                
-                                    const SizedBox(width: 8,),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
+                                  
+                                      SizedBox(width: 8,),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
                                                  GetBuilder<Maincontroller>(
-                                                   builder: (controller) =>  Text(
-                                                      mainC.lastScreened==null?
-                                                      "- - - ":
-                                                      mainC.lastScreened!,
-                                                      style:const TextStyle(
-                                                      fontSize: 18,
-                                                      color: PrimaryColor,
-                                                      fontWeight: FontWeight.w700),
-                                                                                             ),
+                                                   builder: (cont) {
+                                                     return Text(
+                                                        cont.healthStatus.toUpperCase(),
+                                                        style: TextStyle(
+                                                        fontSize: 18,
+                                                        color: PrimaryColor,
+                                                        fontWeight: FontWeight.w700),
+                                                                                               );
+                                                   }
                                                  ),
-                                               
-                                            FittedBox(
-                                              child: Text("Last Screened".tr ,
-                                              maxLines: 2,
-                                              style: TextStyle(
-                                                  color: Black.withOpacity(0.6),
-                                                  // fontSize:currentLocale.languageCode == 'ta' ||currentLocale.languageCode == 'ka'  
-                                                  // ? 10: 14
-                                                  ),
-                                                    softWrap: true,
-                                                    overflow: TextOverflow.visible,
-                                                  ),
-                                            ),
-                                    ],)
-                              ],),
-                            ),
-                                
-                            InkWell(
-                                
-                              child: Row(children: [
-                                                                  Container(
-                                      padding: EdgeInsets.all(4),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(40),
-                                          color: Colors.green),
-                                      child: Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        size: 16,
-                                        color: Black,
+                                               FittedBox(
+                                                
+                                                 child: Text("Health Status".tr,
+                                                                                               style: TextStyle(
+                                                    color: Black.withOpacity(0.6),
+                                                    )),
+                                               ),
+                                      ],)
+                                ],),
+                              )
+                            
+                                    ,InkWell(
+                                      
+                                  
+                                child: Row(children: [
+                                                                    Container(
+                                        padding:const EdgeInsets.all(4),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(40),
+                                            color: Colors.green),
+                                        child:const Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          size: 16,
+                                          color: Black,
+                                        ),
                                       ),
-                                    ),
-                                
-                                    SizedBox(width: 8,),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                               Text(
-                                              "FREE",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: PrimaryColor,
-                                                  fontWeight: FontWeight.w700),
-                                            ),
-                                                                                  FittedBox(
-                                                                                    child: Text("Subscription Plan".tr,
-                                                                                                                                style: TextStyle(
-                                                                                                                                    color: Black.withOpacity(0.6),
-                                                                                                                                    // fontSize: 14
-                                                                                                                                    )),
-                                                                                  ),
-                                    ],)
-                              ],),
-                            )
-                          
-                          ],
+                                  
+                                      const SizedBox(width: 8,),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                                   GetBuilder<Maincontroller>(
+                                                     builder: (controller) =>  Text(
+                                                        mainC.lastScreened==null?
+                                                        "- - - ":
+                                                        mainC.lastScreened!,
+                                                        style:const TextStyle(
+                                                        fontSize: 18,
+                                                        color: PrimaryColor,
+                                                        fontWeight: FontWeight.w700),
+                                                                                               ),
+                                                   ),
+                                                 
+                                              FittedBox(
+                                                child: Text("Last Screened".tr ,
+                                                maxLines: 2,
+                                                style: TextStyle(
+                                                    color: Black.withOpacity(0.6),
+                                                    // fontSize:currentLocale.languageCode == 'ta' ||currentLocale.languageCode == 'ka'  
+                                                    // ? 10: 14
+                                                    ),
+                                                      softWrap: true,
+                                                      overflow: TextOverflow.visible,
+                                                    ),
+                                              ),
+                                      ],)
+                                ],),
+                              ),
+                                  
+                              InkWell(
+                                  
+                                child: Row(children: [
+                                                                    Container(
+                                        padding: EdgeInsets.all(4),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(40),
+                                            color: Colors.green),
+                                        child: Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          size: 16,
+                                          color: Black,
+                                        ),
+                                      ),
+                                  
+                                      SizedBox(width: 8,),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                                 Text(
+                                                "FREE",
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: PrimaryColor,
+                                                    fontWeight: FontWeight.w700),
+                                              ),
+                                                                                    FittedBox(
+                                                                                      child: Text("Subscription Plan".tr,
+                                                                                                                                  style: TextStyle(
+                                                                                                                                      color: Black.withOpacity(0.6),
+                                                                                                                                      // fontSize: 14
+                                                                                                                                      )),
+                                                                                    ),
+                                      ],)
+                                ],),
+                              )
+                            
+                            ],
+                          ),
                         )
                         ],
                       ),

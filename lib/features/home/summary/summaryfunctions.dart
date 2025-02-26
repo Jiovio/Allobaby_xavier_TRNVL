@@ -26,7 +26,7 @@ Maincontroller cont
     int days = cday % avglen;
     
 
-      prompt = "health tips for women on their ${daysPassed}th day of ${avglen}th day period cycle window .give short summary of 3 line";
+      prompt = "health tips for women on their ${daysPassed}th day of ${avglen}th day period cycle window .give short summary 3 lines";
     break;
 
     case "Iam pregnant":

@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/Controller/BabyCry/babyCryController.dart';
+import 'package:allobaby/Screens/Main/BottomSheet/Baby/BabycryFailed.dart';
 import 'package:allobaby/features/babycry/controller/cry_controller.dart';
 import 'package:allobaby/features/babycry/service/audio_classifier.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
 
   }
 
-  int classs = 5;
+
 
   AudioClassifier audioClassifier = AudioClassifier();
 
@@ -219,23 +220,22 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
         if(_countdown > 0 && _countdown % 7 == 0){
 
          detectCry();
-
-          
-
         }
 
-         setState(() {
-            _countdown++;
-          });
-
-        // if(_countdown >100){
-        //   _stopRecording();
-        // }else{
-
-        //   setState(() {
+        //  setState(() {
         //     _countdown++;
         //   });
-        // }
+
+        if(_countdown >22){
+          Get.to(()=> const Babycryfailed());
+          _cancelRecording();
+
+        }else{
+
+          setState(() {
+            _countdown++;
+          });
+        }
       });
     }
     }
@@ -277,7 +277,7 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
       await _recorder!.dispose();
       setState(() => _isRecording = false);
     }
-    Get.back();
+    // Get.back();
   }
 
   @override
@@ -486,28 +486,6 @@ class _VoiceRecorderNewState extends State<VoiceRecorderNew> with SingleTickerPr
                   child: IconButton(
                     icon: Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () => Navigator.pop(context),
-                  ),
-                ),
-              ),
-
-
-               Align(
-                alignment: Alignment.topRight,
-                child: GestureDetector(
-                  onTap: () {
-                    classs++;
-
-                    setState(() {
-                      
-                    });
-                  },
-                  child: Container(
-                    margin: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text(classs.toString())
                   ),
                 ),
               ),

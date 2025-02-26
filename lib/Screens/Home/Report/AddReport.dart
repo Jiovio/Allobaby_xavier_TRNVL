@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -6,10 +7,12 @@ import 'package:allobaby/Components/Loadingbar.dart';
 import 'package:allobaby/Components/forms.dart';
 import 'package:allobaby/Components/snackbar.dart';
 import 'package:allobaby/Config/Color.dart';
+import 'package:allobaby/Config/OurFirebase.dart';
 import 'package:allobaby/utils/camera.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class AddReport extends StatefulWidget {
@@ -26,10 +29,26 @@ class _AddReportState extends State<AddReport> {
 
     String? reportType;
 
+    File? imageFile;
+
+    bool validReport = true;
+
 
     TextEditingController description = TextEditingController();
 
       Future<void> submit () async {
+
+        if(validReport==false){
+
+          print("Invalid Report");
+
+          // showToast("Please Upload Correct Report", false);
+
+          Fluttertoast.showToast(msg: "Please Upload Correct Report");
+
+          return;
+
+        }
 
         //          if(image==null){
         //   showToast("Please Upload Image", false);
@@ -53,6 +72,9 @@ class _AddReportState extends State<AddReport> {
 
     };
 
+    
+
+
 
     
     Map<String,dynamic> data = {
@@ -63,11 +85,47 @@ class _AddReportState extends State<AddReport> {
     };
       await Reportapi().addReports(data);
 
+
+      // showToast("Added Report Successfully", true);
+
+      Fluttertoast.showToast(msg: "Added Report Successfully".tr);
+
+      Get.back();
+
+      
+
   }
 
   
 
+    Future<void> processImage() async {
 
+      final prompt = "This is my medical report ,dont give my name and details, summarize with important details in 4 lines, respond in schema {valid : bool,summary : text , reportType : get from image} , if the report is related to medical , return valid true else false";
+
+      if(imageFile!=null){
+
+      final summary = await OurFirebase.askVertexAi(imageFile!,prompt);
+
+      final data = jsonDecode(summary);
+
+      validReport = data["valid"];
+
+      description.text = data["summary"];
+
+      reportType = data["reportType"];
+
+      print(data);
+
+
+      setState(() {
+        
+      });
+
+      }
+
+      
+      
+    }
 
 
   @override
@@ -171,7 +229,14 @@ class _AddReportState extends State<AddReport> {
                                     final url = await  Imageutils().getImageFromCamera("reports");
                                     setState(() {
                                       image = url![0] as String;
+                                      imageFile = url[1] as File;
                                     });
+
+
+                                    Loadingbar.use("AnalyzingReport",processImage);
+
+                                    
+                                    
 
                                     },
                                     backgroundColor: Colors.amberAccent,
@@ -187,7 +252,11 @@ class _AddReportState extends State<AddReport> {
                                          final url = await  Imageutils().getImageFromGallery("reports");
                                     setState(() {
                                       image = url![0] as String;
+                                      imageFile = url[1] as File;
                                     });
+
+
+                                    Loadingbar.use("AnalyzingReport",processImage);
                                     },
                                         // reportController.getImageFromGallery(),
                                     backgroundColor: Colors.indigoAccent,
@@ -213,7 +282,7 @@ class _AddReportState extends State<AddReport> {
                 height: 10.0,
               ),
 
-              searchBox("Select Type of Report", [
+              dropDown("Select Type of Report", [
                   "ECG",
                   "Blood Test",
                   "HCG",
@@ -232,14 +301,18 @@ class _AddReportState extends State<AddReport> {
                     
                   });
 
-                }),
+                },
+
+                reportType
+                
+                ),
 
                                            SizedBox(
                 height: 10.0,
               ),
 
                             TextFormField(
-                // controller: reportController.reportDesc,
+                controller: description,
                 decoration: InputDecoration(
                     labelText: "Write Description".tr,
                     border: OutlineInputBorder()),
@@ -258,18 +331,21 @@ class _AddReportState extends State<AddReport> {
               ),
 
               ElevatedButton(
+
+                
+
                   style: ElevatedButton.styleFrom(
                       minimumSize: Size(300, 50),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40))),
                   onPressed: () async {
                     await Loadingbar.use("Uploading Report ...", submit);
-                    Get.back();
-                    showToast("Added Report Successfully", true);
+                    // Get.back();
+                    
                   }
                      ,
                   
-                  child: Text("ADD REPORT".tr))
+                  child: Text(validReport? "ADD REPORT".tr:"Invalid Report".tr))
 
 
 

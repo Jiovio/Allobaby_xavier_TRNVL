@@ -212,7 +212,7 @@ class _CryHistoryState extends State<CryHistory> {
         itemCount: cryHistory.length,
         itemBuilder: (context, index) {
           final cry = cryHistory[index];
-          final DateTime createdAt = localDateTime(cry['created_at']);
+          final DateTime createdAt = convertTimeString(cry['created_at']);
           final String formattedDate = DateFormat('MMM dd, yyyy').format(createdAt);
           final String formattedTime = DateFormat('hh:mm a').format(createdAt);
           final bool isCurrentlyPlaying = _currentlyPlayingId == cry['id'];

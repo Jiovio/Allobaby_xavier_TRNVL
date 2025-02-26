@@ -135,6 +135,20 @@ final imagePart = DataPart('image/jpeg', image);
     }
 
 
+       static Future<String> textAiwithImage(File img , String promp) async{
+
+      final prompt = TextPart(promp);
+final image = await img.readAsBytes();
+final imagePart = DataPart('image/jpeg', image);
+
+    final response = await textai.generateContent([
+      Content.multi([prompt,imagePart])
+    ]);
+        // print(response.text);
+        return response.text??"";
+    }
+
+
     static Future<bool> createDataWithName(String collection,String docName,dynamic data) 
     async {
 final city = <String, String>{
@@ -210,16 +224,6 @@ static Future<List<Map<String, dynamic>>> getReports() async {
       
       String date = DateTime.now().toString();
 
-
-
-
-      String temp = """
-      This is my lmp date $lmp_date my status is $status current date is $date. 
-      if my status is iam trying to conceive iam not pregnant
-      check whether iam pregnant 
-      and generate dates for my whole pregnancy of upcoming regular checkup appointment till the ed date 
-      if not pregnant return dates as {} 
-""";
       
       String prompt = """
 iam ${d["pregnancy_status"]}.
@@ -236,7 +240,7 @@ for 9 months starting from one month after lmp date , give short summary based o
         is_pregnant:bool,
         summary : text
         dates :{
-          [month year]: [String of dates]
+          [month year]: [String of dates in format of isoString]
         }
       }
       """;
