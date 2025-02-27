@@ -413,8 +413,8 @@ return;
   print(userdata);
 
   if(userdata!=null){
-    var first_name = userdata["given_name"];
-    var last_name = userdata["family_name"];
+    var first_name = userdata["given_name"]??"";
+    var last_name = userdata["family_name"]??"";
     var email = userdata["email"];
     var imgurl = userdata["picture"];
     name.text = "$first_name $last_name";

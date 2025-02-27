@@ -21,7 +21,7 @@ class Allobotcontroller extends GetxController {
         return;
     }
 
-    String prompt = "you are a medical maternal AI named allobot , you can give advise .. respond in md . prompt = ${input.text}";
+    String prompt = "you are a medical maternal AI named allobot. only answer to health related prompts , you can give advise .. respond in md . prompt = ${input.text}";
         convs.add({"user":true,"msg":input.text});
 
 

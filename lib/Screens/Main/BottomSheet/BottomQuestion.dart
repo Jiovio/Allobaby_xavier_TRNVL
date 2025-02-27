@@ -43,7 +43,6 @@ children: [
           medicine(),
           sleepDuration(context),
           symptoms(context),
-          const Voicerecord()
           ]),
 
           Container(
@@ -78,27 +77,30 @@ children: [
                         
                         Visibility(
                             visible: controller.currpage<6,
-                          child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            // backgroundColor: PrimaryColor,
-                            textStyle: TextStyle(color: White),
-                          ),
-                          onPressed: () {
+                          child: 
+                          SizedBox()
+                          
+                          // ElevatedButton(
+                          // style: ElevatedButton.styleFrom(
+                          //   padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+                          //   shape: RoundedRectangleBorder(
+                          //       borderRadius: BorderRadius.circular(20)),
+                          //   // backgroundColor: PrimaryColor,
+                          //   textStyle: TextStyle(color: White),
+                          // ),
+                          // onPressed: () {
 
-                                                        controller.pageChanged(6);
-                            controller.update();
+                          //                               controller.pageChanged(6);
+                          //   controller.update();
 
 
-                            pageController.jumpToPage(6);
+                          //   pageController.jumpToPage(6);
 
                         
                                     
-                          },
-                          child: Icon(Icons.mic_none_rounded,color: White,),
-                                                ),
+                          // },
+                          // child: Icon(Icons.mic_none_rounded,color: White,),
+                          //                       ),
                         ),
 
                           // if(controller.currpage==5)

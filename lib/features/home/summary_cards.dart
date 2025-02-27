@@ -1,9 +1,13 @@
 import 'package:allobaby/API/Requests/CacheAPI.dart';
+import 'package:allobaby/API/Requests/Userapi.dart';
 import 'package:allobaby/API/local/Storage.dart';
 import 'package:allobaby/Config/Color.dart';
 import 'package:allobaby/Controller/AppointmentController.dart';
 import 'package:allobaby/Controller/MainController.dart';
+import 'package:allobaby/Screens/AI/allobotModal.dart';
+import 'package:allobaby/Screens/Main/BottomSheet/BottomQuestion.dart';
 import 'package:allobaby/Screens/Service/Appointment.dart';
+import 'package:allobaby/Screens/Service/MyAppointment.dart';
 import 'package:allobaby/features/home/summary/summaryfunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -88,7 +92,7 @@ class _HomePageSummaryState extends State<HomePageSummary> {
         enabled: loading,
         child: _buildSummaryCard(summary)),
       const SizedBox(height: 14),
-      // _buildAppointmentsDates(),
+      _buildAppointmentsDates(controller, context),
     ],
       );
   }
@@ -227,7 +231,7 @@ Widget _buildSummaryCard(String summary) {
   );
 }
 
-Widget _buildAppointmentsDates() {
+Widget _buildAppointmentsDates(Maincontroller controller, BuildContext context) {
   return Card(
     elevation: 2,
     shape: RoundedRectangleBorder(
@@ -292,8 +296,174 @@ Widget _buildAppointmentsDates() {
           //     ),
           //   );
           // }
+          
 
-          Container(
+        GestureDetector(
+          
+          onTap: () {
+            showModalBottomSheet(
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(12.0)),
+                        ),
+                        context: context,
+                        builder: (BuildContext context) => Container(
+                              height: Get.height / 2,
+                              child:  
+                              bottomQuestionSheet(context, 0),
+                              // Text("Hi")
+        
+        
+                            ));
+          },
+          
+          child: 
+        
+        Obx(() => Container(
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: BoxDecoration(
+            color: controller.todayScreeningCompleted.value ? Colors.green.shade50 : Colors.red.shade50,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 4,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                controller.todayScreeningCompleted.value 
+                    ? Icons.check_circle 
+                    : Icons.warning_rounded,
+                color: controller.todayScreeningCompleted.value 
+                    ? Colors.green.shade700 
+                    : Colors.red.shade700,
+                size: 24,
+              ),
+              SizedBox(width: 12),
+              Text(
+                controller.todayScreeningCompleted.value
+                    ? "Daily Screening Completed"
+                    : "Daily Screening Not Completed",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: controller.todayScreeningCompleted.value 
+                      ? Colors.green.shade700 
+                      : Colors.red.shade700,
+                ),
+              ),
+            ],
+          ),
+        )),),
+
+        SizedBox(height: 20,),
+
+
+        Container(
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        "Upcoming Appointments",
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+
+      SizedBox(height: 15,),
+      FutureBuilder(
+        future: Userapi.getpendingappointmentsfordisplay(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          
+          if (!snapshot.hasData || snapshot.data == null || snapshot.data!.length == 0) {
+            return emptyAppointments();
+          }
+          
+          final data = snapshot.data!;
+          
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.grey.shade300),
+            ),
+            child: ListView.separated(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: data.length,
+              separatorBuilder: (context, index) => Divider(height: 1),
+              itemBuilder: (context, index) {
+                // Format date from 2025-02-20 to 20-02-2025
+                final originalDate = data[index]["appointment_date"];
+                final formattedDate = formatDate(originalDate);
+                
+                return ListTile(
+  
+
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  leading: CircleAvatar(
+                    backgroundColor: Theme.of(context).primaryColor.withOpacity(0.2),
+                    child: Icon(
+                      Icons.calendar_today,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  title: Text(
+                    formattedDate,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Icon(Icons.access_time, size: 16, color: Colors.grey),
+                          SizedBox(width: 4),
+                          Text("${data[index]["start_time"]} to ${data[index]["end_time"]}"),
+                        ],
+                      ),
+                    ],
+                  ),
+                  trailing: Icon(Icons.arrow_forward_ios, size: 14),
+                  onTap: () {
+                    Get.to(()=> MyAppointment());
+                  },
+                );
+              },
+            ),
+          );
+        },
+      ),
+    ],
+  ),
+)
+
+
+
+
+        ],
+      ),
+    ),
+  );
+}
+
+
+emptyAppointments() {
+  return           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
             decoration: BoxDecoration(
@@ -322,155 +492,17 @@ Widget _buildAppointmentsDates() {
                 ),
               ],
             ),
-          ),
+          );
+}
 
-          // ...dates.entries.map((entry) {
-          //   return Column(
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       Padding(
-          //         padding: const EdgeInsets.only(top: 12, bottom: 6, left: 2),
-          //         child: Text(
-          //           entry.key,
-          //           style: TextStyle(
-          //             fontSize: 15,
-          //             fontWeight: FontWeight.bold,
-          //             color: PrimaryColor,
-          //           ),
-          //         ),
-          //       ),
-
-          //       GetBuilder<AppointmentController>(
-          //         init: AppointmentController(),
-
-          //         builder: (controller) =>  Wrap(
-          //           spacing: 8,
-          //           runSpacing: 8,
-          //           children: entry.value.map((dateStr) {
-          //             DateTime? date;
-          //             try {
-          //               date = DateTime.parse(dateStr);
-          //               print(date.compareTo(DateTime.now()));
-          //             } catch (e) {
-          //               print('Error parsing date: $dateStr');
-          //               return const SizedBox.shrink();
-          //             }
-                      
-          //             return 
-          //             Card(
-          //                 elevation: 1,
-          //                 margin: const EdgeInsets.only(bottom: 8),
-          //                 shape: RoundedRectangleBorder(
-          //                   borderRadius: BorderRadius.circular(10),
-          //                   side: BorderSide(
-          //                     color: date.compareTo(DateTime.now()) < 1 ? Colors.grey.withOpacity(0.2) : Colors.green.withOpacity(0.7),
-          //                     width: 1,
-          //                   ),
-          //                 ),
-          //                 child: 
-                          
-          //                 InkWell(
-          //                   borderRadius: BorderRadius.circular(10),
-          //                   highlightColor: Colors.green.withOpacity(0.05),
-          //                   splashColor: Colors.green.withOpacity(0.1),
-          //                   onTap: () => {},
-          //                   child: Padding(
-          //                     padding: const EdgeInsets.symmetric(
-          //                         vertical: 10, horizontal: 12),
-          //                     child: Row(
-          //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //                       children: [
-          //                         Container(
-          //                           padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
-          //                           decoration: BoxDecoration(
-          //                             color: Colors.green.withOpacity(0.08),
-          //                             borderRadius: BorderRadius.circular(8),
-          //                           ),
-          //                           child: Column(
-          //                             children: <Widget>[
-          //                               Text(
-          //                                 DateFormat('MMM').format(date),
-          //                                 style: TextStyle(
-          //                                   color: Colors.green.shade700,
-          //                                   fontSize: 12,
-          //                                   fontWeight: FontWeight.w500,
-          //                                 ),
-          //                               ),
-          //                               const SizedBox(height: 2),
-          //                               Text(
-          //                                 DateFormat('d').format(date),
-          //                                 style: TextStyle(
-          //                                   color: Colors.green.shade700,
-          //                                   fontSize: 18,
-          //                                   fontWeight: FontWeight.w700,
-          //                                 ),
-          //                               ),
-          //                             ],
-          //                           ),
-          //                         ),
-                                  
-          //                     const SizedBox(width: 12),           
-                  
-          //                     if(date.compareTo(DateTime.now())<1) 
-          //                       Container(
-          //                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-          //                         decoration: BoxDecoration(
-          //                           color: Colors.grey.withOpacity(0.08),
-          //                           borderRadius: BorderRadius.circular(6),
-          //                         ),
-          //                         child: Text(
-          //                           "Date Passed",
-          //                           style: TextStyle(
-          //                             fontSize: 13,
-          //                             color: Colors.grey.shade600,
-          //                             fontWeight: FontWeight.w500,
-          //                           ),
-          //                         ),
-          //                       ) 
-          //                     else
-          //                     Expanded(
-          //                       child: Center(
-          //                         child: ElevatedButton(
-          //                           onPressed: () {
-          //                             controller.selDate = date;
-          //                             controller.dateController.text = DateFormat('dd-MM-yyyy').format(date as DateTime);
-          //                             Get.to(Appointment());
-          //                           },
-          //                           style: ElevatedButton.styleFrom(
-          //                             backgroundColor: PrimaryColor,
-          //                             foregroundColor: White,
-          //                             shape: RoundedRectangleBorder(
-          //                               borderRadius: BorderRadius.circular(8),
-          //                             ),
-          //                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          //                             elevation: 1,
-          //                             minimumSize: const Size(10, 34),
-          //                           ),
-          //                           child: Text(
-          //                             "Book Appointment".tr,
-          //                             style: const TextStyle(
-          //                               fontSize: 13,
-          //                               fontWeight: FontWeight.w600,
-          //                             ),
-          //                           ),
-          //                         ),
-          //                       ),
-          //                     ),
-                                
-          //                       ],
-          //                     ),
-          //                   ),
-          //                 ),
-          //               );
-          //           }).toList(),
-          //         ),
-          //       ),
-          //       const SizedBox(height: 8),
-          //     ],
-          //   );
-          // }).toList(),
-        ],
-      ),
-    ),
-  );
+String formatDate(String inputDate) {
+  try {
+    final parts = inputDate.split('-');
+    if (parts.length == 3) {
+      return "${parts[2]}-${parts[1]}-${parts[0]}";
+    }
+  } catch (e) {
+    print("Error formatting date: $e");
+  }
+  return inputDate; // Return original if formatting fails
 }

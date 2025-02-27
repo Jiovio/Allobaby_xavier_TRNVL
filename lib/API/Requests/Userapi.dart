@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:allobaby/API/Requests/HospitalAPI.dart';
 import 'package:allobaby/API/authAPI.dart';
 import 'package:allobaby/API/local/Storage.dart';
+import 'package:allobaby/API/response.dart';
 import 'package:allobaby/Screens/Main/MainScreen.dart';
 import 'package:get/route_manager.dart';
 import 'package:localstorage/localstorage.dart';
@@ -172,5 +173,14 @@ class Userapi {
     }
   }
 
+      static Future<dynamic> getpendingappointmentsfordisplay() async {
+
+    final req = await getRequest("/appointment/upcomingshort");
+    
+    return req; 
+
+
+
+}
 
 }

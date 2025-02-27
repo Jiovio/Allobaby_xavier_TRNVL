@@ -30,11 +30,28 @@ class EditProfile extends StatelessWidget {
               icon: Icon(Icons.check),
               onPressed: () async {
 
+               
+
 
                 if(mainc.age.text.length>2){
                   showToast("Invalid Age , Please Enter Correct Age !",false);
                   return;
                 }
+
+
+                 if((mainc.pregnancyStatus == "Iam trying to conceive" || mainc.pregnancyStatus == "Iam pregnant") && (mainc.lmpDate.text.isEmpty || mainc.edDate.text.isEmpty)){
+                  showToast("Please Enter LMP and ED Date",false);
+                  return;
+                }
+
+
+                if(mainc.pregnancyStatus == "I have a baby" && mainc.deliveryDate.text.isEmpty){
+                  showToast("Please Enter Delivery Date",false);
+                  return;
+                }
+
+
+
               
 
                await mainc.updateProfile();

@@ -1,4 +1,5 @@
 import 'package:allobaby/API/authAPI.dart';
+import 'package:allobaby/Controller/MainController.dart';
 import 'package:allobaby/Screens/Home/Screening/Controllers/SelfScreeningController.dart';
 import 'package:allobaby/Screens/Home/Screening/SymptomsScreen.dart';
 import 'package:allobaby/Screens/Home/Screening/Vitals/Vitals.dart';
@@ -24,6 +25,9 @@ class SelfScreeningDetails extends StatefulWidget {
 class _SelfScreeningDetailsState extends State<SelfScreeningDetails> {
   Selfscreeningcontroller sc = Get.put(Selfscreeningcontroller());
 
+  Maincontroller mainc = Get.put(Maincontroller());
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,13 +43,52 @@ class _SelfScreeningDetailsState extends State<SelfScreeningDetails> {
           TextButton.icon(onPressed: (){
                   final d = widget.data.params;
 
+
+                  final appointmentData = {
+  "doctor": {
+    "id": 1,
+    "name": "VIJAYSU",
+    "profile_pic_url": "https: //firebasestorage.googleapis.com/v0/b/savemom-healthcare.appspot.com/o/Allolab%2F1%2Fprofilepic%2Fl2024-12-22T12%3A28%3A35.061207.jpg?alt=media&token=d5a740c4-29dd-4808-808c-0dd4f4bb5d2f"
+  },
+  "id": 36,
+  "appointment_date": "2025-03-07",
+  "start_time": "14: 00: 00",
+  "end_time": "14: 30: 00",
+  "status": "Approved",
+  "reason": "Hello",
+
+  "healthStatus": "Normal",
+  "checkup_date": "2025-02-27T02: 20: 16.557215",
+  "summary":""" Patientis28weekspregnantwithmildanemia,
+  fatigue,
+  andbackpain.Requiresincreasedrestwithscheduledbreaksthroughouttheday.Takeprescribedferroussulfateandprenatalvitaminsdaily.Avoidprolongedstandingandstrenuousactivities.Maintainhydrationandiron-richdiet.Follow-upintwoweeksforhemoglobintest.""",
+  "prescription": [
+    {
+      "id": 1,
+      "units": 4,
+      "Timings":""" Morning,
+      Evening""",
+      "tablets": "Paracetamol"
+    }
+  ],
+  "next_appointment_date": null,
+  "labrequest": [
+    "ECG",
+    "BloodTest"
+  ]
+};
+
                         Get.to(()=> MedicalReportPage(
                       reportData: d,
-                      patientId: "Vijay",
-                      doctorDetails: {
-                        "name": "Dr. Jane Smith",
-                        "specialization": "General Medicine",
-                        "license": "MED12345"
+                      patientId: mainc.name.text,
+                      appointmentDetails: appointmentData,
+
+                      userDetails: {
+                        "name": mainc.name,
+                        "pregnancyStatus":mainc.pregnancyStatus.text,
+                        "bloodGroup" : mainc.bloodGroup,
+                        "age" : mainc.age.text
+
                       },
 
                       date : widget.data.created!

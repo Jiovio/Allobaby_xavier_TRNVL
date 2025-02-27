@@ -81,30 +81,30 @@ class _MyHospitalState extends State<MyHospital> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.local_hospital, color: Black800),
-            onPressed: () {},
-          )
+          // IconButton(
+          //   icon: Icon(Icons.local_hospital, color: Black800),
+          //   onPressed: () {},
+          // )
         ],
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: "Search hospitals...",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              onChanged: (value) {
-                _searchHospitals(value);
-              },
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(16.0),
+          //   child: TextField(
+          //     controller: _searchController,
+          //     decoration: InputDecoration(
+          //       hintText: "Search hospitals...",
+          //       prefixIcon: Icon(Icons.search),
+          //       border: OutlineInputBorder(
+          //         borderRadius: BorderRadius.circular(10),
+          //       ),
+          //     ),
+          //     onChanged: (value) {
+          //       _searchHospitals(value);
+          //     },
+          //   ),
+          // ),
           Expanded(
             child: _isLoading || _isSearching
                 ? Center(child: CircularProgressIndicator())

@@ -394,18 +394,18 @@ class _ChatState extends State<Chat> {
                         size: 30.0,
                       ),
                     ),
-                    IconButton(
-                      onPressed: () async {
-                      //  widget.title == 'Doctor' ? await urlLauncher.launch('tel:04523500629') : await urlLauncher.launch('tel:04523500630');
-                      print(widget.p2);
+                    // IconButton(
+                    //   onPressed: () async {
+                    //   //  widget.title == 'Doctor' ? await urlLauncher.launch('tel:04523500629') : await urlLauncher.launch('tel:04523500630');
+                    //   print(widget.p2);
                       
-                      },
-                      icon: Icon(
-                        Icons.phone,
-                        color: PrimaryColor,
-                        size: 30.0,
-                      ),
-                    ),
+                    //   },
+                    //   icon: Icon(
+                    //     Icons.phone,
+                    //     color: PrimaryColor,
+                    //     size: 30.0,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

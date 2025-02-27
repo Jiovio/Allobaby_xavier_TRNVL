@@ -189,7 +189,9 @@ class _SelfScreeningState extends State<SelfScreening> {
                           ),
                           onPressed: () {
 
-                            showDialog(context: context, 
+                            showDialog(
+                              
+                              context: context, 
                             
                             builder:(context) => 
                             
@@ -226,7 +228,43 @@ class _SelfScreeningState extends State<SelfScreening> {
 
                       if(i==6)
                       ElevatedButton(onPressed: () {
-                        Get.back();
+
+
+                        showDialog(
+                              
+                              context: context, 
+                            
+                            builder:(context) => 
+                            
+                            AlertDialog(
+                              title:const Text("Confirm"),
+                              content: const Text("Choose Yes to Save the Data"),
+
+                              actions: [
+                                TextButton(
+    child:const Text("Cancel"),
+    onPressed:  () {
+      Navigator.pop(context);
+    },
+  ),
+
+
+  TextButton(
+    child:const Text("Finish"),
+    onPressed:  () { 
+      Navigator.pop(context);
+
+    pg.nextPage(duration: const Duration(milliseconds: 300),curve: Curves.linear);
+    submit(i); 
+    Get.back();
+    
+    },
+  )
+                              ],
+                            ),);
+
+
+                        
                         
                       }, 
                       child: Text("Finish".tr),)

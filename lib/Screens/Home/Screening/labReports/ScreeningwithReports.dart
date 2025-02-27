@@ -36,9 +36,14 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
+
+
         title: Text("Self Screening".tr),
 
-        actions: [IconButton(onPressed: ()async {
+        actions: [
+          
+          
+          TextButton.icon(onPressed: ()async {
 
           bool sympsub = sc.symptomsUploaded;
           bool vitsub = sc.vitalsUploaded;
@@ -67,7 +72,9 @@ class _ScreeningWithReportsState extends State<ScreeningWithReports> {
           sc.update();
 
 
-        }, icon: Icon(Icons.list))],
+        }, icon: const Icon(Icons.history),
+        label: Text("History".tr),
+        )],
       ),
 
       body: SingleChildScrollView(

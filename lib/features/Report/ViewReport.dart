@@ -300,7 +300,8 @@ Widget _buildDetailItem({required String key, required String value}) {
           children: [
             InteractiveViewer(
               child: Center(
-                child: Image.network(reportDetails['imageurl']),
+                child: reportDetails['imageurl'] !=null ? Image.network(reportDetails['imageurl']):
+                Text("Image Not Uploaded"),
               ),
             ),
             Positioned(

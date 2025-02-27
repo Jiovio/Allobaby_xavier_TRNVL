@@ -66,7 +66,9 @@ Widget emojis(int index) {
                   ? RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       side: BorderSide(color: PrimaryColor, width: 1.5))
-                  : null,
+                  : RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      side: BorderSide(color: Colors.grey, width: 1.5)),
               textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
           onPressed: () {
             controller.setBottomSheetData("feeling",val);

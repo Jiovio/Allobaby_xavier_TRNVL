@@ -15,15 +15,17 @@ import 'package:permission_handler/permission_handler.dart';
 class MedicalReportPage extends StatefulWidget {
   final Map<String, dynamic> reportData;
   final String patientId;
-  final Map<String, String> doctorDetails;
+  final Map<String, dynamic> appointmentDetails; // Changed to dynamic to match your data structure
   final DateTime date;
+  final Map<String, dynamic> userDetails;
 
   const MedicalReportPage({
     Key? key,
     required this.reportData,
     required this.patientId,
-    required this.doctorDetails,
-    required this.date
+    required this.appointmentDetails,
+    required this.date,
+    required this.userDetails
   }) : super(key: key);
 
   @override
@@ -31,70 +33,33 @@ class MedicalReportPage extends StatefulWidget {
 }
 
 class _MedicalReportPageState extends State<MedicalReportPage> {
+  bool loading = true;
+  String summary = "No Summary Available";
 
+  void generateSummary() async {
+    String prompt = "data : ${json.encode(widget.reportData)} . summarize this data in 100 words..";
 
-    // Extract data from the report
-
-    bool loading = true;
-
-
-    String summary = "No Summary Available";
-
-    void generateSummary() async {
-
-
-
-      // loading = false;
-
-      // setState(() {
-        
-      // });
-
-      // return;
-
-      String prompt = "data : ${json.encode(widget.reportData)} . summarize this data in 100 words..";
-
-      try {
-
+    try {
       String? summ = await OurFirebase.getTextResonse(prompt);
-
       print(summ);
-
       summary = summ ?? "No Report Available";
-        
-      } catch (e) {
-
-        Fluttertoast.showToast(msg: "Network Error");
-        
-      }
-
-
-
-
-      loading = false;
-
-
-      setState(() {
-        
-      });
-
-
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Network Error");
     }
 
+    loading = false;
+    setState(() {});
+  }
 
-    @override
-    void initState(){
-      super.initState();
-
-      generateSummary();
-    }
-
+  @override
+  void initState() {
+    super.initState();
+    generateSummary();
+  }
 
   @override
   Widget build(BuildContext context) {
-
-
-        final symptoms = widget.reportData['symptoms'] == null ? null : widget.reportData['symptoms'] as List<dynamic> ;
+    final symptoms = widget.reportData['symptoms'] == null ? null : widget.reportData['symptoms'] as List<dynamic>;
     final vitals = widget.reportData['vitals'] == null ? null : widget.reportData['vitals'] as Map<String, dynamic>;
     final hemoglobinValue = widget.reportData['hemoglobinValue'];
     final alphaminePresent = widget.reportData['alphaminePresent'];
@@ -110,17 +75,13 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
       appBar: AppBar(
         title: const Text('Self Screening Report'),
         actions: [
-          // IconButton(
-          //   icon: const Icon(Icons.picture_as_pdf),
-          //   onPressed: () async {
-          //     await _generateAndDownloadPDF(context);
-          //   },
-          // ),
           IconButton(
             icon: const Icon(Icons.share),
             onPressed: () async {
               // Generate and share PDF
               final pdfFile = await _generatePDF();
+
+              print(pdfFile);
               if (pdfFile != null) {
                 await Share.shareXFiles([XFile(pdfFile.path)], text: 'Medical Report');
               }
@@ -147,21 +108,25 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
                 _buildInfoSection(context),
                 
                 const SizedBox(height: 20),
-        
-                              // AI Summary
+                
+                // Appointment Details
+                _buildAppointmentDetails(context),
+                
+                const SizedBox(height: 20),
+                
+                // AI Summary
                 _buildAISummary(summary),
                 
                 const SizedBox(height: 20),
                 
                 // Symptoms
-                if(symptoms!=null)
+                if(symptoms != null)
                 _buildSection(
                   title: 'Symptoms',
                   child: Wrap(
                     spacing: 8,
                     children: symptoms.map((symptom) => Chip(
                       label: Text(symptom),
-                      // backgroundColor: Colors.blue.shade100,
                     )).toList(),
                   ),
                 ),
@@ -169,19 +134,34 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
                 const SizedBox(height: 20),
                 
                 // Vital Signs
-                if(vitals!=null)
+                if(vitals != null)
                 _buildSection(
                   title: 'Vital Signs',
                   child: Column(
                     children: [
-                      _buildVitalRow('Blood Pressure', '${vitals['bloodPressureH']}/${vitals['bloodPressureL']} mmHg'),
-                      _buildVitalRow('Temperature', '${vitals['temperature']} ${vitals['temperatureMetric']}'),
-                      _buildVitalRow('Blood Saturation (Before/After Walking)', '${vitals['bloodSaturationBW']}% / ${vitals['bloodSaturationAW']}%'),
-                      _buildVitalRow('Heart Rate (Before/After Walking)', '${vitals['heartRateBW']} / ${vitals['heartRateAW']} bpm'),
-                      _buildVitalRow('BMI Details', 'Height: ${vitals['bmiHeight']} cm, Weight: ${vitals['bmiWeight']} kg'),
-                      _buildVitalRow('Respiratory Rate', '${vitals['respiratoryRate']} breaths/min'),
-                      _buildVitalRow('Hemoglobin', '${vitals['hB']} g/dL'),
-                      _buildVitalRow('Blood Glucose (Before/After Food)', '${vitals['bloodGlucoseBF']} / ${vitals['bloodGlucoseAF']} mg/dL'),
+                      if(vitals['bloodPressureH'] != null && vitals['bloodPressureL'] != null)
+                        _buildVitalRow('Blood Pressure', '${vitals['bloodPressureH']}/${vitals['bloodPressureL']} mmHg'),
+
+                      if(vitals['temperature'] != null && vitals['temperatureMetric'] != null)
+                        _buildVitalRow('Temperature', '${vitals['temperature']} ${vitals['temperatureMetric']}'),
+
+                      if(vitals['bloodSaturationBW'] != null && vitals['bloodSaturationAW'] != null)
+                        _buildVitalRow('Blood Saturation (Before/After Walking)', '${vitals['bloodSaturationBW']}% / ${vitals['bloodSaturationAW']}%'),
+
+                      if(vitals['heartRateBW'] != null && vitals['heartRateAW'] != null)
+                        _buildVitalRow('Heart Rate (Before/After Walking)', '${vitals['heartRateBW']} / ${vitals['heartRateAW']} bpm'),
+
+                      if(vitals['bmiHeight'] != null && vitals['bmiWeight'] != null)
+                        _buildVitalRow('BMI Details', 'Height: ${vitals['bmiHeight']} cm, Weight: ${vitals['bmiWeight']} kg'),
+
+                      if(vitals['respiratoryRate'] != null)
+                        _buildVitalRow('Respiratory Rate', '${vitals['respiratoryRate']} breaths/min'),
+
+                      if(vitals['hB'] != null)
+                        _buildVitalRow('Hemoglobin', '${vitals['hB']} g/dL'),
+
+                      if(vitals['bloodGlucoseBF'] != null && vitals['bloodGlucoseAF'] != null)
+                        _buildVitalRow('Blood Glucose (Before/After Food)', '${vitals['bloodGlucoseBF']} / ${vitals['bloodGlucoseAF']} mg/dL'),
                     ],
                   ),
                 ),
@@ -193,9 +173,12 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
                   title: 'Additional Tests',
                   child: Column(
                     children: [
-                      _buildVitalRow('Hemoglobin Value', '${hemoglobinValue?? "Not Provided"} g/dL'),
-                      _buildVitalRow('Sugar Present', sugarPresent?? "Not Provided"),
-                      _buildVitalRow('Glucose', '${glucose ?? "Not Provided"} mg/dL'),
+                      if(hemoglobinValue != null)
+                        _buildVitalRow('Hemoglobin Value', '${hemoglobinValue} g/dL'),
+                      if(sugarPresent != null)
+                        _buildVitalRow('Sugar Present', sugarPresent),
+                      if(glucose != null)
+                        _buildVitalRow('Glucose', '${glucose} mg/dL'),
                     ],
                   ),
                 ),
@@ -207,36 +190,29 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
                   title: 'Fetal Assessment',
                   child: Column(
                     children: [
-                      _buildVitalRow('Kick Count', '${kickCount??"Not Provided"}'),
-                      _buildVitalRow('Heart Rate', '${heartRate??"Not Provided"} bpm'),
-                      _buildVitalRow('Fetal Presentation', fetalPresentation??"Not Provided"),
-                      _buildVitalRow('Fetal Movement', fetalMovement??"Not Provided"),
-                      _buildVitalRow('Placenta', placenta??"Not Provided"),
+                      if(kickCount != null)
+                        _buildVitalRow('Kick Count', '${kickCount}'),
+                      if(heartRate != null)
+                        _buildVitalRow('Heart Rate', '${heartRate} bpm'),
+                      if(fetalPresentation != null)
+                        _buildVitalRow('Fetal Presentation', fetalPresentation),
+                      if(fetalMovement != null)
+                        _buildVitalRow('Fetal Movement', fetalMovement),
+                      if(placenta != null)
+                        _buildVitalRow('Placenta', placenta),
                     ],
                   ),
                 ),
                 
                 const SizedBox(height: 30),
                 
-        
+                // Prescription Section
+                _buildPrescriptionSection(context),
                 
-        
+                const SizedBox(height: 20),
                 
-                // const SizedBox(height: 40),
-                
-                // // PDF Download Button
-                // Center(
-                //   child: ElevatedButton.icon(
-                //     icon: const Icon(Icons.download),
-                //     label: const Text('Download PDF Report'),
-                //     style: ElevatedButton.styleFrom(
-                //       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                //     ),
-                //     onPressed: () async {
-                //       await _generateAndDownloadPDF(context);
-                //     },
-                //   ),
-                // ),
+                // Lab Requests Section
+                _buildLabRequestsSection(context),
               ],
             ),
           ),
@@ -249,20 +225,6 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: [
-        //     Icon(Icons.local_hospital, size: 32, color: Theme.of(context).primaryColor),
-        //     const SizedBox(width: 10),
-        //     Text(
-        //       'Medical Center',
-        //       style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-        //         fontWeight: FontWeight.bold,
-        //         color: Theme.of(context).primaryColor,
-        //       ),
-        //     ),
-        //   ],
-        // ),
         const SizedBox(height: 8),
         Text(
           'Self Screening Report',
@@ -299,7 +261,13 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
                   ),
                   const SizedBox(height: 8),
                   Text('Patient Name: ${widget.patientId}'),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 8),
+                  Text('Patient Age: ${widget.userDetails["age"]}'),
+                  const SizedBox(height: 8),
+                  Text('Blood Group: ${widget.userDetails["bloodGroup"]}'),
+                  const SizedBox(height: 8),
+                  Text('Pregnancy Status: ${widget.userDetails["pregnancyStatus"]}'),
+                  const SizedBox(height: 8),
                   Text('BMI: ${_calculateBMI().toStringAsFixed(1)}'),
                 ],
               ),
@@ -307,35 +275,172 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
           ),
         ),
         const SizedBox(width: 16),
-
-        Expanded(child: Container(),)
-        // Expanded(
-        //   child: Card(
-        //     elevation: 2,
-        //     child: Padding(
-        //       padding: const EdgeInsets.all(12.0),
-        //       child: Column(
-        //         crossAxisAlignment: CrossAxisAlignment.start,
-        //         children: [
-        //           const Text(
-        //             'Doctor Information',
-        //             style: TextStyle(
-        //               fontWeight: FontWeight.bold,
-        //               fontSize: 16,
-        //             ),
-        //           ),
-        //           const SizedBox(height: 8),
-        //           Text('Name: ${doctorDetails['name']}'),
-        //           const SizedBox(height: 4),
-        //           Text('Specialization: ${doctorDetails['specialization']}'),
-        //           const SizedBox(height: 4),
-        //           Text('License: ${doctorDetails['license']}'),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // ),
       ],
+    );
+  }
+
+  Widget _buildAppointmentDetails(BuildContext context) {
+    return Card(
+      elevation: 3,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.calendar_today, color: Theme.of(context).primaryColor),
+                const SizedBox(width: 8),
+                const Text(
+                  'Appointment Details',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const Divider(),
+            
+            // Get data safely with null checks
+            if(widget.appointmentDetails['doctor'] != null && widget.appointmentDetails['doctor']['name'] != null)
+              _buildAppointmentRow('Doctor', widget.appointmentDetails['doctor']['name']),
+              
+            if(widget.appointmentDetails['appointment_date'] != null)
+              _buildAppointmentRow('Appointment Date', widget.appointmentDetails['appointment_date']),
+              
+            if(widget.appointmentDetails['start_time'] != null && widget.appointmentDetails['end_time'] != null)
+              _buildAppointmentRow('Time', '${widget.appointmentDetails['start_time']} - ${widget.appointmentDetails['end_time']}'),
+              
+            if(widget.appointmentDetails['status'] != null)
+              _buildAppointmentRow('Status', widget.appointmentDetails['status']),
+              
+            if(widget.appointmentDetails['reason'] != null)
+              _buildAppointmentRow('Reason', widget.appointmentDetails['reason']),
+              
+            if(widget.appointmentDetails['healthStatus'] != null)
+              _buildAppointmentRow('Health Status', widget.appointmentDetails['healthStatus']),
+              
+            if(widget.appointmentDetails['summary'] != null)
+              _buildAppointmentRow('Doctor\'s Summary', _formatSummary(widget.appointmentDetails['summary'])),
+              
+            if(widget.appointmentDetails['next_appointment_date'] != null)
+              _buildAppointmentRow('Next Appointment', widget.appointmentDetails['next_appointment_date']),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPrescriptionSection(BuildContext context) {
+    // Check if prescription data exists
+    if (widget.appointmentDetails['prescription'] == null || 
+        !(widget.appointmentDetails['prescription'] is List) || 
+        (widget.appointmentDetails['prescription'] as List).isEmpty) {
+      return Container(); // Return empty container if no prescription data
+    }
+    
+    return Card(
+      elevation: 3,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.medication, color: Theme.of(context).primaryColor),
+                const SizedBox(width: 8),
+                const Text(
+                  'Prescribed Medications',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const Divider(),
+            const SizedBox(height: 8),
+            
+            Column(
+              children: (widget.appointmentDetails['prescription'] as List).map<Widget>((med) {
+                // Handle different possible data structures
+                if (med is Map) {
+                  return Container(
+                    padding: const EdgeInsets.all(8),
+                    margin: const EdgeInsets.only(bottom: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Medication: ${med['tablets'] ?? 'Unknown'}', 
+                          style: const TextStyle(fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 4),
+                        Text('Units per dose: ${med['units'] ?? 'Not specified'}'),
+                        const SizedBox(height: 4),
+                        Text('Timings: ${med['Timings'] ?? 'Not specified'}'),
+                      ],
+                    ),
+                  );
+                } else {
+                  return ListTile(title: Text(med.toString()));
+                }
+              }).toList(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLabRequestsSection(BuildContext context) {
+    // Check if lab requests data exists
+    if (widget.appointmentDetails['labrequest'] == null || 
+        !(widget.appointmentDetails['labrequest'] is List) || 
+        (widget.appointmentDetails['labrequest'] as List).isEmpty) {
+      return Container(); // Return empty container if no lab request data
+    }
+    
+    return Card(
+      elevation: 3,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.science, color: Theme.of(context).primaryColor),
+                const SizedBox(width: 8),
+                const Text(
+                  'Lab Tests Requested',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const Divider(),
+            const SizedBox(height: 8),
+            
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: (widget.appointmentDetails['labrequest'] as List).map<Widget>((test) {
+                return Chip(
+                  label: Text(test.toString()),
+                  backgroundColor: Colors.blue.shade100,
+                );
+              }).toList(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -384,17 +489,37 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
     );
   }
 
+  Widget _buildAppointmentRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            value,
+            style: const TextStyle(fontSize: 14),
+          ),
+          const SizedBox(height: 4),
+        ],
+      ),
+    );
+  }
+
   Widget _buildAISummary(String summary) {
     return Card(
       elevation: 3,
-      // color: Colors.blue.shade50,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-           const Row(
-              children: const [
+            const Row(
+              children: [
                 Icon(Icons.psychology, color: Colors.black),
                 SizedBox(width: 8),
                 Text(
@@ -410,7 +535,6 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
             const Divider(),
             const SizedBox(height: 8),
             Text(
-              // _generateAISummary(),
               summary,
               style: const TextStyle(fontSize: 15),
             ),
@@ -420,129 +544,42 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
     );
   }
 
-  Widget _buildSignatureSection() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              width: 150,
-              height: 1,
-              color: Colors.black,
-            ),
-            const SizedBox(height: 4),
-            const Text('Doctor\'s Signature'),
-          ],
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              width: 150,
-              height: 1,
-              color: Colors.black,
-            ),
-            const SizedBox(height: 4),
-            const Text('Patient\'s Signature'),
-          ],
-        ),
-      ],
+  double _calculateBMI() {
+    if(widget.reportData.containsKey("vitals")
+      && widget.reportData["vitals"].containsKey("bmiHeight")
+      && widget.reportData["vitals"].containsKey("bmiWeight")
+    ) {
+      double heightInMeters = ((widget.reportData['vitals']['bmiHeight']) ?? 100) / 100;
+      double weightInKg = widget.reportData['vitals']['bmiWeight'];
+      return weightInKg / (heightInMeters * heightInMeters);
+    }
+    return 0.0;
+  }
+
+  // Helper method to format the summary text by adding spaces
+  String _formatSummary(String rawSummary) {
+    // This will format the summary by adding spaces between words if they're concatenated
+    if (rawSummary == null) return "No summary available";
+    
+    // Regular expression to add spaces between words
+    return rawSummary.replaceAllMapped(
+      RegExp(r'([a-z])([A-Z])'),
+      (match) => '${match.group(1)} ${match.group(2)}'
     );
   }
 
-  double _calculateBMI() {
-
-      if(widget.reportData.containsKey("vitals")
-      && widget.reportData["vitals"].containsKey("bmiHeight")
-      && widget.reportData["vitals"].containsKey("bmiWeight")
-      ){
-
-            double heightInMeters = ((widget.reportData['vitals']['bmiHeight']) ?? 100) / 100;
-    double weightInKg = widget.reportData['vitals']['bmiWeight'];
-    return weightInKg / (heightInMeters * heightInMeters);
-
-
-      }
-
-      return 0.0;
-
-
-  }
-
-  // String _generateAISummary() {
-  //   // Get necessary values
-  //     final symptoms = widget.reportData['symptoms'] == null ? null : widget.reportData['symptoms'] as List<dynamic> ;
-  //   final vitals = widget.reportData['vitals'] == null ? null : widget.reportData['vitals'] as Map<String, dynamic>;
-  //   final bloodPressureH = vitals?['bloodPressureH'];
-  //   final bloodPressureL = vitals?['bloodPressureL'];
-  //   final temperature = vitals?['temperature'];
-  //   final bloodGlucoseBF = vitals?['bloodGlucoseBF'];
-  //   final sugarPresent = widget.reportData['sugarPresent'];
-    
-  //   // Generate summary
-  //   String summary = "Based on the examination, the patient is presenting with ";
-
-  //   if(symptoms!=null){
-  //     summary += symptoms.join(", ") + ". ";
-  //   }
-    
-    
-  //   // Blood pressure assessment
-  //   if (bloodPressureH >= 120 && bloodPressureH < 130 && bloodPressureL < 80) {
-  //     summary += "Blood pressure is elevated. ";
-  //   } else if (bloodPressureH >= 130 || bloodPressureL >= 80) {
-  //     summary += "Blood pressure readings indicate hypertension. ";
-  //   } else if (bloodPressureH < 90 || bloodPressureL < 60) {
-  //     summary += "Blood pressure is on the lower side. ";
-  //   } else {
-  //     summary += "Blood pressure is within normal range. ";
-  //   }
-    
-  //   // Temperature assessment
-  //   if (temperature < 36.5) {
-  //     summary += "Body temperature is below normal. ";
-  //   } else if (temperature > 37.5) {
-  //     summary += "Patient is presenting with fever. ";
-  //   } else {
-  //     summary += "Temperature is normal. ";
-  //   }
-    
-  //   // Blood glucose assessment
-  //   if (bloodGlucoseBF > 140 || sugarPresent == "Yes") {
-  //     summary += "Blood glucose levels are elevated, suggesting the need for diabetes management. ";
-  //   }
-    
-  //   // Add recommendations
-  //   summary += "\n\nRecommendations: ";
-    
-  //   if (symptoms.contains("Body pain")) {
-  //     summary += "Consider pain management therapy. ";
-  //   }
-    
-  //   if (symptoms.contains("Burning Stomach")) {
-  //     summary += "Evaluate for gastrointestinal issues, possibly GERD or gastritis. ";
-  //   }
-    
-  //   if (symptoms.contains("Cold cough")) {
-  //     summary += "Symptomatic treatment for respiratory condition. ";
-  //   }
-    
-  //   if (bloodGlucoseBF > 140 || sugarPresent == "Yes") {
-  //     summary += "Regular blood glucose monitoring and dietary consultation recommended. ";
-  //   }
-    
-  //   return summary;
-  // }
-
-  // PDF Generation Functions
+  // PDF Functions
   Future<File?> _generatePDF() async {
     final pdf = pw.Document();
     
     // Get necessary data
-    final symptoms = widget.reportData['symptoms'] as List<dynamic>;
-    final vitals = widget.reportData['vitals'] as Map<String, dynamic>;
+    final symptoms = widget.reportData.containsKey('symptoms') 
+        ? (widget.reportData['symptoms'] as List<dynamic>?) ?? []
+        : <dynamic>[];
+    
+    final vitals = widget.reportData.containsKey('vitals')
+        ? (widget.reportData['vitals'] as Map<String, dynamic>?) ?? {}
+        : <String, dynamic>{};
     
     pdf.addPage(
       pw.MultiPage(
@@ -550,25 +587,11 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
         margin: const pw.EdgeInsets.all(32),
         build: (pw.Context context) {
           return [
-
             pw.Header(
               level: 0,
               child: pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.center,
                 children: [
-                  // pw.Row(
-                  //   mainAxisAlignment: pw.MainAxisAlignment.center,
-                  //   children: [
-                  //     pw.Text(
-                  //       'Medical Center',
-                  //       style: pw.TextStyle(
-                  //         fontSize: 24,
-                  //         fontWeight: pw.FontWeight.bold,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  // pw.SizedBox(height: 8),
                   pw.Text(
                     'Health Assessment Report',
                     style: pw.TextStyle(fontSize: 18),
@@ -585,7 +608,7 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
             
             pw.SizedBox(height: 20),
             
-            // Patient and Doctor Info
+            // Patient Info
             pw.Row(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
@@ -609,58 +632,64 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
                         pw.SizedBox(height: 8),
                         pw.Text('Patient ID: ${widget.patientId}'),
                         pw.SizedBox(height: 4),
+                        pw.Text('Patient Age: ${widget.userDetails["age"]}'),
+                        pw.SizedBox(height: 4),
+                        pw.Text('Blood Group: ${widget.userDetails["bloodGroup"]}'),
+                        pw.SizedBox(height: 4),
+                        pw.Text('Pregnancy Status: ${widget.userDetails["pregnancyStatus"]}'),
+                        pw.SizedBox(height: 4),
                         if(widget.reportData.containsKey("vitals"))
                         pw.Text('BMI: ${_calculateBMI().toStringAsFixed(1)}'),
                       ],
                     ),
                   ),
                 ),
-                // pw.SizedBox(width: 16),
-                // pw.Expanded(
-                //   child: pw.Container(
-                //     padding: const pw.EdgeInsets.all(10),
-                //     decoration: pw.BoxDecoration(
-                //       border: pw.Border.all(),
-                //       borderRadius: pw.BorderRadius.circular(5),
-                //     ),
-                //     child: pw.Column(
-                //       crossAxisAlignment: pw.CrossAxisAlignment.start,
-                //       children: [
-                //         pw.Text(
-                //           'Doctor Information',
-                //           style: pw.TextStyle(
-                //             fontWeight: pw.FontWeight.bold,
-                //             fontSize: 14,
-                //           ),
-                //         ),
-                //         pw.SizedBox(height: 8),
-                //         pw.Text('Name: ${widget.doctorDetails['name']}'),
-                //         pw.SizedBox(height: 4),
-                //         pw.Text('Specialization: ${widget.doctorDetails['specialization']}'),
-                //         pw.SizedBox(height: 4),
-                //         pw.Text('License: ${widget.doctorDetails['license']}'),
-                //       ],
-                //     ),
-                //   ),
-                // ),
               ],
             ),
             
             pw.SizedBox(height: 20),
-
-
+            
+            // Appointment Details
+            _buildPDFSection(
+              title: 'Appointment Details',
+              child: pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  if(widget.appointmentDetails['doctor'] != null && widget.appointmentDetails['doctor']['name'] != null)
+                    _buildPDFDetailRow('Doctor', widget.appointmentDetails['doctor']['name']),
+                    
+                  if(widget.appointmentDetails['appointment_date'] != null)
+                    _buildPDFDetailRow('Appointment Date', widget.appointmentDetails['appointment_date']),
+                    
+                  if(widget.appointmentDetails['start_time'] != null && widget.appointmentDetails['end_time'] != null)
+                    _buildPDFDetailRow('Time', '${widget.appointmentDetails['start_time']} - ${widget.appointmentDetails['end_time']}'),
+                    
+                  if(widget.appointmentDetails['status'] != null)
+                    _buildPDFDetailRow('Status', widget.appointmentDetails['status']),
+                    
+                  if(widget.appointmentDetails['reason'] != null)
+                    _buildPDFDetailRow('Reason', widget.appointmentDetails['reason']),
+                    
+                  if(widget.appointmentDetails['healthStatus'] != null)
+                    _buildPDFDetailRow('Health Status', widget.appointmentDetails['healthStatus']),
+                    
+                  if(widget.appointmentDetails['summary'] != null)
+                    _buildPDFDetailRow('Doctor\'s Summary', _formatSummary(widget.appointmentDetails['summary'])),
+                    
+                  if(widget.appointmentDetails['next_appointment_date'] != null)
+                    _buildPDFDetailRow('Next Appointment', widget.appointmentDetails['next_appointment_date']),
+                ],
+              ),
+            ),
+            
+            pw.SizedBox(height: 20),
             
             // AI Summary
             _buildPDFSection(
               title: 'AI Summary',
               child: pw.Container(
                 padding: const pw.EdgeInsets.all(8),
-                // color: const PdfColor(0.9, 0.95, 1.0),
-                child: pw.Text(
-                  summary
-                  // _generateAISummary()
-                  
-                  ),
+                child: pw.Text(summary),
               ),
             ),
 
@@ -685,22 +714,37 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
             
             pw.SizedBox(height: 20),
             
-            if(widget.reportData.containsKey("vitals"))
-            _buildPDFSection(
-              title: 'Vital Signs',
-              child: pw.Column(
-                children: [
-                  _buildPDFVitalRow('Blood Pressure', '${['bloodPressureH']}/${vitals['bloodPressureL']} mmHg'),
-                  _buildPDFVitalRow('Temperature', '${vitals['temperature']} ${vitals['temperatureMetric']}'),
-                  _buildPDFVitalRow('Blood Saturation (Before/After Walking)', '${vitals['bloodSaturationBW']}% / ${vitals['bloodSaturationAW']}%'),
-                  _buildPDFVitalRow('Heart Rate (Before/After Walking)', '${vitals['heartRateBW']} / ${vitals['heartRateAW']} bpm'),
-                  _buildPDFVitalRow('BMI Details', 'Height: ${vitals['bmiHeight']} cm, Weight: ${vitals['bmiWeight']} kg'),
-                  _buildPDFVitalRow('Respiratory Rate', '${vitals['respiratoryRate']} breaths/min'),
-                  _buildPDFVitalRow('Hemoglobin', '${vitals['hB']} g/dL'),
-                  _buildPDFVitalRow('Blood Glucose (Before/After Food)', '${vitals['bloodGlucoseBF']} / ${vitals['bloodGlucoseAF']} mg/dL'),
-                ],
+            if(widget.reportData.containsKey("vitals")) 
+              _buildPDFSection(
+                title: 'Vital Signs',
+                child: pw.Column(
+                  children: [
+                    if(vitals['bloodPressureH'] != null && vitals['bloodPressureL'] != null)
+                      _buildPDFVitalRow('Blood Pressure', '${vitals['bloodPressureH']}/${vitals['bloodPressureL']} mmHg'),
+                    
+                    if(vitals['temperature'] != null && vitals['temperatureMetric'] != null)
+                      _buildPDFVitalRow('Temperature', '${vitals['temperature']} ${vitals['temperatureMetric']}'),
+                    
+                    if(vitals['bloodSaturationBW'] != null && vitals['bloodSaturationAW'] != null)
+                      _buildPDFVitalRow('Blood Saturation (Before/After Walking)', '${vitals['bloodSaturationBW']}% / ${vitals['bloodSaturationAW']}%'),
+                    
+                    if(vitals['heartRateBW'] != null && vitals['heartRateAW'] != null)
+                      _buildPDFVitalRow('Heart Rate (Before/After Walking)', '${vitals['heartRateBW']} / ${vitals['heartRateAW']} bpm'),
+                    
+                    if(vitals['bmiHeight'] != null && vitals['bmiWeight'] != null)
+                      _buildPDFVitalRow('BMI Details', 'Height: ${vitals['bmiHeight']} cm, Weight: ${vitals['bmiWeight']} kg'),
+                    
+                    if(vitals['respiratoryRate'] != null)
+                      _buildPDFVitalRow('Respiratory Rate', '${vitals['respiratoryRate']} breaths/min'),
+                    
+                    if(vitals['hB'] != null)
+                      _buildPDFVitalRow('Hemoglobin', '${vitals['hB']} g/dL'),
+                    
+                    if(vitals['bloodGlucoseBF'] != null && vitals['bloodGlucoseAF'] != null)
+                      _buildPDFVitalRow('Blood Glucose (Before/After Food)', '${vitals['bloodGlucoseBF']} / ${vitals['bloodGlucoseAF']} mg/dL'),
+                  ],
+                ),
               ),
-            ),
             
             pw.SizedBox(height: 20),
             
@@ -709,69 +753,132 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
               title: 'Additional Tests',
               child: pw.Column(
                 children: [
-                  _buildPDFVitalRow('Hemoglobin Value', '${widget.reportData['hemoglobinValue']??"No Provided"} g/dL'),
-                  _buildPDFVitalRow('Alphamine Present', widget.reportData['alphaminePresent']??"No Provided"),
-                  _buildPDFVitalRow('Sugar Present', widget.reportData['sugarPresent']??"No Provided"),
-                  _buildPDFVitalRow('Glucose', '${widget.reportData['glucose']??"No Provided"} mg/dL'),
+                  _buildPDFVitalRow('Hemoglobin Value', '${widget.reportData['hemoglobinValue'] ?? "No Data Provided"} ${widget.reportData['hemoglobinValue'] != null ? "g/dL" : ""}'),
+                  _buildPDFVitalRow('Alphamine Present', widget.reportData['alphaminePresent'] ?? "No Data Provided"),
+                  _buildPDFVitalRow('Sugar Present', widget.reportData['sugarPresent'] ?? "No Data Provided"),
+                  _buildPDFVitalRow('Glucose', '${widget.reportData['glucose'] ?? "No Data Provided"} ${widget.reportData['glucose'] != null ? "mg/dL" : ""}'),
                 ],
               ),
             ),
             
             pw.SizedBox(height: 20),
             
-            // Fetal Assessment
             _buildPDFSection(
               title: 'Fetal Assessment',
               child: pw.Column(
                 children: [
-                  _buildPDFVitalRow('Kick Count', '${widget.reportData['kickCount']??"No Provided"}'),
-                  _buildPDFVitalRow('Heart Rate', '${widget.reportData['heartRate']??"No Provided"} bpm'),
-                  _buildPDFVitalRow('Fetal Presentation', widget.reportData['fetalPresentation']??"No Provided"),
-                  _buildPDFVitalRow('Fetal Movement', widget.reportData['fetalMovement']??"No Provided"),
-                  _buildPDFVitalRow('Placenta', widget.reportData['placenta']??"No Provided"),
+                  _buildPDFVitalRow('Kick Count', '${widget.reportData['kickCount'] ?? "No Data Provided"}'),
+                  _buildPDFVitalRow('Heart Rate', '${widget.reportData['heartRate'] ?? "No Data Provided"} ${widget.reportData['heartRate'] != null ? "bpm" : ""}'),
+                  _buildPDFVitalRow('Fetal Presentation', widget.reportData['fetalPresentation'] ?? "No Data Provided"),
+                  _buildPDFVitalRow('Fetal Movement', widget.reportData['fetalMovement'] ?? "No Data Provided"),
+                  _buildPDFVitalRow('Placenta', widget.reportData['placenta'] ?? "No Data Provided"),
                 ],
               ),
             ),
             
-
+            pw.SizedBox(height: 20),
             
-            pw.SizedBox(height: 30),
-            
-            // Signature Section
-            // pw.Row(
-            //   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     pw.Column(
-            //       crossAxisAlignment: pw.CrossAxisAlignment.center,
-            //       children: [
-            //         pw.Container(
-            //           width: 150,
-            //           height: 1,
-            //           color: const PdfColor(0, 0, 0),
-            //         ),
-            //         pw.SizedBox(height: 4),
-            //         pw.Text('Doctor\'s Signature'),
-            //       ],
-            //     ),
-            //     pw.Column(
-            //       crossAxisAlignment: pw.CrossAxisAlignment.center,
-            //       children: [
-            //         pw.Container(
-            //           width: 150,
-            //           height: 1,
-            //           color: const PdfColor(0, 0, 0),
-            //         ),
-            //         pw.SizedBox(height: 4),
-            //         pw.Text('Patient\'s Signature'),
-            //       ],
-            //     ),
-            //   ],
-            // ),
-          ];
-        },
-      ),
+            // Prescribed Medications
+            if (widget.appointmentDetails['prescription'] != null && 
+                widget.appointmentDetails['prescription'] is List && 
+                (widget.appointmentDetails['prescription'] as List).isNotEmpty)
+              _buildPDFSection(
+                title: 'Prescribed Medications',
+                child: pw.Column(
+                  children: [
+                    pw.SizedBox(height: 8),
+                    pw.Table(
+                      border: pw.TableBorder.all(),
+                      children: [
+                        // Table header
+                        pw.TableRow(
+                          decoration: const pw.BoxDecoration(
+                            color: PdfColor(0.9, 0.9, 0.9),
+                          ),
+                          children: [
+                            pw.Padding(
+  padding: const pw.EdgeInsets.all(5),
+  child: pw.Text('Medication', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+),
+pw.Padding(
+  padding: const pw.EdgeInsets.all(5),
+  child: pw.Text('Units', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+),
+pw.Padding(
+  padding: const pw.EdgeInsets.all(5),
+  child: pw.Text('Timings', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+)
+]
+),
+// Table rows for each medication
+...(widget.appointmentDetails['prescription'] as List).map((med) {
+  if (med is Map) {
+    return pw.TableRow(
+      children: [
+        pw.Padding(
+          padding: const pw.EdgeInsets.all(5),
+          child: pw.Text(med['tablets'] ?? 'Unknown'),
+        ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.all(5),
+          child: pw.Text(med['units']?.toString() ?? 'Not specified'),
+        ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.all(5),
+          child: pw.Text(med['Timings'] ?? 'Not specified'),
+        ),
+      ]
     );
-    
+  } else {
+    return pw.TableRow(
+      children: [
+        pw.Padding(
+          padding: const pw.EdgeInsets.all(5),
+          child: pw.Text(med.toString()),
+        ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.all(5),
+          child: pw.Text(''),
+        ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.all(5),
+          child: pw.Text(''),
+        ),
+      ]
+    );
+  }
+}).toList(),
+]),
+]),
+),
+
+// Lab Tests Section
+if (widget.appointmentDetails['labrequest'] != null && 
+    widget.appointmentDetails['labrequest'] is List && 
+    (widget.appointmentDetails['labrequest'] as List).isNotEmpty)
+  _buildPDFSection(
+    title: 'Lab Tests Requested',
+    child: pw.Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: (widget.appointmentDetails['labrequest'] as List).map<pw.Widget>((test) {
+        return pw.Container(
+          padding: const pw.EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          decoration: pw.BoxDecoration(
+            color: const PdfColor(0.8, 0.9, 1.0),
+            borderRadius: pw.BorderRadius.circular(12),
+          ),
+          child: pw.Text(test.toString()),
+        );
+      }).toList(),
+    ),
+  ),
+];
+},
+)
+);
+
+
     try {
       // Save PDF to device
       final tempDir = await getTemporaryDirectory();
@@ -783,109 +890,70 @@ class _MedicalReportPageState extends State<MedicalReportPage> {
       print('Error saving PDF: $e');
       return null;
     }
-  }
-
-  pw.Widget _buildPDFSection({required String title, required pw.Widget child}) {
-    return pw.Container(
-      decoration: pw.BoxDecoration(
-        // border: pw.Border.all(),
-        borderRadius: pw.BorderRadius.circular(4),
-      ),
-      padding: const pw.EdgeInsets.all(10),
-      child: pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: [
-          pw.Text(
-            title,
-            style: pw.TextStyle(
-              fontSize: 16,
-              fontWeight: pw.FontWeight.bold,
-            ),
-          ),
-          pw.Divider(),
-          pw.SizedBox(height: 8),
-          child,
-        ],
-      ),
-    );
-  }
-
-  pw.Widget _buildPDFVitalRow(String label, String value) {
-    return pw.Padding(
-      padding: const pw.EdgeInsets.symmetric(vertical: 4.0),
-      child: pw.Row(
-        children: [
-          pw.Expanded(
-            flex: 2,
-            child: pw.Text(
-              label,
-              style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-            ),
-          ),
-          pw.Expanded(
-            flex: 3,
-            child: pw.Text(value),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _generateAndDownloadPDF(BuildContext context) async {
-    try {
-      // Check storage permission
-      final status = await Permission.storage.request();
-      if (!status.isGranted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Storage permission is required to save PDF')),
-        );
-        return;
-      }
-      
-      // Show loading indicator
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Generating PDF...')),
-      );
-      
-      // Generate PDF
-      final pdfFile = await _generatePDF();
-      if (pdfFile == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to generate PDF')),
-        );
-        return;
-      }
-      
-      // Save PDF to Downloads folder
-      final downloadsDir = await getDownloadsDirectory() ?? await getExternalStorageDirectory();
-      if (downloadsDir == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not access downloads directory')),
-        );
-        return;
-      }
-      
-      final reportName = 'medical_report_${widget.patientId}_${DateFormat('yyyyMMdd').format(DateTime.now())}.pdf';
-      final savedFile = await File(pdfFile.path).copy('${downloadsDir.path}/$reportName');
-      
-      // Show success message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('PDF saved to ${savedFile.path}'),
-          action: SnackBarAction(
-            label: 'View',
-            onPressed: () {
-              // Add code to open the PDF file here
-              // You can use plugins like open_file or url_launcher to open the file
-            },
-          ),
-        ),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
-    }
-  }
 }
 
+// Helper methods for PDF
+pw.Widget _buildPDFSection({required String title, required pw.Widget child}) {
+  return pw.Container(
+    decoration: pw.BoxDecoration(
+      border: pw.Border.all(),
+      borderRadius: pw.BorderRadius.circular(5),
+    ),
+    padding: const pw.EdgeInsets.all(10),
+    child: pw.Column(
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
+      children: [
+        pw.Text(
+          title,
+          style: pw.TextStyle(
+            fontSize: 14,
+            fontWeight: pw.FontWeight.bold,
+          ),
+        ),
+        pw.Divider(),
+        pw.SizedBox(height: 8),
+        child,
+      ],
+    ),
+  );
+}
+
+pw.Widget _buildPDFVitalRow(String label, String value) {
+  return pw.Padding(
+    padding: const pw.EdgeInsets.symmetric(vertical: 2),
+    child: pw.Row(
+      children: [
+        pw.Expanded(
+          flex: 2,
+          child: pw.Text(
+            label,
+            style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+          ),
+        ),
+        pw.Expanded(
+          flex: 3,
+          child: pw.Text(value),
+        ),
+      ],
+    ),
+  );
+}
+
+pw.Widget _buildPDFDetailRow(String label, String value) {
+  return pw.Padding(
+    padding: const pw.EdgeInsets.symmetric(vertical: 2),
+    child: pw.Column(
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
+      children: [
+        pw.Text(
+          label,
+          style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+        ),
+        pw.SizedBox(height: 2),
+        pw.Text(value),
+        pw.SizedBox(height: 2),
+      ],
+    ),
+  );
+}
+}

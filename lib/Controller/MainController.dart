@@ -23,6 +23,20 @@ class Maincontroller extends GetxController {
 
       RxBool notification = false.obs;
 
+      RxBool todayScreeningCompleted = false.obs;
+
+
+      List<Map> actions = [];
+
+
+      void checkTodayScreeningComplete(){
+
+        if(localStorage.getItem("lastScreened")== DateFormat('dd-MM-yyyy').format(DateTime.now())){
+         todayScreeningCompleted.value = true;
+        }
+
+      }
+
 
     void checkNotificationPermission() async{
       final status = await Permission.notification.isGranted;
@@ -119,6 +133,8 @@ class Maincontroller extends GetxController {
     }
 
     try {
+
+      checkTodayScreeningComplete();
 
   getCounterData();
 
@@ -398,6 +414,8 @@ TextEditingController waketime = TextEditingController();
   }
 
   Future<void> updateDailyScreening() async {
+
+    todayScreeningCompleted.value = true;
 
 
       Loadingbar.show("Updating Screening");
